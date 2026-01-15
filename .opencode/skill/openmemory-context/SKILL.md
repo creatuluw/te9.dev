@@ -34,7 +34,7 @@ Use me whenever you need to:
 ```javascript
 context = skill("openmemory-context", {
   "query": "user's request keywords",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -44,7 +44,7 @@ context = skill("openmemory-context", {
 context = skill("openmemory-context", {
   "query": "user authentication",
   "contextType": "prd-interview",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -55,7 +55,7 @@ context = skill("openmemory-context", {
   "query": "authentication implementation",
   "contextType": "prd-execute",
   "prdId": "PRD-20250115-143022",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -68,9 +68,12 @@ context = skill("openmemory-context", {
   - Examples: "user authentication", "React components", "database design"
   - Supports natural language queries
 
-- **userId** (string): User identifier
-  - Default: "default"
-  - Ensures context isolation between users
+- **userId** (string): Project folder name (MANDATORY)
+  - **MUST be the folder NAME (not full path) of the current project/repo**
+  - Examples: "myapp", "te9.dev", "project"
+  - Ensures context isolation between projects
+  - Default: "default" (WARNING: Do not use! Always use project folder name)
+  - See [Critical userId Requirement](#-critical-userid-must-be-project-folder) above
 
 ### Optional Parameters
 
@@ -357,7 +360,7 @@ Optimized for making technical decisions. Focuses on past decisions, outcomes, a
 // Step 1: Query context (MANDATORY in te9-method)
 context = skill("openmemory-context", {
   "query": "user request keywords",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Step 2: Analyze context
@@ -380,7 +383,7 @@ if (context.warnings.some(w => w.includes("complex"))) {
 context = skill("openmemory-context", {
   "query": interview_topic,
   "contextType": "prd-interview",
-  "userId": "default"
+  "userId": project_folder_name  // e.g., "myapp"
 })
 
 // Use context to guide interview
@@ -407,7 +410,7 @@ context = skill("openmemory-context", {
   "query": "feature implementation",
   "contextType": "prd-execute",
   "prdId": prdId,
-  "userId": "default"
+  "userId": project_folder_name  // e.g., "myapp"
 })
 
 // Follow established patterns
@@ -433,7 +436,7 @@ context.warnings.forEach(warning => {
 context = skill("openmemory-context", {
   "query": "database selection for transactional requirements",
   "contextType": "decision-support",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Review past decisions
@@ -463,7 +466,7 @@ context = skill("openmemory-context", {
     "end": "2024-12-31T23:59:59Z"
   },
   "analysisDepth": "deep",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Analyze patterns
@@ -562,7 +565,7 @@ context.patterns.technical.forEach(pattern => {
 // Step 1: QUERY FIRST (MANDATORY)
 context = skill("openmemory-context", {
   "query": user_request,
-  "userId": userId
+  "userId": project_folder_name  // e.g., "myapp"
 })
 
 // Step 2: ANALYZE
@@ -593,7 +596,8 @@ skill("openmemory-store", {
 context = skill("openmemory-context", {
   "query": interview_topic,
   "contextType": "prd-interview",
-  "userId": userId
+  "includeRelatedPRDs": true,
+  "userId": project_folder_name  // e.g., "myapp"
 })
 
 // Conduct interview with context
@@ -616,10 +620,10 @@ skill("openmemory-store", {
 ```javascript
 // Before execution
 context = skill("openmemory-context", {
-  "query": execution_topic,
+  "query": "feature implementation",
   "contextType": "prd-execute",
   "prdId": prdId,
-  "userId": userId
+  "userId": project_folder_name  // e.g., "myapp"
 })
 
 // Execute with context awareness
@@ -675,7 +679,7 @@ context = skill("openmemory-context", {
 // Compare contexts across users (with appropriate permissions)
 context = skill("openmemory-context", {
   "query": "React component patterns",
-  "userId": "default",
+  "userId": "te9.dev",
   "compareWith": ["user-123", "user-456"]
 })
 
@@ -723,8 +727,9 @@ context = skill("openmemory-context", {
 context = skill("openmemory-context", {
   "query": "user authentication",
   "contextType": "prd-interview",
-  "userId": "default"
+  "userId": "te9.dev"
 })
+```
 
 // context.summary.overview:
 // "User has strong preference for JWT with 2FA on sensitive endpoints"
@@ -742,7 +747,7 @@ context = skill("openmemory-context", {
 context = skill("openmemory-context", {
   "query": "database timeout during authentication",
   "contextType": "prd-execute",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // context.patterns.technical:
@@ -760,7 +765,7 @@ context = skill("openmemory-context", {
 context = skill("openmemory-context", {
   "query": "frontend framework selection",
   "contextType": "decision-support",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // context.patterns.decisions:

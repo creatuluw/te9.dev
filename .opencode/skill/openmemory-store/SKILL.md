@@ -9,6 +9,55 @@ metadata:
   category: openmemory
 ---
 
+## ⚠️ CRITICAL: userId MUST Be Project Folder
+
+**The `userId` parameter is MANDATORY for ALL OpenMemory operations.**
+
+For every memory storage operation, the `userId` MUST be set to the **folder from or in which the user/agent is working**. This ensures:
+
+1. **Context Isolation**: Each project/repo maintains its own separate memory space
+2. **Project-Specific Context**: Memories are scoped to the current working directory
+3. **Cross-Project Independence**: Working on multiple projects doesn't mix memories
+4. **Repository-Level Persistence**: Memories persist and are retrieved only for the specific project/repo
+
+### Determining userId
+
+The `userId` should be:
+- The **root folder name** of the current project (not the full path)
+- The **repository name** for repo-based work
+- Extracted from the full path: use only the final folder name
+
+### Examples
+
+```javascript
+// ✅ CORRECT - Using folder name only
+skill("openmemory-store", {
+  "content": "Decision made",
+  "userId": "myrecipes.xyz"
+})
+
+// ✅ CORRECT - Using repository name
+skill("openmemory-store", {
+  "content": "Key learning",
+  "userId": "te9.dev"
+})
+```
+
+// ❌ WRONG - Using generic user ID
+skill("openmemory-store", {
+  "content": "Important preference",
+  "userId": "user123"  // Wrong! Not project-scoped
+})
+
+// ❌ WRONG - Using full path or generic ID
+skill("openmemory-store", {
+  "content": "Critical decision",
+  "userId": "E:/projects/te9.dev"  // Wrong! Use folder name only
+})
+```
+
+**This is non-negotiable**: Every `openmemory-store` call must use the project folder as `userId` to maintain proper context isolation.
+
 # OpenMemory Store Skill
 
 ## What I Do
@@ -34,7 +83,7 @@ Use me whenever you need to:
 ```javascript
 result = skill("openmemory-store", {
   "content": "User prefers dark mode with high contrast",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -44,7 +93,7 @@ result = skill("openmemory-store", {
 result = skill("openmemory-store", {
   "content": "Always validate user input before database queries",
   "sector": "procedural",
-  "userId": "default",
+  "userId": "te9.dev",
   "tags": ["security", "validation", "database"]
 })
 ```
@@ -54,7 +103,7 @@ result = skill("openmemory-store", {
 ```javascript
 result = skill("openmemory-store", {
   "content": "JWT tokens are preferred for authentication",
-  "userId": "default",
+  "userId": "te9.dev",
   "reinforce": true,
   "importance": "high"
 })
@@ -74,9 +123,11 @@ result = skill("openmemory-store", {
     - "Workflow: Always run tests before committing to main branch"
 
 - **userId** (string): User identifier
-  - Default: "default"
-  - Ensures memory isolation between users
-  - Use consistent ID for same user across sessions
+  - **CRITICAL**: MUST be the project folder NAME only (e.g., "myproject")
+  - Ensures memory isolation between projects/repositories
+  - Use only the root folder name, NOT the full path
+  - Examples: "te9.dev", "myrecipes.xyz", "myproject"
+  - Do NOT use generic user IDs like "user123" or "default"
 
 ### Optional Parameters
 
@@ -243,7 +294,7 @@ result = skill("openmemory-store", {
 // After making technical decision
 result = skill("openmemory-store", {
   "content": "Decision: Use PostgreSQL over MongoDB for transactional consistency",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "semantic",
   "reinforce": true,
   "importance": "high",
@@ -275,7 +326,7 @@ result = skill("openmemory-store", {
 // Document workflow
 result = skill("openmemory-store", {
   "content": "Workflow: 1. Write tests, 2. Implement feature, 3. Run tests, 4. Commit",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "procedural",
   "tags": ["testing", "workflow", "TDD", "best-practice"],
   "metadata": {
@@ -291,7 +342,7 @@ result = skill("openmemory-store", {
 // Document lessons learned
 result = skill("openmemory-store", {
   "content": "Lesson: Early API contract validation prevents 80% of integration issues",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "reflective",
   "reinforce": true,
   "importance": "medium",
@@ -305,7 +356,7 @@ result = skill("openmemory-store", {
 // Track PRD execution
 result = skill("openmemory-store", {
   "content": "Completed PRD-20250115-143022: Implemented user authentication with JWT",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "episodic",
   "tags": ["completed", "authentication", "JWT", "PRD"],
   "metadata": {
@@ -527,7 +578,7 @@ result = skill("openmemory-store", {
 ```javascript
 result = skill("openmemory-store", {
   "content": "Decision: Use Redis for caching to reduce database load by 60%",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "semantic",
   "reinforce": true,
   "importance": "high",

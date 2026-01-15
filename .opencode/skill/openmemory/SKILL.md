@@ -78,7 +78,7 @@ The OpenMemory skill suite includes three specialized skills:
 // Query for authentication patterns
 result = skill("openmemory-query", {
   "query": "authentication implementation patterns",
-  "userId": "default",
+  "userId": "te9.dev",
   "sectors": ["semantic", "procedural"],
   "limit": 15
 })
@@ -96,7 +96,7 @@ result = skill("openmemory-query", {
 // Store a technical decision
 result = skill("openmemory-store", {
   "content": "Decision: Use JWT tokens with 256-bit encryption for authentication",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "semantic",
   "reinforce": true,
   "importance": "high"
@@ -117,7 +117,7 @@ context = skill("openmemory-context", {
   "query": "user authentication system",
   "contextType": "prd-interview",
   "includeRelatedPRDs": true,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -131,7 +131,7 @@ The OpenMemory skill suite makes the mandatory memory workflow effortless:
 // Step 1: QUERY FIRST (use openmemory-context for comprehensive context)
 context = skill("openmemory-context", {
   "query": user_request,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Step 2: ANALYZE (context.summary, patterns, recommendations are ready to use)
@@ -145,7 +145,7 @@ context = skill("openmemory-context", {
 // Step 4: STORE LAST (use openmemory-store to save learnings)
 skill("openmemory-store", {
   "content": "Key decision or learning from this interaction",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "semantic"
 })
 ```
@@ -158,7 +158,7 @@ context = skill("openmemory-context", {
   "query": interview_topic,
   "contextType": "prd-interview",
   "includeRelatedPRDs": true,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Use context to guide interview questions
@@ -168,7 +168,7 @@ context = skill("openmemory-context", {
 // Store interview results
 skill("openmemory-store", {
   "content": `Interview completed: ${interviewData.title}`,
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "episodic",
   "metadata": { "interviewId": interviewId }
 })
@@ -182,7 +182,7 @@ context = skill("openmemory-context", {
   "query": execution_topic,
   "contextType": "prd-execute",
   "prdId": prdId,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Follow context.patterns.procedural for implementation
@@ -198,7 +198,7 @@ patterns = skill("openmemory-query", {
 // Store completion and lessons learned
 skill("openmemory-store", {
   "content": `Completed ${prdId}: following ${context.relatedPRDs.length} related PRDs`,
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "episodic",
   "metadata": { "prdId": prdId, "status": "DONE" }
 })
@@ -226,7 +226,7 @@ skill("openmemory-store", {
 // Get context
 context = skill("openmemory-context", {
   "query": topic,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Use context in work
@@ -235,7 +235,7 @@ context = skill("openmemory-context", {
 // Store learnings
 skill("openmemory-store", {
   "content": learning,
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": determineSector(learning)
 })
 ```
@@ -245,14 +245,14 @@ skill("openmemory-store", {
 // Query for existing patterns
 existing = skill("openmemory-query", {
   "query": topic,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // If new pattern found, store it
 if (existing.totalResults === 0) {
   skill("openmemory-store", {
     "content": newPattern,
-    "userId": "default"
+    "userId": "te9.dev"
   })
 }
 ```
@@ -263,7 +263,7 @@ if (existing.totalResults === 0) {
 context = skill("openmemory-context", {
   "query": topic,
   "contextType": "prd-execute",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Follow recommendations
@@ -275,7 +275,7 @@ context.warnings.forEach(warn => ensureAvoid(warn))
 // Store outcome
 skill("openmemory-store", {
   "content": outcome,
-  "userId": "default",
+  "userId": "te9.dev",
   "metadata": { "followed": context.recommendations.length }
 })
 ```
@@ -312,7 +312,7 @@ All operations are local-first with no external API calls.
 // ✅ MANDATORY in te9-method
 context = skill("openmemory-context", {
   "query": user_request,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 // Then respond based on context
 
@@ -324,7 +324,7 @@ context = skill("openmemory-context", {
 // ✅ Store decisions and patterns
 skill("openmemory-store", {
   "content": "Decision: Use JWT for authentication",
-  "userId": "default",
+  "userId": "te9.dev",
   "reinforce": true
 })
 
@@ -371,7 +371,7 @@ if (context.relatedPRDs.length > 0) {
 ```javascript
 context = skill("openmemory-context", {
   "query": "what user is asking about",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -387,7 +387,7 @@ context = skill("openmemory-context", {
 ```javascript
 skill("openmemory-store", {
   "content": "important decision or insight",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "appropriate-sector"
 })
 ```
@@ -402,7 +402,7 @@ skill("openmemory-store", {
 // Step 1: Get context
 context = skill("openmemory-context", {
   "query": "authentication implementation",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Step 2: Use context in response
@@ -416,7 +416,7 @@ context = skill("openmemory-context", {
 // Step 4: Store this interaction
 skill("openmemory-store", {
   "content": "Provided authentication guidance recommending JWT",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "episodic"
 })
 ```
@@ -431,7 +431,7 @@ context = skill("openmemory-context", {
   "query": "authentication feature",
   "contextType": "prd-interview",
   "includeRelatedPRDs": true,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Step 2: Use context to guide interview
@@ -447,7 +447,7 @@ interview = skill("prd-interview", {
 // Step 4: Store interview results
 skill("openmemory-store", {
   "content": `Interview: ${interview.title} with ${interview.criteria.length} criteria`,
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "episodic",
   "metadata": { "interviewId": interview.id }
 })
@@ -463,7 +463,7 @@ context = skill("openmemory-context", {
   "query": "database selection",
   "contextType": "decision-support",
   "depth": "deep",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Step 2: Review past decisions
@@ -479,7 +479,7 @@ context.sectors.reflective.memories.forEach(mem => {
 // Step 4: Make decision and store
 skill("openmemory-store", {
   "content": "Decision: Use PostgreSQL for transactional consistency",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "semantic",
   "reinforce": true,
   "importance": "high"
@@ -494,7 +494,8 @@ The OpenMemory skill suite integrates seamlessly with all te9-method skills:
 ```javascript
 context = skill("openmemory-context", {
   "query": interview_topic,
-  "contextType": "prd-interview"
+  "contextType": "prd-interview",
+  "userId": "te9.dev"
 })
 interview = skill("prd-interview", { "context": context })
 ```
@@ -503,7 +504,8 @@ interview = skill("prd-interview", { "context": context })
 ```javascript
 context = skill("openmemory-context", {
   "query": interviewData.title,
-  "contextType": "prd-interview"
+  "contextType": "prd-interview",
+  "userId": "te9.dev"
 })
 prd = skill("prd-create", { "interviewData": interviewData, "context": context })
 ```
@@ -513,7 +515,8 @@ prd = skill("prd-create", { "interviewData": interviewData, "context": context }
 context = skill("openmemory-context", {
   "query": prd.title,
   "contextType": "prd-execute",
-  "prdId": prdId
+  "prdId": prdId,
+  "userId": "te9.dev"
 })
 result = skill("prd-execute", { "prdId": prdId, "context": context })
 ```
@@ -541,7 +544,7 @@ skill("prd-track", {
 // Store memory in parallel
 skill("openmemory-store", {
   "content": "Progress update",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 

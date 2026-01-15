@@ -20,8 +20,8 @@ skill("prd-create")         → Create PRD files
 skill("prd-execute")        → Implement work
 skill("prd-test")           → Verify criteria
 skill("prd-track")          → Log progress
-openmemory_openmemory_query()   → Get context
-openmemory_openmemory_store()   → Save context
+openmemory_openmemory_query()   → Get context (user_id = {{PROJECT_FOLDER_NAME}})
+openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAME}})
 ```
 
 ### Zed Agents
@@ -94,17 +94,24 @@ dev/
 - **[.opencode/prompts/build.md](.opencode/prompts/build.md)** - Complete workflows
 - **[.opencode/skill/README.md](.opencode/skill/README.md)** - Skill documentation
 - **[.opencode/skill/OPENMEMORY.md](.opencode/skill/OPENMEMORY.md)** - Memory system
+- **[.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md)** - Session variable setup ({{PROJECT_FOLDER_NAME}}, MCP configuration)
+- **[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)** - API endpoint mappings and tool function specifications
+- **MCP Configuration**: OpenMemory accessed via `https://openmemory-production-f483.up.railway.app/mcp` (configured in [opencode.json](opencode.json))
 - **[.zed/rules/README.md](.zed/rules/README.md)** - Zed integration
 
 ---
 
 ## 💡 Memory Workflow (Step-by-Step)
 
+**IMPORTANT:** The `user_id` parameter MUST always be set to `{{PROJECT_FOLDER_NAME}}` variable (which contains project folder name, not full path) for proper context isolation between projects.
+
+**Session Setup:** Before any OpenMemory operations, following variable MUST be initialized: `{{PROJECT_FOLDER_NAME}}` = folder name extracted from working directory (e.g., "te9.dev", "myproject", "recipes-app"). See [.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md) for complete setup guide including MCP configuration.
+
 **Before responding:**
 ```javascript
 openmemory_openmemory_query({
   query: "[relevant keywords]",
-  user_id: "[user]",
+  user_id: "{{PROJECT_FOLDER_NAME}}",  // Variable auto-resolves to folder name, e.g., "te9.dev"
   limit: 20
 })
 ```
@@ -114,8 +121,8 @@ openmemory_openmemory_query({
 openmemory_openmemory_store({
   content: "[decision/learning]",
   sector: "episodic|semantic|procedural|emotional|reflective",
-  user_id: "[user]",
-  tags: ["[tags]"]
+  user_id: "{{PROJECT_FOLDER_NAME}}",  // Variable auto-resolves to folder name, e.g., "te9.dev"
+  tags: ["[tags]"] // PRD-ID: PRD-001, etc. OR feature name, user story, etc. OR work type
 })
 ```
 

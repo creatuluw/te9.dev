@@ -4,19 +4,61 @@ You MUST follow both workflows below for ALL development work.
 
 ---
 
-# WORKFLOW 1: MANDATORY MEMORY WORKFLOW
+## WORKFLOW 1: MANDATORY MEMORY WORKFLOW
+
+## ⚠️ CRITICAL: Session Variables MUST Be Initialized First
+
+**Before ANY OpenMemory operations, following variables MUST be initialized:**
+
+| Variable | Description | Example | Source |
+|----------|-------------|---------|--------|
+| `{{PROJECT_FOLDER_NAME}}` | **Root folder name** of current project (not full path) | `te9.dev`, `myproject`, `recipes-app` | Extracted from working directory |
+| `{{OPENMEMORY_API_URL}}` | OpenMemory MCP endpoint URL | `https://openmemory-production-f483.up.railway.app/mcp` | Configuration (`opencode.json` MCP settings) |
+
+**Documentation:**
+- See `[.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md)` for complete variable setup guide (including MCP configuration)
+- See `[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)` for API endpoint mappings
+
+**MCP Note:** OpenMemory is accessed via MCP server configured in `opencode.json`. Authentication is handled by MCP connection, so `{{OPENMEMORY_API_KEY}}` is typically not needed.
+
+## ⚠️ CRITICAL: user_id MUST Be Project Folder Name
+
+**For ALL OpenMemory operations, the `user_id` parameter MUST be the project folder name (not the full path).**
+
+This ensures **context isolation** between projects/repositories. Each project has its own memory space, preventing cross-contamination and maintaining proper context boundaries.
+
+**Variable Requirement:** Always use `{{PROJECT_FOLDER_NAME}}` variable which is automatically set to the folder name at session start.
+
+**How to determine PROJECT_FOLDER_NAME:**
+- Extract the **folder name** from the project root path
+- Example: `"E:/projects/te9.dev"` → `PROJECT_FOLDER_NAME: "te9.dev"`
+- Example: `"/home/user/myproject"` → `PROJECT_FOLDER_NAME: "myproject"`
+- Example: `"~/workspace/app"` → `PROJECT_FOLDER_NAME: "app"`
+
+**Examples:**
+- Working in `E:\te9.dev` → `user_id: "{{PROJECT_FOLDER_NAME}}"` resolves to `"te9.dev"`
+- Working in `/home/user/myproject` → `user_id: "{{PROJECT_FOLDER_NAME}}"` resolves to `"myproject"`
+- Working in `~/workspace/app` → `user_id: "{{PROJECT_FOLDER_NAME}}"` resolves to `"app"`
 
 ## 1. QUERY FIRST
 
 Before responding to ANY user request, you MUST query OpenMemory:
 
 ```javascript
+// Query memory - user_id uses PROJECT_FOLDER_NAME variable
 openmemory_openmemory_query({
   query: "[relevant keywords]",
-  user_id: "[user]",
+  user_id: "{{PROJECT_FOLDER_NAME}}",  // Automatically resolves to folder name
   limit: 20
 })
 ```
+
+**API Mapping:**
+- Function: `openmemory_openmemory_query()`
+- Endpoint: `POST /memory/query`
+- Parameters mapped: `query` → body.query, `limit` → body.k, `user_id` → body.filters.user_id
+
+**See:** `[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)` for complete API reference
 
 Extract context from previous conversations, decisions, and relationships.
 
@@ -42,13 +84,21 @@ Your response MUST reflect memory context:
 After EVERY important interaction, you MUST:
 
 ```javascript
+// Store memory - user_id uses PROJECT_FOLDER_NAME variable
 openmemory_openmemory_store({
   content: "[key learnings/decisions]",
-  sector: "[episodic|semantic|procedural|emotional|reflective]",
-  user_id: "[user]",
-  tags: ["[relevant tags]"]
+  sector: "episodic|semantic|procedural|emotional|reflective",
+  user_id: "{{PROJECT_FOLDER_NAME}}",  // Automatically resolves to folder name
+  tags: ["preference", "decision", "authentication", "PRD-001", "refactor"]  // Array of descriptive tag strings
 })
 ```
+
+**API Mapping:**
+- Function: `openmemory_openmemory_store()`
+- Endpoint: `POST /memory/add`
+- Parameters mapped: `content` → body.content, `sector` → body.metadata.sector, `user_id` → body.user_id, `tags` → body.tags
+
+**See:** `[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)` for complete API reference
 
 Store: decisions made, patterns discovered, relationships identified, preferences observed.
 

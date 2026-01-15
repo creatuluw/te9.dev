@@ -2,6 +2,83 @@
 
 Complete OpenMemory integration suite for the te9-method with intelligent memory management capabilities.
 
+## ⚠️ CRITICAL: user_id Requirement
+
+**The `user_id` parameter is MANDATORY for ALL OpenMemory operations.**
+
+For every CRUD and interaction with OpenMemory, the `user_id` MUST be set to the **`{{PROJECT_FOLDER_NAME}}` variable** (which contains the folder name from which the user/agent is working). This ensures:
+
+**Variable Requirement:** Always use `{{PROJECT_FOLDER_NAME}}` (not hardcoded values) for user_id. See [.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md) for complete variable setup guide.
+
+This ensures:
+
+1. **Context Isolation**: Each project/repo maintains its own separate memory space
+2. **Project-Specific Context**: Memories are scoped to the current working directory
+3. **Cross-Project Independence**: Working on multiple projects doesn't mix memories
+4. **Repository-Level Persistence**: Memories persist and are retrieved only for the specific project/repo
+
+### Determining user_id
+
+The `user_id` should be:
+- The **`{{PROJECT_FOLDER_NAME}}` variable** which contains the folder name
+- The **repository name** for repo-based work
+- The **base directory name** when the agent is invoked
+
+**Automatic Variable Setup:**
+At session start, `{{PROJECT_FOLDER_NAME}}` is automatically extracted from the working directory path. This variable is then used in all memory operations.
+
+**Examples:**
+- Working in `E:\projects\te9.dev` → `{{PROJECT_FOLDER_NAME}} = "te9.dev"` → `userId: "te9.dev"`
+- Working in `/home/user/myproject` → `{{PROJECT_FOLDER_NAME}} = "myproject"` → `userId: "myproject"`
+- Working in `~/workspace/app` → `{{PROJECT_FOLDER_NAME}} = "app"` → `userId: "app"`
+
+**See [.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md) for complete session variable setup.**
+
+### Examples
+
+```javascript
+// ✅ CORRECT - Using folder name as user_id
+skill("openmemory-context", {
+  "query": "feature request",
+  "userId": "myrecipes.xyz"
+})
+
+// ✅ CORRECT - Using folder name
+skill("openmemory-store", {
+  "content": "Decision made",
+  "userId": "te9.dev"
+})
+
+// ❌ WRONG - Using generic user ID
+skill("openmemory-query", {
+  "query": "preferences",
+  "userId": "user123"  // Wrong! Not project-scoped
+})
+
+// ❌ WRONG - Using full path
+skill("openmemory-context", {
+  "query": "context",
+  "userId": "E:/projects/te9.dev"  // Wrong! Use folder name only
+})
+```
+
+**This is non-negotiable**: Every OpenMemory call must use the project folder name as `user_id` to maintain proper context isolation.
+
+Complete OpenMemory integration suite for the te9-method with intelligent memory management capabilities.
+
+## ⚠️ Important References
+
+**Before using this skill suite, refer to these documentation files:**
+
+- **[.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md)** - Required session variables (`{{PROJECT_FOLDER_NAME}}`, etc.) that MUST be initialized before any OpenMemory operations
+- **[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)** - Complete API endpoint mappings, parameter references, and tool function specifications
+
+These documents provide the authoritative reference for:
+- Required session variables and how to determine them
+- Exact API endpoints and their parameters
+- How tool functions map to backend API calls
+- Proper variable substitution (`{{VARIABLE_NAME}}`)
+
 ## Overview
 
 The OpenMemory skills suite provides three specialized skills that transform the mandatory memory workflow from manual, repetitive operations into intelligent, automated processes. These skills leverage OpenMemory's cognitive memory engine to provide persistent context, pattern recognition, and decision support for AI agents.
@@ -622,7 +699,7 @@ context.recommendations.forEach(rec => {
 // Step 1: QUERY FIRST (MANDATORY)
 context = skill("openmemory-context", {
   "query": "authentication implementation",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Step 2: ANALYZE (automatic)
@@ -640,7 +717,7 @@ console.log("User prefers minimal friction in login UX, so keep it simple.")
 // Step 4: STORE LAST (MANDATORY)
 skill("openmemory-store", {
   "content": "Provided authentication guidance recommending JWT based on patterns",
-  "userId": "default",
+  "userId": "te9.dev",
   "sector": "episodic"
 })
 ```
@@ -655,7 +732,7 @@ context = skill("openmemory-context", {
   "query": "user profile management",
   "contextType": "prd-interview",
   "includeRelatedPRDs": true,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Context reveals:
@@ -681,7 +758,7 @@ context = skill("openmemory-context", {
   "query": "user profile implementation",
   "contextType": "prd-execute",
   "prdId": prdId,
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Context provides implementation patterns:
@@ -721,7 +798,7 @@ skill("openmemory-store", {
 context = skill("openmemory-context", {
   "query": "database timeout authentication",
   "contextType": "debugging",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 
 // Context reveals similar issues and solutions:
@@ -748,7 +825,7 @@ applySolutions(context.sectors.reflective.memories)
 // Query OpenMemory
 const results = await openmemory_openmemory_query({
   query: "authentication",
-  user_id: "default",
+  user_id: "te9.dev",
   limit: 20
 })
 
@@ -777,7 +854,7 @@ if (result.content.includes("JWT")) tags.push("JWT")
 await openmemory_openmemory_store({
   content: result.content,
   sector: sector,
-  user_id: "default",
+  user_id: "te9.dev",
   tags: tags
 })
 ```
@@ -787,7 +864,7 @@ await openmemory_openmemory_store({
 // Get context (automatic analysis included)
 const context = await skill("openmemory-context", {
   query: "authentication",
-  userId: "default"
+  userId: "te9.dev"
 })
 
 // Patterns, preferences, recommendations already extracted
@@ -796,7 +873,7 @@ const context = await skill("openmemory-context", {
 // Store (auto-classifies and tags)
 await skill("openmemory-store", {
   content: "Decision: Use JWT for authentication",
-  userId: "default"
+  userId: "te9.dev"
 })
 ```
 

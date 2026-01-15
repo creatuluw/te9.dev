@@ -11,6 +11,35 @@ metadata:
 
 # OpenMemory Query Skill
 
+## ⚠️ CRITICAL: userId MUST Be Project Folder Name
+
+**The `userId` parameter is MANDATORY and MUST be set to the project folder name (not the full path).**
+
+This ensures **context isolation** between projects/repositories. Each project has its own memory space, preventing cross-contamination and maintaining proper context boundaries.
+
+**How to Determine userId:**
+- The **folder name** of the current project (e.g., `"te9.dev"`)
+- The **last segment** of the working directory when the agent is invoked
+- The **repository name** for repo-based work
+
+**Examples:**
+```javascript
+// ✅ CORRECT - Using folder name as userId
+skill("openmemory-query", {
+  "query": "user preferences",
+  "userId": "te9.dev"
+})
+```
+
+// ❌ WRONG - Using generic user ID
+skill("openmemory-query", {
+  "query": "user preferences",
+  "userId": "user123"  // Wrong! Not project-scoped
+})
+```
+
+**This is non-negotiable**: Every `openmemory-query` call must use the project folder as `userId`.
+
 ## What I Do
 
 I provide intelligent querying capabilities for OpenMemory with automatic filtering, sector-based analysis, and structured context extraction. I transform raw memory results into actionable insights.
@@ -34,7 +63,7 @@ Use me whenever you need to:
 ```javascript
 result = skill("openmemory-query", {
   "query": "user preferences for UI design",
-  "userId": "default"
+  "userId": "te9.dev"
 })
 ```
 
@@ -43,7 +72,7 @@ result = skill("openmemory-query", {
 ```javascript
 result = skill("openmemory-query", {
   "query": "authentication implementation decisions",
-  "userId": "default",
+  "userId": "te9.dev",
   "sectors": ["semantic", "procedural"],
   "limit": 15
 })
@@ -55,7 +84,7 @@ result = skill("openmemory-query", {
 result = skill("openmemory-query", {
   "query": "similar features or bugfixes",
   "context": "user authentication",
-  "userId": "default",
+  "userId": "te9.dev",
   "analysis": true
 })
 ```
@@ -69,10 +98,11 @@ result = skill("openmemory-query", {
   - Supports natural language queries
   - Examples: "user preferences", "API decisions", "bug patterns"
 
-- **userId** (string): User identifier
-  - Default: "default"
-  - Use specific user ID for multi-user systems
-  - Ensures memory isolation between users
+- **userId** (string): User identifier - **MUST be project folder name**
+  - **Examples**: `"te9.dev"`, `"myproject"`, `"app"`
+  - Ensures context isolation between projects/repositories
+  - Use the folder name (not full path) of the current working directory or repository
+  - **NEVER** use generic IDs like "user123" or "default"
 
 ### Optional Parameters
 
@@ -255,7 +285,7 @@ if (context.analysis.patterns.includes("prefers TypeScript")) {
 context = skill("openmemory-query", {
   "query": "user authentication features",
   "context": "past features and bugfixes",
-  "userId": "default",
+  "userId": "te9.dev",
   "sectors": ["episodic", "semantic", "procedural"],
   "analysis": true
 })
@@ -441,8 +471,8 @@ if (existing.totalResults === 0) {
 
 ```javascript
 result = skill("openmemory-query", {
-  "query": "UI design preferences",
-  "userId": "user123",
+  "query": "user preferences",
+  "userId": "te9.dev",
   "sectors": ["emotional", "reflective"],
   "limit": 15
 })

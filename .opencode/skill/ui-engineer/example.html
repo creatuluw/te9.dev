@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>About Kees - Business Process Management</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            zinc: {
+                                50: "#fafafa",
+                                100: "#f4f4f5",
+                                200: "#e4e4e7",
+                                300: "#d4d4d8",
+                                400: "#a1a1aa",
+                                500: "#71717a",
+                                600: "#52525b",
+                                700: "#3f3f46",
+                                800: "#27272a",
+                                900: "#18181b",
+                                950: "#09090b",
+                            },
+                        },
+                        fontFamily: {
+                            sans: [
+                                "system-ui",
+                                "-apple-system",
+                                "BlinkMacSystemFont",
+                                "Segoe UI",
+                                "Roboto",
+                                "sans-serif",
+                            ],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            *:focus-visible {
+                outline: 2px solid #3b82f6;
+                outline-offset: 2px;
+            }
+        </style>
+    </head>
+    <body class="bg-white text-zinc-900 antialiased">
+        <!-- Header -->
+        <header class="border-b border-zinc-200">
+            <nav class="container mx-auto px-4 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center"
+                        >
+                            <span class="text-white font-bold text-sm">K</span>
+                        </div>
+                        <span class="font-semibold text-lg text-zinc-900"
+                            >Kees</span
+                        >
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >Features</a
+                        >
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >Architecture</a
+                        >
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >Documentation</a
+                        >
+                        <a href="#" class="text-sm font-medium text-zinc-900"
+                            >About</a
+                        >
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <main>
+            <section class="container mx-auto px-4 py-16">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1
+                        class="text-4xl md:text-5xl font-bold text-zinc-900 mb-6 tracking-tight"
+                    >
+                        Modern Business Process Management
+                    </h1>
+                    <p class="text-lg text-zinc-600 mb-8 leading-relaxed">
+                        Kees is a comprehensive BPM platform built with modern
+                        technologies, helping teams manage work items, projects,
+                        cases, and processes efficiently. Built with Svelte 5,
+                        Tailwind CSS, and powered by PostgreSQL.
+                    </p>
+                    <div class="flex items-center justify-center gap-4">
+                        <a
+                            href="#"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium text-white bg-zinc-900 hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900"
+                        >
+                            Get Started
+                        </a>
+                        <a
+                            href="#"
+                            class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium text-zinc-900 border border-zinc-300 hover:bg-zinc-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900"
+                        >
+                            View Architecture
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="bg-zinc-50 py-16">
+                <div class="container mx-auto px-4">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-semibold text-zinc-900 mb-2">
+                            Core Features
+                        </h2>
+                        <p class="text-sm text-zinc-600">
+                            Everything you need to manage your business
+                            processes
+                        </p>
+                    </div>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        <!-- Feature Card 1 -->
+                        <div
+                            class="group bg-white border border-zinc-200 rounded-lg p-6 hover:border-zinc-300 transition-all hover:shadow-md"
+                        >
+                            <div class="flex items-start justify-between mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-blue-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                        />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-blue-100 text-blue-800"
+                                    >Work Management</span
+                                >
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-2"
+                            >
+                                Work Items
+                            </h3>
+                            <p
+                                class="text-sm text-zinc-600 group-hover:text-zinc-700 transition-colors"
+                            >
+                                Unified task system with process, manual, and
+                                help task types. Kanban board with
+                                drag-and-drop, priority levels, deadline
+                                tracking, and multi-assignee support.
+                            </p>
+                        </div>
+
+                        <!-- Feature Card 2 -->
+                        <div
+                            class="group bg-white border border-zinc-200 rounded-lg p-6 hover:border-zinc-300 transition-all hover:shadow-md"
+                        >
+                            <div class="flex items-start justify-between mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-emerald-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                                        />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-emerald-100 text-emerald-800"
+                                    >Projects</span
+                                >
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-2"
+                            >
+                                Project Management
+                            </h3>
+                            <p
+                                class="text-sm text-zinc-600 group-hover:text-zinc-700 transition-colors"
+                            >
+                                Project CRUD operations, member management,
+                                public sharing via tokens, project-level
+                                permissions, and comprehensive statistics.
+                            </p>
+                        </div>
+
+                        <!-- Feature Card 3 -->
+                        <div
+                            class="group bg-white border border-zinc-200 rounded-lg p-6 hover:border-zinc-300 transition-all hover:shadow-md"
+                        >
+                            <div class="flex items-start justify-between mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-purple-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                                        />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-purple-100 text-purple-800"
+                                    >Cases</span
+                                >
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-2"
+                            >
+                                Case Management
+                            </h3>
+                            <p
+                                class="text-sm text-zinc-600 group-hover:text-zinc-700 transition-colors"
+                            >
+                                Business case tracking with workflow steps, task
+                                assignment, process integration, and multi-step
+                                case workflows.
+                            </p>
+                        </div>
+
+                        <!-- Feature Card 4 -->
+                        <div
+                            class="group bg-white border border-zinc-200 rounded-lg p-6 hover:border-zinc-300 transition-all hover:shadow-md"
+                        >
+                            <div class="flex items-start justify-between mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-amber-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                        />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-amber-100 text-amber-800"
+                                    >Process</span
+                                >
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-2"
+                            >
+                                Process Management
+                            </h3>
+                            <p
+                                class="text-sm text-zinc-600 group-hover:text-zinc-700 transition-colors"
+                            >
+                                Business process definitions, task templates,
+                                step management, process-based task generation,
+                                and case-process integration.
+                            </p>
+                        </div>
+
+                        <!-- Feature Card 5 -->
+                        <div
+                            class="group bg-white border border-zinc-200 rounded-lg p-6 hover:border-zinc-300 transition-all hover:shadow-md"
+                        >
+                            <div class="flex items-start justify-between mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-pink-100 flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-pink-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                                        />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-pink-100 text-pink-800"
+                                    >Chat</span
+                                >
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-2"
+                            >
+                                Chat & Messaging
+                            </h3>
+                            <p
+                                class="text-sm text-zinc-600 group-hover:text-zinc-700 transition-colors"
+                            >
+                                Team chat for internal communication, AI
+                                assistant mode, message threading, chat history,
+                                and real-time messaging.
+                            </p>
+                        </div>
+
+                        <!-- Feature Card 6 -->
+                        <div
+                            class="group bg-white border border-zinc-200 rounded-lg p-6 hover:border-zinc-300 transition-all hover:shadow-md"
+                        >
+                            <div class="flex items-start justify-between mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-red-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                                        />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="px-2.5 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-red-100 text-red-800"
+                                    >Analytics</span
+                                >
+                            </div>
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-2"
+                            >
+                                Analytics & Reporting
+                            </h3>
+                            <p
+                                class="text-sm text-zinc-600 group-hover:text-zinc-700 transition-colors"
+                            >
+                                Client-side analytics, user behavior tracking,
+                                employee reports, operational reports, dashboard
+                                statistics, and hours tracking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack Section -->
+            <section class="py-16">
+                <div class="container mx-auto px-4">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-semibold text-zinc-900 mb-2">
+                            Technology Stack
+                        </h2>
+                        <p class="text-sm text-zinc-600">
+                            Built with modern, scalable technologies
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Frontend -->
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-4 flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-zinc-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                    />
+                                </svg>
+                                Frontend
+                            </h3>
+                            <div class="space-y-3">
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600">Framework</span>
+                                    <span class="text-zinc-900 font-medium"
+                                        >Svelte 5</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600">Styling</span>
+                                    <span class="text-zinc-900 font-medium"
+                                        >Tailwind CSS</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600"
+                                        >Design System</span
+                                    >
+                                    <span class="text-zinc-900 font-medium"
+                                        >gray-html</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600"
+                                        >State Management</span
+                                    >
+                                    <span class="text-zinc-900 font-medium"
+                                        >Svelte 5 Runes</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600">Routing</span>
+                                    <span class="text-zinc-900 font-medium"
+                                        >SvelteKit</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Backend -->
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <h3
+                                class="text-lg font-semibold text-zinc-900 mb-4 flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-zinc-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
+                                    />
+                                </svg>
+                                Backend
+                            </h3>
+                            <div class="space-y-3">
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600">Database</span>
+                                    <span class="text-zinc-900 font-medium"
+                                        >PostgreSQL</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600">API Layer</span>
+                                    <span class="text-zinc-900 font-medium"
+                                        >PostgREST</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600"
+                                        >Authentication</span
+                                    >
+                                    <span class="text-zinc-900 font-medium"
+                                        >JWT + bcrypt</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600"
+                                        >File Storage</span
+                                    >
+                                    <span class="text-zinc-900 font-medium"
+                                        >MinIO (S3)</span
+                                    >
+                                </div>
+                                <div
+                                    class="flex items-center justify-between text-sm"
+                                >
+                                    <span class="text-zinc-600"
+                                        >Validation</span
+                                    >
+                                    <span class="text-zinc-900 font-medium"
+                                        >Zod</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Highlights -->
+            <section class="bg-zinc-50 py-16">
+                <div class="container mx-auto px-4">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-semibold text-zinc-900 mb-2">
+                            Architecture Highlights
+                        </h2>
+                        <p class="text-sm text-zinc-600">
+                            Modern architecture for scalability and
+                            maintainability
+                        </p>
+                    </div>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center mb-4"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                                    />
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-base font-semibold text-zinc-900 mb-2"
+                            >
+                                Component-Based UI
+                            </h3>
+                            <p class="text-sm text-zinc-600">
+                                108+ reusable Svelte components following the
+                                gray-html design system for consistent UI across
+                                the application.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center mb-4"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                                    />
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-base font-semibold text-zinc-900 mb-2"
+                            >
+                                Layered Architecture
+                            </h3>
+                            <p class="text-sm text-zinc-600">
+                                Clear separation of concerns with routes,
+                                services, stores, utilities, and API layers for
+                                maintainability.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center mb-4"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                    />
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-base font-semibold text-zinc-900 mb-2"
+                            >
+                                Type Safety
+                            </h3>
+                            <p class="text-sm text-zinc-600">
+                                End-to-end TypeScript with Zod validation for
+                                runtime type safety and better developer
+                                experience.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center mb-4"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                    />
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-base font-semibold text-zinc-900 mb-2"
+                            >
+                                Optimistic Updates
+                            </h3>
+                            <p class="text-sm text-zinc-600">
+                                Fast UI with optimistic updates and background
+                                sync for real-time collaboration feel.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center mb-4"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                    />
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-base font-semibold text-zinc-900 mb-2"
+                            >
+                                RBAC
+                            </h3>
+                            <p class="text-sm text-zinc-600">
+                                Role-based access control with granular
+                                permissions for users, projects, and resources.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white border border-zinc-200 rounded-lg p-6"
+                        >
+                            <div
+                                class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center mb-4"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                                    />
+                                </svg>
+                            </div>
+                            <h3
+                                class="text-base font-semibold text-zinc-900 mb-2"
+                            >
+                                6 Themes
+                            </h3>
+                            <p class="text-sm text-zinc-600">
+                                Multiple themes including default, catalyst,
+                                pglite, planet, trevor, and cursor for
+                                personalization.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="py-16">
+                <div class="container mx-auto px-4">
+                    <div
+                        class="max-w-2xl mx-auto text-center bg-zinc-900 rounded-lg p-12"
+                    >
+                        <h2 class="text-2xl font-semibold text-white mb-4">
+                            Ready to streamline your processes?
+                        </h2>
+                        <p class="text-zinc-400 mb-8">
+                            Get started with Kees and experience modern business
+                            process management.
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <a
+                                href="#"
+                                class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500"
+                            >
+                                Get Started
+                            </a>
+                            <a
+                                href="#"
+                                class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+                            >
+                                View Documentation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-zinc-200 py-8">
+            <div class="container mx-auto px-4">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between gap-4"
+                >
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-6 h-6 rounded bg-zinc-900 flex items-center justify-center"
+                        >
+                            <span class="text-white font-bold text-xs">K</span>
+                        </div>
+                        <span class="text-sm text-zinc-600"
+                            >© 2024 Kees. Built with Svelte 5 & Tailwind
+                            CSS.</span
+                        >
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >GitHub</a
+                        >
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >Documentation</a
+                        >
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >Privacy</a
+                        >
+                        <a
+                            href="#"
+                            class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+                            >Terms</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

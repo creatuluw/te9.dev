@@ -7,6 +7,9 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+# Archive files
+.archive/
+
 # Environment variables
 .env
 .env.local
