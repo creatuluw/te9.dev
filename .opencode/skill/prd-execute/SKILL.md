@@ -18,6 +18,7 @@ I implement the work described in a specific PRD by:
 - Understanding the existing codebase
 - Implementing the required functionality
 - Testing all acceptance criteria
+- **CRITICAL: Ensuring unit tests pass successfully before completion**
 - Ensuring code quality and completeness
 - Leaving the codebase in a clean, working state
 
@@ -124,14 +125,16 @@ Track testing in a structured format:
 **Notes:** [any observations]
 ```
 
-### Step 7: Run Full Test Suite
+### Step 7: Run Full Test Suite (MANDATORY)
 
 After individual criterion testing:
 1. Run `npm test` to execute full test suite
 2. Check for any regressions in existing tests
 3. Verify no new errors or warnings
 4. Ensure code compiles/builds successfully
-5. If tests fail, fix the issues before proceeding
+5. **CRITICAL: If ANY unit test fails, you MUST NOT mark the PRD as complete**
+6. **CRITICAL: Fix all failing tests before proceeding to Step 9**
+7. **CRITICAL: Re-run tests until ALL pass - no exceptions**
 
 ### Step 8: Code Quality Check
 
@@ -145,10 +148,22 @@ Before marking complete, verify:
 - [ ] No console.log statements or debug code remains
 - [ ] Files are properly formatted and linted
 
-### Step 9: Update PRD Status
+### Step 9: Update PRD Status (ONLY IF TESTS PASS)
 
-Update `/dev/prd/prd.json` for this PRD:
-- Change `status` from "TODO" to "DONE"
+**CRITICAL REQUIREMENT: You may ONLY update PRD status to "DONE" if:**
+- All unit tests pass successfully
+- Full test suite passes (npm test)
+- No regressions detected
+- Code builds/compiles without errors
+
+**If tests fail:**
+- DO NOT update status to "DONE"
+- Keep status as "IN_PROGRESS" or mark as "FAILED" after 3 retry attempts
+- Report which tests are failing
+- Explain what needs to be fixed
+
+When ALL tests pass, update `/dev/prd/prd.json` for this PRD:
+- Change `status` from "TODO" or "IN_PROGRESS" to "DONE"
 - Set `passes` to `true`
 - Add completion timestamp
 
@@ -162,7 +177,9 @@ Append to `/dev/prd/logs/<prd-id>.md`:
 - **Event:** PRD implementation completed successfully
 - **Action:** All acceptance criteria implemented and tested
 - **Test Results:** All criteria passed
+- **Git Commit:** <commit_hash> - "feat: <title> [PRD-<id>]"
 - **Status:** DONE
+- **Note:** Awaiting user approval to push changes
 
 ## Achievements
 - Implemented all [N] acceptance criteria
@@ -172,16 +189,109 @@ Append to `/dev/prd/logs/<prd-id>.md`:
 - Code quality verified
 
 ## Status Changes
-- IN_PROGRESS: <timestamp> - Started execution
+- Status: IN_PROGRESS: <timestamp> - Started execution
 - DONE: <timestamp> - Completed successfully
+- Git Commit: <commit_hash> - Committed with message "feat: <title> [PRD-<id>]"
 ```
 
-### Step 11: Clean Up
+### Step 11: Final Verification Before Clean Up
+
+Before cleaning up, verify ONE MORE TIME:
+- **[ ] All unit tests pass (npm test completed successfully)**
+- **[ ] No test failures or errors**
+- **[ ] No regressions in existing tests**
+- **[ ] Code builds/compiles without errors**
+
+If any test is still failing, GO BACK and fix it. DO NOT proceed to cleanup until all tests pass.
+
+### Step 11: Git Commit with PRD Reference (MANDATORY)
+
+After all tests pass and before cleanup, you MUST create a git commit for this PRD:
+
+1. **Review Changes**: Check all modified/created files
+2. **Stage Changes**: `git add` all relevant files for this PRD
+3. **Create Commit Message** using this format:
+
+```bash
+git commit -m "feat: <PRD title> [PRD-<id>]
+
+- Implemented all acceptance criteria
+- All unit tests passing (100% pass rate)
+- No regressions detected
+- Code quality verified
+
+PRD: PRD-<id>
+Type: <type>
+Priority: <priority>"
+```
+
+4. **Commit Format Examples**:
+
+**New Feature:**
+```bash
+git commit -m "feat: Implement user authentication system [PRD-20250115-143022]
+
+- Implemented user registration, login, logout
+- Added JWT token authentication
+- All unit tests passing (15/15 tests)
+- No regressions detected
+
+PRD: PRD-20250115-143022
+Type: Feature
+Priority: 1"
+```
+
+**Bug Fix:**
+```bash
+git commit -m "fix: Resolve login form validation error [PRD-20250115-153045]
+
+- Fixed email validation regex
+- Added proper error messages
+- All unit tests passing (8/8 tests)
+- No regressions detected
+
+PRD: PRD-20250115-153045
+Type: Bugfix
+Priority: 1"
+```
+
+**Refactor:**
+```bash
+git commit -m "refactor: Optimize database queries for performance [PRD-20250115-160030]
+
+- Refactored query structure
+- Added proper indexing
+- All unit tests passing (12/12 tests)
+- No regressions detected
+- Performance improved by 40%
+
+PRD: PRD-20250115-160030
+Type: Refactor
+Priority: 2"
+```
+
+5. **CRITICAL Requirements**:
+   - Each PRD MUST have its own separate commit
+   - Commit message MUST include PRD ID in brackets `[PRD-<id>]`
+   - Commit message MUST include PRD title
+   - Include test results in commit message
+   - Follow conventional commit format (feat/fix/refactor/etc.)
+   - Keep changes focused only on this PRD's work
+
+6. **Verification**:
+   - Confirm commit was created successfully
+   - Verify commit hash is generated
+   - Check that commit message follows format
+   - Ensure all PRD-related files are included
+
+**Do NOT push yet** - pushing happens after user approval in prd-track skill
+
+### Step 12: Clean Up
 
 Before finishing:
 - Remove any temporary or debug files
-- Ensure no uncommitted changes are left
-- Verify git status is clean (optional)
+- Ensure no uncommitted changes are left (except the PRD commit)
+- Verify git status shows only the new PRD commit
 - Close any open test servers or processes
 
 ## Return Data
@@ -214,19 +324,27 @@ Return execution summary:
   },
   "nextSteps": [
     "PRD marked as DONE",
-    "Ready for next PRD in plan",
-    "Review implementation"
+    "Changes committed with PRD reference",
+    "Awaiting user approval for push",
+    "Use prd-track to log completion and push"
   ]
 }
 ```
 
 ## Error Handling
 
-### If Tests Fail
+### If Tests Fail (CRITICAL - DO NOT PROCEED)
+- **STOP IMMEDIATELY** - Do not continue with next steps
 - Analyze which tests are failing
 - Fix the implementation to make tests pass
-- Re-run tests until all pass
+- Re-run tests until ALL pass (not just some)
+- **CRITICAL: You CANNOT mark PRD as DONE while any test fails**
 - Document what was fixed
+- If tests cannot be made to pass after 3 attempts:
+  - Mark PRD status as "FAILED"
+  - Document blocking issues
+  - Report to user
+  - Do NOT proceed to cleanup
 
 ### If Dependencies Not Satisfied
 - Stop execution immediately
@@ -234,12 +352,34 @@ Return execution summary:
 - Suggest completing those PRDs first
 - Do not proceed with implementation
 
+### If Git Commit Fails
+- Check if git is initialized (`git init` if needed)
+- Verify git is installed and accessible
+- Check for merge conflicts that need resolution
+- Verify you have write permissions
+- Resolve any git errors before proceeding
+- **CRITICAL: Cannot complete PRD without creating commit**
+
+### If Unit Tests Cannot Run
+- Check if test framework is installed (npm install if needed)
+- Verify test files exist and are not corrupted
+- Ensure dependencies are installed
+- **CRITICAL: Cannot complete PRD without running tests**
+- Report specific error to user
+
 ### If Scope Creep Detected
 - If you find yourself implementing features not in criteria:
   - Stop and reassess
   - Confirm if the feature is actually needed
   - If not needed, remove the extra code
   - Stay focused on the PRD criteria
+
+### If Code Won't Build
+- Check for syntax errors
+- Verify all imports are correct
+- Ensure dependencies are installed
+- Fix compilation errors before proceeding
+- **CRITICAL: Cannot complete PRD if code doesn't build**
 
 ### If Code Won't Build
 - Check for syntax errors
@@ -254,6 +394,7 @@ Return execution summary:
 - **DRY principle**: Don't repeat code, use functions/components
 - **Follow conventions**: Match existing patterns in the codebase
 - **Test early, test often**: Don't wait until the end to test
+- **CRITICAL: Never skip unit tests** - All tests must pass before completion
 
 ### Communication
 - **Document decisions**: Explain why you made certain technical choices
@@ -295,7 +436,9 @@ Return execution summary:
 
 - **ONE PRD AT A TIME** - Only work on the specified PRD
 - **TEST EVERYTHING** - Don't assume code works without testing
-- **LEAVE CLEAN STATE** - Code must build and tests must pass
+- **CRITICAL: UNIT TESTS MUST PASS** - NO PRD can complete without passing unit tests
+- **COMMIT WITH PRD REFERENCE** - Each PRD gets its own commit with PRD ID in message
+- **LEAVE CLEAN STATE** - Code must build and ALL tests must pass
 - **DOCUMENT PROGRESS** - Keep track of what you've done
 - **ASK FOR CLARIFICATION** - If acceptance criteria are unclear, ask
 

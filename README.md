@@ -10,7 +10,9 @@ A sophisticated, PRD-driven development system that implements the te9-method fo
 
 - **Structure First**: All development work follows PRD-driven workflows
 - **Memory-Enabled**: Every interaction is tracked and contextualized through OpenMemory
-- **Test-Driven**: Every PRD must pass acceptance criteria and test suites
+- **Test-Driven**: Every PRD must pass acceptance criteria and ALL unit tests (100% pass rate required)
+- **Commit-Driven**: Every PRD creates its own git commit with PRD ID in the message
+- **Approval-Driven**: Every PRD requires user approval before pushing to remote
 - **Design-System-Driven**: Consistent UI through the Gray Design System
 - **Traceable**: Complete audit trail of all decisions, implementations, and progress
 
@@ -296,7 +298,9 @@ All development work must follow:
 3. **CREATE**: Generate PRD files and configuration
 4. **EXECUTE**: Implement work according to acceptance criteria
 5. **TEST**: Verify all criteria pass, no regressions
-6. **TRACK**: Log progress and maintain complete history
+6. **CRITICAL: ALL UNIT TESTS MUST PASS** (100% pass rate required - zero tolerance for failures)
+7. **CRITICAL: GIT COMMIT CREATED** - Each PRD gets its own commit with PRD ID in message
+8. **TRACK**: Log progress, present commit for user approval, and push if approved
 
 ## 🎨 Gray Design System
 
@@ -535,9 +539,12 @@ Visualize project knowledge:
 
 1. **Never Skip Memory**: Query before every response, store after
 2. **Never Skip PRD**: Interview, create, execute, test, track all dev work
-3. **Always Be Testable**: Every PRD must pass acceptance criteria
-4. **Always Be Traceable**: Complete history of all work
-5. **Always Be Consistent**: Use design system and established patterns
+3. **Always Be Testable**: Every PRD must pass acceptance criteria AND ALL unit tests (100% pass rate)
+4. **Critical: Zero Test Failure Tolerance**: NO task/PRD can complete until ALL unit tests pass
+5. **Critical: Each PRD Gets Its Own Commit**: Must create git commit with PRD ID in message before completion
+6. **Critical: User Approval Required for Push**: Never auto-push - always wait for user to approve
+7. **Always Be Traceable**: Complete history of all work
+8. **Always Be Consistent**: Use design system and established patterns
 
 ## 🚀 What's Next
 

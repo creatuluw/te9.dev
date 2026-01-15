@@ -15,11 +15,17 @@ metadata:
 
 I verify that a PRD's work is complete by:
 - Testing each acceptance criterion individually
+- **CRITICAL: Running unit tests and ensuring ALL pass successfully**
 - Running the full test suite (`npm test`)
+- **CRITICAL: Verifying that NO unit tests fail - zero tolerance for test failures**
 - Checking for regressions
 - Documenting test results
 - Verifying code quality
 - Ensuring the PRD meets all requirements
+
+**NOTE:** This skill ONLY performs verification. Commits and pushes are handled separately:
+- Commits are created in `prd-execute` skill (with PRD reference in commit message)
+- Pushes are handled in `prd-track` skill (after user approval)
 
 ## When to Use Me
 
@@ -148,33 +154,39 @@ For each criterion, document:
 **Issues Found:** [any problems discovered]
 ```
 
-### Step 5: Run Full Test Suite
+### Step 5: Run Full Test Suite (MANDATORY - CRITICAL STEP)
 
 After testing individual criteria:
 
 1. **Execute**: Run `npm test` command
-2. **Wait for completion**: Let all tests run
+2. **Wait for completion**: Let all tests run completely
 3. **Analyze results**: Check for failures or errors
 4. **Identify regressions**: See if any previously passing tests now fail
 
 #### Handle Test Results
 
+**CRITICAL REQUIREMENT: ALL TESTS MUST PASS**
+
 **If all tests pass:**
 - Note this in the test report
-- Proceed to next step
+- Proceed to next step (Code Quality Verification)
 
-**If tests fail:**
+**If ANY test fails (unit tests, integration tests, or any other):**
+- **STOP IMMEDIATELY** - Do not proceed further
 - Identify which tests failed
 - Determine if they're related to this PRD
-  - If yes: Fix the issues in implementation
-  - If no: Report as regression
-- Re-run tests until all pass
+  - If yes: Implementation needs fixing - DO NOT mark PRD as DONE
+  - If no: Document as critical regression - DO NOT mark PRD as DONE
+- **CRITICAL: You CANNOT mark the PRD as DONE while ANY test is failing**
+- Re-run tests until ALL pass - no exceptions
+- If tests cannot be fixed after 3 attempts, mark PRD as FAILED
 
 **Regressions Check:**
 - Compare with baseline test results (if available)
 - Identify tests that previously passed but now fail
 - Document all regressions found
-- Do NOT proceed if regressions exist (unless explicitly allowed)
+- **CRITICAL: Do NOT proceed if ANY regressions exist** (unless explicitly allowed by user)
+- All regressions must be fixed before PRD can be marked DONE
 
 ### Step 6: Verify Code Quality
 
@@ -256,11 +268,16 @@ Create comprehensive test report:
 [list any suggestions for improvement]
 ```
 
-### Step 8: Update PRD Status
+### Step 8: Update PRD Status (CRITICAL - ONLY IF ALL TESTS PASS)
 
-Based on test results:
+**CRITICAL REQUIREMENT: PRD can ONLY be marked as "DONE" if:**
+- ALL acceptance criteria pass
+- ALL unit tests pass (100% pass rate required)
+- Full test suite passes (npm test)
+- NO regressions detected
+- Code builds/compiles without errors
 
-#### If All Criteria Pass
+#### If All Criteria and Tests Pass
 Update `/dev/prd/prd.json`:
 - Set `status` to "DONE"
 - Set `passes` to `true`
@@ -271,17 +288,20 @@ Update `/dev/prd/logs/<prd-id>.md`:
 ### Testing Completed
 - **Timestamp:** <ISO timestamp>
 - **Event:** PRD testing completed successfully
-- **Result:** All acceptance criteria passed
-- **Test Results:** Full test suite passed, no regressions
+- **Result:** All acceptance criteria passed, all unit tests passed
+- **Test Results:** Full test suite passed, no regressions, all unit tests passing
 
 ## Achievements
 - All [N] acceptance criteria verified and passed
-- Full test suite passed
+- Full test suite passed (100% pass rate)
+- All unit tests passing
 - No regressions detected
 - Code quality verified
 ```
 
-#### If Any Criteria Fail
+#### If Any Criteria or Tests Fail
+**CRITICAL: DO NOT MARK PRD AS DONE**
+
 Update `/dev/prd/prd.json`:
 - Set `status` to "FAILED" or keep "IN_PROGRESS"
 - Set `passes` to `false`
@@ -292,16 +312,25 @@ Update `/dev/prd/logs/<prd-id>.md`:
 ### Testing Failed
 - **Timestamp:** <ISO timestamp>
 - **Event:** PRD testing revealed issues
-- **Result:** [X] criteria failed, see details below
+- **Result:** [X] criteria failed, [Y] tests failed - see details below
 
 ## Issues
 - [Criterion 1]: [issue description]
 - [Criterion 2]: [issue description]
+- [Unit Test 1]: [test name] - [failure reason]
+- [Unit Test 2]: [test name] - [failure reason]
+
+## Blockers
+- Cannot mark PRD as DONE until ALL tests pass
+- Must fix failing acceptance criteria
+- Must fix failing unit tests
+- Must resolve any regressions
 
 ## Next Steps
 - Fix failed criteria
+- Fix failing unit tests
 - Re-run tests
-- Verify all pass
+- Verify all pass before attempting to mark as DONE
 ```
 
 ## Return Data
@@ -336,6 +365,8 @@ Return test results:
   "newStatus": "DONE",
   "nextSteps": [
     "PRD marked as DONE",
+    "Note: Commit already created in prd-execute skill",
+    "Use prd-track to push changes with user approval",
     "Ready for production deployment",
     "Consider creating next PRD in plan"
   ]
@@ -344,11 +375,21 @@ Return test results:
 
 ## Error Handling
 
+### If Unit Tests Fail (CRITICAL - DO NOT PROCEED)
+- **STOP IMMEDIATELY** - Do not mark PRD as DONE under any circumstances
+- Document all failing tests with specific error messages
+- Identify root cause of test failures
+- Report blocking issues to user
+- Suggest fixes for failing tests
+- **CRITICAL: PRD cannot complete until all unit tests pass**
+
 ### If Tests Cannot Run
-- Check if test framework is installed
-- Verify test files exist
+- Check if test framework is installed (run npm install if needed)
+- Verify test files exist and are not corrupted
 - Ensure dependencies are installed
+- **CRITICAL: Cannot complete PRD verification without running tests**
 - Report specific error to user
+- Do not mark PRD as DONE if tests cannot be executed
 
 ### If Implementation Missing
 - Stop testing immediately
@@ -357,10 +398,12 @@ Return test results:
 - Do not continue with testing
 
 ### If Regressions Detected
-- List all regressions found
-- Determine if regressions are acceptable
-- If not acceptable, do not mark PRD as DONE
+- **STOP IMMEDIATELY** - Do not mark PRD as DONE
+- List all regressions found with detailed information
+- **CRITICAL: Regressions are NOT acceptable by default**
+- Do not mark PRD as DONE unless user explicitly accepts regressions
 - Suggest fixing regressions before proceeding
+- Update PRD status to "FAILED" if regressions cannot be fixed
 
 ### If Code Won't Build
 - Report build errors
@@ -420,7 +463,9 @@ Return test results:
 - **NO REGRESSIONS** - Don't break existing functionality
 - **BE THOROUGH** - Test edge cases and error conditions
 - **BE HONEST** - Report all failures, don't hide issues
-- **FIX ISSUES** - Ensure all tests pass before marking DONE
+- **CRITICAL: ALL UNIT TESTS MUST PASS** - Zero tolerance for test failures
+- **FIX ISSUES** - Ensure ALL tests pass before marking DONE
+- **NO EXCEPTIONS** - PRD cannot be DONE with any failing tests
 
 ---
 

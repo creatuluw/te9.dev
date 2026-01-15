@@ -267,6 +267,91 @@ Create a current status summary:
 [What should be done next]
 ```
 
+## Step 7: Git Push with User Approval (For COMPLETED Events)
+
+When the event type is `COMPLETED` and the PRD has a commit:
+
+1. **Verify Commit Exists**: Check that a git commit was created for this PRD
+2. **Ask for User Approval**: Present the commit details and request user approval to push
+
+```markdown
+### Ready to Push PRD Changes
+
+**PRD ID:** <prd-id>
+**PRD Title:** <title>
+**Status:** DONE
+**Commit Hash:** <commit_hash>
+**Commit Message:** "<commit_message>"
+
+**Files in this commit:**
+- [List of files changed]
+
+**Test Results:**
+- All unit tests passing (100% pass rate)
+- No regressions detected
+- Code quality verified
+
+### User Approval Required
+
+To push these changes to the remote repository, please confirm:
+
+- [ ] Review the commit message
+- [ ] Verify the changes included
+- [ ] Confirm all tests pass
+- [ ] Approve pushing to remote
+
+**Type "approve" to push, or "reject" to cancel push.**
+```
+
+3. **If User Approves**:
+   - Execute `git push` to push the commit to remote
+   - Capture the push result (successful or failed)
+   - Log the push in the timeline
+   - Note the remote branch name and commit hash
+
+4. **If User Rejects**:
+   - Do not push the commit
+   - Log that push was declined by user
+   - Keep commit locally
+   - Note that user may push manually later
+
+5. **Update Timeline with Push Status**:
+
+If pushed successfully:
+```markdown
+### Changes Pushed to Remote
+- **Timestamp:** <ISO timestamp>
+- **Event:** PRD changes pushed to remote repository
+- **Action:** Git push completed successfully
+- **Commit Hash:** <commit_hash>
+- **Remote Branch:** <branch_name>
+- **User:** <user who approved>
+```
+
+If push rejected:
+```markdown
+### Push Not Completed
+- **Timestamp:** <ISO timestamp>
+- **Event:** User declined to push changes
+- **Action:** Commit remains local, not pushed
+- **Reason:** User rejected push approval
+- **Note:** User may push manually using: git push
+```
+
+6. **Handle Push Errors**:
+
+If `git push` fails:
+```markdown
+### Push Failed
+- **Timestamp:** <ISO timestamp>
+- **Event:** Git push encountered errors
+- **Error:** <error message>
+- **Resolution:** Manual intervention required
+- **Action:** Recommend checking git remote configuration and permissions
+```
+
+**CRITICAL: Only push after user approval. Do not auto-push.**
+
 ## Return Data
 
 Return tracking summary:
@@ -284,6 +369,14 @@ Return tracking summary:
   },
   "logUpdated": true,
   "databaseUpdated": true,
+  "gitPushed": true,
+  "commitHash": "<commit_hash>",
+  "pushStatus": "SUCCESSFUL|REJECTED|FAILED",
+  "pushDetails": {
+    "userApproved": true,
+    "remoteBranch": "<branch_name>",
+    "pushError": null
+  },
   "summary": {
     "totalCriteria": <N>,
     "completedCriteria": <X>,
@@ -341,7 +434,10 @@ Return tracking summary:
   },
   "filesCreated": <count>,
   "filesModified": <count>,
-  "regressions": <count>
+  "regressions": <count>,
+  "commitHash": "<git_commit_hash>",
+  "commitMessage": "<commit_message>",
+  "requiresPushApproval": true
 }
 ```
 
@@ -381,6 +477,25 @@ Return tracking summary:
 - Explain why it's not allowed
 - Do not update status
 - Still log the event but note status issue
+
+### If Git Push Fails
+- Check git remote configuration
+- Verify authentication credentials
+- Check network connectivity
+- Verify you have push permissions
+- Report specific error to user
+- Suggest manual push with: `git push`
+
+### If User Rejects Push
+- Respect user decision
+- Do not attempt to push
+- Log that push was rejected
+- Keep commit locally
+- Provide manual push instructions:
+  ```bash
+  # User can push manually when ready:
+  git push
+  ```
 
 ### If File Write Fails
 - Report the specific error

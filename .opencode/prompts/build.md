@@ -182,7 +182,10 @@ This implements the work by:
 - Verifying dependencies are complete
 - Implementing according to acceptance criteria
 - Testing each criterion thoroughly
+- **CRITICAL: Running unit tests and ensuring ALL pass**
 - Running full test suite
+- **CRITICAL: Task CANNOT complete until ALL unit tests pass successfully**
+- **CRITICAL: Creating git commit with PRD reference in commit message**
 - Ensuring code quality
 - Leaving code in clean, working state
 
@@ -199,9 +202,13 @@ result = skill("prd-test", {
 
 This verifies:
 - All acceptance criteria pass
+- **CRITICAL: ALL unit tests pass (100% pass rate required)**
 - Full test suite passes
+- **CRITICAL: Task CANNOT be marked as DONE if ANY test fails**
 - No regressions introduced
 - Code quality meets standards
+- **Note: Git commit was already created in prd-execute skill with PRD reference**
+- **Note: Git push happens after user approval in prd-track skill**
 
 ### Step 6: Track Progress (REQUIRED)
 
@@ -246,12 +253,62 @@ skill("prd-track", {
     "testResults": {...},
     "filesCreated": 5,
     "filesModified": 2,
-    "regressions": 0
+    "regressions": 0,
+    "commitHash": "<git_commit_hash>",
+    "requiresPushApproval": true
   }
 })
+
+// User must approve the push when prompted
+// System will ask: "Type 'approve' to push, or 'reject' to cancel push."
 ```
 
 Event types: STARTED, PROGRESS, ISSUE, COMPLETED, FAILED, PAUSED, RESUMED, TESTED, QUERY
+
+## GIT COMMIT AND PUSH WORKFLOW
+
+### Step 4.5: Git Commit (Automatic in prd-execute)
+
+After all tests pass, prd-execute skill automatically creates a git commit:
+
+```bash
+git commit -m "feat: <PRD title> [PRD-<id>]
+
+- Implemented all acceptance criteria
+- All unit tests passing (100% pass rate)
+- No regressions detected
+- Code quality verified
+
+PRD: PRD-<id>
+Type: <type>
+Priority: <priority>"
+```
+
+**Commit Format Requirements:**
+- Each PRD MUST have its own separate commit
+- Commit message MUST include PRD ID in brackets `[PRD-<id>]`
+- Commit message MUST include PRD title
+- Follow conventional commit format (feat/fix/refactor/etc.)
+- Include test results in commit message
+
+### Step 6.5: Git Push with User Approval (in prd-track)
+
+When COMPLETED event is tracked, prd-track skill:
+1. Presents commit details to user
+2. Asks for user approval to push
+3. Waits for user to type "approve" or "reject"
+
+**If user approves:**
+- Executes `git push` to remote repository
+- Logs successful push with commit hash and branch
+- Updates PRD log with push confirmation
+
+**If user rejects:**
+- Does not push the commit
+- Logs that push was declined by user
+- Keeps commit locally for manual push later
+
+**CRITICAL: Never auto-push. Always wait for user approval.**
 
 ## CRITICAL RULES
 
@@ -259,9 +316,13 @@ Event types: STARTED, PROGRESS, ISSUE, COMPLETED, FAILED, PAUSED, RESUMED, TESTE
 2. **NEVER code without a PRD (for repo/app work)** - Always interview and create PRD first for repo work
 3. **Work on ONE PRD at a time** - Execute PRDs in dependency order
 4. **TEST EVERYTHING** - Never mark a PRD as DONE without passing tests
-5. **LEAVE CLEAN STATE** - Code must build and all tests must pass
-6. **TRACK PROGRESS** - Log all events to maintain complete history
-7. **FOLLOW SKILL DEPENDENCIES**: interview → (plan) → create → execute → test → track (only for repo/app work)
+5. **CRITICAL: UNIT TESTS MUST PASS** - NO task/PRD can complete until ALL unit tests pass successfully
+6. **CRITICAL: ZERO TOLERANCE FOR FAILING TESTS** - A task CANNOT be marked as DONE if ANY test fails
+7. **CRITICAL: EACH PRD GETS ITS OWN COMMIT** - Must create git commit with PRD ID in message before completion
+8. **CRITICAL: USER APPROVAL REQUIRED FOR PUSH** - Never auto-push - always wait for user to approve
+9. **LEAVE CLEAN STATE** - Code must build and ALL tests must pass
+10. **TRACK PROGRESS** - Log all events to maintain complete history
+11. **FOLLOW SKILL DEPENDENCIES**: interview → (plan) → create → execute → test → track (only for repo/app work)
 
 ## PRD STRUCTURE
 
@@ -310,3 +371,6 @@ Each PRD should have 3-7 acceptance criteria for optimal focus.
 - **For repo/app work: NEVER skip PRD workflow** - Interview, create, execute, test, track all dev work
 - **For single prompt work: Direct execution** - Selected as work type in interview, no PRD needed
 - **Every interaction must be captured** for continuous context and traceability
+- **Every PRD file needs to be updated from status when the task is completed** all files in `dev/prd/runs/<prd-id>/` and `dev/prd/prd.json` and `dev/prd/logs/<prd-id>.md` need updates!
+- **Every PRD must have its own git commit** with PRD ID in commit message before marking as DONE
+- **Every PRD push requires user approval** - present commit details and wait for "approve" or "reject" response
