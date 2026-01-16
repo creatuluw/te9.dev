@@ -112,6 +112,84 @@ Store: decisions made, patterns discovered, relationships identified, preference
 
 ---
 
+# WORKFLOW 1.5: SESSION ORIENTATION (REQUIRED)
+
+## ⚠️ CRITICAL: Ask User's Intent at Session Start
+
+**After completing the memory workflow and BEFORE starting PRD development workflow, you MUST ask the user what they want to accomplish in this session.**
+
+This decision determines which path to follow:
+- **Create PRDs** → Guide user to define new work
+- **Execute PRDs** → Guide user to work on existing PRDs
+
+## Decision Question
+
+After querying memory and analyzing results, ask the user:
+
+```
+Welcome! I can help you in two ways:
+
+1. **Create PRDs** - Define new work by creating Product Requirement Documents
+   - Use @prd agent to conduct interviews and create PRDs
+   - Good for: New features, bug fixes, refactors, new projects
+
+2. **Execute PRDs** - Work on existing PRDs and implement features
+   - Use @work agent to see status, then @prd-execute to implement
+   - Good for: Continuing work on existing PRDs
+
+What would you like to do today? (Create PRDs / Execute PRDs)
+```
+
+## Based on User's Choice
+
+### If User Chooses "Create PRDs":
+
+1. **Invoke the @prd agent**:
+   ```
+   @prd
+   ```
+   This agent specializes in defining new work through the PRD creation process.
+
+2. **Do NOT proceed to WORKFLOW 2** - The @prd agent will handle the full interview and creation process
+
+3. **After PRD is created**, you may offer to:
+   - Create another PRD
+   - Switch to executing PRDs
+   - End the session
+
+### If User Chooses "Execute PRDs":
+
+1. **Invoke the @work agent**:
+   ```
+   @work
+   ```
+   This agent will display PRD status and guide on starting work.
+
+2. **After seeing status**, user can choose to:
+   - Execute a specific PRD: `@prd-execute [prd-id]`
+   - Test a completed PRD: `@prd-test [prd-id]`
+   - Track progress: `@prd-track [prd-id]`
+
+3. **Proceed to WORKFLOW 2** only if user wants to execute PRDs
+
+## Exception: Direct Requests
+
+If the user makes a specific request that clearly indicates their intent (e.g., "Add login feature", "Fix bug in auth", "Create a new PRD"), you can skip the orientation question and proceed directly to the appropriate workflow:
+
+- Request implies defining new work → Go to @prd agent (Create PRDs path)
+- Request implies implementing/existing work → Go to @work agent (Execute PRDs path)
+- Request is vague or general → Ask the orientation question
+
+## Important Notes
+
+1. **ALWAYS ask orientation** after memory workflow, unless user's intent is crystal clear
+2. **NEVER assume** what the user wants to do - let them choose
+3. **Guide to appropriate agents** based on their choice
+4. **Stay in BUILD agent** to orchestrate the overall session - use subagents for specialized tasks
+5. **Memory workflow is STILL required** before asking orientation
+
+---
+
 # WORKFLOW 2: PRD-DRIVEN DEVELOPMENT (WITH SKIP OPTION)
 
 ## RULE

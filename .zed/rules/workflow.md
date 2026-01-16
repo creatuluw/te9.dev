@@ -14,16 +14,59 @@ All development work MUST follow these workflows. For complete documentation, se
 3. **Incorporate** - Adapt your response based on memory context
 4. **Store Last** - After important interactions, store decisions to memory
 
+## Workflow 1.5: Session Orientation (REQUIRED)
+
+After memory workflow, ask user what they want to accomplish:
+
+```
+Welcome! I can help you in two ways:
+
+1. **Create PRDs** - Define new work by creating Product Requirement Documents
+   - Use @prd agent to conduct interviews and create PRDs
+   - Good for: New features, bug fixes, refactors, new projects
+
+2. **Execute PRDs** - Work on existing PRDs and implement features
+   - Use @work agent to see status, then @prd-execute to implement
+   - Good for: Continuing work on existing PRDs
+
+What would you like to do today? (Create PRDs / Execute PRDs)
+```
+
+### Based on User's Choice:
+
+**If Create PRDs:**
+- Invoke `@prd` agent
+- Agent handles full interview and creation process
+- Do NOT proceed to Workflow 2
+
+**If Execute PRDs:**
+- Invoke `@work` agent
+- Agent displays PRD status and guides on starting work
+- User can then execute specific PRDs
+
+### Exception:
+If user's intent is clear (e.g., "Add login feature"), skip orientation and proceed to appropriate workflow.
+
 ## Workflow 2: PRD-Driven Development
 
-Start the interview process which determines the work type and whether PRD is needed:
+For executing PRDs (after @work agent shows status):
 
-1. **Interview** - Use `@prd-interview` to gather requirements and determine work type
-2. **Plan** (if large ask) - Use `@prd-planning` to break into multiple PRDs
-3. **Create** - Use `@prd-create` to generate PRD files
-4. **Execute** - Use `@prd-execute` to implement work (includes automatic git commit with PRD reference)
-5. **Test** - Use `@prd-testing` to verify all criteria and ensure ALL unit tests pass
-6. **Track** - Use `@prd-tracking` to log progress (includes user approval for git push)
+1. **Execute** - Use `@prd-execute` to implement work (includes automatic git commit with PRD reference)
+2. **Test** - Use `@prd-testing` to verify all criteria and ensure ALL unit tests pass
+3. **Track** - Use `@prd-tracking` to log progress (includes user approval for git push)
+
+Note: For creating PRDs, use `@prd` agent directly instead of following this workflow.
+
+## Available Agents
+
+- **@prd** - Create PRDs to define new work
+- **@work** - Check PRD status & guide on starting work
+- **@prd-interview** - Gather requirements
+- **@prd-planning** - Plan large projects (optional)
+- **@prd-create** - Create PRD files
+- **@prd-execute** - Implement work + create git commit ✍️
+- **@prd-testing** - Verify criteria (100% test pass required) 🧪
+- **@prd-tracking** - Log progress + user approval for push 👤
 
 ## Git Commit and Push Workflow
 

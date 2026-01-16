@@ -10,21 +10,33 @@ This directory contains Zed-compatible rules that implement te9-method's PRD-dri
 
 ## Quick Start
 
-For any development work, follow this workflow:
+Start each session by choosing your intent:
 
-1. **@prd-interview** - Gather requirements (references `.opencode/skill/prd-interview/`)
-2. **@prd-planning** - Plan large asks (references `.opencode/skill/prd-plan/`)
-3. **@prd-create** - Generate PRD files (references `.opencode/skill/prd-create/`)
-4. **@prd-work** - Check PRD status & guide on starting work (references `.opencode/skill/prd-work/`)
-5. **@prd-execute** - Implement work (references `.opencode/skill/prd-execute/`)
-6. **@prd-testing** - Verify criteria (references `.opencode/skill/prd-test/`)
-7. **@prd-tracking** - Log progress (references `.opencode/skill/prd-track/`)
+1. **@prd** - Create PRDs to define new work (references `.opencode/agent/prd.md`)
+2. **@work** - Check PRD status & guide on starting work (references `.opencode/agent/work.md`)
+
+Then proceed with the PRD workflow:
+
+3. **@prd-interview** - Gather requirements (references `.opencode/skill/prd-interview/`)
+4. **@prd-planning** - Plan large asks (references `.opencode/skill/prd-plan/`)
+5. **@prd-create** - Generate PRD files (references `.opencode/skill/prd-create/`)
+6. **@prd-execute** - Implement work (references `.opencode/skill/prd-execute/`)
+7. **@prd-testing** - Verify criteria (references `.opencode/skill/prd-test/`)
+8. **@prd-tracking** - Log progress (references `.opencode/skill/prd-track/`)
 
 ## How It Works
 
-These rules act as **Zed-compatible wrappers** around OpenCode skills:
+### Session Flow
 
-- **OpenCode Agent:** Uses `.opencode/skill/` directly (canonical source)
+1. **Session Start:** Query memory, then ask user: "Create PRDs" or "Execute PRDs"
+2. **If Creating PRDs:** Use `@prd` agent (handles interview, plan, create)
+3. **If Executing PRDs:** Use `@work` agent to see status, then execute with `@prd-execute`
+
+### Architecture
+
+These rules act as **Zed-compatible wrappers** around OpenCode skills and agents:
+
+- **OpenCode Agent:** Uses `.opencode/skill/` and `.opencode/agent/` directly (canonical source)
 - **Zed Agent:** Uses `.zed/rules/` which reference `.opencode`
 
 Both agents execute **identical processes** from the same source.

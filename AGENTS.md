@@ -14,26 +14,28 @@ This is the authoritative source for all workflows. Below is a quick reference.
 
 ### OpenCode Agents
 ```
-skill("prd-interview")      → Gather requirements
-skill("prd-plan")           → Plan large projects (optional)
-skill("prd-create")         → Create PRD files
-skill("prd-work")           → Check PRD status & guide on starting work
-skill("prd-execute")        → Implement work + create git commit ✍️
-skill("prd-test")           → Verify criteria (100% test pass required) 🧪
-skill("prd-track")          → Log progress + user approval for push 👤
+@prd                  → Create PRDs to define new work
+@work                 → Check PRD status & guide on starting work
+@prd-interview        → Gather requirements
+@prd-plan             → Plan large projects (optional)
+@prd-create           → Create PRD files
+@prd-execute          → Implement work + create git commit ✍️
+@prd-test             → Verify criteria (100% test pass required) 🧪
+@prd-track            → Log progress + user approval for push 👤
 openmemory_openmemory_query()   → Get context (user_id = {{PROJECT_FOLDER_NAME}})
 openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAME}})
 ```
 
 ### Zed Agents
 ```
-@prd-interview    → Gather requirements
-@prd-planning     → Plan large projects (optional)
-@prd-create       → Create PRD files
-@prd-work         → Check PRD status & guide on starting work
-@prd-execute      → Implement work + create git commit ✍️
-@prd-testing      → Verify criteria (100% test pass required) 🧪
-@prd-tracking     → Log progress + user approval for push 👤
+@prd                  → Create PRDs to define new work
+@work                 → Check PRD status & guide on starting work
+@prd-interview        → Gather requirements
+@prd-planning         → Plan large projects (optional)
+@prd-create           → Create PRD files
+@prd-execute          → Implement work + create git commit ✍️
+@prd-testing          → Verify criteria (100% test pass required) 🧪
+@prd-tracking         → Log progress + user approval for push 👤
 ```
 
 ---
@@ -42,9 +44,12 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 
 | Situation | Command Sequence |
 |-----------|-----------------|
-| New feature/bugfix/refactor | interview → create → execute → test → track (includes commit & push approval) |
-| Large/complex project | interview → plan → create → (execute → test → track) × N (each PRD gets own commit) |
-| Single prompt work | interview (select "Single Prompt") → execute directly → store memory |
+| Start BUILD agent | Query memory → Ask orientation (Create/Execute PRDs) → Proceed based on choice |
+| Define new work | @prd → Interview → (plan) → create PRDs |
+| Work on existing PRDs | @work → See status → @prd-execute → @prd-test → @prd-track |
+| New feature/bugfix/refactor | @prd → interview → create → execute → test → track (includes commit & push approval) |
+| Large/complex project | @prd → interview → plan → create → (execute → test → track) × N (each PRD gets own commit) |
+| Single prompt work | @prd → interview (select "Single Prompt") → execute directly → store memory |
 | Any response | **ALWAYS**: query memory → respond → store memory |
 
 ---
@@ -53,6 +58,7 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 
 ### `.opencode/` - Canonical Source
 - **`prompts/build.md`** - Mandatory workflows (READ THIS)
+- **`agent/`** - Agent definitions (@prd, @work, and others)
 - **`skill/`** - All skill implementations (interview, plan, create, execute, test, track)
 - **`tool/`** - Tools (daisyui, knowledge_graph, melt, uikit)
 - **`documentation/`** - Detailed guides:
@@ -203,26 +209,41 @@ openmemory_openmemory_store({
 
 ## 💡 PRD Workflow (Step-by-Step)
 
-1. **Interview** - Start with work type question:
-   - **New Project** → Creating entirely new application or system from scratch
-   - **New Feature** → Adding new functionality to existing system
-   - **Refactor** → Improving existing code structure or performance
-   - **Bugfix** → Fixing identified issues or defects
-   - **Other** → Infrastructure, documentation, research, or other work
-   - **Single Prompt** → Skip PRD, execute immediately
+1. **Session Start** - BUILD agent starts by:
+   - Querying memory (Mandatory Workflow 1)
+   - Asking orientation: "Create PRDs" or "Execute PRDs"
+   - Directing to appropriate agent based on choice
 
-2. **If work type = Single Prompt** → Execute directly (skip all PRD steps)
+2. **If "Create PRDs"** → Invoke @prd agent:
+   - Interview - Start with work type question:
+     - **New Project** → Creating entirely new application or system from scratch
+     - **New Feature** → Adding new functionality to existing system
+     - **Refactor** → Improving existing code structure or performance
+     - **Bugfix** → Fixing identified issues or defects
+     - **Other** → Infrastructure, documentation, research, or other work
+     - **Single Prompt** → Skip PRD, execute immediately
 
-3. **If work type = other options** → Continue with PRD workflow:
-   - Complete remaining 8 questions (title, description, criteria, priority, dependencies, tech, constraints, notes)
-2. **Plan** - Split into 3-7 criteria per PRD if >10 criteria or >500 words
-3. **Create** - Generate PRD files in `/dev/prd/runs/`
-4. **Execute** - Implement per acceptance criteria
+3. **If "Execute PRDs"** → Invoke @work agent:
+   - Display PRD status overview
+   - Guide user on starting work
+   - Recommend which PRD to work on next
+
+4. **For PRD Creation** (via @prd):
+   - If work type = Single Prompt → Execute directly (skip all PRD steps)
+   - If work type = other options → Continue with PRD workflow:
+     - Complete remaining 8 questions (title, description, criteria, priority, dependencies, tech, constraints, notes)
+   - Plan - Split into 3-7 criteria per PRD if >10 criteria or >500 words
+   - Create - Generate PRD files in `/dev/prd/runs/`
+
+5. **For PRD Execution** (via @prd-execute):
+   - Implement per acceptance criteria
    - Test each criterion
    - Run unit tests → Must pass 100% 🧪
    - Create git commit with PRD ID ✍️
-5. **Test** - Verify all criteria, check regressions, confirm 100% test pass rate 🧪
-6. **Track** - Log: STARTED, PROGRESS, ISSUE, COMPLETED
+
+6. **Test** - Verify all criteria, check regressions, confirm 100% test pass rate 🧪
+
+7. **Track** - Log: STARTED, PROGRESS, ISSUE, COMPLETED
    - Present commit for user approval 👤
    - Execute git push if approved
    - Log push result
@@ -236,27 +257,35 @@ openmemory_openmemory_store({
 │                    PRD-DRIVEN DEVELOPMENT                      │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                               │
-│  1. INTERVIEW  →  Gather requirements                        │
+│  1. SESSION START                                             │
+│      ├─ Query memory (always)                               │
+│      └─ Ask orientation: Create PRDs or Execute PRDs?        │
 │                                                               │
-│  2. PLAN      →  Break into PRDs if needed                   │
+│  2. IF CREATE PRDs → @prd agent:                             │
+│      ├─ INTERVIEW → Gather requirements                      │
+│      ├─ PLAN       → Break into PRDs if needed               │
+│      └─ CREATE     → Generate PRD files                     │
 │                                                               │
-│  3. CREATE    →  Generate PRD files                         │
+│  3. IF EXECUTE PRDs → @work agent:                          │
+│      ├─ Display PRD status                                  │
+│      ├─ Guide user on starting work                         │
+│      └─ Recommend which PRD to work on                       │
 │                                                               │
-│  4. EXECUTE   →  Implement work                             │
+│  4. EXECUTE   → Implement work (via @prd-execute)           │
 │                  ├─ Implement acceptance criteria            │
 │                  ├─ Test each criterion                     │
 │                  ├─ Run unit tests (100% required) 🧪        │
 │                  ├─ Create git commit ✍️                    │
 │                  └─ Include PRD ID in message            │
 │                                                               │
-│  5. TEST      →  Verify all criteria                      │
+│  5. TEST      → Verify all criteria (via @prd-test)        │
 │                                                               │
-│  6. TRACK     →  Log completion                          │
+│  6. TRACK     → Log completion (via @prd-track)           │
 │                  ├─ Present commit details                 │
 │                  ├─ Ask for user approval 👤              │
 │                  └─ Wait for "approve" or "reject"     │
 │                                                               │
-│  7. PUSH      →  Execute git push if approved ✅        │
+│  7. PUSH      → Execute git push if approved ✅        │
 │                                                               │
 └─────────────────────────────────────────────────────────────────┘
 ```
