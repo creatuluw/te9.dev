@@ -73,7 +73,224 @@ Read `/dev/prd/logs/<prd-id>.md`:
 - Review existing achievements and issues
 - Note last status change
 
-### Step 3: Process Event Based on Type
+### Step 3: Load PRD File and Verify Implementation
+
+**CRITICAL: Always verify actual implementation before logging any event.**
+
+Read `/dev/prd/runs/<prd-id>/<prd-id>.md` to get:
+- **Title**: PRD title
+- **Description**: What needs to be implemented
+- **Acceptance Criteria**: List of all criteria (numbered)
+- **Technical Requirements**: Technologies and patterns required
+- **Dependencies**: Other PRDs or systems this depends on
+
+#### Verification Checklist
+
+For each event type, verify the following:
+
+##### For STARTED Events:
+1. **Check Dependencies**:
+   - If PRD lists dependencies, verify they exist
+   - Check if dependent PRDs are marked as DONE
+   - Verify dependent files/modules are accessible
+   - Document any missing dependencies as BLOCKERS
+
+2. **Verify Starting State**:
+   - Check that required directories exist
+   - Verify project structure is ready
+   - Confirm no conflicting work in progress
+   - Document baseline state before starting
+
+##### For PROGRESS Events:
+1. **Verify Claimed Progress**:
+   - Check which acceptance criteria are claimed as complete
+   - For each claimed criterion, verify actual implementation:
+     - **Read the files** mentioned in the criterion
+     - **Confirm code exists** that implements the requirement
+     - **Check for tests** if criterion requires testing
+     - **Verify functionality** matches acceptance criteria description
+   
+2. **Count Actual Changes**:
+   - Use `git diff` or file system checks to count:
+     - Files created (new files that didn't exist before)
+     - Files modified (existing files with changes)
+     - Lines added/removed
+   - Compare claimed changes with actual changes
+   - Document any discrepancies
+
+3. **Review Code Quality**:
+   - Check if code follows project standards
+   - Verify proper error handling exists
+   - Confirm logging/debugging statements are appropriate
+   - Note any code quality issues
+
+4. **Validate Partial Completion**:
+   - For each acceptance criterion:
+     - ✅ COMPLETE: Implementation exists and matches requirement
+     - 🔄 IN_PROGRESS: Partial implementation exists
+     - ❌ NOT_STARTED: No implementation found
+   - Calculate actual percentage: (COMPLETE criteria / Total criteria) × 100%
+
+##### For ISSUE Events:
+1. **Verify Issue Exists**:
+   - Check if reported issue is reproducible
+   - Review error messages or logs
+   - Confirm the issue blocks progress
+   - Assess actual severity based on impact
+
+2. **Document Issue Context**:
+   - Which acceptance criterion triggered the issue?
+   - What files are affected?
+   - What was attempted before issue occurred?
+   - Are there related issues in other PRDs?
+
+##### For COMPLETED Events:
+1. **Verify ALL Acceptance Criteria**:
+   - Go through EACH criterion one by one
+   - For each criterion:
+     - Read implementation files
+     - Confirm requirement is fully met
+     - Check edge cases are handled
+     - Verify no shortcuts or TODOs left
+   - If ANY criterion is incomplete, **DO NOT mark as COMPLETED**
+
+2. **Verify Test Results**:
+   - Check if test files exist for this PRD
+   - Read test output or logs
+   - Confirm 100% pass rate claim
+   - Count actual tests: total, passed, failed
+   - Verify no tests were skipped or disabled
+
+3. **Check Git Commit**:
+   - Verify git commit exists: `git log -1 --grep="[PRD-<id>]"`
+   - Extract commit hash
+   - Verify commit message includes PRD ID
+   - Check files in commit: `git show --name-only <commit_hash>`
+   - Confirm commit includes all implementation files
+
+4. **Regression Check**:
+   - Review if any existing functionality broke
+   - Check if related tests still pass
+   - Verify integration points still work
+   - Document any regressions found
+
+5. **Quality Gate Verification**:
+   - All acceptance criteria: COMPLETE ✅
+   - All unit tests: PASSING 100% 🧪
+   - Git commit: EXISTS ✍️
+   - Code quality: ACCEPTABLE
+   - No blockers: CONFIRMED
+   - If ANY gate fails, change to FAILED or IN_PROGRESS instead
+
+##### For TESTED Events:
+1. **Verify Test Execution**:
+   - Check test runner was actually executed
+   - Read test output files or logs
+   - Count tests by category: unit, integration, e2e
+   - Verify tests are relevant to this PRD
+
+2. **Validate Test Coverage**:
+   - Check which acceptance criteria have tests
+   - Verify edge cases are tested
+   - Confirm error paths are tested
+   - Document coverage gaps
+
+3. **Analyze Test Results**:
+   - Count: total tests, passed, failed, skipped
+   - For failed tests: extract error messages
+   - For skipped tests: understand why
+   - Calculate pass rate: (passed / total) × 100%
+
+##### For FAILED Events:
+1. **Document Failure Reason**:
+   - What was the blocking issue?
+   - At which acceptance criterion did it fail?
+   - What was attempted to resolve it?
+   - Why couldn't it be resolved?
+
+2. **Identify Blockers**:
+   - List all blocking issues preventing completion
+   - Categorize: technical, dependency, resource, knowledge
+   - Assess if blockers can be resolved or need escalation
+
+#### Implementation Verification Output
+
+After verification, create detailed findings:
+
+```markdown
+### Implementation Verification Report
+
+**PRD ID:** <prd-id>
+**Event Type:** <event-type>
+**Verification Timestamp:** <ISO timestamp>
+
+#### Acceptance Criteria Status
+- Total Criteria: <N>
+- Complete: <X> ✅
+- In Progress: <Y> 🔄
+- Not Started: <Z> ❌
+- Actual Completion: <X/N × 100>%
+
+#### Detailed Criteria Verification
+1. [Criterion 1 text]
+   - Status: COMPLETE/IN_PROGRESS/NOT_STARTED
+   - Implementation: [file paths where implemented]
+   - Evidence: [specific code/features that fulfill this]
+   - Tests: [test files covering this criterion]
+
+2. [Criterion 2 text]
+   - Status: COMPLETE/IN_PROGRESS/NOT_STARTED
+   - Implementation: [file paths where implemented]
+   - Evidence: [specific code/features that fulfill this]
+   - Tests: [test files covering this criterion]
+
+[... for each criterion ...]
+
+#### File Changes Verification
+- Files Created: <count> files
+  - [List actual files created]
+- Files Modified: <count> files
+  - [List actual files modified]
+- Total Lines Changed: +<added> / -<removed>
+
+#### Test Verification (if applicable)
+- Test Execution: YES/NO
+- Total Tests: <count>
+- Passed: <count> ✅
+- Failed: <count> ❌
+- Skipped: <count> ⏭️
+- Pass Rate: <percentage>%
+- Test Files: [list of test files]
+
+#### Git Commit Verification (if applicable)
+- Commit Exists: YES/NO
+- Commit Hash: <hash>
+- Commit Message: "<message>"
+- PRD ID in Message: YES/NO
+- Files in Commit: <count> files
+- Commit Matches Implementation: YES/NO
+
+#### Quality Issues Found
+[List any code quality, implementation, or other issues discovered]
+
+#### Discrepancies
+[List any differences between claimed work and actual implementation]
+
+#### Blockers Identified
+[List any blocking issues that prevent progress]
+
+#### Recommendation
+Based on verification:
+- ✅ APPROVE: Log event as claimed
+- ⚠️ ADJUST: Log event with corrections
+- ❌ REJECT: Do not log event, issue found
+
+[Explanation of recommendation]
+```
+
+**Store this verification report** in the timeline so there's a permanent record of what was actually verified.
+
+### Step 4: Process Event Based on Type (With Verified Data)
 
 #### Event Type: STARTED
 Add to timeline:
@@ -209,7 +426,9 @@ Add to timeline:
 - **Status:** [current status]
 ```
 
-### Step 4: Update PRD Database
+### Step 5: Update PRD Database (Using Verified Data)
+
+**Use actual verified data from Step 3, not claimed data.**
 
 Update `/dev/prd/prd.json` entry for this PRD:
 
@@ -230,7 +449,7 @@ Update `/dev/prd/prd.json` entry for this PRD:
 - IN_PROGRESS → FAILED (when failed)
 - FAILED → IN_PROGRESS (when retrying)
 
-### Step 5: Save Updated Log File
+### Step 6: Save Updated Log File (Including Verification Report)
 
 Write updated content to `/dev/prd/logs/<prd-id>.md`:
 - Preserve existing structure
@@ -240,9 +459,9 @@ Write updated content to `/dev/prd/logs/<prd-id>.md`:
 - Maintain markdown formatting
 - Ensure proper indentation
 
-### Step 6: Generate Status Report
+### Step 7: Generate Status Report (Based on Verified Data)
 
-Create a current status summary:
+Create a current status summary using **actual verified data**, not claimed data:
 
 ```markdown
 ## Current Status Report
@@ -267,7 +486,7 @@ Create a current status summary:
 [What should be done next]
 ```
 
-## Step 7: Git Push with User Approval (For COMPLETED Events)
+### Step 8: Git Push with User Approval (For COMPLETED Events)
 
 When the event type is `COMPLETED` and the PRD has a commit:
 
@@ -377,10 +596,22 @@ Return tracking summary:
     "remoteBranch": "<branch_name>",
     "pushError": null
   },
+  "verification": {
+    "performed": true,
+    "timestamp": "<ISO timestamp>",
+    "criteriaVerified": <count>,
+    "filesChecked": <count>,
+    "testsVerified": true,
+    "commitVerified": true,
+    "discrepanciesFound": <count>,
+    "recommendation": "APPROVE|ADJUST|REJECT"
+  },
   "summary": {
     "totalCriteria": <N>,
     "completedCriteria": <X>,
-    "percentageComplete": <percentage>,
+    "claimedComplete": <claimed count>,
+    "actualComplete": <verified count>,
+    "percentageComplete": <actual percentage>,
     "achievements": <count>,
     "issues": <count>,
     "blockers": <count>
@@ -582,12 +813,17 @@ This will return the current status without modifying the log.
 
 ## Important Reminders
 
+- **VERIFY FIRST** - Always verify implementation before logging anything
+- **BE ACCURATE** - Only log what actually happened, not what was claimed
+- **CHECK THE CODE** - Read files, check git, run tests to confirm
 - **LOG EVERYTHING** - Keep detailed records of all PRD activity
-- **BE ACCURATE** - Only log what actually happened
+- **DOCUMENT VERIFICATION** - Include verification report in timeline
 - **UPDATE BOTH** - Always update both log file and database
+- **USE VERIFIED DATA** - Base all logs and status on verified findings
 - **TRACK TIME** - Use timestamps to understand progress
 - **DOCUMENT BLOCKERS** - Clearly identify what's blocking progress
-- **CELEBRATE WINS** - Log achievements and milestones
+- **CELEBRATE WINS** - Log achievements and milestones (when truly achieved)
+- **REJECT WHEN NEEDED** - Don't log false progress; require proof
 
 ---
 

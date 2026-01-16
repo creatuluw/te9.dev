@@ -17,6 +17,7 @@ This is the authoritative source for all workflows. Below is a quick reference.
 skill("prd-interview")      → Gather requirements
 skill("prd-plan")           → Plan large projects (optional)
 skill("prd-create")         → Create PRD files
+skill("prd-work")           → Check PRD status & guide on starting work
 skill("prd-execute")        → Implement work + create git commit ✍️
 skill("prd-test")           → Verify criteria (100% test pass required) 🧪
 skill("prd-track")          → Log progress + user approval for push 👤
@@ -29,6 +30,7 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 @prd-interview    → Gather requirements
 @prd-planning     → Plan large projects (optional)
 @prd-create       → Create PRD files
+@prd-work         → Check PRD status & guide on starting work
 @prd-execute      → Implement work + create git commit ✍️
 @prd-testing      → Verify criteria (100% test pass required) 🧪
 @prd-tracking     → Log progress + user approval for push 👤

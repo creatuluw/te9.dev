@@ -4,6 +4,7 @@ This document provides practical examples of how to use the te9-method's OpenCod
 
 ## Table of Contents
 - [Basic Workflows](#basic-workflows)
+  - [Checking PRD Status](#checking-prd-status)
   - [Simple Feature Addition](#simple-feature-addition)
   - [Bugfix](#bugfix)
   - [Refactoring](#refactoring)
@@ -16,6 +17,140 @@ This document provides practical examples of how to use the te9-method's OpenCod
 ---
 
 ## Basic Workflows
+
+### Checking PRD Status
+
+**Scenario**: You want to see what PRDs are pending and get guidance on starting work
+
+**User Prompt**:
+```
+Show me what PRD work needs to be done
+```
+
+**Agent Workflow**:
+
+1. **Call PRD Work Skill**
+```python
+skill("prd-work")
+```
+
+**Agent Response**:
+```markdown
+# PRD Work Status Overview
+
+## Active PRDs
+
+| Title | PRD ID | Status | Priority |
+|-------|--------|--------|----------|
+| User Authentication System | PRD-20250115-143022 | IN_PROGRESS | 1 |
+| Shopping Cart Feature | PRD-20250115-150033 | TODO | 1 |
+| Payment Integration | PRD-20250115-152045 | TODO | 2 |
+
+## Work Status Recap
+
+**Total Active PRDs:** 3
+**Currently In Progress:** 1
+**Ready to Start:** 2 (TODO status with no blockers)
+
+### Breakdown by Priority:
+- **Priority 1 (High):** 2 PRDs (1 in progress, 1 ready)
+- **Priority 2 (Medium):** 1 PRD (0 in progress, 1 ready)
+
+### Immediate Attention Needed:
+- **PRD-20250115-143022** (User Authentication) is in progress - complete this first
+
+### Log Insights:
+
+**IN_PROGRESS PRDs:**
+
+**PRD-20250115-143022 (User Authentication System):**
+- Last worked on: 2025-01-15 16:30:22 (4 hours ago)
+- Progress: 3 of 5 criteria completed
+- Completed:
+  - User registration endpoint implemented
+  - Login functionality with JWT tokens
+  - Password hashing with bcrypt
+- Remaining:
+  - Email verification system
+  - Password reset functionality
+- Issues:
+  - Email service integration failing with SMTP timeout
+  - Need to configure email provider credentials
+- Tests: 12 passing, 3 failing (email verification tests)
+- Next: Fix email service configuration and implement remaining criteria
+
+## How to Start Working on PRDs
+
+### ⚠️ Existing Work In Progress
+
+You have a PRD currently in progress:
+
+**PRD-20250115-143022: User Authentication System**
+- **Status:** IN_PROGRESS
+- **Last Activity:** 2025-01-15 16:30:22 (4 hours ago)
+- **Progress:** 3 of 5 acceptance criteria completed
+- **Completed So Far:**
+  - User registration endpoint with validation
+  - Login functionality with JWT token generation
+  - Password hashing using bcrypt
+  - Database schema for users table
+- **Remaining Work:**
+  - Email verification system (criterion 4)
+  - Password reset functionality (criterion 5)
+- **Issues to Address:**
+  - SMTP timeout error when sending verification emails
+  - Email service credentials need configuration
+  - 3 tests failing related to email verification
+- **Test Status:** 12 tests passing, 3 tests failing
+
+**Context from Log:**
+The email service integration is currently failing with "SMTP timeout after 5000ms". 
+The developer noted that email provider credentials (SMTP_HOST, SMTP_USER, SMTP_PASS) 
+need to be configured in environment variables. Template system is ready, just needs 
+working email connection.
+
+**Recommended Action:**
+1. Review the log file: `/dev/prd/logs/PRD-20250115-143022.md`
+2. Address the email service configuration issue:
+   - Configure SMTP credentials in .env file
+   - Test email connection
+   - Fix the 3 failing email verification tests
+3. Continue execution: `skill("prd-execute", { prdId: "PRD-20250115-143022", continueMode: true })`
+4. Focus on remaining criteria:
+   - Implement email verification flow (criterion 4)
+   - Implement password reset flow (criterion 5)
+5. Once complete, verify: `skill("prd-test", { prdId: "PRD-20250115-143022" })`
+6. Finally, complete: `skill("prd-track", { prdId: "PRD-20250115-143022", eventType: "COMPLETED" })`
+
+## Related Workflow Steps
+
+### Critical Rules to Remember:
+1. 📋 **Read Log Files First** - Understand context before starting work
+2. 🧪 **100% Test Pass Rate Required** - No exceptions
+3. ✍️ **One Commit Per PRD** - Must include PRD ID in message
+4. 👤 **User Approval for Push** - Never auto-push
+5. ✅ **Leave Clean State** - Code must build and tests pass
+6. 📝 **Track Everything** - Log all progress and events
+```
+
+**Benefits**:
+- Quick overview of all pending work
+- **Deep context from log file analysis** - understand what's been done and what's left
+- **Issue visibility** - see unresolved problems and blockers immediately
+- **Progress tracking** - know exactly how far along each PRD is
+- Clear guidance on what to do next based on actual work state
+- Prioritized view of PRDs
+- Workflow reminders included
+
+**When to Use**:
+- Starting a work session (get context from logs)
+- Deciding which PRD to work on next (see progress and issues)
+- After completing a PRD to see what's next
+- When returning to the project after a break (catch up on progress)
+- When you need to understand what was done previously
+- When troubleshooting issues in in-progress PRDs
+
+---
 
 ### Simple Feature Addition
 

@@ -38,6 +38,7 @@ Your project structure should look like:
 | `prd-interview` | Conduct structured 9-question interview for new work |
 | `prd-plan` | Break large asks into multiple well-sized PRDs |
 | `prd-create` | Generate PRD files, update database, create run folders |
+| `prd-work` | Display PRD status overview and guide on starting work |
 | `prd-execute` | Implement work on a specific PRD |
 | `prd-test` | Verify all acceptance criteria with tests |
 | `prd-track` | Log progress, achievements, and issues |
