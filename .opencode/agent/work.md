@@ -1,7 +1,8 @@
+---
 name: work
 description: Displays PRD status overview and guides user on starting work on existing PRDs
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
+model: zai-coding-plan/glm-4.7
 temperature: 0.3
 permission:
   edit: deny

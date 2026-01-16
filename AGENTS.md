@@ -59,6 +59,7 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 ### `.opencode/` - Canonical Source
 - **`prompts/build.md`** - Mandatory workflows (READ THIS)
 - **`agent/`** - Agent definitions (@prd, @work, and others)
+- **`agent/AGENT_DOCUMENTATION.md`** - Agent documentation and usage guide
 - **`skill/`** - All skill implementations (interview, plan, create, execute, test, track)
 - **`tool/`** - Tools (daisyui, knowledge_graph, melt, uikit)
 - **`documentation/`** - Detailed guides:

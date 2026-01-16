@@ -2,7 +2,7 @@
 name: prd
 description: Defines new work by creating PRDs through the prd-interview and prd-create process
 mode: subagent
-model: anthropic/claude-sonnet-4-20250514
+model: zai-coding-plan/glm-4.7
 temperature: 0.3
 permission:
   edit: allow
