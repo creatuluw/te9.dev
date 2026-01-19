@@ -13,7 +13,7 @@ This directory contains Zed-compatible rules that implement te9-method's PRD-dri
 Start each session by choosing your intent:
 
 1. **@prd** - Create PRDs to define new work (references `.opencode/agent/prd.md`)
-2. **@work** - Check PRD status & guide on starting work (references `.opencode/agent/work.md`)
+2. **@status** - Check PRD status & guide on starting work (references `.opencode/agent/status.md`)
 
 Then proceed with the PRD workflow:
 
@@ -30,7 +30,7 @@ Then proceed with the PRD workflow:
 
 1. **Session Start:** Query memory, then ask user: "Create PRDs" or "Execute PRDs"
 2. **If Creating PRDs:** Use `@prd` agent (handles interview, plan, create)
-3. **If Executing PRDs:** Use `@work` agent to see status, then execute with `@prd-execute`
+3. **If Executing PRDs:** Use `@status` agent to see status, then execute with `@prd-execute`
 
 ### Architecture
 

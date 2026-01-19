@@ -45,7 +45,7 @@ Agents are specialized AI assistants that are configured for specific tasks and 
 
 ---
 
-### @work - Work Status & Guidance Agent
+### @status - Work Status & Guidance Agent
 
 **Purpose:** Displays PRD status overview and guides user on starting work on existing PRDs.
 
@@ -98,7 +98,7 @@ Agents are specialized AI assistants that are configured for specific tasks and 
    └─ Returns with new PRD(s)
 
 3. If "Execute PRDs"
-   └─ Invokes @work agent
+   └─ Invokes @status agent
    └─ Agent displays PRD status and provides guidance
    └─ User can then execute specific PRDs
 ```
@@ -109,7 +109,7 @@ Agents are specialized AI assistants that are configured for specific tasks and 
 @prd (creates work)
   ├─ Interview → (Plan) → Create PRD files
   │
-@work (shows status & guides)
+@status (shows status & guides)
   ├─ Display PRD status
   ├─ Analyze logs
   └─ Recommend which PRD to work on
@@ -171,7 +171,7 @@ Let the BUILD agent guide you when:
 ## Critical Rules
 
 1. **@prd NEVER implements code** - Its job is ONLY to create PRDs
-2. **@work NEVER creates PRDs or implements code** - Its job is ONLY to read and guide
+2. **@status NEVER creates PRDs or implements code** - Its job is ONLY to read and guide
 3. **Always query memory first** - Before any agent invocation
 4. **Store memory after important interactions** - For context continuity
 5. **Follow PRD workflow** - Interview → (Plan) → Create → Execute → Test → Track
@@ -189,7 +189,7 @@ Let the BUILD agent guide you when:
 .opencode/
 ├── agent/
 │   ├── prd.md              # PRD Creation Agent (@prd)
-│   ├── work.md             # Work Status Agent (@work)
+│   ├── status.md           # Work Status Agent (@status)
 │   └── README.md           # This file
 ├── skill/
 │   ├── prd-interview/      # Interview skill
@@ -218,13 +218,13 @@ User: Add user authentication
 ...
 [Full interview proceeds]
 Agent: PRD created! PRD-20250115-143022: Add user authentication
-       Use @work to start working on this PRD.
+       Use @status to start working on this PRD.
 ```
 
 ### Example 2: Checking Work Status
 
 ```
-User: @work
+User: @status
 Agent: # PRD Work Status Overview
 
        ## Active PRDs
@@ -253,7 +253,7 @@ BUILD Agent: [Queries memory...]
                 - Good for: New features, bug fixes, refactors, new projects
              
              2. Execute PRDs - Work on existing PRDs and implement features
-                - Use @work agent to see status, then @prd-execute to implement
+                - Use @status agent to see status, then @prd-execute to implement
                 - Good for: Continuing work on existing PRDs
              
              What would you like to do today? (Create PRDs / Execute PRDs)
@@ -272,7 +272,7 @@ BUILD Agent: [Queries memory...]
 **Issue:** PRD files not created
 - **Solution:** Check directory permissions and ensure `/dev/prd/` structure exists
 
-### Work Agent Issues
+### Status Agent Issues
 
 **Issue:** No PRDs found
 - **Solution:** Use @prd agent to create PRDs first
@@ -286,14 +286,14 @@ BUILD Agent: [Queries memory...]
 ## Best Practices
 
 1. **Start with @prd** when defining new work - don't skip documentation
-2. **Use @work** before executing - understand your workload and priorities
+2. **Use @status** before executing - understand your workload and priorities
 3. **Follow the full workflow** - Create → Execute → Test → Track
 4. **Read agent outputs carefully** - They contain important guidance and next steps
 5. **Store memory** after important decisions for context continuity
 
 ## Version History
 
-- **v1.0** - Initial agent system with @prd and @work agents
+- **v1.0** - Initial agent system with @prd and @status agents
   - PRD Creation Agent for defining new work
   - Work Status Agent for guiding execution
   - Integration with existing skill system

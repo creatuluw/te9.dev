@@ -1,5 +1,5 @@
 ---
-name: prd-work
+name: prd-status
 description: Display PRD status overview and guide user on starting work
 license: MIT
 compatibility: opencode

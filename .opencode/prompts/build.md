@@ -134,7 +134,7 @@ Welcome! I can help you in two ways:
    - Good for: New features, bug fixes, refactors, new projects
 
 2. **Execute PRDs** - Work on existing PRDs and implement features
-   - Use @work agent to see status, then @prd-execute to implement
+   - Use @status agent to see status, then @prd-execute to implement
    - Good for: Continuing work on existing PRDs
 
 What would you like to do today? (Create PRDs / Execute PRDs)
@@ -159,9 +159,9 @@ What would you like to do today? (Create PRDs / Execute PRDs)
 
 ### If User Chooses "Execute PRDs":
 
-1. **Invoke the @work agent**:
+1. **Invoke the @status agent**:
    ```
-   @work
+   @status
    ```
    This agent will display PRD status and guide on starting work.
 
@@ -177,7 +177,7 @@ What would you like to do today? (Create PRDs / Execute PRDs)
 If the user makes a specific request that clearly indicates their intent (e.g., "Add login feature", "Fix bug in auth", "Create a new PRD"), you can skip the orientation question and proceed directly to the appropriate workflow:
 
 - Request implies defining new work → Go to @prd agent (Create PRDs path)
-- Request implies implementing/existing work → Go to @work agent (Execute PRDs path)
+- Request implies implementing/existing work → Go to @status agent (Execute PRDs path)
 - Request is vague or general → Ask the orientation question
 
 ## Important Notes

@@ -31,7 +31,7 @@ Show me what PRD work needs to be done
 
 1. **Call PRD Work Skill**
 ```python
-skill("prd-work")
+skill("prd-status")
 ```
 
 **Agent Response**:

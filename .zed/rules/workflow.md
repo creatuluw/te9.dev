@@ -26,7 +26,7 @@ Welcome! I can help you in two ways:
    - Good for: New features, bug fixes, refactors, new projects
 
 2. **Execute PRDs** - Work on existing PRDs and implement features
-   - Use @work agent to see status, then @prd-execute to implement
+   - Use @status agent to see status, then @prd-execute to implement
    - Good for: Continuing work on existing PRDs
 
 What would you like to do today? (Create PRDs / Execute PRDs)
@@ -40,7 +40,7 @@ What would you like to do today? (Create PRDs / Execute PRDs)
 - Do NOT proceed to Workflow 2
 
 **If Execute PRDs:**
-- Invoke `@work` agent
+- Invoke `@status` agent
 - Agent displays PRD status and guides on starting work
 - User can then execute specific PRDs
 
@@ -49,7 +49,7 @@ If user's intent is clear (e.g., "Add login feature"), skip orientation and proc
 
 ## Workflow 2: PRD-Driven Development
 
-For executing PRDs (after @work agent shows status):
+For executing PRDs (after @status agent shows status):
 
 1. **Execute** - Use `@prd-execute` to implement work (includes automatic git commit with PRD reference)
 2. **Test** - Use `@prd-testing` to verify all criteria and ensure ALL unit tests pass
@@ -60,7 +60,7 @@ Note: For creating PRDs, use `@prd` agent directly instead of following this wor
 ## Available Agents
 
 - **@prd** - Create PRDs to define new work
-- **@work** - Check PRD status & guide on starting work
+- **@status** - Check PRD status & guide on starting work
 - **@prd-interview** - Gather requirements
 - **@prd-planning** - Plan large projects (optional)
 - **@prd-create** - Create PRD files

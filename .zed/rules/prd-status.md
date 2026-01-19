@@ -1,7 +1,7 @@
 # PRD Work Status Rule
 
 This rule implements PRD Work Status process documented at:
-**[.opencode/skill/prd-work/SKILL.md](../../.opencode/skill/prd-work/SKILL.md)**
+**[.opencode/skill/prd-status/SKILL.md](../../.opencode/skill/prd-status/SKILL.md)**
 
 ## What I Do
 
@@ -18,7 +18,7 @@ I provide a comprehensive overview of PRD work status:
 
 When you want to see PRD status and get started:
 
-**@prd-work**
+**@prd-status**
 
 This will show all pending work and guide you on next steps.
 
@@ -90,11 +90,11 @@ Based on current PRD state, I provide:
 ## Reference
 
 For complete implementation details, see:
-- [.opencode/skill/prd-work/SKILL.md](../../.opencode/skill/prd-work/SKILL.md)
+- [.opencode/skill/prd-status/SKILL.md](../../.opencode/skill/prd-status/SKILL.md)
 
 ## When to Use This
 
-Use **@prd-work** when:
+Use **@prd-status** when:
 - Starting your work session
 - Deciding which PRD to work on next
 - Understanding current workload
@@ -104,7 +104,7 @@ Use **@prd-work** when:
 ## Typical Workflow Integration
 
 ```
-@prd-work                           → See what needs doing
+@prd-status                          → See what needs doing
 @prd-execute PRD-<id>              → Implement work + create commit
 @prd-testing PRD-<id>              → Verify all criteria + tests pass
 @prd-tracking PRD-<id> COMPLETED   → Mark done + request push approval
@@ -122,7 +122,7 @@ The status overview includes reminders about:
 
 ## Next Steps
 
-After reviewing status with **@prd-work**:
+After reviewing status with **@prd-status**:
 1. Choose a PRD to work on (prioritize IN_PROGRESS first)
 2. Use **@prd-execute** to implement
 3. Use **@prd-testing** to verify

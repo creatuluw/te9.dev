@@ -15,7 +15,7 @@ This is the authoritative source for all workflows. Below is a quick reference.
 ### OpenCode Agents
 ```
 @prd                  → Create PRDs to define new work
-@work                 → Check PRD status & guide on starting work
+@status               → Check PRD status & guide on starting work
 @prd-interview        → Gather requirements
 @prd-plan             → Plan large projects (optional)
 @prd-create           → Create PRD files
@@ -29,7 +29,7 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 ### Zed Agents
 ```
 @prd                  → Create PRDs to define new work
-@work                 → Check PRD status & guide on starting work
+@status               → Check PRD status & guide on starting work
 @prd-interview        → Gather requirements
 @prd-planning         → Plan large projects (optional)
 @prd-create           → Create PRD files
@@ -46,7 +46,7 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 |-----------|-----------------|
 | Start BUILD agent | Query memory → Ask orientation (Create/Execute PRDs) → Proceed based on choice |
 | Define new work | @prd → Interview → (plan) → create PRDs |
-| Work on existing PRDs | @work → See status → @prd-execute → @prd-test → @prd-track |
+| Work on existing PRDs | @status → See status → @prd-execute → @prd-test → @prd-track |
 | New feature/bugfix/refactor | @prd → interview → create → execute → test → track (includes commit & push approval) |
 | Large/complex project | @prd → interview → plan → create → (execute → test → track) × N (each PRD gets own commit) |
 | Single prompt work | @prd → interview (select "Single Prompt") → execute directly → store memory |
@@ -58,7 +58,7 @@ openmemory_openmemory_store()   → Save context (user_id = {{PROJECT_FOLDER_NAM
 
 ### `.opencode/` - Canonical Source
 - **`prompts/build.md`** - Mandatory workflows (READ THIS)
-- **`agent/`** - Agent definitions (@prd, @work, and others)
+- **`agent/`** - Agent definitions (@prd, @status, and others)
 - **`agent/AGENT_DOCUMENTATION.md`** - Agent documentation and usage guide
 - **`skill/`** - All skill implementations (interview, plan, create, execute, test, track)
 - **`tool/`** - Tools (daisyui, knowledge_graph, melt, uikit)
@@ -224,7 +224,7 @@ openmemory_openmemory_store({
      - **Other** → Infrastructure, documentation, research, or other work
      - **Single Prompt** → Skip PRD, execute immediately
 
-3. **If "Execute PRDs"** → Invoke @work agent:
+3. **If "Execute PRDs"** → Invoke @status agent:
    - Display PRD status overview
    - Guide user on starting work
    - Recommend which PRD to work on next
@@ -259,25 +259,25 @@ openmemory_openmemory_store({
 ├─────────────────────────────────────────────────────────────────┤
 │                                                               │
 │  1. SESSION START                                             │
-│      ├─ Query memory (always)                               │
-│      └─ Ask orientation: Create PRDs or Execute PRDs?        │
+│      ├─ Query memory (always)                                  │
+│      └─ Ask orientation: Create PRDs or get Status of PRDs?    │
 │                                                               │
 │  2. IF CREATE PRDs → @prd agent:                             │
 │      ├─ INTERVIEW → Gather requirements                      │
 │      ├─ PLAN       → Break into PRDs if needed               │
 │      └─ CREATE     → Generate PRD files                     │
 │                                                               │
-│  3. IF EXECUTE PRDs → @work agent:                          │
+│  3. IF status of PRDs → @status agent:                         │
 │      ├─ Display PRD status                                  │
-│      ├─ Guide user on starting work                         │
+│      ├─ Guide user on what to starting work on                 │
 │      └─ Recommend which PRD to work on                       │
 │                                                               │
-│  4. EXECUTE   → Implement work (via @prd-execute)           │
+│  4. EXECUTE   → Implement work with Build agent (via @prd-execute)│
 │                  ├─ Implement acceptance criteria            │
 │                  ├─ Test each criterion                     │
 │                  ├─ Run unit tests (100% required) 🧪        │
 │                  ├─ Create git commit ✍️                    │
-│                  └─ Include PRD ID in message            │
+│                  └─ Include PRD ID in message                 │
 │                                                               │
 │  5. TEST      → Verify all criteria (via @prd-test)        │
 │                                                               │

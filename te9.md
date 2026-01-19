@@ -29,7 +29,7 @@ Complete reference for all mechanics, commands, workflows, and configuration opt
 skill("prd-interview")      # Start requirements gathering
 skill("prd-plan")           # Plan large projects (optional)
 skill("prd-create")         # Generate PRD files
-skill("prd-work")           # Check PRD status & get guidance
+skill("prd-status")         # Check PRD status & get guidance
 skill("prd-execute")        # Implement work
 skill("prd-test")           # Verify criteria
 skill("prd-track")          # Log progress + approval workflow
@@ -207,7 +207,7 @@ skill("prd-create", {
 
 **Usage**:
 ```bash
-skill("prd-work")
+skill("prd-status")
 ```
 
 **What It Does**:
@@ -757,7 +757,7 @@ High
 #### Step 4: Work Check (Recommended)
 
 ```bash
-skill("prd-work")
+skill("prd-status")
 ```
 
 **Output**:
@@ -2398,7 +2398,7 @@ te9.dev/
 │   │   │   ├── SKILL.md
 │   │   │   ├── skill.ts
 │   │   │   └── test/
-│   │   ├── prd-work/               # Status check & guidance
+│   │   ├── prd-status/             # Status check & guidance
 │   │   │   ├── SKILL.md
 │   │   │   ├── skill.ts
 │   │   │   └── test/
@@ -2501,7 +2501,7 @@ te9.dev/
 │       ├── prd-interview.md
 │       ├── prd-plan.md
 │       ├── prd-create.md
-│       ├── prd-work.md
+│       ├── prd-status.md
 │       ├── prd-execute.md
 │       ├── prd-test.md
 │       └── prd-track.md
@@ -3136,7 +3136,7 @@ console.log("Slow requests:", slowRequests);
 
 ```bash
 # Check skill status
-skill("prd-work")
+skill("prd-status")
 
 # View PRD details
 cat dev/prd/runs/PRD-XXX/PRD.md
@@ -3316,7 +3316,7 @@ Solution: Check OpenMemory URL and user_id
 │  DEVELOPMENT WORKFLOW:                                      │
 │  prd-interview → prd-create → prd-execute → prd-test        │
 │                     ↓                                        │
-│                   prd-work                                  │
+│                   prd-status                                │
 │                                                             │
 │  MEMORY:                                                    │
 │  Query → Respond → Store                                     │
@@ -3344,7 +3344,7 @@ Solution: Check OpenMemory URL and user_id
 skill("prd-interview")      # Gather requirements
 skill("prd-plan")           # Plan large projects
 skill("prd-create")         # Generate PRD files
-skill("prd-work")           # Check status & guidance
+skill("prd-status")         # Check status & guidance
 skill("prd-execute")        # Implement work
 skill("prd-test")           # Verify criteria
 skill("prd-track")          # Log progress & approval

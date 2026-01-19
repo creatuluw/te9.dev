@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `prd-work` skill has been enhanced to read and analyze PRD log files, providing deep contextual information about active PRDs to help users understand exactly where work stands and what needs to be done next.
+The `prd-status` skill has been enhanced to read and analyze PRD log files, providing deep contextual information about active PRDs to help users understand exactly where work stands and what needs to be done next.
 
 ## What This Feature Does
 
@@ -189,7 +189,7 @@ You have PRD-123 in progress.
 The log analysis integrates seamlessly with the te9-method workflow:
 
 ```
-prd-work (read logs)
+prd-status (read logs)
     ↓ (understand context)
 prd-execute (continue with context)
     ↓ (update logs with progress)
@@ -254,9 +254,9 @@ Each PRD in the return data now includes a `logAnalysis` object:
 
 ## Best Practices
 
-### When Using prd-work
+### When Using prd-status
 
-1. **Start Every Session**: Run `prd-work` to understand current state
+1. **Start Every Session**: Run `prd-status` to understand current state
 2. **Before Continuing Work**: Check log insights for context
 3. **After Breaks**: Use log analysis to quickly catch up
 4. **When Troubleshooting**: Review issues section in log insights
@@ -276,7 +276,7 @@ Each PRD in the return data now includes a `logAnalysis` object:
 
 **Command:**
 ```
-skill("prd-work")
+skill("prd-status")
 ```
 
 **Output Shows:**
@@ -295,7 +295,7 @@ skill("prd-work")
 
 **Command:**
 ```
-skill("prd-work")
+skill("prd-status")
 ```
 
 **Output Shows:**
@@ -313,7 +313,7 @@ skill("prd-work")
 
 **Command:**
 ```
-skill("prd-work")
+skill("prd-status")
 ```
 
 **Output Shows:**
@@ -348,7 +348,7 @@ Potential additions:
 
 ## Summary
 
-The log analysis feature transforms `prd-work` from a simple status display into a comprehensive work context tool. It provides:
+The log analysis feature transforms `prd-status` from a simple status display into a comprehensive work context tool. It provides:
 
 ✅ **Deep Context** - Not just status, but full work history
 ✅ **Issue Visibility** - Problems are immediately apparent
