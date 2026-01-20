@@ -25,6 +25,34 @@ curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
 
 This works on Linux, macOS, and Windows (Git Bash).
 
+### Windows CMD
+
+For Windows Command Prompt (without Git Bash), use the CMD wrapper:
+
+```cmd
+REM Install te9.dev
+te9 install
+
+REM Update to latest version
+te9 update
+
+REM Check installation status
+te9 status
+
+REM Show version
+te9 version
+
+REM Show help
+te9 help
+```
+
+**Note:** The `te9` command for Windows CMD automatically:
+- Downloads the bash script from GitHub
+- Uses Git Bash (if installed) or WSL
+- Requires Git for Windows or WSL to be installed
+
+**Install Git for Windows:** https://git-scm.com/download/win
+
 ### Update
 
 ```bash

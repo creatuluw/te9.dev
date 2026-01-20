@@ -15,6 +15,36 @@ This works on:
 - ✅ macOS
 - ✅ Windows (Git Bash - comes with Git for Windows)
 
+### Windows CMD
+
+For Windows Command Prompt (without Git Bash), use:
+
+```cmd
+REM Download te9.cmd to your project
+REM Then run:
+
+te9 install
+te9 update
+te9 status
+te9 version
+te9 help
+```
+
+**Note:** The `te9.cmd` command for Windows automatically:
+- Downloads the bash script from GitHub
+- Uses Git Bash (if installed) or WSL
+- Provides same functionality as bash script
+
+**Prerequisites:**
+- Git for Windows (recommended): https://git-scm.com/download/win
+- Or WSL (Windows Subsystem for Linux)
+- PowerShell (for downloading files)
+
+**To get te9.cmd:**
+1. Download from: https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9.cmd
+2. Save as `te9.cmd` in your project folder
+3. Run: `te9 install`
+
 ### After Installation
 
 Open your project in OpenCode or Zed, then run:
@@ -56,6 +86,15 @@ curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash version
 
 # Show help
 curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash help
+```
+
+**Or on Windows CMD:**
+```cmd
+te9 install
+te9 update
+te9 status
+te9 version
+te9 help
 ```
 
 ## What Gets Installed
@@ -210,6 +249,55 @@ curl -I https://github.com
 # Retry installation
 curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
 ```
+
+### Issue: Windows CMD - te9 Command Not Found
+
+**Solution:** Make sure `te9.cmd` is in your project folder:
+```cmd
+REM Check if te9.cmd exists
+dir te9.cmd
+
+REM If not, download it:
+REM 1. Go to: https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9.cmd
+REM 2. Save as: te9.cmd
+REM 3. Run: te9 install
+```
+
+### Issue: Windows CMD - Git Bash Not Found
+
+**Solution:** Install Git for Windows or use WSL:
+
+**Option 1 - Install Git for Windows (Recommended):**
+1. Download from: https://git-scm.com/download/win
+2. Run installer with default options
+3. Restart Command Prompt
+4. Run: `te9 install`
+
+**Option 2 - Use WSL:**
+```cmd
+REM Enable WSL
+wsl --install
+
+REM Restart your computer
+
+REM Then use WSL bash
+wsl bash -c "cd %CD% && curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install"
+```
+
+### Issue: Windows CMD - PowerShell Download Fails
+
+**Solution:** The `te9.cmd` script will automatically fall back to PowerShell if curl is not available. If PowerShell fails:
+
+1. Check internet connection
+2. Verify PowerShell execution policy:
+```cmd
+powershell -Command "Get-ExecutionPolicy"
+```
+3. If restricted, allow running scripts temporarily:
+```cmd
+powershell -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
+```
+4. Retry: `te9 install`
 
 ### Issue: Update Fails
 
