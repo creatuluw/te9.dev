@@ -1,0 +1,383 @@
+# te9.dev - AI-Powered Development Workflow
+
+## Overview
+
+te9.dev is a fast, simple, and easy AI-driven development workflow system. It provides a structured 6-step process for collaborating with AI assistants to build software projects efficiently.
+
+### Key Features
+
+- **6-Step Workflow**: Clarify → Store → Execute → Commit → Track
+- **Skills System**: Predefined skills for each workflow stage
+- **Memory System**: OpenMemory for persistent context across sessions
+- **Knowledge Graph**: Mandatory tracking of project entities and relationships
+- **Cross-Platform**: Works on Linux, macOS, and Windows
+- **Zero Configuration**: One-command installation with `--llm` flag
+
+---
+
+## Installation
+
+### Prerequisites
+
+- Git (required for version control)
+- Terminal access (Bash, CMD, or PowerShell)
+- Internet connection for initial download
+
+### Install Command
+
+**Linux/macOS/Git Bash:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+```
+
+**Windows CMD:**
+```cmd
+te9 install --llm
+```
+
+**Windows PowerShell:**
+```powershell
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+```
+
+### What `--llm` Flag Does Automatically
+
+- ✅ Initializes git repository (no prompts)
+- ✅ Creates all directory structures
+- ✅ Downloads all required files
+- ✅ Initializes specs database
+- ✅ Sets up complete project configuration
+- ✅ No manual steps required
+
+### Success Indicator
+
+Look for this output:
+```
+STATUS: READY_TO_USE
+```
+
+---
+
+## What Gets Installed
+
+### Core Files (4)
+- `opencode.json` - Main configuration file
+- `openmemory.md` - Memory system rules and API
+- `README.md` - Project overview
+- `te9.md` - Workflow documentation
+
+### Skills (6)
+- `te9-init/SKILL.md` - Project initialization
+- `spec-clarify/SKILL.md` - Gather requirements via questions (max 5)
+- `spec-store/SKILL.md` - Save spec to file system
+- `spec-execute/SKILL.md` - Implement and log work
+- `spec-commit/SKILL.md` - Commit and push with user approval
+- `spec-track/SKILL.md` - Track progress and status
+
+### Tools (4)
+- `daisyui.ts` - UI component templates
+- `knowledge_graph.ts` - Memory graph exporter
+- `melt.ts` - Svelte UI builder
+- `uikit.ts` - UI component generator
+
+### Directory Structure
+```
+project-root/
+├── .opencode/
+│   ├── skill/          # All skill definitions
+│   └── tool/           # Technical tools
+├── te9.dev/
+│   ├── specs/          # Spec file storage (SPEC-<id>/spec.md)
+│   ├── logs/           # Execution logs (SPEC-<id>.log)
+│   ├── history/        # Git history
+│   └── specs.json      # Specs database
+├── opencode.json       # Configuration
+├── openmemory.md       # Memory rules
+├── README.md           # Documentation
+└── te9.md             # Workflow guide
+```
+
+---
+
+## Initialization
+
+No separate initialization step is needed when using the `--llm` flag during installation. The project is fully initialized and ready to use immediately after installation completes.
+
+**Alternative Manual Init (if needed):**
+```bash
+te9-init
+```
+
+This is automatically handled by the `--llm` installation flag.
+
+---
+
+## Upgrading
+
+### Update Command
+
+**Linux/macOS/Git Bash:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+```
+
+**Windows CMD:**
+```cmd
+te9 update
+```
+
+**Windows PowerShell:**
+```powershell
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+```
+
+### What Update Does
+
+- Creates backup at `.te9-backup-TIMESTAMP/`
+- Downloads latest files from GitHub
+- Preserves user's specs in `te9.dev/specs/`
+- Preserves user's logs in `te9.dev/logs/`
+- Updates all skills and tools
+- Verifies installation
+
+### Check Status
+
+**Linux/macOS/Git Bash:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+```
+
+**Windows CMD:**
+```cmd
+te9 status
+```
+
+**Windows PowerShell:**
+```powershell
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+```
+
+Status shows:
+- Installed files
+- Missing files
+- Number of specs and logs
+- Git repository status
+
+---
+
+## Usage in All Sessions
+
+### The 6-Step Workflow
+
+```
+1. User describes what they want to build
+2. AI uses spec-clarify → Asks clarification questions (max 5)
+3. AI uses spec-store → Saves unique spec file
+4. AI uses spec-execute → Implements the feature
+5. AI uses spec-commit → Creates commit (with user approval)
+6. User approves → AI pushes to remote
+7. spec-track can be used anytime to check progress
+```
+
+### Spec Status Values
+
+- **PENDING** - Waiting to start
+- **IN_PROGRESS** - Being executed
+- **READY_FOR_COMMIT** - Ready to commit
+- **COMPLETED** - Finished and pushed
+- **FAILED** - Execution failed
+- **BLOCKED** - Has blockers
+
+### Tracking Progress
+
+```bash
+spec-track                    # View all specs
+spec-track <spec-id>          # View specific spec details
+spec-track <spec-id> --log    # View execution log for spec
+spec-track --commits          # View commit history
+```
+
+### Memory System (OpenMemory)
+
+**MANDATORY**: Before ANY operation, query OpenMemory first:
+
+```javascript
+openmemory_openmemory_query({
+  query: "[relevant keywords]",
+  user_id: "{{PROJECT_FOLDER_NAME}}",  // Root folder name only
+  limit: 20
+})
+```
+
+**After important interactions, store memory:**
+
+```javascript
+openmemory_openmemory_store({
+  content: "[key learnings/decisions]",
+  sector: "episodic|semantic|procedural|emotional|reflective",
+  user_id: "{{PROJECT_FOLDER_NAME}}",
+  tags: ["preference", "decision", "PRD-001", "authentication"]
+})
+```
+
+### Knowledge Graph (MANDATORY)
+
+**CRITICAL**: You MUST maintain a complete knowledge graph for EVERY project. Track:
+
+- Technologies and frameworks used
+- Dependencies between components
+- Features and capabilities
+- Deployment environments and infrastructure
+- Architectural decisions and trade-offs
+- Migrations and technology changes
+- Team structure and ownership
+- Configuration values and settings
+- External integrations and services
+- Performance characteristics
+- Security policies and requirements
+
+**Create Fact:**
+```javascript
+openmemory_openmemory_store({
+  subject: "[entity]",
+  predicate: "[relationship]",
+  object: "[value]",
+  valid_from: "2025-01-15",
+  confidence: 0.9,
+  metadata: {
+    source: "code_analysis",
+    prdId: "PRD-001"
+  }
+})
+```
+
+---
+
+## What Else is Needed to Function
+
+### Required MCP Services (configured in opencode.json)
+
+1. **Time Server**: `https://mcp.time.mcpcentral.io`
+   - Provides timestamp services
+
+2. **OpenMemory**: `https://openmemory-production-f483.up.railway.app/mcp`
+   - **CRITICAL**: Required for memory and knowledge graph operations
+   - Handles all memory storage and queries
+   - Manages knowledge graph facts
+
+3. **Playwright**: `npx @playwright/mcp@latest`
+   - Browser automation for testing
+   - Local tool (requires Node.js)
+
+4. **Sequential Thinking**: `npx -y @modelcontextprotocol/server-sequential-thinking`
+   - Enhanced reasoning capabilities
+   - Local tool (requires Node.js)
+
+5. **DocFork**: `https://mcp.docfork.com/mcp`
+   - Document processing
+   - Requires API key: configured in opencode.json
+
+6. **Chrome DevTools**: `npx -y chrome-devtools-mcp@latest`
+   - Browser debugging capabilities
+   - Local tool (requires Node.js)
+
+### Environment Requirements
+
+- **Git Repository**: Required for version control
+- **Project Folder**: Must be initialized as a git repo
+- **Node.js**: Required for Playwright, Sequential Thinking, and Chrome DevTools MCP tools
+- **Internet**: Required for remote MCP servers and initial installation
+
+### Critical Configuration Variables
+
+- `{{PROJECT_FOLDER_NAME}}`: Root folder name (extracted from working directory)
+  - Used as `user_id` for all OpenMemory operations
+  - Ensures context isolation between projects
+
+- `{{OPENMEMORY_API_URL}}`: OpenMemory MCP endpoint
+  - Configured in opencode.json
+  - Default: `https://openmemory-production-f483.up.railway.app/mcp`
+
+### Session Initialization
+
+Before starting ANY session, ensure:
+
+1. **Project folder is identified** (extract folder name from full path)
+2. **OpenMemory variables are initialized** (PROJECT_FOLDER_NAME, OPENMEMORY_API_URL)
+3. **Query existing memory** to load context
+4. **Query knowledge graph** to load project state
+
+---
+
+## Workflow Example
+
+**User:** Add a login button to the homepage
+
+**AI:** [Queries OpenMemory for existing auth context]
+      Got it! I'll help you add a login button.
+      Should it:
+      - Link to /login page?
+      - Open a login modal?
+      - Use inline form?
+
+**User:** Link to /login page
+
+**AI:** [Stores decision in memory]
+      ✓ Spec created: SPEC-20250115-abc123
+      ✓ Stored in te9.dev/specs/SPEC-20250115-abc123/spec.md
+      Ready to execute?
+
+**User:** Yes
+
+**AI:** [Uses spec-execute]
+      ✓ Implemented login button in homepage
+      ✓ Linked to /login
+      ✓ Added hover effects
+      ✓ Tests passing
+      [Creates spec-store knowledge graph facts]
+      Ready to commit?
+
+**User:** approve
+
+**AI:** [Uses spec-commit]
+      ✓ Commit created: "Add login button to homepage"
+      ✓ Pushed to remote
+      ✓ Work complete!
+
+**User:** Check progress
+
+**AI:** [Uses spec-track]
+      Current specs:
+      - SPEC-20250115-abc123: COMPLETED
+        Added login button to homepage, linked to /login
+
+---
+
+## Documentation References
+
+- `README.md` - Project overview and quick install
+- `te9.md` - Detailed workflow documentation
+- `openmemory.md` - Complete memory and knowledge graph API
+- `AI_INSTRUCTIONS.md` - Quick AI installation guide
+- `te9/llms.md` - Detailed AI assistant instructions
+- `te9/QUICKSTART.md` - Quick reference guide
+- `te9/INSTALL_LLM.md` - LLM-native installation details
+- `te9/CHEATSHEET.md` - Command cheat sheet
+
+---
+
+## Repository
+
+- **GitHub**: https://github.com/creatuluw/te9.dev
+- **Issues**: https://github.com/creatuluw/te9.dev/issues
+
+---
+
+## Key URLs
+
+- **Installation Script**: `https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9`
+- **Base Repository**: `https://github.com/creatuluw/te9.dev`
+
+---
+
+**Fast. Simple. Easy.** 🚀
