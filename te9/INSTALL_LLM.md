@@ -42,6 +42,7 @@ Create these directories:
 .opencode/skill/spec-commit/
 .opencode/skill/spec-track/
 .opencode/tool/
+.opencode/prompts/
 te9.dev/specs/
 te9.dev/logs/
 te9.dev/history/
@@ -64,7 +65,13 @@ te9.dev/history/
 |-------------|-----|
 | `.opencode/skill/README.md` | `https://raw.githubusercontent.com/creatuluw/te9.dev/main/.opencode/skill/README.md` |
 
-### Step 5: Download Tools (4 files, optional but recommended)
+### Step 5: Download Prompts (1 file, required)
+
+| Destination | URL |
+|-------------|-----|
+| `.opencode/prompts/rules.md` | `https://raw.githubusercontent.com/creatuluw/te9.dev/main/.opencode/prompts/rules.md` |
+
+### Step 6: Download Tools (4 files, optional but recommended)
 
 | Destination | URL |
 |-------------|-----|
@@ -73,7 +80,7 @@ te9.dev/history/
 | `.opencode/tool/melt.ts` | `https://raw.githubusercontent.com/creatuluw/te9.dev/main/.opencode/tool/melt.ts` |
 | `.opencode/tool/uikit.ts` | `https://raw.githubusercontent.com/creatuluw/te9.dev/main/.opencode/tool/uikit.ts` |
 
-### Step 6: Initialize Specs Database
+### Step 7: Initialize Specs Database
 
 Create file `te9.dev/specs.json` with this content:
 
@@ -85,7 +92,7 @@ Create file `te9.dev/specs.json` with this content:
 }
 ```
 
-### Step 7: Initialize Project
+### Step 8: Initialize Project
 
 Create file `te9.dev/.initialized` with this content:
 
@@ -122,6 +129,7 @@ After completing all steps, verify:
 - [ ] `.opencode/tool/knowledge_graph.ts` exists (optional)
 - [ ] `.opencode/tool/melt.ts` exists (optional)
 - [ ] `.opencode/tool/uikit.ts` exists (optional)
+- [ ] `.opencode/prompts/rules.md` exists
 - [ ] `te9.dev/specs/` directory exists
 - [ ] `te9.dev/logs/` directory exists
 - [ ] `te9.dev/history/` directory exists
@@ -165,6 +173,10 @@ Each skill defines a step in the 6-step workflow:
 - `spec-commit`: Create git commits and ask for push approval
 - `spec-track`: Show progress and status at any time
 
+### Prompts
+System prompts and rules for the AI:
+- `rules.md`: Mandatory spec process workflow rules and guidelines
+
 ### Tools
 Technical utilities for specific tasks:
 - `daisyui.ts`: Generate DaisyUI component templates
@@ -194,8 +206,8 @@ Technical utilities for specific tasks:
 
 ## 📝 Installation Summary
 
-- **Total files to download**: 15 (11 required + 4 optional tools)
-- **Total directories to create**: 10
+- **Total files to download**: 16 (12 required + 4 optional tools)
+- **Total directories to create**: 11
 - **Total files to create manually**: 2 (specs.json, .initialized)
 - **Estimated time**: 2-5 minutes depending on file sizes and network speed
 
@@ -204,10 +216,11 @@ Technical utilities for specific tasks:
 Installation is successful when:
 1. All core files are present in project root
 2. All 6 skill files are present in `.opencode/skill/`
-3. All 3 te9.dev directories are created
-4. `specs.json` contains valid JSON with "specs": []
-5. `.initialized` contains valid JSON with project details
-6. User can start using the 6-step workflow immediately
+3. Prompts file is present in `.opencode/prompts/`
+4. All 3 te9.dev directories are created
+5. `specs.json` contains valid JSON with "specs": []
+6. `.initialized` contains valid JSON with project details
+7. User can start using the 6-step workflow immediately
 
 ---
 

@@ -47,6 +47,7 @@ https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9
 ✅ Core files: 4/4 installed
 ✅ Skills: 6/6 installed
 ✅ Tools: 4/4 installed
+✅ Prompts: 1/1 installed
 ✅ Directories: created
 ✅ Specs database: initialized
 
@@ -144,9 +145,13 @@ See `INSTALL_LLM.md` for detailed step-by-step instructions.
 - `melt.ts` - Svelte UI
 - `uikit.ts` - UI generator
 
+### Prompts (1)
+- `rules.md` - Mandatory spec process workflow rules and guidelines
+
 ### Directories
 - `.opencode/skill/` - Skills
 - `.opencode/tool/` - Tools
+- `.opencode/prompts/` - Prompts
 - `te9.dev/specs/` - Spec storage
 - `te9.dev/logs/` - Execution logs
 - `te9.dev/history/` - Git history

@@ -54,6 +54,7 @@ LLM Mode: enabled
 ✅ Core files: 4/4 installed
 ✅ Skills: 6/6 installed
 ✅ Tools: 4/4 installed
+✅ Prompts: 1/1 installed
 ✅ Directories: created
 ✅ Specs database: initialized
 ✅ Project initialized

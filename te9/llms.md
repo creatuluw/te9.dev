@@ -105,9 +105,13 @@ If verification passes, installation is complete and ready to use.
 - `melt.ts` - Svelte UI builder
 - `uikit.ts` - UI component generator
 
+### Prompts (1 file, required)
+- `rules.md` - Mandatory spec process workflow rules and guidelines
+
 ### Directory Structure
 - `.opencode/skill/` - All skill definitions
 - `.opencode/tool/` - Technical tools
+- `.opencode/prompts/` - System prompts and rules
 - `te9.dev/specs/` - Spec file storage
 - `te9.dev/logs/` - Execution logs
 - `te9.dev/history/` - Git history
@@ -138,6 +142,7 @@ https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9.md
 .opencode/tool/knowledge_graph.ts
 .opencode/tool/melt.ts
 .opencode/tool/uikit.ts
+.opencode/prompts/rules.md
 te9.dev/specs/
 te9.dev/logs/
 te9.dev/specs.json

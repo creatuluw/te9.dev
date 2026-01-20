@@ -52,6 +52,7 @@ LLM Mode: enabled
 ✅ Core files: 4/4 installed
 ✅ Skills: 6/6 installed
 ✅ Tools: 4/4 installed
+✅ Prompts: 1/1 installed
 ✅ Directories: created
 ✅ Specs database: initialized
 
@@ -120,7 +121,9 @@ te9 help
 
 **Tools (4):** `daisyui.ts`, `knowledge_graph.ts`, `melt.ts`, `uikit.ts`
 
-**Dirs:** `.opencode/skill/`, `.opencode/tool/`, `te9.dev/specs/`, `te9.dev/logs/`, `te9.dev/history/`
+**Prompts (1):** `rules.md`
+
+**Dirs:** `.opencode/skill/`, `.opencode/tool/`, `.opencode/prompts/`, `te9.dev/specs/`, `te9.dev/logs/`, `te9.dev/history/`
 
 ---
 

@@ -146,6 +146,7 @@ create_directories() {
     mkdir -p .opencode/skill/spec-commit
     mkdir -p .opencode/skill/spec-track
     mkdir -p .opencode/tool
+    mkdir -p .opencode/prompts
     mkdir -p te9.dev/specs
     mkdir -p te9.dev/logs
 
@@ -194,6 +195,9 @@ download_files() {
     download_file "${RAW_URL}/.opencode/tool/melt.ts" ".opencode/tool/melt.ts"
     download_file "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
 
+    # Prompts
+    download_file "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
+
     log_success "All files downloaded"
 }
 
@@ -218,6 +222,7 @@ verify_installation() {
         ".opencode/skill/spec-execute/SKILL.md"
         ".opencode/skill/spec-commit/SKILL.md"
         ".opencode/skill/spec-track/SKILL.md"
+        ".opencode/prompts/rules.md"
     )
 
     local all_present=true
@@ -243,6 +248,7 @@ verify_installation() {
             echo "✅ Core files: 4/4 installed"
             echo "✅ Skills: 6/6 installed"
             echo "✅ Tools: 4/4 installed"
+            echo "✅ Prompts: 1/1 installed"
             echo "✅ Directories: created"
             echo "✅ Specs database: initialized"
             echo ""
@@ -334,6 +340,9 @@ update_files() {
     download_file_with_backup "${RAW_URL}/.opencode/tool/melt.ts" ".opencode/tool/melt.ts"
     download_file_with_backup "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
 
+    # Prompts
+    download_file_with_backup "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
+
     log_success "All files updated"
 }
 
@@ -350,6 +359,7 @@ verify_update() {
         ".opencode/skill/spec-execute/SKILL.md"
         ".opencode/skill/spec-commit/SKILL.md"
         ".opencode/skill/spec-track/SKILL.md"
+        ".opencode/prompts/rules.md"
     )
 
     local all_present=true
