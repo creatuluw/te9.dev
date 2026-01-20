@@ -380,12 +380,12 @@ After spec-commit completes:
 ## Example Workflow
 
 ```
-AI: Preparing commit for SPEC-20250115-abc123
+AI: Preparing commit for SPEC-20260120-2010-add-login-functionality
     
     === COMMIT PREVIEW ===
     
     Commit Message:
-    feat: Add login functionality [SPEC-20250115-abc123]
+    feat: Add login functionality [SPEC-20260120-2010-add-login-functionality]
     
     - Implemented login form
     - Added authentication

@@ -58,6 +58,12 @@ Wait for confirmation before proceeding to spec-store.
 
 ## Question Guidelines
 
+### Mandatory Rule
+```
+Always ask questions ONE BY ONE and include the question number in the format: "Question X/Y" where X is the current question number and Y is the total expected number of questions.
+Example: "Question 2/4: What should happen when...?"
+```
+
 ### Maximum 5 Questions Total
 ```
 Question 1: Main objective clarification
@@ -78,6 +84,18 @@ Question 5: Confirmation and final details
   
 - Confirmatory for verification
   "So you want X to do Y, correct?"
+```
+
+### Multiple Choice Answer Format
+```
+When using multiple choice questions, ALWAYS assign a single letter (A, B, C, etc.) to each option so the user can respond by typing just the letter.
+
+Format examples:
+  "A) Use React for the frontend"
+  "B) Use Vue for the frontend"
+  "C) Use Angular for the frontend"
+
+This makes it easy for users to respond with "A", "B", or "C".
 ```
 
 ### What NOT to Ask
@@ -109,10 +127,13 @@ Is it vague or large scope?
 ```
 User: "Add a login button to the homepage"
 
-AI: Got it! I'll add a login button to your homepage. 
-    Should it link to /login or open a modal?
+AI: Got it! I'll add a login button to your homepage.
+    
+    Question 1/1: Should the button link to /login or open a modal?
+    A) Link to /login
+    B) Open a modal
 
-User: Link to /login
+User: A
 
 AI: Perfect. I'll add a login button that links to /login on your homepage.
     Proceed? (y/n)
@@ -155,9 +176,14 @@ AI: I need more details to help you best:
 User: [answers all 5 questions]
 
 AI: Excellent. I'll create a dashboard for [purpose] that displays [data] 
-    for [users] with [actions]. Any preferences on layout?
+    for [users] with [actions]. 
     
-User: No, you decide
+    Question 6 (follow-up): Any preferences on layout?
+    A) Grid layout
+    B) List layout
+    C) Let you decide
+
+User: C
     
 AI: Great! I'll create the dashboard. Ready to proceed.
 ```

@@ -1,9 +1,10 @@
-Format: SPEC-<timestamp>-<short-hash>
-Example: SPEC-20250115-abc123
+Format: SPEC-<YYYYMMDD>-<HHMM>-<slug>
+Example: SPEC-20260120-2010-match-brutalist-design
 
 Generate using:
-- Current timestamp (YYYYMMDDHHMM)
-- Short hash of requirements (first 6 chars)
+- Current date (YYYYMMDD)
+- Current time (HHMM)
+- Slugified spec title (lowercase, hyphen-separated, max 50 chars)
 ```
 
 ### 2. Create Spec File
@@ -121,7 +122,7 @@ te9.dev/specs/specs.json
 ## Spec File Template
 
 ```markdown
-# Spec: SPEC-<timestamp>-<hash>
+# Spec: SPEC-20260120-2010-match-brutalist-design
 
 ## Status
 State: PENDING
@@ -163,8 +164,8 @@ Updated: 2025-01-15T10:30:00Z
 
 ```json
 {
-  "spec_id": "SPEC-<timestamp>-<hash>",
-  "created_at": "2025-01-15T10:30:00Z",
+  "spec_id": "SPEC-20260120-2010-match-brutalist-design",
+  "created_at": "2026-01-20T20:10:00Z",
   "original_prompt": "user's original prompt",
   "clarification_questions": [
     {
@@ -202,8 +203,54 @@ PENDING → IN_PROGRESS → COMPLETED
                   BLOCKED
 ```
 
+## Spec ID Format Validation (MANDATORY)
+
+The spec ID format is **strictly enforced**. All spec IDs MUST follow: `SPEC-<YYYYMMDD>-<HHMM>-<slug>`
+
+### Format Breakdown:
+- **SPEC**: Literal prefix (required)
+- **<YYYYMMDD>**: 8-digit date (e.g., 20260120)
+- **<HHMM>**: 4-digit time in 24h format (e.g., 2010)
+- **<slug>**: Lowercase, hyphen-separated title slug (max 50 chars)
+
+### Slug Generation Rules:
+- Convert title to lowercase
+- Replace spaces with hyphens
+- Remove special characters (keep only a-z, 0-9, hyphens)
+- Max length: 50 characters
+- No consecutive hyphens
+- No leading/trailing hyphens
+
+### Valid Examples:
+- SPEC-20260120-2010-match-brutalist-design
+- SPEC-20260120-2010-fix-api-authentication
+- SPEC-20260120-2010-add-user-profile-page
+
+### Invalid Examples (REJECTED):
+- SPEC-1737400800-0875b1c7 ❌ (uses old timestamp-hash format)
+- SPEC-1768932478-TASKGRID ❌ (uses old format)
+- SPEC-20260120-2010 ❌ (missing slug)
+- SPEC-20260120-2010- ❌ (trailing hyphen)
+- SPEC-20260120-2010--test ❌ (consecutive hyphens)
+- spec-20260120-2010-test ❌ (lowercase prefix)
+
+### Validation Steps:
+1. Check prefix is "SPEC" (case-sensitive)
+2. Validate date format (YYYYMMDD, must be valid date)
+3. Validate time format (HHMM, 00-23 hours, 00-59 minutes)
+4. Validate slug (lowercase, hyphen-separated, no special chars, max 50 chars)
+5. Ensure uniqueness in specs database
+
+### Error Messages:
+- Invalid prefix: "❌ Spec ID must start with 'SPEC'"
+- Invalid date: "❌ Invalid date format. Use YYYYMMDD"
+- Invalid time: "❌ Invalid time format. Use HHMM (24h format)"
+- Invalid slug: "❌ Slug must be lowercase, hyphen-separated, max 50 chars"
+- Duplicate ID: "❌ Spec ID already exists. Please try again in one minute."
+
 ## Validation Checklist
 
+- ✅ Spec ID follows mandatory format SPEC-<YYYYMMDD>-<HHMM>-<slug>
 - ✅ Unique spec ID generated
 - ✅ Spec file created with all required sections
 - ✅ Specs database updated
@@ -217,7 +264,9 @@ PENDING → IN_PROGRESS → COMPLETED
 - Spec file is complete and well-formatted
 - All requirements from spec-clarify are captured
 - Acceptance criteria are clear and testable
-- Spec ID is unique and follows naming convention
+- Spec ID strictly follows mandatory format SPEC-<YYYYMMDD>-<HHMM>-<slug>
+- Spec ID is unique in the specs database
+- Spec ID validation passed (prefix, date, time, and slug all valid)
 - User knows how to proceed to execution or tracking
 - Spec is stored in both file system and OpenMemory
 
@@ -226,8 +275,9 @@ PENDING → IN_PROGRESS → COMPLETED
 ### Duplicate Spec ID
 ```
 If spec ID exists:
-- Regenerate with different timestamp
-- Or increment suffix (-01, -02, etc.)
+- User must wait 1 minute and regenerate (different time)
+- DO NOT use suffixes or modifications
+- The format SPEC-<YYYYMMDD>-<HHMM>-<slug> is MANDATORY
 ```
 
 ### Missing Information
@@ -240,6 +290,7 @@ If spec-clarify didn't provide sufficient detail:
 
 ## Notes
 
+- **Spec ID format SPEC-<YYYYMMDD>-<HHMM>-<slug> is MANDATORY** - no exceptions
 - Always store spec immediately after clarification
 - Don't wait for execution to create spec
 - Specs are immutable - if changes needed, create new spec

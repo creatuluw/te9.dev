@@ -56,7 +56,7 @@ AFTER user confirmation, automatically proceed to **spec-store**.
 IMMEDIATELY after spec-clarify confirmation.
 
 ### What You MUST Do
-1. Generate unique spec ID: `SPEC-<timestamp>-<hash>`
+1. Generate unique spec ID: `SPEC-<YYYYMMDD>-<HHMM>-<slug>`
 2. Create spec file at: `te9.dev/specs/<spec-id>/spec.md`
 3. Create context.json with conversation history
 4. Update `te9.dev/specs/specs.json` database
@@ -67,7 +67,7 @@ IMMEDIATELY after spec-clarify confirmation.
 
 ### Spec File Structure
 ```markdown
-# Spec: SPEC-<timestamp>-<hash>
+# Spec: SPEC-<YYYYMMDD>-<HHMM>-<title-slug>
 
 ## Status
 State: PENDING
