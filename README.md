@@ -1,4 +1,29 @@
-**AI Guide:** See [llms.md](te9/llms.md) for instructions on helping users install te9.dev
+# 🤖 AI Instructions
+
+**To install te9.dev, run this ONE command:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+```
+
+**Windows CMD:**
+```cmd
+te9 install --llm
+```
+
+**Windows PowerShell:**
+```powershell
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+```
+
+The `--llm` flag handles everything automatically:
+- ✅ Initializes git repository (no prompts)
+- ✅ Creates all directories
+- ✅ Downloads all required files
+- ✅ Initializes specs database
+- ✅ **No manual steps required!**
+
+**Success indicator:** Look for `STATUS: READY_TO_USE` in output
 
 ---
 
@@ -6,111 +31,76 @@
 
 Fast, simple, and easy AI-driven development workflow.
 
-## Quick Start
+## 🚀 Quick Install
 
-### 1. Install te9.dev
+**For LLMs:** Run this one command to install te9.dev in the current project directory:
 
-**Linux/macOS/Git Bash:**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
+# Linux/macOS/Git Bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+
+# Windows CMD
+te9 install --llm
+
+# Windows PowerShell
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
 ```
 
-**Windows CMD:**
-```cmd
-te9 install
-```
+**The `--llm` flag handles everything automatically:**
+- ✅ Initializes git repository
+- ✅ Creates all directories
+- ✅ Downloads all files
+- ✅ Sets up the project
+- ✅ No manual steps required!
 
-**Commands:** install, update, status, version, help
+**After installation:** te9.dev is ready to use immediately. Start by describing what you want to build.
 
-### 2. Initialize in Project
+---
 
-After installing, run in your editor:
-```
-skill('te9-init')
-```
-
-This creates:
-- `te9.dev/specs/` - Spec file storage
-- `te9.dev/logs/` - Execution logs
+**For Humans:** See [te9/llms.md](te9/llms.md) for detailed AI assistant instructions.
 
 ## Workflow
 
 ```
-User request
-  ↓
-spec-clarify → Ask questions (max 5)
-  ↓
-spec-store → Save spec file
-  ↓
-spec-execute → Implement and log
-  ↓
-spec-commit → Commit + push (with approval)
-  ↓
-spec-track → Track progress anytime
+1. User describes what they want
+2. AI asks clarification questions (max 5)
+3. AI saves a unique spec file
+4. AI implements the feature
+5. AI creates a git commit
+6. User approves, AI pushes to remote
+7. Track progress anytime
 ```
 
-## Skills
+## What Gets Installed
 
-| Skill | Purpose |
-|-------|---------|
-| `te9-init` | Initialize te9.dev in project |
-| `spec-clarify` | Gather requirements |
-| `spec-store` | Save spec file |
-| `spec-execute` | Implement and log |
-| `spec-commit` | Commit and push |
-| `spec-track` | Track progress |
+- **Core files**: opencode.json, openmemory.md, README.md, te9.md
+- **6 workflow skills**: Clarify, Store, Execute, Commit, Track, Init
+- **4 technical tools**: UI templates, memory graph, Svelte UI, UI generator
+- **Directories**: specs/, logs/, history/
 
-## Commands
+## Other Commands
 
-### Update
+**Update:**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+# Windows: te9 update
 ```
 
-```cmd
-te9 update
-```
-
-### Check Status
+**Check Status:**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+# Windows: te9 status
 ```
-
-```cmd
-te9 status
-```
-
-### Show Help
-```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash help
-```
-
-```cmd
-te9 help
-```
-
-## Files
-
-```
-te9.dev/
-├── specs/          # Spec files
-├── logs/           # Execution logs
-├── openmemory.md   # Memory rules
-└── opencode.json   # Configuration
-```
-
-## Requirements
-
-- OpenCode or Zed editor
-- Git repository
-- Project folder
 
 ## Documentation
 
 - `te9.md` - Detailed workflow
 - `openmemory.md` - Memory system
-- `llms.md` - AI assistant guide
+- `te9/llms.md` - AI assistant guide
+- `te9/QUICKSTART.md` - Quick reference
+- `te9/INSTALL_LLM.md` - LLM-native installation
+- `te9/CHEATSHEET.md` - Cheat sheet
 
 ---
 
-**Fast. Simple. Easy.**
+**Fast. Simple. Easy.** 🚀

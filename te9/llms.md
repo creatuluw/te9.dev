@@ -1,79 +1,56 @@
-# te9.dev AI Instructions
+# te9.dev AI Installation Guide
 
-Guide for AI assistants to help users install and manage te9.dev in their projects.
+This guide is specifically written for AI assistants to help users install te9.dev.
 
-## What is te9.dev?
+## Overview
 
-te9.dev is a simplified, 6-step AI-driven development workflow:
+te9.dev is a 6-step AI-driven development workflow that requires installation before use. As an AI, you can install it by:
 
-1. **User enters prompt**
-2. **spec-clarify** → Ask clarification questions (max 5)
-3. **spec-store** → Store unique spec file
-4. **spec-execute** → Implement spec and log work
-5. **spec-commit** → Commit and push (with user approval)
-6. **spec-track** → Track progress and status anytime
+1. **Downloading the installation script**
+2. **Running the install command**
+3. **Auto-initializing the project structure**
 
-## Quick Installation Commands
+## Critical Information
 
-### Linux / macOS / Windows (Git Bash)
+### THE ONE CORRECT URL
 
-```bash
-# Install te9.dev
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
-
-# Update to latest version
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
-
-# Check installation status
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
-
-# Show version
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash version
-
-# Show help
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash help
+Use ONLY this URL for the te9 installation script:
+```
+https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9
 ```
 
-### Windows Command Prompt
+**Do NOT use:**
+- ❌ `https://github.com/creatuluw/te9.dev/te9/te9` (missing raw.githubusercontent.com)
+- ❌ `https://raw.githubusercontent.com/creatuluw/te9.dev/refs/heads/main/te9/te9` (refs/heads not needed)
+- ❌ Any other variation
 
-```cmd
-REM Install te9.dev
-te9 install
+### Platform Detection
 
-REM Update to latest version
-te9 update
+Before providing installation commands, detect the user's environment:
 
-REM Check installation status
-te9 status
+**Check if Windows CMD/PowerShell:**
+- User is on Windows platform
+- Default shell is likely cmd or powershell
 
-REM Show version
-te9 version
+**Check if Bash (Linux/macOS/Git Bash):**
+- User is on Linux/macOS
+- User on Windows with Git Bash installed
+- Environment shows `/bin/bash` or similar
 
-REM Show help
-te9 help
+## Installation Procedure
+
+### Step 1: Confirm Location
+
+Ask user to navigate to their project directory:
+```
+Please navigate to your project directory where you want to install te9.dev.
 ```
 
-## Installation Process
+### Step 2: Provide Installation Command
 
-### Step 1: User requests te9.dev installation
-
-When user says:
-- "Install te9.dev"
-- "Set up te9.dev"
-- "I want to use te9.dev"
-- "Add te9.dev to my project"
-
-### Step 2: Check platform
-
-Detect the user's platform:
-- Linux/macOS: Use bash commands
-- Windows: Check if using CMD/PowerShell or Git Bash
-
-### Step 3: Provide installation command
-
-**For Linux/macOS/Git Bash:**
+**For Bash environments (Linux, macOS, Git Bash):**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
 ```
 
 **For Windows CMD:**
@@ -83,65 +60,104 @@ te9 install
 
 **For Windows PowerShell:**
 ```powershell
-& .\te9.cmd install
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
 ```
 
-### Step 4: Verify installation
+### Step 3: The Script Does Everything
 
-After installation, user should have:
-- `opencode.json`
-- `openmemory.md`
-- `.opencode/skill/` (6 skills)
-- `.opencode/tool/` (4 technical tools)
-- `te9.dev/specs/`
-- `te9.dev/logs/`
+The install script will:
+- ✅ Initialize git repository if needed
+- ✅ Create all directory structures
+- ✅ Download all required files
+- ✅ Initialize the specs database
+- ✅ Verify installation
 
-### Step 5: Initialize te9.dev
+**No manual steps required after running the install command!**
 
-Tell user to run:
-```
-skill('te9-init')
-```
+### Step 4: Verify Installation
 
-This creates the project structure for specs and logs.
+The script outputs a verification showing:
+- ✅ All core files installed
+- ✅ All skills present
+- ✅ Directory structure created
+
+If verification passes, installation is complete and ready to use.
 
 ## What Gets Installed
 
-### Core Files (4)
-- `opencode.json` - Configuration
+### Core Configuration (4 files)
+- `opencode.json` - Main configuration
 - `openmemory.md` - Memory system rules
 - `README.md` - Project documentation
 - `te9.md` - Workflow guide
 
-### Skills (6)
-- `te9-init/SKILL.md` - Initialize te9.dev
-- `spec-clarify/SKILL.md` - Clarify requirements
+### Skills (6 skills)
+- `te9-init/SKILL.md` - Project initialization
+- `spec-clarify/SKILL.md` - Ask clarification questions
 - `spec-store/SKILL.md` - Store spec files
-- `spec-execute/SKILL.md` - Implement and log
-- `spec-commit/SKILL.md` - Commit and push
+- `spec-execute/SKILL.md` - Implement and log work
+- `spec-commit/SKILL.md` - Commit and push changes
 - `spec-track/SKILL.md` - Track progress
 
-### Technical Tools (4)
+### Technical Tools (4 tools, optional)
 - `daisyui.ts` - UI component templates
 - `knowledge_graph.ts` - Memory graph exporter
 - `melt.ts` - Svelte UI builder
 - `uikit.ts` - UI component generator
 
+### Directory Structure
+- `.opencode/skill/` - All skill definitions
+- `.opencode/tool/` - Technical tools
+- `te9.dev/specs/` - Spec file storage
+- `te9.dev/logs/` - Execution logs
+- `te9.dev/history/` - Git history
+
+## Alternative: LLM Native Installation
+
+If you have direct file system access, you can install te9.dev without shell commands:
+
+### Download Each File Directly
+
+Download these files from GitHub:
+```
+https://raw.githubusercontent.com/creatuluw/te9.dev/main/opencode.json
+https://raw.githubusercontent.com/creatuluw/te9.dev/main/openmemory.md
+https://raw.githubusercontent.com/creatuluw/te9.dev/main/README.md
+https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9.md
+```
+
+### Create Directory Structure
+```
+.opencode/skill/te9-init/SKILL.md
+.opencode/skill/spec-clarify/SKILL.md
+.opencode/skill/spec-store/SKILL.md
+.opencode/skill/spec-execute/SKILL.md
+.opencode/skill/spec-commit/SKILL.md
+.opencode/skill/spec-track/SKILL.md
+.opencode/tool/daisyui.ts
+.opencode/tool/knowledge_graph.ts
+.opencode/tool/melt.ts
+.opencode/tool/uikit.ts
+te9.dev/specs/
+te9.dev/logs/
+te9.dev/specs.json
+```
+
+### Initialize Specs Database
+Create an empty JSON file at `te9.dev/specs.json` with content:
+```json
+{}
+```
+
 ## Updating te9.dev
 
-### When user requests update
+### Check for Updates
 
-User says:
-- "Update te9.dev"
-- "Check for updates"
-- "Upgrade te9.dev"
-- "Get latest version"
+User asks: "Update te9.dev" or "Check for updates"
 
-### Provide update command
-
-**Linux/macOS/Git Bash:**
+**Bash:**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
 ```
 
 **Windows CMD:**
@@ -151,32 +167,23 @@ te9 update
 
 **Windows PowerShell:**
 ```powershell
-& .\te9.cmd update
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
 ```
 
-### What update does
-
-- Creates automatic backup (`.te9-backup-TIMESTAMP`)
+### What Update Does
+- Creates backup: `.te9-backup-TIMESTAMP/`
 - Downloads latest files from GitHub
-- Preserves user's specs and logs
+- Preserves user's specs and logs in `te9.dev/`
 - Updates all skills and tools
 - Verifies installation
 
-## Checking Status
+## Checking Installation Status
 
-### When user asks to check status
+User asks: "Check te9.dev status" or "Is te9.dev installed?"
 
-User says:
-- "Check te9.dev status"
-- "Is te9.dev installed?"
-- "Verify installation"
-- "What's the status?"
-
-### Provide status command
-
-**Linux/macOS/Git Bash:**
+**Bash:**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
 ```
 
 **Windows CMD:**
@@ -186,205 +193,186 @@ te9 status
 
 **Windows PowerShell:**
 ```powershell
-& .\te9.cmd status
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
 ```
 
-## Prerequisites
-
-### Required
-- **OpenCode or Zed editor** (with MCP support)
-- **Git repository** (auto-initialized if missing)
-- **curl** command (Linux/macOS/Git Bash)
-- **Bash shell** (Linux/macOS/Git Bash)
-- **PowerShell** (Windows CMD)
-
-### For Windows Users
-- **Git for Windows** (recommended): https://git-scm.com/download/win
-- OR **WSL** (Windows Subsystem for Linux)
-
-## Quick Start Example
-
-### Complete conversation flow
-
-**User:** "I want to use te9.dev"
-
-**AI:** "Great! Here's how to install te9.dev in your project:
-
-**Step 1:** Navigate to your project folder
-```bash
-cd your-project
-```
-
-**Step 2:** Run installation command
-
-For Linux/macOS/Git Bash:
-```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
-```
-
-For Windows Command Prompt:
-```cmd
-te9 install
-```
-
-**Step 3:** Initialize te9.dev
-In your OpenCode or Zed editor, run:
-```
-skill('te9-init')
-```
-
-This will create the `te9.dev/specs/` and `te9.dev/logs/` folders.
-
-**Step 4:** Start using te9.dev
-Enter your request, and I'll:
-- Ask clarification questions (if needed)
-- Create a spec file
-- Implement your request
-- Create a git commit
-- Ask for approval to push
-
-Ready to get started?"
-
----
-
-**User:** "Yes"
-
-**AI:** "Perfect! Run the installation command above, then let me know when it's complete. After that, you can start using te9.dev right away!"
-
-## Common Scenarios
-
-### Scenario 1: User wants to update
-
-**User:** "Is there a newer version of te9.dev?"
-
-**AI:** "To check for and install the latest version of te9.dev, run:
-
-Linux/macOS/Git Bash:
-```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
-```
-
-Windows CMD:
-```cmd
-te9 update
-```
-
-This will backup your current files, download the latest version, and verify the update. Your specs and logs will be preserved."
-
-### Scenario 2: User wants to check status
-
-**User:** "Check if te9.dev is installed correctly"
-
-**AI:** "To check your te9.dev installation status, run:
-
-Linux/macOS/Git Bash:
-```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
-```
-
-Windows CMD:
-```cmd
-te9 status
-```
-
-This will show you which files are installed and if anything is missing."
-
-### Scenario 3: User wants help
-
-**User:** "Show te9.dev commands"
-
-**AI:** "Here are the te9.dev commands:
-
-**Install te9.dev:**
-Linux/macOS/Git Bash: `curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install`
-Windows CMD: `te9 install`
-
-**Update to latest:**
-Linux/macOS/Git Bash: `curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update`
-Windows CMD: `te9 update`
-
-**Check status:**
-Linux/macOS/Git Bash: `curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status`
-Windows CMD: `te9 status`
-
-**Show version:**
-Linux/macOS/Git Bash: `curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash version`
-Windows CMD: `te9 version`
-
-**Show help:**
-Linux/macOS/Git Bash: `curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash help`
-Windows CMD: `te9 help`"
-
-## Important Notes
-
-### For AI Assistants
-
-- **Always detect platform** before providing commands
-- **Provide both bash and Windows options** when platform unclear
-- **Explain what each command does**
-- **Wait for user confirmation** before proceeding
-- **Offer help** if user seems stuck
-- **Check for prerequisites** (git, curl, etc.)
-
-### For Users
-
-- **te9.dev is self-contained** - all files downloaded from GitHub
-- **No installation needed** - just run the command
-- **Updates preserve data** - specs and logs are safe
-- **Cross-platform** - works on Linux, macOS, and Windows
-- **Backups automatic** - update creates `.te9-backup-TIMESTAMP`
+Status shows:
+- Which files are installed
+- Which files are missing
+- Number of specs and logs
+- Git repository status
+- Next steps
 
 ## Troubleshooting
 
-### Installation fails
+### Installation Fails
 
-**Possible causes:**
-- No internet connection
-- Git not initialized
-- No write permissions
-- curl missing (Windows)
+**Error: "command not found" or similar**
+- Curl not available on Windows
+- Solution: Install Git for Windows from https://git-scm.com/download/win
+- Then use Git Bash and run the bash command
 
-**Solutions:**
-- Check internet: `curl -I https://github.com`
-- Initialize git: `git init`
-- Check permissions: `ls -la`
-- Install curl or Git for Windows
+**Error: "Not in a git repository"**
+- Script will offer to initialize git
+- Accept the prompt to run `git init`
+- Installation will continue
 
-### Update fails
-
-**Possible causes:**
-- Network issues
-- Corrupted backup
-- Permission errors
-
-**Solutions:**
-- Check `.te9-backup-*` folders
-- Manually restore from backup
-- Re-run update command
+**Error: "Failed to download"**
 - Check internet connection
+- Verify the URL is correct (use the exact URL from this guide)
+- Try downloading directly from browser to test
+
+### Update Fails
+
+**Error: "Permission denied"**
+- Check write permissions in project directory
+- Run command with elevated privileges if needed
+
+**Error: "Backup failed"**
+- Manually create backup folder: `.te9-backup-manual/`
+- Copy important files there
+- Re-run update command
+
+## Quick Reference
+
+### Install (One Command)
+```bash
+# Bash (Linux/macOS/Git Bash)
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+
+# Windows CMD
+te9 install
+
+# Windows PowerShell
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+```
+
+### Update
+```bash
+# Bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+
+# Windows CMD
+te9 update
+```
+
+### Status
+```bash
+# Bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+
+# Windows CMD
+te9 status
+```
+
+### Help
+```bash
+# Bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash help
+
+# Windows CMD
+te9 help
+```
+
+## Conversation Examples
+
+### Example 1: Fresh Installation
+
+**User:** "I want to use te9.dev"
+
+**AI:** "Great! Let's install te9.dev in your project.
+
+First, please navigate to your project directory.
+
+Then, I'll run the installation command for you.
+
+Which environment are you using?
+- Linux/macOS/Git Bash
+- Windows Command Prompt
+- Windows PowerShell"
+
+**User:** "Git Bash on Windows"
+
+**AI:** "Perfect! I'll install te9.dev now:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+```
+
+This will:
+✅ Initialize git repository if needed
+✅ Create all necessary directories
+✅ Download all required files
+✅ Set up the specs database
+
+Running installation now..."
+
+[AI runs command]
+
+**AI:** "✅ Installation complete!
+
+te9.dev is now ready to use in your project. You can start by entering your request, and I'll help you through the 6-step workflow."
+
+### Example 2: Update
+
+**User:** "Update te9.dev to the latest version"
+
+**AI:** "I'll update te9.dev to the latest version now:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+```
+
+This will create a backup of your current files and download the latest updates. Your specs and logs will be preserved."
+
+[AI runs command]
+
+**AI:** "✅ Update complete!
+
+Your te9.dev installation is now up to date. Backup created at `.te9-backup-TIMESTAMP/`. You can continue using te9.dev as normal."
+
+### Example 3: Check Status
+
+**User:** "Is te9.dev installed correctly?"
+
+**AI:** "Let me check your te9.dev installation status:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+```"
+
+[AI runs command]
+
+**AI:** "Based on the status check:
+- ✅ All core files are installed
+- ✅ All 6 skills are present
+- ✅ Directory structure is correct
+- ✅ Git repository is initialized
+- 📊 X spec(s) found
+- 📊 X log(s) found
+
+Your te9.dev installation is complete and ready to use!"
+
+## Best Practices for AI Assistants
+
+1. **Always detect platform first** - Don't assume bash or Windows
+2. **Use the exact URL provided** - No variations, no assumptions
+3. **Explain what will happen** - Tell user before running commands
+4. **Wait for confirmation** - Don't auto-run without user consent
+5. **Handle errors gracefully** - Provide clear solutions for common issues
+6. **Offer alternatives** - If curl fails, suggest LLM native installation
+7. **Verify after installation** - Run status check to confirm success
+
+## Key Takeaways
+
+- **One URL to rule them all:** `https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9`
+- **One command to install:** `curl -fsSL [URL] | bash install`
+- **No manual steps:** Script handles everything including git init
+- **Cross-platform:** Works on Linux, macOS, and Windows (with Git Bash)
+- **Safe updates:** Automatic backups preserve user data
 
 ## Additional Resources
 
-- **GitHub Repository:** https://github.com/creatuluw/te9.dev
-- **Documentation:** https://github.com/creatuluw/te9.dev#readme
+- **Repository:** https://github.com/creatuluw/te9.dev
 - **Issues:** https://github.com/creatuluw/te9.dev/issues
-
-## Summary
-
-te9.dev is fast, simple, and easy to install:
-
-**One command to install:**
-- Linux/macOS/Git Bash: `curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install`
-- Windows CMD: `te9 install`
-
-**After installation:**
-- Run `skill('te9-init')` to initialize
-- Start using the 6-step workflow
-
-**One command to update:**
-- Same command with `update` instead of `install`
-
-**Always available:**
-- `status` to check installation
-- `version` to show version
-- `help` to see all commands
+- **Documentation:** See te9.md in your project after installation

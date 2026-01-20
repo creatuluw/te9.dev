@@ -1,8 +1,36 @@
 #!/bin/bash
 
+# ==============================================================================
+# AI INSTRUCTIONS - READ THIS FIRST
+# ==============================================================================
+#
+# To install te9.dev, run this ONE command:
+#
+#   curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+#
+# Windows CMD:
+#   te9 install --llm
+#
+# Windows PowerShell:
+#   iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+#
+# The --llm flag handles EVERYTHING automatically:
+#   - Initializes git repository (no prompts)
+#   - Creates all directories
+#   - Downloads all required files
+#   - Initializes specs database
+#   - Completes project setup
+#
+# SUCCESS INDICATOR: Look for "STATUS: READY_TO_USE" in output
+#
+# For more info: See AI_INSTRUCTIONS.md in the repository root
+#
+# ==============================================================================
+
 # te9 - Unified te9.dev Management Script
 # Works on Linux, macOS, and Windows (Git Bash)
 # Usage: curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash
+# LLM mode: curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install --llm
 
 set -e
 
@@ -10,6 +38,10 @@ set -e
 REPO="creatuluw/te9.dev"
 BRANCH="main"
 RAW_URL="https://raw.githubusercontent.com/${REPO}/${BRANCH}"
+
+# LLM mode flag (auto-confirm, auto-init, structured output)
+LLM_MODE=false
+AUTO_INIT=false
 
 # Colors
 RED='\033[0;31m'
@@ -42,7 +74,7 @@ show_help() {
     echo -e "${BOLD}te9 - te9.dev Management Script${NC}"
     echo ""
     echo -e "${BOLD}Usage:${NC}"
-    echo "  curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash [command]"
+    echo "  curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash [command] [options]"
     echo ""
     echo -e "${BOLD}Commands:${NC}"
     echo "  ${CYAN}install${NC}    Install te9.dev in current directory"
@@ -51,8 +83,13 @@ show_help() {
     echo "  ${CYAN}version${NC}    Show version information"
     echo "  ${CYAN}help${NC}       Show this help message"
     echo ""
+    echo -e "${BOLD}Options:${NC}"
+    echo "  ${CYAN}--llm${NC}      LLM-friendly mode (auto-confirm, auto-init, structured output)"
+    echo "  ${CYAN}--auto-init${NC} Automatically initialize after install (no manual skill step)"
+    echo ""
     echo -e "${BOLD}Examples:${NC}"
     echo "  curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install"
+    echo "  curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install --llm"
     echo "  curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update"
     echo "  curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status"
     echo ""
@@ -71,13 +108,19 @@ show_version() {
 check_git_repo() {
     if ! git rev-parse --git-dir > /dev/null 2>&1; then
         log_warn "Not in a git repository"
-        read -p "Run 'git init' first? (y/N): " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            git init
+        if [ "$LLM_MODE" = true ] || [ "$AUTO_INIT" = true ]; then
+            log_info "Auto-initializing git repository (LLM mode)..."
+            git init > /dev/null 2>&1
             log_success "Initialized git repository"
         else
-            log_info "Continuing anyway..."
+            read -p "Run 'git init' first? (y/N): " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                git init
+                log_success "Initialized git repository"
+            else
+                log_info "Continuing anyway..."
+            fi
         fi
     fi
 }
@@ -189,11 +232,29 @@ verify_installation() {
 
     [ -d te9.dev/specs ] && log_success "te9.dev/specs/" || log_error "te9.dev/specs/"
     [ -d te9.dev/logs ] && log_success "te9.dev/logs/" || log_error "te9.dev/logs/"
+    [ -d te9.dev/history ] && log_success "te9.dev/history/" || log_error "te9.dev/history/"
+    [ -f te9.dev/specs.json ] && log_success "te9.dev/specs.json" || log_error "te9.dev/specs.json"
 
     if [ "$all_present" = true ]; then
         log_success "✅ Installation verified!"
+        if [ "$LLM_MODE" = true ]; then
+            echo ""
+            echo "=== INSTALLATION SUMMARY ==="
+            echo "✅ Core files: 4/4 installed"
+            echo "✅ Skills: 6/6 installed"
+            echo "✅ Tools: 4/4 installed"
+            echo "✅ Directories: created"
+            echo "✅ Specs database: initialized"
+            echo ""
+            echo "STATUS: READY_TO_USE"
+        fi
     else
         log_error "❌ Installation incomplete"
+        if [ "$LLM_MODE" = true ]; then
+            echo ""
+            echo "=== INSTALLATION FAILED ==="
+            echo "STATUS: INCOMPLETE"
+        fi
         return 1
     fi
 }
@@ -449,11 +510,45 @@ check_status() {
     fi
 }
 
+# Auto-initialize project (LLM-friendly, no manual skill step needed)
+auto_init() {
+    log_info "Auto-initializing te9.dev project structure..."
+
+    # Create te9.dev/history directory
+    mkdir -p te9.dev/history
+    log_success "Created: te9.dev/history/"
+
+    # Initialize OpenMemory with project info
+    local project_dir=$(pwd)
+    local project_name=$(basename "$project_dir")
+
+    # Create a simple initialization marker
+    cat > te9.dev/.initialized <<EOF
+{
+  "initialized_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+  "project_name": "$project_name",
+  "project_path": "$project_dir",
+  "version": "1.0.0"
+}
+EOF
+
+    log_success "Project initialized: $project_name"
+    log_success "No manual skill('te9-init') needed!"
+}
+
 # Install command
 cmd_install() {
     detect_platform
-    log_info "Installing te9.dev..."
-    echo ""
+
+    if [ "$LLM_MODE" = true ]; then
+        echo "=== TE9.DEV INSTALLATION ==="
+        echo "Platform: $PLATFORM"
+        echo "LLM Mode: enabled"
+        echo ""
+    else
+        log_info "Installing te9.dev..."
+        echo ""
+    fi
 
     check_git_repo
     create_directories
@@ -461,13 +556,28 @@ cmd_install() {
     init_specs
     verify_installation
 
+    # Auto-initialize if in LLM mode or --auto-init flag
+    if [ "$LLM_MODE" = true ] || [ "$AUTO_INIT" = true ]; then
+        echo ""
+        auto_init
+    fi
+
     echo ""
     log_success "🎉 te9.dev installed successfully!"
     echo ""
-    log_info "Next steps:"
-    echo "  1. Open your project in OpenCode or Zed"
-    echo "  2. Run: skill('te9-init')"
-    echo "  3. Start using te9.dev workflow!"
+
+    if [ "$LLM_MODE" = true ] || [ "$AUTO_INIT" = true ]; then
+        log_info "te9.dev is now ready to use! No further initialization needed."
+        echo ""
+        echo "=== READY ==="
+        log_info "You can start using the 6-step workflow immediately."
+    else
+        log_info "Next steps:"
+        echo "  1. Open your project in OpenCode or Zed"
+        echo "  2. Run: skill('te9-init')"
+        echo "  3. Start using te9.dev workflow!"
+    fi
+
     echo ""
     log_info "For help: https://github.com/${REPO}"
 }
@@ -503,7 +613,31 @@ cmd_status() {
 
 # Main
 main() {
-    local command="${1:-help}"
+    # Parse arguments
+    local command=""
+    local args=()
+
+    for arg in "$@"; do
+        case "$arg" in
+            --llm)
+                LLM_MODE=true
+                AUTO_INIT=true
+                ;;
+            --auto-init)
+                AUTO_INIT=true
+                ;;
+            *)
+                if [ -z "$command" ]; then
+                    command="$arg"
+                else
+                    args+=("$arg")
+                fi
+                ;;
+        esac
+    done
+
+    # Default to help if no command
+    command="${command:-help}"
 
     case "$command" in
         install)
