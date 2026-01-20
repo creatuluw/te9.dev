@@ -1,168 +1,80 @@
-# OpenCode Skills for the te9-method
+# te9.dev Skills
 
-This directory contains OpenCode Skills that implement the te9-method's PRD-driven development workflow. These skills enable AI agents to conduct structured interviews, create PRDs, execute work, test criteria, and track progress.
+Simplified workflow for software development with AI.
 
-## Installation
+## Skills
 
-Copy the entire skill folders to your project:
+| Skill | Purpose |
+|-------|---------|
+| **te9-init** | Initialize te9.dev in your project |
+| **spec-clarify** | Ask clarification questions (max 5) |
+| **spec-store** | Store unique spec file |
+| **spec-execute** | Implement spec and log work |
+| **spec-commit** | Commit and push after approval |
+| **spec-track** | Track progress and status anytime |
 
-```bash
-# Copy all skills to your project's .opencode directory
-cp -r opencode-skills/* <your-project>/.opencode/skill/
-```
-
-Your project structure should look like:
-
-```
-.your-project/
-├── .opencode/
-│   └── skill/
-│       ├── prd-interview/
-│       │   └── SKILL.md
-│       ├── prd-plan/
-│       │   └── SKILL.md
-│       ├── prd-create/
-│       │   └── SKILL.md
-│       ├── prd-execute/
-│       │   └── SKILL.md
-│       ├── prd-test/
-│       │   └── SKILL.md
-│       └── prd-track/
-│           └── SKILL.md
-```
-
-## Available Skills
-
-| Skill | Description |
-|-------|-------------|
-| `prd-interview` | Conduct structured 9-question interview for new work |
-| `prd-plan` | Break large asks into multiple well-sized PRDs |
-| `prd-create` | Generate PRD files, update database, create run folders |
-| `prd-status` | Display PRD status overview and guide on starting work |
-| `prd-execute` | Implement work on a specific PRD |
-| `prd-test` | Verify all acceptance criteria with tests |
-| `prd-track` | Log progress, achievements, and issues |
-
-## Quick Start Examples
-
-### Example 1: Simple Feature (Single PRD)
-
-**Your prompt:**
-```
-I need to add user authentication to my webapp
-```
-
-**Agent workflow:**
-1. Calls `skill("prd-interview")` → Conducts 9-question interview
-2. Gets your approval on the recap
-3. Calls `skill("prd-create")` → Generates PRD files
-4. Calls `skill("prd-execute")` → Implements authentication
-5. Calls `skill("prd-test")` → Runs tests and verifies criteria
-6. Calls `skill("prd-track")` → Updates logs and marks PRD as DONE
-
-### Example 2: Large Project (Multiple PRDs)
-
-**Your prompt:**
-```
-I want to create an e-commerce platform with shopping cart, checkout, and payment processing
-```
-
-**Agent workflow:**
-1. Calls `skill("prd-interview")` → Conducts interview
-2. Recognizes it's a large ask (10+ criteria, complex description)
-3. Calls `skill("prd-plan")` → Creates multi-PRD plan:
-   - PRD-001: Database schema & product models
-   - PRD-002: Shopping cart functionality
-   - PRD-003: Checkout system
-   - PRD-004: Payment integration
-   - PRD-005: Testing & deployment
-4. Gets your approval on the plan
-5. Calls `skill("prd-create")` → Generates all PRD files
-6. For each PRD in order:
-   - Calls `skill("prd-execute")` → Implements work
-   - Calls `skill("prd-test")` → Tests and verifies
-   - Calls `skill("prd-track")` → Updates progress
-7. Summarizes all completed work
-
-### Example 3: Bugfix
-
-**Your prompt:**
-```
-There's a bug where the login form doesn't validate email format
-```
-
-**Agent workflow:**
-1. Calls `skill("prd-interview")` with type "Bugfix"
-2. Gets approval on the bugfix PRD
-3. Calls `skill("prd-create")` → Generates bugfix PRD
-4. Calls `skill("prd-execute")` → Fixes the email validation
-5. Calls `skill("prd-test")` → Verifies fix works, checks for regressions
-6. Calls `skill("prd-track")` → Logs completion
-
-## Configuration
-
-Optional: Configure skill permissions in `opencode.json`:
-
-```json
-{
-  "permission": {
-    "skill": {
-      "*": "allow"
-    }
-  }
-}
-```
-
-## Project Structure
-
-The skills expect this structure (the te9-method will create if missing):
+## Workflow
 
 ```
-your-project/
-├── dev/
-│   ├── prd/
-│   │   ├── prd.json              # PRD database
-│   │   ├── runs/                 # PRD execution folders
-│   │   │   └── <prd-id>/
-│   │   │       ├── <prd-id>.json
-│   │   │       ├── <prd-id>-prompt.md
-│   │   │       └── <prd-id>-config.json
-│   │   └── logs/                 # PRD progress logs
-│   │       └── <prd-id>.md
-│   └── interviews/               # Interview transcripts
-│       └── <interview-id>.md
+1. User enters prompt
+2. spec-clarify → Ask questions (max 5)
+3. spec-store → Save spec file
+4. spec-execute → Implement and log
+5. spec-commit → Commit + push (with approval)
+6. spec-track → Check status anytime
 ```
 
-## Skill Dependencies
+## Quick Start
 
-Skills follow this dependency order:
-
+### First Time Setup
 ```
-prd-interview (gather requirements)
-    ↓
-prd-plan (optional: chunk large asks)
-    ↓
-prd-create (generate PRD files)
-    ↓
-prd-execute (implement work)
-    ↓
-prd-test (verify criteria)
-    ↓
-prd-track (log progress)
+te9-init
 ```
 
-## Benefits
+### Create Work
+```
+spec-clarify → spec-store → spec-execute → spec-commit
+```
 
-✅ **Modular**: Each skill has a single, focused responsibility  
-✅ **Reusable**: Skills can be used in different workflows  
-✅ **Automated**: Agent orchestrates the entire process  
-✅ **Tracked**: Complete history of all work done  
-✅ **Tested**: Every PRD is verified with tests  
+### Check Status
+```
+spec-track                    # Overview
+spec-track <spec-id>          # Details
+spec-track <spec-id> --log    # Execution log
+spec-track --commits          # Commit history
+```
 
-## Need Help?
+## Spec Status
 
-- Review individual skill documentation in each `SKILL.md` file
-- Check the generated PRD files in `/dev/prd/runs/<prd-id>/`
-- Monitor progress in `/dev/prd/logs/<prd-id>.md`
+- **PENDING** - Waiting to start
+- **IN_PROGRESS** - Being executed
+- **READY_FOR_COMMIT** - Ready for commit
+- **COMPLETED** - Finished and pushed
+- **FAILED** - Execution failed
+- **BLOCKED** - Has blockers
 
-Happy coding with the te9-method's OpenCode Skills! 🚀
+## File Structure
+
+```
+te9.dev/
+├── specs/
+│   ├── spec-id-1/
+│   │   └── spec.md
+│   └── specs.json
+└── logs/
+    └── spec-id-1.log
+```
+
+## Technical Skills
+
+Tools in `.opencode/tool/`:
+- `daisyui.ts` - UI component templates
+- `knowledge_graph.ts` - Memory graph export
+- `melt.ts` - Code processing
+- `uikit.ts` - UI helpers
+
+## Memory System
+
+OpenMemory is configured in `opencode.json` and documented in `openmemory.md`.
+
+All spec-related work is automatically stored in OpenMemory for context.

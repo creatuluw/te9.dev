@@ -1,106 +1,104 @@
-# The AI development framework for fast-moving teams
-
-**Build production software with AI agents that understand your project.**
-
-te9.dev gives developers what generic AI coding assistants never could: structured workflows with complete traceability. Run development exactly the way you want. Launch documented, tested features in hours, and ship with complete confidence.
-
----
-
-## Built for developers. Not experimentation.
-
-AI coding assistants are built for quick snippets, code completion, and one-off suggestions. Developers are usually left wrestling with inconsistent code, undocumented features, and workflows that don't scale.
-
-te9.dev is made for people who actually build production software. Day in. Day out.
-
----
-
-## Finally, development as disciplined as your business.
-
-Define your workflow from scratch. Not just the code, but everything from PRD to deployment, right to the core.
-
-Features, bugfixes, refactors, tests, documentation, commits — whatever your project needs. No extra bloat.
-
----
-
-## Workflows you'll love to use every day
-
-Clean, structured, and reliable. Processes built to make development teams productive from the start. No guessing required.
-
-### PRD-Driven Development
-Every feature starts with documented requirements, acceptance criteria, and success metrics. No scope creep, no vague specs.
-
-### AI Memory System
-Your AI remembers your patterns, decisions, and preferences across sessions. It learns from every interaction, getting smarter about your project.
-
-### Zero-Tolerance Testing
-100% test pass rate required before any PRD completes. No regressions, no broken builds, no surprises.
-
-### Design-System-Driven UI
-Generate accessible, consistent UI components automatically. WCAG AA compliant by default.
-
----
-
-## Part of your workflow
-
-te9.dev works with your existing tools and infrastructure. Keep everything working smoothly together.
-
-```bash
-skill("prd-interview")   # Gather requirements
-skill("prd-execute")     # Implement features
-skill("prd-test")        # Verify 100% test pass
-skill("prd-track")       # Log progress + commit
+te9-init
 ```
 
----
-
-## Own your code. Stay in control.
-
-Your codebase is too critical to hand off to black-box AI platforms. te9.dev gives you a clean, structured foundation you actually control, built on engineering best practices.
-
-**With te9.dev, you don't just code faster.** **You plan faster.** **You ship faster.**
-
----
-
-## _Actually_ built for developers
-
-te9.dev is unapologetically structured and grounded in software engineering best practices. Build fast, maintain context, and ship production-ready features.
-
-- Version-controlled PRDs
-- Built-in unit testing
-- 100% test pass requirement
-- Git workflow with PRD tracking
-- Complete documentation
-- Memory-driven context
-- Multi-framework support
-- Design system integration
-- CI/CD compatible
-
----
-
-## Start shipping better software today.
-
-## Quick Start
-
-**Copy these files into your project:**
-
-```bash
-# Copy these folders
-.opencode/
-.zed/
-dev/
-
-# Copy these files
-AGENTS.md
-opencode.json
-te9.md
+### Create Work
+```
+[Your request]
+→ spec-clarify → spec-store → spec-execute → spec-commit
 ```
 
-**Then start working:**
+### Check Status
+```
+spec-track                    # Overview
+spec-track <spec-id>          # Details
+spec-track <spec-id> --log    # Execution log
+spec-track --commits          # Commit history
+```
 
-1. Open OpenCode or Zed with MCP support
-2. Ask the AI: "What skills are available?"
-3. Start with `skill("prd-interview")` to begin
+## Installation
+
+### One-Line Install
+
+```bash
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
+```
+
+This works on Linux, macOS, and Windows (Git Bash).
+
+### Update
+
+```bash
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
+```
+
+### Check Status
+
+```bash
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
+```
+
+### Show Help
+
+```bash
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash help
+```
+
+### Initialize in Project
+
+After installation, run in your project folder with your AI assistant:
+
+```
+skill('te9-init')
+```
+
+This creates:
+- `te9.dev/specs/` - Spec file storage
+- `te9.dev/logs/` - Execution logs
+
+## Available Commands
+
+The `te9` script supports these commands:
+
+| Command | Purpose |
+|---------|---------|
+| `install` | Install te9.dev in current directory |
+| `update` | Update te9.dev to latest version |
+| `status` | Check installation status |
+| `version` | Show version information |
+| `help` | Show help message |
+
+## Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `te9-init` | Initialize te9.dev in project |
+| `spec-clarify` | Gather requirements |
+| `spec-store` | Save spec file |
+| `spec-execute` | Implement and log |
+| `spec-commit` | Commit and push |
+| `spec-track` | Track progress |
+
+## Files
+
+```
+te9.dev/
+├── specs/          # Spec files
+├── logs/           # Execution logs
+├── openmemory.md   # Memory rules
+└── opencode.json   # Configuration
+```
+
+## Requirements
+
+- OpenCode or Zed editor
+- Git repository
+- Project folder
+
+## Documentation
+
+- `te9.md` - Detailed workflow
+- `openmemory.md` - Memory system
 
 ---
 
-**te9.dev — Where structured development meets AI.**
+**Fast. Simple. Easy.**

@@ -3,6 +3,7 @@
   "theme": "opencode",
   "model": "zai-coding-plan/glm-4.7",
   "autoupdate": true,
+  "instructions": ["openmemory.md"],
   "mcp": {
     "time-server": {
       "type": "remote",
@@ -37,13 +38,6 @@
     "chrome-devtools": {
       "type": "local",
       "command": ["npx", "-y", "chrome-devtools-mcp@latest"]
-    }
-  },
-  "agent": {
-    "build": {
-      "model": "zai-coding-plan/glm-4.7",
-      "temperature": 0.3,
-      "prompt": "{file:./.opencode/prompts/build.md}"
     }
   },
   "permission": {
