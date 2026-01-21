@@ -167,6 +167,40 @@ download_file() {
     fi
 }
 
+# Download AGENTS.md with special handling (prepend if exists)
+download_agents_md() {
+    local url="${RAW_URL}/AGENTS.md"
+    local dest="AGENTS.md"
+
+    if [ -f "$dest" ]; then
+        log_info "AGENTS.md exists - backing up and prepending te9 version"
+
+        # Backup existing file
+        cp "$dest" "${dest}.backup"
+
+        # Download new version to temp file
+        local temp_file="${dest}.new"
+        if curl -fsSL "$url" -o "$temp_file"; then
+            # Create new file with new content first, then old content
+            cat "$temp_file" > "$dest"
+            echo "" >> "$dest"
+            echo "---" >> "$dest"
+            echo "" >> "$dest"
+            cat "${dest}.backup" >> "$dest"
+
+            # Clean up
+            rm "$temp_file"
+            log_success "AGENTS.md updated (te9 version prepended)"
+        else
+            log_error "Failed to download AGENTS.md"
+            return 1
+        fi
+    else
+        # Just download normally if doesn't exist
+        download_file "$url" "$dest"
+    fi
+}
+
 # Download all files
 download_files() {
     log_info "Downloading te9.dev files from GitHub..."
@@ -177,6 +211,7 @@ download_files() {
     download_file "${RAW_URL}/openmemory.md" "openmemory.md"
     download_file "${RAW_URL}/README.md" "README.md"
     download_file "${RAW_URL}/te9.md" "te9.md"
+    download_agents_md
 
     # Skills
     download_file "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
@@ -216,6 +251,9 @@ verify_installation() {
     local required=(
         "opencode.json"
         "openmemory.md"
+        "README.md"
+        "te9.md"
+        "AGENTS.md"
         ".opencode/skill/te9-init/SKILL.md"
         ".opencode/skill/spec-clarify/SKILL.md"
         ".opencode/skill/spec-store/SKILL.md"
@@ -245,7 +283,7 @@ verify_installation() {
         if [ "$LLM_MODE" = true ]; then
             echo ""
             echo "=== INSTALLATION SUMMARY ==="
-            echo "✅ Core files: 4/4 installed"
+            echo "✅ Core files: 5/5 installed"
             echo "✅ Skills: 6/6 installed"
             echo "✅ Tools: 4/4 installed"
             echo "✅ Prompts: 1/1 installed"
@@ -277,6 +315,7 @@ backup_files() {
     [ -f openmemory.md ] && cp openmemory.md "$BACKUP_DIR/"
     [ -f README.md ] && cp README.md "$BACKUP_DIR/"
     [ -f te9.md ] && cp te9.md "$BACKUP_DIR/"
+    [ -f AGENTS.md ] && cp AGENTS.md "$BACKUP_DIR/"
 
     # Backup skills
     cp -r .opencode/skill "$BACKUP_DIR/"
@@ -322,6 +361,7 @@ update_files() {
     download_file_with_backup "${RAW_URL}/openmemory.md" "openmemory.md"
     download_file_with_backup "${RAW_URL}/README.md" "README.md"
     download_file_with_backup "${RAW_URL}/te9.md" "te9.md"
+    download_agents_md
 
     # Skills
     download_file_with_backup "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
