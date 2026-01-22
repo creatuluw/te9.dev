@@ -14,6 +14,7 @@ Use when a spec has been created and is ready for implementation.
 5. Tests implementation
 6. Prepares for commit
 7. Updates spec status
+8. MANDATORY: Updates specs.json immediately after any change to spec.md status or content
 
 ## Steps
 

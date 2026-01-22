@@ -329,6 +329,11 @@ spec-track (optional, anytime)
 - ❌ Never push without user approval
 - ✅ Always follow the complete workflow
 
+### Mandatory Database Updates
+- ✅ Always update `te9.dev/specs/specs.json` whenever a spec's status or content changes
+- ✅ Update immediately after status changes
+- ✅ Update immediately after content modifications
+
 ### Status Transitions (MANDATORY)
 ```
 PENDING → IN_PROGRESS → READY_FOR_COMMIT → COMPLETED
@@ -408,6 +413,7 @@ For EVERY spec:
 - ✅ Code follows project standards
 - ✅ Execution log complete
 - ✅ Knowledge graph updated
+- ✅ Specs database updated with final status
 
 ### Before Marking Spec as COMPLETED
 - ✅ Git commit created with proper message
@@ -417,6 +423,7 @@ For EVERY spec:
 - ✅ Changes pushed to remote (if approved)
 - ✅ All actions logged
 - ✅ OpenMemory updated
+- ✅ Specs database updated with completion status
 
 ---
 
