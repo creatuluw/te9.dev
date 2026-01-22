@@ -356,6 +356,8 @@ update_files() {
     log_info "Updating te9.dev files..."
     log_cmd "Source: ${RAW_URL}"
 
+    # Note: te9.dev folder and its contents are never touched to preserve user data
+
     # Core files
     download_file_with_backup "${RAW_URL}/opencode.json" "opencode.json"
     download_file_with_backup "${RAW_URL}/openmemory.md" "openmemory.md"
@@ -647,7 +649,7 @@ cmd_update() {
     echo ""
     log_success "🎉 te9.dev updated successfully!"
     echo ""
-    log_info "Your specs and logs are preserved in: te9.dev/"
+    log_info "Your te9.dev folder and all its contents are fully preserved (never overwritten during updates)."
     log_info "Backup created at: $BACKUP_DIR"
     echo ""
     log_info "Ready to continue using te9.dev!"
