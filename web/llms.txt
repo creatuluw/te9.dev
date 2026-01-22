@@ -6,10 +6,11 @@ te9.dev is a fast, simple, and easy AI-driven development workflow system. It pr
 
 ### Key Features
 
-- **6-Step Workflow**: Clarify → Store → Execute → Commit → Track
+- **6-Step Workflow**: Clarify → Store → Execute → Branch-Commit → PR-Create → PR-Review
 - **Skills System**: Predefined skills for each workflow stage
 - **Memory System**: OpenMemory for persistent context across sessions
 - **Knowledge Graph**: Mandatory tracking of project entities and relationships
+- **Multi-Contributor Ready**: Branch-based workflow with PR collaboration
 - **Cross-Platform**: Works on Linux, macOS, and Windows
 - **Zero Configuration**: One-command installation with `--llm` flag
 
@@ -66,12 +67,14 @@ STATUS: READY_TO_USE
 - `README.md` - Project overview
 - `te9.md` - Workflow documentation
 
-### Skills (6)
+### Skills (7)
 - `te9-init/SKILL.md` - Project initialization
 - `spec-clarify/SKILL.md` - Gather requirements via questions (max 5)
 - `spec-store/SKILL.md` - Save spec to file system
 - `spec-execute/SKILL.md` - Implement and log work
-- `spec-commit/SKILL.md` - Commit and push with user approval
+- `spec-branch-commit/SKILL.md` - Branch commit and push with user approval
+- `spec-pr-create/SKILL.md` - Create pull request for review
+- `spec-pr-review/SKILL.md` - Provide PR link for manual merge
 - `spec-track/SKILL.md` - Track progress and status
 
 ### Tools (4)
@@ -174,17 +177,20 @@ Status shows:
 2. AI uses spec-clarify → Asks clarification questions (max 5)
 3. AI uses spec-store → Saves unique spec file
 4. AI uses spec-execute → Implements the feature
-5. AI uses spec-commit → Creates commit (with user approval)
-6. User approves → AI pushes to remote
-7. spec-track can be used anytime to check progress
+5. AI uses spec-branch-commit → Creates branch, commits, pushes (with user approval)
+6. AI uses spec-pr-create → Creates pull request for review
+7. AI uses spec-pr-review → Provides PR link for manual merge on GitHub
+8. spec-track can be used anytime to check progress
 ```
 
 ### Spec Status Values
 
 - **PENDING** - Waiting to start
-- **IN_PROGRESS** - Being executed
-- **READY_FOR_COMMIT** - Ready to commit
-- **COMPLETED** - Finished and pushed
+- **IN_PROGRESS** - Currently being executed
+- **READY_FOR_BRANCH_COMMIT** - Ready for branch commit
+- **BRANCH_COMMITTED** - Branch committed and pushed
+- **PR_CREATED** - Pull request created and under review
+- **COMPLETED** - PR link provided for manual merge
 - **FAILED** - Execution failed
 - **BLOCKED** - Has blockers
 
@@ -335,13 +341,17 @@ Before starting ANY session, ensure:
       ✓ Added hover effects
       ✓ Tests passing
       [Creates spec-store knowledge graph facts]
-      Ready to commit?
+      Ready for branch commit?
 
 **User:** approve
 
-**AI:** [Uses spec-commit]
+**AI:** [Uses spec-branch-commit]
+      ✓ Feature branch created: feature/SPEC-20250115-abc123-add-login-button
       ✓ Commit created: "Add login button to homepage"
-      ✓ Pushed to remote
+      ✓ Branch pushed to remote
+      ✓ Pull request created
+      ✓ PR link: https://github.com/org/repo/pull/123
+      ✓ Manual merge instructions provided
       ✓ Work complete!
 
 **User:** Check progress
@@ -349,7 +359,7 @@ Before starting ANY session, ensure:
 **AI:** [Uses spec-track]
       Current specs:
       - SPEC-20250115-abc123: COMPLETED
-        Added login button to homepage, linked to /login
+        Added login button to homepage, PR ready for manual merge
 
 ---
 

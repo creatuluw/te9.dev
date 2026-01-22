@@ -23,8 +23,10 @@ This creates:
 2. spec-clarify → Ask questions (max 5)
 3. spec-store → Save spec file
 4. spec-execute → Implement and log
-5. spec-commit → Commit + push (with approval)
-6. spec-track → Check status anytime
+5. spec-branch-commit → Create branch, commit + push (with approval)
+6. spec-pr-create → Create pull request for review
+7. spec-pr-review → Provide PR link for manual merge on GitHub
+8. spec-track → Check status anytime
 ```
 
 ## Skills
@@ -35,7 +37,9 @@ This creates:
 | `spec-clarify` | Gather requirements with questions |
 | `spec-store` | Save spec to file system |
 | `spec-execute` | Implement and test |
-| `spec-commit` | Commit and push with approval |
+| `spec-branch-commit` | Create branch, commit and push with approval |
+| `spec-pr-create` | Create pull request for collaborative review |
+| `spec-pr-review` | Provide PR link for manual merge on GitHub |
 | `spec-track` | View progress and status |
 
 ## Example
@@ -54,12 +58,16 @@ This creates:
 **AI:** ✓ Implemented login button
         ✓ Linked to /login
         ✓ Tests passing
-        Ready to commit?
+        Ready for branch commit?
 
 **User:** approve
 
-**AI:** ✓ Commit created
-        ✓ Pushed to remote
+**AI:** ✓ Feature branch created: feature/SPEC-20250115-abc123-add-login-button
+        ✓ Commit created
+        ✓ Branch pushed to remote
+        ✓ Pull request created
+        ✓ PR link provided: https://github.com/org/repo/pull/123
+        ✓ Manual merge instructions given
         ✓ Work complete!
 
 ## Track Progress
@@ -74,9 +82,11 @@ spec-track --commits          # Commit history
 ## Spec Status
 
 - **PENDING** - Waiting to start
-- **IN_PROGRESS** - Being executed
-- **READY_FOR_COMMIT** - Ready to commit
-- **COMPLETED** - Finished and pushed
+- **IN_PROGRESS** - Currently being executed
+- **READY_FOR_BRANCH_COMMIT** - Ready for branch commit
+- **BRANCH_COMMITTED** - Branch committed and pushed
+- **PR_CREATED** - Pull request created and under review
+- **COMPLETED** - PR link provided for manual merge
 - **FAILED** - Execution failed
 - **BLOCKED** - Has blockers
 

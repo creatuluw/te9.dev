@@ -66,15 +66,16 @@ iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bas
 2. AI asks clarification questions (max 5)
 3. AI saves a unique spec file
 4. AI implements the feature
-5. AI creates a git commit
-6. User approves, AI pushes to remote
-7. Track progress anytime
+5. AI creates feature branch, commits, and pushes
+6. AI creates a pull request for review
+7. AI provides PR link for manual merge on GitHub
+8. Track progress anytime
 ```
 
 ## What Gets Installed
 
 - **Core files**: opencode.json, openmemory.md, README.md, te9.md
-- **6 workflow skills**: Clarify, Store, Execute, Commit, Track, Init
+- **7 workflow skills**: Clarify, Store, Execute, Branch-Commit, PR-Create, PR-Review, Track, Init
 - **4 technical tools**: UI templates, memory graph, Svelte UI, UI generator
 - **Directories**: specs/, logs/, history/
 

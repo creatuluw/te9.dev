@@ -9,7 +9,7 @@ Quick reference guide for AI agents following the te9.dev mandatory workflow.
 ```
 User Request
     ↓
-spec-clarify → spec-store → spec-execute → spec-commit
+spec-clarify → spec-store → spec-execute → spec-branch-commit → spec-pr-create → spec-pr-review
     ↓
 spec-track (anytime)
 ```
@@ -19,7 +19,7 @@ spec-track (anytime)
 ## QUICK START
 
 1. **Initialize**: `te9-install` or see `AI_INSTRUCTIONS.md#L1-L30`
-2. **Follow workflow**: Always use the 4-step mandatory sequence
+2. **Follow workflow**: Always use the 6-step mandatory sequence
 3. **Track progress**: Use `spec-track` anytime
 
 ---
@@ -60,21 +60,37 @@ spec-track (anytime)
 - Verify each acceptance criterion
 - Run comprehensive tests
 - Update knowledge graph with completed facts
-- Update status to READY_FOR_COMMIT or FAILED
-- → Transition to spec-commit
+- Update status to READY_FOR_BRANCH_COMMIT or FAILED
+- → Transition to spec-branch-commit
 
-### Step 4: spec-commit
-**File**: `.opencode/skill/spec-commit/SKILL.md`
-**Rules**: `.opencode/prompts/rules.md#L262-L330`
+### Step 4: spec-branch-commit
+**File**: `.opencode/skill/spec-branch-commit/SKILL.md`
+**Rules**: `.opencode/prompts/rules.md#L200-L280`
 
-- Verify status is READY_FOR_COMMIT
-- Review all changes with `git status`
-- Show COMMIT PREVIEW, wait for user "approve"
-- Create commit with spec ID in brackets
-- Show PUSH PREVIEW, wait for user "approve"
-- Push to remote
-- Update status to COMPLETED
-- Store completion in OpenMemory
+- Create feature branch: `feature/SPEC-<id>-<slug>`
+- Commit changes with spec ID in brackets
+- Push branch to remote after user approval
+- Update spec status to BRANCH_COMMITTED
+- → Transition to spec-pr-create
+
+### Step 5: spec-pr-create
+**File**: `.opencode/skill/spec-pr-create/SKILL.md`
+**Rules**: `.opencode/prompts/rules.md#L282-L340`
+
+- Create pull request against main branch
+- Include spec details and assign reviewers
+- Enable CI/CD checks
+- Update spec status to PR_CREATED
+- → Transition to spec-pr-merge
+
+### Step 6: spec-pr-review
+**File**: `.opencode/skill/spec-pr-review/SKILL.md`
+**Rules**: `.opencode/prompts/rules.md#L342-L400`
+
+- Check PR readiness and status
+- Provide direct GitHub PR link for manual review
+- Give manual merge instructions
+- Mark spec as completed after user confirmation
 - → Transition to spec-track or new spec
 
 ### Step 5: spec-track (Anytime)
@@ -111,12 +127,9 @@ spec-track (anytime)
 **File**: `.opencode/prompts/rules.md`
 
 - **Critical Workflow Rules**: `rules.md#L372-L392`
-- **Status Transitions**: `rules.md#L394-L404`
-- **Error Handling**: `rules.md#L406-L422`
-- **Before spec-store validation**: `rules.md#L455-L463`
-- **Before spec-execute validation**: `rules.md#L465-L475`
-- **Before spec-commit validation**: `rules.md#L477-L487`
-- **Before completion validation**: `rules.md#L489-L500`
+- **Status Transitions**: `rules.md#L459-L469`
+- **Error Handling**: `rules.md#L471-L495`
+- **Validation Checklists**: `rules.md#L497-L545`
 
 ---
 
@@ -129,7 +142,9 @@ spec-track (anytime)
 - `spec-clarify/SKILL.md` - Requirements gathering
 - `spec-store/SKILL.md` - Spec file creation
 - `spec-execute/SKILL.md` - Implementation
-- `spec-commit/SKILL.md` - Git commit & push
+- `spec-branch-commit/SKILL.md` - Branch commit & push
+- `spec-pr-create/SKILL.md` - Pull request creation
+- `spec-pr-review/SKILL.md` - Pull request review link
 - `spec-track/SKILL.md` - Progress tracking
 
 ### Technical Tools
@@ -337,14 +352,16 @@ Priority: <priority>
 - Clarify: `.opencode/skill/spec-clarify/SKILL.md`
 - Store: `.opencode/skill/spec-store/SKILL.md`
 - Execute: `.opencode/skill/spec-execute/SKILL.md`
-- Commit: `.opencode/skill/spec-commit/SKILL.md`
+- Branch Commit: `.opencode/skill/spec-branch-commit/SKILL.md`
+- PR Create: `.opencode/skill/spec-pr-create/SKILL.md`
+- PR Review: `.opencode/skill/spec-pr-review/SKILL.md`
 - Track: `.opencode/skill/spec-track/SKILL.md`
 
 ---
 
 ## CRITICAL REMINDERS
 
-1. **ALWAYS follow the exact 4-step sequence**: `.opencode/prompts/rules.md#L372-L392`
+1. **ALWAYS follow the exact 6-step sequence**: `.opencode/prompts/rules.md#L372-L392`
 2. **NEVER skip steps**: `.opencode/prompts/rules.md#L378-L390`
 3. **Knowledge graph is MANDATORY**: `openmemory.md#L5-L24`
 4. **User ID must be project folder name**: `openmemory.md#L43-L55`
@@ -355,4 +372,5 @@ Priority: <priority>
 
 ---
 
+**Fast. Simple. Easy. Multi-Contributor Ready.**
 **Fast. Simple. Easy.**

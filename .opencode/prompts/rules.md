@@ -173,17 +173,17 @@ Log EVERYTHING to `te9.dev/logs/<spec-id>.log`:
 - ✅ Code follows project standards
 - ✅ Execution log complete
 - ✅ Knowledge graph updated
-- ✅ Spec status updated
+- ✅ Spec status updated to READY_FOR_BRANCH_COMMIT
 
 ### CRITICAL RESTRICTIONS
-- ❌ Do NOT create git commits in this skill (that's spec-commit's job)
-- ❌ Do NOT push to remote (that's spec-commit's job)
+- ❌ Do NOT create git commits in this skill (that's spec-branch-commit's job)
+- ❌ Do NOT push to remote (that's spec-branch-commit's job)
 - ✅ Focus ONLY on implementation and testing
-- ✅ Prepare everything for commit
+- ✅ Prepare everything for branch commit
 
 ### Transition
 After successful execution:
-- If READY_FOR_COMMIT → **spec-commit**
+- If READY_FOR_BRANCH_COMMIT → **spec-branch-commit**
 - If FAILED/BLOCKED → **spec-track** to review and decide next steps
 
 ### Success Criteria
@@ -198,26 +198,26 @@ After successful execution:
 
 ## STEP 4: spec-commit (MANDATORY COMMIT & PUSH)
 
+## STEP 4: spec-branch-commit (MANDATORY BRANCH COMMIT & PUSH)
+
 ### When to Use
 When spec status is READY_FOR_COMMIT.
 
 ### What You MUST Do
 1. Read spec from `te9.dev/specs/<spec-id>/spec.md`
 2. Verify status is READY_FOR_COMMIT
-3. Review all changes with `git status`
-4. Stage all changes with `git add -A`
-5. Prepare commit message with spec ID in brackets
-6. Display COMMIT PREVIEW
-7. **WAIT for user approval** before committing
-8. If approved, create commit with `git commit -m "<message>"`
-9. Display PUSH PREVIEW
-10. **WAIT for user approval** before pushing
-11. If approved, push to remote with `git push`
-12. Update spec status to COMPLETED
-13. Update specs.json
-14. Store completion in OpenMemory
-15. Log final summary to execution log
-16. Display final report to user
+3. Create feature branch: `feature/SPEC-<id>-<slug>`
+4. Review all changes with `git status`
+5. Stage all changes with `git add -A`
+6. Prepare commit message with spec ID in brackets
+7. Display COMMIT PREVIEW
+8. **WAIT for user approval** before committing
+9. If approved, create commit with `git commit -m "<message>"`
+10. Display BRANCH PUSH PREVIEW
+11. **WAIT for user approval** before pushing branch
+12. If approved, push branch to remote with `git push origin <branch>`
+13. Update spec status to BRANCH_COMMITTED
+14. Log actions to execution log
 
 ### Commit Message Format
 ```
@@ -239,32 +239,148 @@ Priority: <priority>
 ### MANDATORY Approval Workflow
 1. Show commit preview
 2. Wait for user to type "approve", "reject", or "modify"
-3. If approved, create commit
-4. Show push preview
+3. If approved, create commit on branch
+4. Show branch push preview
 5. Wait for user to type "approve" or "reject"
-6. If approved, push to remote
-7. Only then mark spec as COMPLETED
+6. If approved, push branch to remote
 
 ### CRITICAL RESTRICTIONS
 - ❌ NEVER auto-commit without user approval
-- ❌ NEVER auto-push without user approval
+- ❌ NEVER auto-push branch without user approval
+- ✅ ALWAYS create feature branch first
 - ✅ ALWAYS show full preview before commit
 - ✅ ALWAYS wait for "approve" before committing
-- ✅ ALWAYS wait for second "approve" before pushing
+- ✅ ALWAYS wait for second "approve" before pushing branch
 
 ### Transition
-After successful commit:
+After successful branch push:
+- **spec-pr-create** - Create pull request
+
+### Success Criteria
+- Feature branch created
+- Git commit created with proper message
+- Commit includes spec ID in brackets
+- Branch pushed to remote
+- User explicitly approved before commit and push
+- Spec marked as BRANCH_COMMITTED
+- All actions logged
+
+---
+
+## STEP 5: spec-pr-create (MANDATORY PULL REQUEST CREATION)
+
+### When to Use
+When spec status is BRANCH_COMMITTED.
+
+### What You MUST Do
+1. Read spec from `te9.dev/specs/<spec-id>/spec.md`
+2. Verify status is BRANCH_COMMITTED
+3. Verify branch exists and is pushed
+4. Create pull request against main branch
+5. Set PR title: `SPEC-<id>: <spec title>`
+6. Include PR description with spec details, acceptance criteria, and change summary
+7. Assign reviewers (based on team configuration)
+8. Enable CI/CD checks
+9. Update spec status to PR_CREATED
+10. Log PR URL and details to execution log
+
+### PR Description Template
+```
+## Pull Request: SPEC-<id>
+
+### Objective
+[spec objective]
+
+### Requirements
+- [list requirements]
+
+### Acceptance Criteria
+- [ ] [criteria 1]
+- [ ] [criteria 2]
+
+### Changes Made
+- [brief summary of changes]
+
+### Testing
+- All unit tests passing (100%)
+- No regressions detected
+- CI/CD checks enabled
+
+Spec: SPEC-<id>
+Type: <feature|bugfix|refactor|other>
+Priority: <priority>
+```
+
+### CRITICAL RESTRICTIONS
+- ❌ NEVER create PR without branch push
+- ❌ NEVER auto-create PR without verification
+- ✅ ALWAYS include spec details in PR
+- ✅ ALWAYS assign appropriate reviewers
+- ✅ ALWAYS enable required CI/CD checks
+
+### Transition
+After PR creation:
+- **spec-pr-merge** - Wait for review and merge
+
+### Success Criteria
+- Pull request created successfully
+- PR includes all required information
+- Reviewers assigned
+- CI/CD checks enabled
+- Spec marked as PR_CREATED
+- PR URL logged
+
+---
+
+## STEP 6: spec-pr-review (MANDATORY PULL REQUEST REVIEW LINK)
+
+### When to Use
+When spec status is PR_CREATED and ready to provide PR link for manual review.
+
+### What You MUST Do
+1. Read spec from `te9.dev/specs/<spec-id>/spec.md`
+2. Verify status is PR_CREATED
+3. Check PR status: reviews and CI/CD status
+4. Display PR REVIEW LINK with status
+5. Provide direct GitHub PR link for manual merging
+6. Give clear manual merge instructions
+7. **WAIT for user confirmation** to mark spec complete
+8. Update spec status to COMPLETED
+9. Update specs.json
+10. Store completion in OpenMemory
+11. Log PR link provision to execution log
+12. Display final report with PR link
+
+### MANDATORY Confirmation Workflow
+1. Show PR status and readiness
+2. Provide GitHub PR link
+3. Give manual merge instructions
+4. Wait for user to type "complete" or "wait"
+5. If "complete", mark spec as done
+
+### Merge Options
+- **Squash Merge**: Combine all commits into one
+- **Merge Commit**: Preserve commit history
+- Choose based on team preference
+
+### CRITICAL RESTRICTIONS
+- ❌ NEVER provide PR link without verifying PR exists
+- ❌ NEVER mark spec complete without user confirmation
+- ✅ ALWAYS provide direct GitHub PR link
+- ✅ ALWAYS give clear manual merge instructions
+- ✅ ALWAYS wait for user confirmation before completion
+
+### Transition
+After providing PR link:
 - **spec-track** - View overall progress
 - **spec-clarify** - Start new spec if needed
 
 ### Success Criteria
-- Git commit created with proper message
-- Commit includes spec ID in brackets
-- User explicitly approved before commit
-- User explicitly approved before push
-- Changes pushed to remote (if approved)
+- PR link provided to user
+- Manual merge instructions given
 - Spec marked as COMPLETED
 - All actions logged
+- User confirmed completion
 
 ---
 
@@ -289,9 +405,11 @@ ANYTIME to check progress, status, logs, or history.
 - `spec-track --project` - Project status
 
 ### Status Indicators
-- ✅ COMPLETED - Successfully finished
+- ✅ COMPLETED - Successfully finished and merged
 - 🟡 IN_PROGRESS - Currently being executed
-- 🟠 READY_FOR_COMMIT - Ready for commit and push
+- 🟠 READY_FOR_BRANCH_COMMIT - Ready for branch commit and push
+- 🔵 BRANCH_COMMITTED - Branch committed and pushed
+- 🟣 PR_CREATED - Pull request created and under review
 - ⏳ PENDING - Waiting to start
 - ❌ FAILED - Execution failed
 - 🚫 BLOCKED - Blocked by dependencies or issues
@@ -317,7 +435,11 @@ spec-store (mandatory)
     ↓
 spec-execute (mandatory)
     ↓
-spec-commit (mandatory)
+spec-branch-commit (mandatory)
+    ↓
+spec-pr-create (mandatory)
+    ↓
+spec-pr-review (mandatory)
     ↓
 spec-track (optional, anytime)
 ```
@@ -326,7 +448,9 @@ spec-track (optional, anytime)
 - ❌ Never go directly from user request to implementation
 - ❌ Never implement without storing a spec first
 - ❌ Never commit without user approval
-- ❌ Never push without user approval
+- ❌ Never push branch without user approval
+- ❌ Never create PR without branch push
+- ❌ Never provide PR link without verifying PR exists
 - ✅ Always follow the complete workflow
 
 ### Mandatory Database Updates
@@ -336,7 +460,7 @@ spec-track (optional, anytime)
 
 ### Status Transitions (MANDATORY)
 ```
-PENDING → IN_PROGRESS → READY_FOR_COMMIT → COMPLETED
+PENDING → IN_PROGRESS → READY_FOR_BRANCH_COMMIT → BRANCH_COMMITTED → PR_CREATED → COMPLETED
                                 ↓
                               FAILED / BLOCKED
 ```
@@ -353,10 +477,64 @@ PENDING → IN_PROGRESS → READY_FOR_COMMIT → COMPLETED
    - Keep spec as READY_FOR_COMMIT
    - Suggest retry later
 
-3. If user rejects push:
-   - Keep commit local
-   - Update spec: pushed: false
+3. If user rejects branch push:
+   - Keep commit on branch local
+   - Update spec: branch_pushed: false
    - Suggest push manually later
+
+4. If PR creation fails:
+   - Log error details
+   - Check branch exists and is pushed
+   - Retry PR creation
+
+5. If PR reviews are rejected:
+   - Update spec status back to PR_CREATED
+   - Log rejection reasons
+   - Suggest fixes and re-review
+
+6. If PR link provision fails:
+   - Provide direct PR URL from spec
+   - Log error details
+   - Ask user to access manually
+
+---
+
+## VALIDATION CHECKLISTS (MANDATORY)
+
+### spec-execute → spec-branch-commit
+- ✅ All requirements implemented
+- ✅ All acceptance criteria verified
+- ✅ All tests passing
+- ✅ No regressions detected
+- ✅ Code follows project standards
+- ✅ Execution log complete
+- ✅ Knowledge graph updated
+- ✅ Spec status updated to READY_FOR_BRANCH_COMMIT
+
+### spec-branch-commit → spec-pr-create
+- ✅ Feature branch created: `feature/SPEC-<id>-<slug>`
+- ✅ Commit created with spec ID in brackets
+- ✅ Branch pushed to remote
+- ✅ User approved commit and push
+- ✅ Spec status updated to BRANCH_COMMITTED
+- ✅ Branch commit logged
+
+### spec-pr-create → spec-pr-review
+- ✅ Pull request created against main
+- ✅ PR includes spec details and acceptance criteria
+- ✅ Reviewers assigned
+- ✅ CI/CD checks enabled
+- ✅ Spec status updated to PR_CREATED
+- ✅ PR URL and details logged
+
+### spec-pr-review → completion
+- ✅ PR link verified and accessible
+- ✅ PR status checked (reviews and checks)
+- ✅ Direct GitHub PR link provided to user
+- ✅ Manual merge instructions given
+- ✅ User confirmed completion
+- ✅ Spec status updated to COMPLETED
+- ✅ OpenMemory updated with PR ready status
 
 ---
 
@@ -376,8 +554,14 @@ During spec-execute:
 - Create knowledge graph facts for completed requirements
 - Create knowledge graph facts for verified acceptance criteria
 
-During spec-commit:
-- Store "Completed spec <spec-id> - commit <hash> pushed"
+During spec-branch-commit:
+- Store "Branch committed for spec <spec-id> - commit <hash> pushed to <branch>"
+
+During spec-pr-create:
+- Store "Pull request created for spec <spec-id> - PR <url> opened"
+
+During spec-pr-review:
+- Store "Spec <spec-id> PR ready for manual merge - link provided: <pr-url>"
 
 ### Knowledge Graph Facts (MANDATORY)
 For EVERY spec:
@@ -497,8 +681,10 @@ For EVERY spec:
 1. **spec-clarify** (always start here)
 2. **spec-store** (immediately after clarification)
 3. **spec-execute** (implement requirements)
-4. **spec-commit** (with user approval)
-5. **spec-track** (anytime for status)
+4. **spec-branch-commit** (branch commit & push)
+5. **spec-pr-create** (pull request creation)
+6. **spec-pr-review** (pull request review link)
+7. **spec-track** (anytime for status)
 
 **DO NOT SKIP ANY STEPS.**
 **DO NOT SHORTCUT THE PROCESS.**
