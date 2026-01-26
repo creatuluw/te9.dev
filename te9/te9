@@ -139,12 +139,16 @@ check_installed() {
 create_directories() {
     log_info "Creating directory structure..."
 
-    mkdir -p .opencode/skill/te9-init
+    mkdir -p .opencode/skill/daisyui
+    mkdir -p .opencode/skill/spec-branch-commit
     mkdir -p .opencode/skill/spec-clarify
-    mkdir -p .opencode/skill/spec-store
-    mkdir -p .opencode/skill/spec-execute
     mkdir -p .opencode/skill/spec-commit
+    mkdir -p .opencode/skill/spec-execute
+    mkdir -p .opencode/skill/spec-pr-create
+    mkdir -p .opencode/skill/spec-pr-review
+    mkdir -p .opencode/skill/spec-store
     mkdir -p .opencode/skill/spec-track
+    mkdir -p .opencode/skill/te9-init
     mkdir -p .opencode/tool
     mkdir -p .opencode/prompts
     mkdir -p te9.dev/specs
@@ -214,12 +218,16 @@ download_files() {
     download_agents_md
 
     # Skills
-    download_file "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/daisyui/SKILL.md" ".opencode/skill/daisyui/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/spec-branch-commit/SKILL.md" ".opencode/skill/spec-branch-commit/SKILL.md"
     download_file "${RAW_URL}/.opencode/skill/spec-clarify/SKILL.md" ".opencode/skill/spec-clarify/SKILL.md"
-    download_file "${RAW_URL}/.opencode/skill/spec-store/SKILL.md" ".opencode/skill/spec-store/SKILL.md"
-    download_file "${RAW_URL}/.opencode/skill/spec-execute/SKILL.md" ".opencode/skill/spec-execute/SKILL.md"
     download_file "${RAW_URL}/.opencode/skill/spec-commit/SKILL.md" ".opencode/skill/spec-commit/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/spec-execute/SKILL.md" ".opencode/skill/spec-execute/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/spec-pr-create/SKILL.md" ".opencode/skill/spec-pr-create/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/spec-pr-review/SKILL.md" ".opencode/skill/spec-pr-review/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/spec-store/SKILL.md" ".opencode/skill/spec-store/SKILL.md"
     download_file "${RAW_URL}/.opencode/skill/spec-track/SKILL.md" ".opencode/skill/spec-track/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
 
     # Skill README
     download_file "${RAW_URL}/.opencode/skill/README.md" ".opencode/skill/README.md"
@@ -254,12 +262,16 @@ verify_installation() {
         "README.md"
         "te9.md"
         "AGENTS.md"
-        ".opencode/skill/te9-init/SKILL.md"
+        ".opencode/skill/daisyui/SKILL.md"
+        ".opencode/skill/spec-branch-commit/SKILL.md"
         ".opencode/skill/spec-clarify/SKILL.md"
-        ".opencode/skill/spec-store/SKILL.md"
-        ".opencode/skill/spec-execute/SKILL.md"
         ".opencode/skill/spec-commit/SKILL.md"
+        ".opencode/skill/spec-execute/SKILL.md"
+        ".opencode/skill/spec-pr-create/SKILL.md"
+        ".opencode/skill/spec-pr-review/SKILL.md"
+        ".opencode/skill/spec-store/SKILL.md"
         ".opencode/skill/spec-track/SKILL.md"
+        ".opencode/skill/te9-init/SKILL.md"
         ".opencode/prompts/rules.md"
     )
 
@@ -284,7 +296,7 @@ verify_installation() {
             echo ""
             echo "=== INSTALLATION SUMMARY ==="
             echo "✅ Core files: 5/5 installed"
-            echo "✅ Skills: 6/6 installed"
+            echo "✅ Skills: 10/10 installed"
             echo "✅ Tools: 4/4 installed"
             echo "✅ Prompts: 1/1 installed"
             echo "✅ Directories: created"
@@ -366,12 +378,16 @@ update_files() {
     download_agents_md
 
     # Skills
-    download_file_with_backup "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/daisyui/SKILL.md" ".opencode/skill/daisyui/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-branch-commit/SKILL.md" ".opencode/skill/spec-branch-commit/SKILL.md"
     download_file_with_backup "${RAW_URL}/.opencode/skill/spec-clarify/SKILL.md" ".opencode/skill/spec-clarify/SKILL.md"
-    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-store/SKILL.md" ".opencode/skill/spec-store/SKILL.md"
-    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-execute/SKILL.md" ".opencode/skill/spec-execute/SKILL.md"
     download_file_with_backup "${RAW_URL}/.opencode/skill/spec-commit/SKILL.md" ".opencode/skill/spec-commit/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-execute/SKILL.md" ".opencode/skill/spec-execute/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-pr-create/SKILL.md" ".opencode/skill/spec-pr-create/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-pr-review/SKILL.md" ".opencode/skill/spec-pr-review/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/spec-store/SKILL.md" ".opencode/skill/spec-store/SKILL.md"
     download_file_with_backup "${RAW_URL}/.opencode/skill/spec-track/SKILL.md" ".opencode/skill/spec-track/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
 
     # Skill README
     download_file_with_backup "${RAW_URL}/.opencode/skill/README.md" ".opencode/skill/README.md"
@@ -395,12 +411,16 @@ verify_update() {
     local required=(
         "opencode.json"
         "openmemory.md"
-        ".opencode/skill/te9-init/SKILL.md"
+        ".opencode/skill/daisyui/SKILL.md"
+        ".opencode/skill/spec-branch-commit/SKILL.md"
         ".opencode/skill/spec-clarify/SKILL.md"
-        ".opencode/skill/spec-store/SKILL.md"
-        ".opencode/skill/spec-execute/SKILL.md"
         ".opencode/skill/spec-commit/SKILL.md"
+        ".opencode/skill/spec-execute/SKILL.md"
+        ".opencode/skill/spec-pr-create/SKILL.md"
+        ".opencode/skill/spec-pr-review/SKILL.md"
+        ".opencode/skill/spec-store/SKILL.md"
         ".opencode/skill/spec-track/SKILL.md"
+        ".opencode/skill/te9-init/SKILL.md"
         ".opencode/prompts/rules.md"
     )
 
@@ -432,12 +452,16 @@ check_status() {
     declare -a REQUIRED=(
         "opencode.json:Core configuration"
         "openmemory.md:Memory system rules"
-        ".opencode/skill/te9-init/SKILL.md:Initialization"
+        ".opencode/skill/daisyui/SKILL.md:DAISY UI components"
+        ".opencode/skill/spec-branch-commit/SKILL.md:Branch and commit workflow"
         ".opencode/skill/spec-clarify/SKILL.md:Clarification"
-        ".opencode/skill/spec-store/SKILL.md:Spec storage"
-        ".opencode/skill/spec-execute/SKILL.md:Execution"
         ".opencode/skill/spec-commit/SKILL.md:Commit workflow"
+        ".opencode/skill/spec-execute/SKILL.md:Execution"
+        ".opencode/skill/spec-pr-create/SKILL.md:Pull request creation"
+        ".opencode/skill/spec-pr-review/SKILL.md:Pull request review"
+        ".opencode/skill/spec-store/SKILL.md:Spec storage"
         ".opencode/skill/spec-track/SKILL.md:Progress tracking"
+        ".opencode/skill/te9-init/SKILL.md:Initialization"
     )
 
     local all_present=true

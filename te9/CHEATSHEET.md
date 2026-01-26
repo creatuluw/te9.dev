@@ -50,7 +50,7 @@ LLM Mode: enabled
 
 === INSTALLATION SUMMARY ===
 ✅ Core files: 4/4 installed
-✅ Skills: 6/6 installed
+✅ Skills: 10/10 installed
 ✅ Tools: 4/4 installed
 ✅ Prompts: 1/1 installed
 ✅ Directories: created
@@ -117,7 +117,7 @@ te9 help
 
 **Core (4):** `opencode.json`, `openmemory.md`, `README.md`, `te9.md`
 
-**Skills (6):** `te9-init`, `spec-clarify`, `spec-store`, `spec-execute`, `spec-commit`, `spec-track`
+**Skills (10):** `daisyui`, `spec-branch-commit`, `spec-clarify`, `spec-commit`, `spec-execute`, `spec-pr-create`, `spec-pr-review`, `spec-store`, `spec-track`, `te9-init`
 
 **Tools (4):** `daisyui.ts`, `knowledge_graph.ts`, `melt.ts`, `uikit.ts`
 

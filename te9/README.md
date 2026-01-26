@@ -45,7 +45,7 @@ https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9
 ```
 === INSTALLATION SUMMARY ===
 ✅ Core files: 4/4 installed
-✅ Skills: 6/6 installed
+✅ Skills: 10/10 installed
 ✅ Tools: 4/4 installed
 ✅ Prompts: 1/1 installed
 ✅ Directories: created
@@ -131,13 +131,17 @@ See `INSTALL_LLM.md` for detailed step-by-step instructions.
 - `README.md` - Project documentation
 - `te9.md` - Workflow guide
 
-### Skills (6)
-- `te9-init/SKILL.md` - Initialization
+### Skills (10)
+- `daisyui/SKILL.md` - DAISY UI components
+- `spec-branch-commit/SKILL.md` - Branch and commit workflow
 - `spec-clarify/SKILL.md` - Clarification
-- `spec-store/SKILL.md` - Spec storage
-- `spec-execute/SKILL.md` - Execution
 - `spec-commit/SKILL.md` - Commit workflow
+- `spec-execute/SKILL.md` - Execution
+- `spec-pr-create/SKILL.md` - Pull request creation
+- `spec-pr-review/SKILL.md` - Pull request review
+- `spec-store/SKILL.md` - Spec storage
 - `spec-track/SKILL.md` - Progress tracking
+- `te9-init/SKILL.md` - Initialization
 
 ### Tools (4)
 - `daisyui.ts` - UI templates
