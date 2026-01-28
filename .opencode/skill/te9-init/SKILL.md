@@ -11,7 +11,8 @@ Use when starting a new project or setting up te9.dev in an existing project.
 2. Copies configuration files (opencode.json, openmemory.md)
 3. Initializes spec storage directory
 4. Creates initial project state
-5. Provides setup confirmation
+5. Checks for te9.dev system updates
+6. Provides setup confirmation
 
 ## Steps
 
@@ -42,11 +43,22 @@ Store in OpenMemory:
   - Project folder name
 ```
 
-### 5. Provide Confirmation
+### 5. Check for Updates
+```
+Use te9-update skill to check for system updates:
+  - Verify if 24+ hours since last check
+  - Fetch latest commit from GitHub
+  - If update available, ask user for approval
+  - If approved, perform update
+  - Update check timestamp
+```
+
+### 6. Provide Confirmation
 ```
 Display:
   ✓ te9.dev structure created
   ✓ Configuration files copied
+  ✓ Update check completed
   ✓ Ready to use te9.dev workflow
   
 Next steps:

@@ -228,6 +228,7 @@ download_files() {
     download_file "${RAW_URL}/.opencode/skill/spec-store/SKILL.md" ".opencode/skill/spec-store/SKILL.md"
     download_file "${RAW_URL}/.opencode/skill/spec-track/SKILL.md" ".opencode/skill/spec-track/SKILL.md"
     download_file "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
+    download_file "${RAW_URL}/.opencode/skill/te9-update/SKILL.md" ".opencode/skill/te9-update/SKILL.md"
 
     # Skill README
     download_file "${RAW_URL}/.opencode/skill/README.md" ".opencode/skill/README.md"
@@ -237,6 +238,7 @@ download_files() {
     download_file "${RAW_URL}/.opencode/tool/knowledge_graph.ts" ".opencode/tool/knowledge_graph.ts"
     download_file "${RAW_URL}/.opencode/tool/melt.ts" ".opencode/tool/melt.ts"
     download_file "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
+    download_file "${RAW_URL}/.opencode/tool/te9-update.ts" ".opencode/tool/te9-update.ts"
 
     # Prompts
     download_file "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
@@ -296,8 +298,8 @@ verify_installation() {
             echo ""
             echo "=== INSTALLATION SUMMARY ==="
             echo "✅ Core files: 5/5 installed"
-            echo "✅ Skills: 10/10 installed"
-            echo "✅ Tools: 4/4 installed"
+            echo "✅ Skills: 11/11 installed"
+            echo "✅ Tools: 5/5 installed"
             echo "✅ Prompts: 1/1 installed"
             echo "✅ Directories: created"
             echo "✅ Specs database: initialized"
@@ -388,6 +390,7 @@ update_files() {
     download_file_with_backup "${RAW_URL}/.opencode/skill/spec-store/SKILL.md" ".opencode/skill/spec-store/SKILL.md"
     download_file_with_backup "${RAW_URL}/.opencode/skill/spec-track/SKILL.md" ".opencode/skill/spec-track/SKILL.md"
     download_file_with_backup "${RAW_URL}/.opencode/skill/te9-init/SKILL.md" ".opencode/skill/te9-init/SKILL.md"
+    download_file_with_backup "${RAW_URL}/.opencode/skill/te9-update/SKILL.md" ".opencode/skill/te9-update/SKILL.md"
 
     # Skill README
     download_file_with_backup "${RAW_URL}/.opencode/skill/README.md" ".opencode/skill/README.md"
@@ -397,6 +400,7 @@ update_files() {
     download_file_with_backup "${RAW_URL}/.opencode/tool/knowledge_graph.ts" ".opencode/tool/knowledge_graph.ts"
     download_file_with_backup "${RAW_URL}/.opencode/tool/melt.ts" ".opencode/tool/melt.ts"
     download_file_with_backup "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
+    download_file_with_backup "${RAW_URL}/.opencode/tool/te9-update.ts" ".opencode/tool/te9-update.ts"
 
     # Prompts
     download_file_with_backup "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
