@@ -16,6 +16,12 @@ This creates:
 - `opencode.json` - Configuration
 - `openmemory.md` - Memory rules
 
+## Update Check
+
+On initialization, te9.dev automatically checks once daily if updates are available from the GitHub repository. If updates are found, the AI will ask for user approval before applying them.
+
+This ensures the system stays current with the latest features and fixes.
+
 ## Workflow
 
 ```

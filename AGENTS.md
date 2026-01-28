@@ -146,6 +146,7 @@ spec-track (anytime)
 - `spec-pr-create/SKILL.md` - Pull request creation
 - `spec-pr-review/SKILL.md` - Pull request review link
 - `spec-track/SKILL.md` - Progress tracking
+- `te9-update/SKILL.md` - Update checking and application
 
 ### Technical Tools
 **Location**: `.opencode/tool/`
@@ -154,6 +155,7 @@ spec-track (anytime)
 - `knowledge_graph.ts` - Memory graph exporter
 - `melt.ts` - Svelte UI builder
 - `uikit.ts` - UI component generator
+- `te9-update.ts` - Update management functions
 
 ---
 

@@ -1,0 +1,1078 @@
+<!doctype html>
+<html class="dark" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>te9.dev - AI-Powered Development Workspace</title>
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link
+            crossorigin=""
+            href="https://fonts.gstatic.com"
+            rel="preconnect"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Material Symbols -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <!-- Privacy-friendly analytics by Plausible -->
+        <script
+            async
+            src="https://plausible.io/js/pa-psv9RHCmt-cskBRunjKOK.js"
+        ></script>
+        <script>
+            ((window.plausible =
+                window.plausible ||
+                function () {
+                    (plausible.q = plausible.q || []).push(arguments);
+                }),
+                (plausible.init =
+                    plausible.init ||
+                    function (i) {
+                        plausible.o = i || {};
+                    }));
+            plausible.init();
+        </script>
+
+        <!-- Theme Config -->
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#137fec",
+                            "background-light": "#f6f7f8",
+                            "background-dark": "#101922",
+                            "border-dark": "#2a3b4d",
+                            "surface-dark": "#16202a",
+                        },
+                        fontFamily: {
+                            display: ["Space Grotesk", "sans-serif"],
+                            mono: ["JetBrains Mono", "monospace"],
+                        },
+                        borderRadius: {
+                            DEFAULT: "0.25rem",
+                            lg: "0.5rem",
+                            xl: "0.75rem",
+                            full: "9999px",
+                        },
+                        boxShadow: {
+                            brutal: "4px 4px 0px 0px #000000",
+                            "brutal-primary": "4px 4px 0px 0px #137fec",
+                            "brutal-white": "4px 4px 0px 0px #ffffff",
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            ::-webkit-scrollbar {
+                width: 12px;
+                background: #111a22;
+                border-left: 1px solid #2a3b4d;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #233648;
+                border: 1px solid #111a22;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #137fec;
+            }
+        </style>
+    </head>
+
+    <body
+        class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden min-h-screen flex flex-col"
+    >
+        <!-- Navbar: Strict Grid -->
+        <header
+            class="border-b-2 border-slate-900 dark:border-white/20 sticky top-0 z-50 bg-background-light dark:bg-background-dark"
+        >
+            <div
+                class="max-w-7xl mx-auto border-x-2 border-slate-900 dark:border-white/20 flex flex-col md:flex-row items-stretch"
+            >
+                <!-- Logo Section -->
+                <div
+                    class="flex items-center justify-between px-6 py-4 md:w-64 border-b-2 md:border-b-0 md:border-r-2 border-slate-900 dark:border-white/20"
+                >
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="material-symbols-outlined text-3xl text-primary"
+                            >terminal</span
+                        >
+                        <h1
+                            class="text-xl font-bold tracking-tighter uppercase"
+                        >
+                            te9.dev
+                        </h1>
+                    </div>
+                    <button class="md:hidden text-primary">
+                        <span class="material-symbols-outlined text-3xl"
+                            >menu</span
+                        >
+                    </button>
+                </div>
+                <!-- Nav Links -->
+                <nav class="hidden md:flex flex-1 items-stretch">
+                    <a
+                        class="flex items-center px-8 text-sm font-bold uppercase tracking-wider hover:bg-primary hover:text-white transition-colors border-r-2 border-slate-900 dark:border-white/20"
+                        href="#workflow"
+                        >Workflow</a
+                    >
+                    <a
+                        class="flex items-center px-8 text-sm font-bold uppercase tracking-wider hover:bg-primary hover:text-white transition-colors border-r-2 border-slate-900 dark:border-white/20"
+                        href="#features"
+                        >Features</a
+                    >
+                    <a
+                        class="flex items-center px-8 text-sm font-bold uppercase tracking-wider hover:bg-primary hover:text-white transition-colors"
+                        href="#install"
+                        >Installation</a
+                    >
+                </nav>
+                <!-- CTA -->
+                <div
+                    class="hidden md:flex items-center px-6 py-3 border-l-2 border-slate-900 dark:border-white/20 bg-surface-dark/50"
+                >
+                    <div
+                        class="flex items-center gap-2 text-xs font-mono text-primary bg-black/20 px-3 py-1 rounded border border-primary/30"
+                    >
+                        <span class="opacity-50">$</span> curl -fsSL ... | bash
+                        <button class="hover:text-white ml-2 transition-colors">
+                            <span class="material-symbols-outlined text-sm"
+                                >content_copy</span
+                            >
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Wrapper -->
+        <main
+            class="flex-1 w-full max-w-7xl mx-auto border-x-2 border-slate-900 dark:border-white/20 flex flex-col"
+        >
+            <!-- Hero Section: Brutalist Layout -->
+            <section
+                class="grid grid-cols-1 lg:grid-cols-12 border-b-2 border-slate-900 dark:border-white/20"
+            >
+                <!-- Left: Text Content -->
+                <div
+                    class="lg:col-span-7 p-8 md:p-16 flex flex-col justify-center gap-8 border-b-2 lg:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMTAxOTIyIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMxNzI2MzEiPjwvcmVjdD4KPC9zdmc+')]"
+                >
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 border border-primary text-primary text-xs font-bold uppercase w-fit bg-primary/10"
+                    >
+                        <span
+                            class="w-2 h-2 bg-primary rounded-full animate-pulse"
+                        ></span>
+                        🤖 AI-Powered
+                    </div>
+                    <h2
+                        class="text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase text-slate-900 dark:text-white"
+                    >
+                        Fast, Simple,<br />
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400"
+                            >Easy Workflow.</span
+                        >
+                    </h2>
+                    <p
+                        class="font-mono text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed"
+                    >
+                        Fast, simple, and easy AI-driven development workflow.
+                        Describe what you want, AI asks smart questions,
+                        implements features, and manages git automatically.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a
+                            href="#install"
+                            class="relative bg-primary text-white text-lg font-bold uppercase px-8 py-4 border-2 border-transparent hover:border-white transition-all shadow-brutal-white dark:shadow-[4px_4px_0px_0px_#ffffff] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[4px] active:translate-y-[4px]"
+                        >
+                            Get Started
+                        </a>
+                        <a
+                            href="#workflow"
+                            class="relative bg-transparent text-slate-900 dark:text-white text-lg font-bold uppercase px-8 py-4 border-2 border-slate-900 dark:border-white hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                        >
+                            See Workflow
+                        </a>
+                    </div>
+                    <div
+                        class="font-mono text-xs text-slate-500 dark:text-slate-400 mt-4"
+                    >
+                        One command to install • No manual setup required
+                    </div>
+                </div>
+
+                <!-- Right: Terminal/Visual -->
+                <div
+                    class="lg:col-span-5 bg-surface-dark relative flex items-center justify-center p-8 md:p-12 overflow-hidden"
+                >
+                    <!-- Abstract Pattern Background -->
+                    <div
+                        class="absolute inset-0 opacity-10"
+                        style="
+                            background-image: radial-gradient(
+                                #137fec 1px,
+                                transparent 1px
+                            );
+                            background-size: 20px 20px;
+                        "
+                    ></div>
+                    <!-- Terminal Window -->
+                    <div
+                        class="w-full max-w-md bg-[#0a0f14] border-2 border-slate-700 rounded-lg shadow-2xl overflow-hidden relative z-10"
+                    >
+                        <div
+                            class="bg-[#1a232d] px-4 py-2 flex items-center gap-2 border-b border-slate-700"
+                        >
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div
+                                class="w-3 h-3 rounded-full bg-yellow-500"
+                            ></div>
+                            <div
+                                class="w-3 h-3 rounded-full bg-green-500"
+                            ></div>
+                            <span
+                                class="ml-auto text-xs font-mono text-slate-500"
+                                >bash</span
+                            >
+                        </div>
+                        <div class="p-6 font-mono text-sm leading-7">
+                            <div class="flex gap-2 text-slate-400">
+                                <span class="text-green-400">$</span>
+                                <span class="text-white"
+                                    >curl -fsSL ... | bash install --llm</span
+                                >
+                            </div>
+                            <div class="text-slate-500 mt-2">
+                                &gt; Initializing git repository...
+                                <span class="text-primary">Done</span><br />
+                                &gt; Creating directories...
+                                <span class="text-primary">Done</span><br />
+                                &gt; Downloading required files...
+                                <span class="text-primary">Done</span><br />
+                                &gt; Initializing specs database...
+                                <span class="text-primary">Done</span><br />
+                                &gt;
+                                <span class="text-green-400"
+                                    >STATUS: READY_TO_USE</span
+                                >
+                            </div>
+                            <div
+                                class="mt-4 flex gap-2 text-slate-400 animate-pulse"
+                            >
+                                <span class="text-green-400">$</span>
+                                <span class="w-2 h-5 bg-primary block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Workflow Section -->
+            <section
+                id="workflow"
+                class="border-b-2 border-slate-900 dark:border-white/20"
+            >
+                <div class="p-8 md:p-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-black uppercase tracking-tight mb-4 text-center"
+                    >
+                        6-Step Multi-Contributor Workflow
+                    </h2>
+                    <p
+                        class="text-center text-slate-600 dark:text-slate-400 font-mono text-sm max-w-2xl mx-auto mb-12"
+                    >
+                        Streamlined AI-driven development process
+                    </p>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-2 border-slate-900 dark:border-white/20"
+                    >
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >chat</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 1</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                Describe
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                User describes what they want in plain language
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >help</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 2</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                Clarify
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                AI asks clarification questions (max 5)
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >save</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 3</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                Save Spec
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                AI saves a unique spec file with requirements
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >code</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 4</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                Implement
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                AI implements the feature based on the spec
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >commit</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 4</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                Branch & Commit
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                AI creates feature branch, commits changes, and
+                                pushes
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >merge</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 5</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                PR Create
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                AI creates pull request for team review
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >cloud_upload</span
+                                >
+                            </div>
+                            <div class="badge badge-primary mb-4">Step 6</div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                PR Review
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                AI provides PR link for manual merge on GitHub
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 hover:bg-surface-dark transition-colors relative overflow-hidden"
+                        >
+                            <div
+                                class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"
+                            >
+                                <span
+                                    class="material-symbols-outlined text-6xl text-primary"
+                                    >analytics</span
+                                >
+                            </div>
+                            <h3
+                                class="text-2xl font-bold uppercase mb-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                            >
+                                Track Anytime
+                            </h3>
+                            <p
+                                class="font-mono text-sm text-slate-600 dark:text-slate-400 leading-relaxed"
+                            >
+                                Track progress anytime with full history
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What Gets Installed Section -->
+            <section
+                id="features"
+                class="border-b-2 border-slate-900 dark:border-white/20 bg-surface-dark"
+            >
+                <div class="p-8 md:p-16">
+                    <h2
+                        class="text-4xl md:text-5xl font-black uppercase tracking-tight mb-4 text-center"
+                    >
+                        What Gets Installed
+                    </h2>
+                    <p
+                        class="text-center text-slate-400 font-mono text-sm max-w-2xl mx-auto mb-12"
+                    >
+                        Complete development workspace setup
+                    </p>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border-2 border-slate-900 dark:border-white/20"
+                    >
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-background-dark transition-colors"
+                        >
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="material-symbols-outlined text-5xl text-primary"
+                                    >description</span
+                                >
+                                <h3
+                                    class="text-xl font-bold uppercase text-white"
+                                >
+                                    Core Files
+                                </h3>
+                            </div>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed mb-4"
+                            >
+                                opencode.json, openmemory.md, README.md, te9.md
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-background-dark transition-colors"
+                        >
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="material-symbols-outlined text-5xl text-primary"
+                                    >psychology</span
+                                >
+                                <h3
+                                    class="text-xl font-bold uppercase text-white"
+                                >
+                                    7 Workflow Skills
+                                </h3>
+                            </div>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed mb-4"
+                            >
+                                Clarify, Store, Execute, Commit, Track, Init
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-background-dark transition-colors"
+                        >
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="material-symbols-outlined text-5xl text-primary"
+                                    >build</span
+                                >
+                                <h3
+                                    class="text-xl font-bold uppercase text-white"
+                                >
+                                    4 Technical Tools
+                                </h3>
+                            </div>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed mb-4"
+                            >
+                                UI templates, memory graph, Svelte UI, UI
+                                generator
+                            </p>
+                        </div>
+
+                        <div
+                            class="group p-8 md:p-12 hover:bg-background-dark transition-colors"
+                        >
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="material-symbols-outlined text-5xl text-primary"
+                                    >folder_open</span
+                                >
+                                <h3
+                                    class="text-xl font-bold uppercase text-white"
+                                >
+                                    Directories
+                                </h3>
+                            </div>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed mb-4"
+                            >
+                                specs/, logs/, history/
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Installation Section -->
+            <section
+                id="install"
+                class="border-b-2 border-slate-900 dark:border-white/20"
+            >
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div
+                        class="p-8 md:p-16 flex flex-col justify-center gap-6 border-b-2 lg:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20"
+                    >
+                        <h3
+                            class="text-3xl md:text-4xl font-black uppercase tracking-tight"
+                        >
+                            Quick Installation
+                        </h3>
+                        <p
+                            class="text-slate-600 dark:text-slate-400 font-mono text-sm"
+                        >
+                            The
+                            <code
+                                class="bg-primary/20 text-primary px-2 py-1 rounded"
+                                >--llm</code
+                            >
+                            flag handles everything automatically - no manual
+                            steps required!
+                        </p>
+                        <ul class="flex flex-col gap-3 font-mono text-sm mt-4">
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-green-500"
+                                    >check_circle</span
+                                >
+                                <span
+                                    >Initializes git repository (no
+                                    prompts)</span
+                                >
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-green-500"
+                                    >check_circle</span
+                                >
+                                <span>Creates all directories</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-green-500"
+                                    >check_circle</span
+                                >
+                                <span>Downloads all required files</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-green-500"
+                                    >check_circle</span
+                                >
+                                <span>Initializes specs database</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span
+                                    class="material-symbols-outlined text-green-500"
+                                    >check_circle</span
+                                >
+                                <span>No manual steps required</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div
+                        class="bg-[#050505] p-8 md:p-16 flex flex-col justify-center gap-6"
+                    >
+                        <div
+                            class="w-full bg-[#111] border border-slate-800 rounded p-6 font-mono text-sm relative group"
+                        >
+                            <button
+                                class="absolute top-4 right-4 text-slate-500 hover:text-white"
+                            >
+                                <span class="material-symbols-outlined text-lg"
+                                    >content_copy</span
+                                >
+                            </button>
+                            <div
+                                class="text-slate-500 mb-4 text-xs uppercase tracking-wider"
+                            >
+                                Linux / macOS / Git Bash
+                            </div>
+                            <pre
+                                class="overflow-x-auto"
+                            ><code class="text-success">curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm</code></pre>
+                        </div>
+
+                        <div
+                            class="w-full bg-[#111] border border-slate-800 rounded p-6 font-mono text-sm relative group"
+                        >
+                            <button
+                                class="absolute top-4 right-4 text-slate-500 hover:text-white"
+                            >
+                                <span class="material-symbols-outlined text-lg"
+                                    >content_copy</span
+                                >
+                            </button>
+                            <div
+                                class="text-slate-500 mb-4 text-xs uppercase tracking-wider"
+                            >
+                                Windows CMD
+                            </div>
+                            <pre
+                                class="overflow-x-auto"
+                            ><code class="text-success">te9 install --llm</code></pre>
+                        </div>
+
+                        <div
+                            class="w-full bg-[#111] border border-slate-800 rounded p-6 font-mono text-sm relative group"
+                        >
+                            <button
+                                class="absolute top-4 right-4 text-slate-500 hover:text-white"
+                            >
+                                <span class="material-symbols-outlined text-lg"
+                                    >content_copy</span
+                                >
+                            </button>
+                            <div
+                                class="text-slate-500 mb-4 text-xs uppercase tracking-wider"
+                            >
+                                Windows PowerShell
+                            </div>
+                            <pre
+                                class="overflow-x-auto"
+                            ><code class="text-success">iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Other Commands Section -->
+            <section
+                class="border-b-2 border-slate-900 dark:border-white/20 bg-surface-dark"
+            >
+                <div class="p-8 md:p-16">
+                    <h3
+                        class="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4 text-center"
+                    >
+                        Other Commands
+                    </h3>
+                    <p
+                        class="text-center text-slate-400 font-mono text-sm max-w-2xl mx-auto mb-12"
+                    >
+                        Keep your te9.dev installation up to date and check its
+                        status
+                    </p>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 gap-0 border-2 border-slate-900 dark:border-white/20"
+                    >
+                        <div
+                            class="p-8 md:p-12 md:border-r-2 border-slate-900 dark:border-white/20"
+                        >
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="material-symbols-outlined text-3xl text-yellow-500"
+                                    >update</span
+                                >
+                                <h4 class="text-xl font-bold uppercase">
+                                    Update
+                                </h4>
+                            </div>
+                            <div
+                                class="bg-[#111] border border-slate-800 rounded p-4 font-mono text-sm relative group"
+                            >
+                                <button
+                                    class="absolute top-3 right-3 text-slate-500 hover:text-white"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >content_copy</span
+                                    >
+                                </button>
+                                <pre
+                                    class="overflow-x-auto"
+                                ><code class="text-success">curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update</code></pre>
+                                <div class="text-slate-500 mt-2 text-xs">
+                                    # Windows: te9 update
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-8 md:p-12">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="material-symbols-outlined text-3xl text-blue-500"
+                                    >info</span
+                                >
+                                <h4 class="text-xl font-bold uppercase">
+                                    Check Status
+                                </h4>
+                            </div>
+                            <div
+                                class="bg-[#111] border border-slate-800 rounded p-4 font-mono text-sm relative group"
+                            >
+                                <button
+                                    class="absolute top-3 right-3 text-slate-500 hover:text-white"
+                                >
+                                    <span class="material-symbols-outlined"
+                                        >content_copy</span
+                                    >
+                                </button>
+                                <pre
+                                    class="overflow-x-auto"
+                                ><code class="text-success">curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status</code></pre>
+                                <div class="text-slate-500 mt-2 text-xs">
+                                    # Windows: te9 status
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documentation Section -->
+            <section class="border-b-2 border-slate-900 dark:border-white/20">
+                <div class="p-8 md:p-16">
+                    <h3
+                        class="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4 text-center"
+                    >
+                        Documentation
+                    </h3>
+                    <p
+                        class="text-center text-slate-600 dark:text-slate-400 font-mono text-sm max-w-2xl mx-auto mb-12"
+                    >
+                        Everything you need to master te9.dev
+                    </p>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-2 border-slate-900 dark:border-white/20"
+                    >
+                        <a
+                            href="https://github.com/creatuluw/te9.dev/blob/main/te9.md"
+                            target="_blank"
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors"
+                        >
+                            <div class="badge badge-primary mb-4">Core</div>
+                            <h4
+                                class="text-xl font-bold uppercase mb-3 text-white group-hover:text-primary transition-colors"
+                            >
+                                te9.md
+                            </h4>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed"
+                            >
+                                Detailed workflow documentation
+                            </p>
+                        </a>
+
+                        <a
+                            href="https://github.com/creatuluw/te9.dev/blob/main/openmemory.md"
+                            target="_blank"
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors"
+                        >
+                            <div class="badge badge-primary mb-4">System</div>
+                            <h4
+                                class="text-xl font-bold uppercase mb-3 text-white group-hover:text-primary transition-colors"
+                            >
+                                openmemory.md
+                            </h4>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed"
+                            >
+                                Memory system documentation
+                            </p>
+                        </a>
+
+                        <a
+                            href="https://github.com/creatuluw/te9.dev/blob/main/te9/llms.md"
+                            target="_blank"
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 hover:bg-surface-dark transition-colors"
+                        >
+                            <div class="badge badge-primary mb-4">AI Guide</div>
+                            <h4
+                                class="text-xl font-bold uppercase mb-3 text-white group-hover:text-primary transition-colors"
+                            >
+                                te9/llms.md
+                            </h4>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed"
+                            >
+                                AI assistant instructions
+                            </p>
+                        </a>
+
+                        <a
+                            href="https://github.com/creatuluw/te9.dev/blob/main/te9/QUICKSTART.md"
+                            target="_blank"
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors"
+                        >
+                            <div class="badge badge-primary mb-4">
+                                Reference
+                            </div>
+                            <h4
+                                class="text-xl font-bold uppercase mb-3 text-white group-hover:text-primary transition-colors"
+                            >
+                                te9/QUICKSTART.md
+                            </h4>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed"
+                            >
+                                Quick reference guide
+                            </p>
+                        </a>
+
+                        <a
+                            href="https://github.com/creatuluw/te9.dev/blob/main/te9/INSTALL_LLM.md"
+                            target="_blank"
+                            class="group p-8 md:p-12 border-b-2 md:border-b-0 lg:border-r-2 border-slate-900 dark:border-white/20 hover:bg-surface-dark transition-colors"
+                        >
+                            <div class="badge badge-primary mb-4">Setup</div>
+                            <h4
+                                class="text-xl font-bold uppercase mb-3 text-white group-hover:text-primary transition-colors"
+                            >
+                                te9/INSTALL_LLM.md
+                            </h4>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed"
+                            >
+                                LLM-native installation
+                            </p>
+                        </a>
+
+                        <a
+                            href="https://github.com/creatuluw/te9.dev/blob/main/te9/CHEATSHEET.md"
+                            target="_blank"
+                            class="group p-8 md:p-12 hover:bg-surface-dark transition-colors"
+                        >
+                            <div class="badge badge-primary mb-4">
+                                Cheat Sheet
+                            </div>
+                            <h4
+                                class="text-xl font-bold uppercase mb-3 text-white group-hover:text-primary transition-colors"
+                            >
+                                te9/CHEATSHEET.md
+                            </h4>
+                            <p
+                                class="font-mono text-sm text-slate-400 leading-relaxed"
+                            >
+                                Quick reference for commands
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer
+            class="border-t-2 border-slate-900 dark:border-white/20 bg-surface-dark"
+        >
+            <div
+                class="grid grid-cols-1 md:grid-cols-4 divide-y-2 md:divide-y-0 md:divide-x-2 divide-slate-900 dark:divide-white/20"
+            >
+                <div class="p-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-primary"
+                                >terminal</span
+                            >
+                            <span class="font-bold text-lg uppercase"
+                                >te9.dev</span
+                            >
+                        </div>
+                        <p class="font-mono text-xs text-slate-500">
+                            Fast. Simple. Easy. 🚀<br />
+                            AI-Powered Development Workspace
+                        </p>
+                    </div>
+                </div>
+
+                <div class="p-10 flex flex-col gap-4">
+                    <h4 class="font-bold uppercase text-primary mb-2">
+                        Getting Started
+                    </h4>
+                    <a
+                        href="#install"
+                        class="font-mono text-sm text-slate-400 hover:text-white hover:underline decoration-primary underline-offset-4"
+                        >Installation</a
+                    >
+                    <a
+                        href="#workflow"
+                        class="font-mono text-sm text-slate-400 hover:text-white hover:underline decoration-primary underline-offset-4"
+                        >Workflow</a
+                    >
+                    <a
+                        href="#features"
+                        class="font-mono text-sm text-slate-400 hover:text-white hover:underline decoration-primary underline-offset-4"
+                        >Features</a
+                    >
+                </div>
+
+                <div class="p-10 flex flex-col gap-4">
+                    <h4 class="font-bold uppercase text-primary mb-2">
+                        Documentation
+                    </h4>
+                    <a
+                        href="https://github.com/creatuluw/te9.dev/blob/main/te9.md"
+                        target="_blank"
+                        class="font-mono text-sm text-slate-400 hover:text-white hover:underline decoration-primary underline-offset-4"
+                        >te9.md</a
+                    >
+                    <a
+                        href="https://github.com/creatuluw/te9.dev/blob/main/openmemory.md"
+                        target="_blank"
+                        class="font-mono text-sm text-slate-400 hover:text-white hover:underline decoration-primary underline-offset-4"
+                        >openmemory.md</a
+                    >
+                    <a
+                        href="https://github.com/creatuluw/te9.dev/blob/main/te9/llms.md"
+                        target="_blank"
+                        class="font-mono text-sm text-slate-400 hover:text-white hover:underline decoration-primary underline-offset-4"
+                        >AI Guide</a
+                    >
+                </div>
+
+                <div
+                    class="p-10 flex flex-col justify-center items-center gap-4 bg-[#0a0f14]"
+                >
+                    <a
+                        href="https://github.com/creatuluw/te9.dev"
+                        target="_blank"
+                        class="text-slate-400 hover:text-white transition-colors"
+                    >
+                        <span class="material-symbols-outlined text-5xl"
+                            >github</span
+                        >
+                    </a>
+                    <span
+                        class="font-mono text-xs text-slate-500 text-center uppercase tracking-widest"
+                        >Open Source</span
+                    >
+                </div>
+            </div>
+            <div
+                class="px-10 py-4 border-t border-slate-900 dark:border-white/20 bg-surface-dark"
+            >
+                <p class="font-mono text-xs text-slate-500 text-center">
+                    © 2026 te9.dev - Open Source Project
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(
+                        this.getAttribute("href"),
+                    );
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
