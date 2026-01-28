@@ -139,7 +139,7 @@ Quick Start
 
 | Platform | Installation | Update | Status |
 |----------|-------------|---------|---------|
-| **Linux/macOS** | `curl ... | bash install` | `curl ... | bash update` | `curl ... | bash status` |
+| **Linux/macOS** | `curl ... | bash -s install` | `curl ... | bash -s update` | `curl ... | bash -s status` |
 | **Windows CMD** | `te9 install` | `te9 update` | `te9 status` |
 | **Windows PowerShell** | `& .\te9.cmd install` | `& .\te9.cmd update` | `& .\te9.cmd status` |
 

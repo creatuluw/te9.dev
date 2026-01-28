@@ -3,7 +3,7 @@
 **To install te9.dev, run this ONE command:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 **Windows CMD:**
@@ -13,7 +13,7 @@ te9 install --llm
 
 **Windows PowerShell:**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 The `--llm` flag handles everything automatically:
@@ -37,13 +37,13 @@ Fast, simple, and easy AI-driven development workflow.
 
 ```bash
 # Linux/macOS/Git Bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 
 # Windows CMD
 te9 install --llm
 
 # Windows PowerShell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 **The `--llm` flag handles everything automatically:**
@@ -83,13 +83,13 @@ iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bas
 
 **Update:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 # Windows: te9 update
 ```
 
 **Check Status:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s status
 # Windows: te9 status
 ```
 

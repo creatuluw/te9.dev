@@ -58,9 +58,9 @@ curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | ba
 te9 install
 ```
 
-**For Windows PowerShell:**
+**Windows PowerShell:**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install
 ```
 
 ### Step 3: The Script Does Everything
@@ -162,7 +162,7 @@ User asks: "Update te9.dev" or "Check for updates"
 
 **Bash:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install
 ```
 
 **Windows CMD:**
@@ -243,19 +243,19 @@ Status shows:
 ### Install (One Command)
 ```bash
 # Bash (Linux/macOS/Git Bash)
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install
 
 # Windows CMD
 te9 install
 
 # Windows PowerShell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install
 ```
 
 ### Update
 ```bash
 # Bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 
 # Windows CMD
 te9 update
@@ -299,9 +299,10 @@ Which environment are you using?
 **User:** "Git Bash on Windows"
 
 **AI:** "Perfect! I'll install te9.dev now:
+**AI:** "I'll install te9.dev now:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install
 ```
 
 This will:
@@ -325,7 +326,7 @@ te9.dev is now ready to use in your project. You can start by entering your requ
 **AI:** "I'll update te9.dev to the latest version now:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 ```
 
 This will create a backup of your current files and download the latest updates. Your specs and logs will be preserved."
@@ -371,7 +372,7 @@ Your te9.dev installation is complete and ready to use!"
 ## Key Takeaways
 
 - **One URL to rule them all:** `https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9`
-- **One command to install:** `curl -fsSL [URL] | bash install`
+- **One command to install:** `curl -fsSL [URL] | bash -s install`
 - **No manual steps:** Script handles everything including git init
 - **Cross-platform:** Works on Linux, macOS, and Windows (with Git Bash)
 - **Safe updates:** Automatic backups preserve user data

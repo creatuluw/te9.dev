@@ -5,7 +5,7 @@
 ### For Bash (Linux, macOS, Git Bash)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 ### For Windows CMD
@@ -17,7 +17,7 @@ te9 install --llm
 ### For Windows PowerShell
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 ---
@@ -113,7 +113,7 @@ For help: https://github.com/creatuluw/te9.dev
 Same command, replace `install` with `update`:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 ```
 
 Update automatically backs up your files at `.te9-backup-TIMESTAMP/`.

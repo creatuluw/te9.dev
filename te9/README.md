@@ -243,7 +243,7 @@ You can start by describing what you want to build."
 
 ```bash
 # Bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 
 # Windows CMD
 te9 update

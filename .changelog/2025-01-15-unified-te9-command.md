@@ -27,9 +27,9 @@ curl -fsSL https://github.com/creatuluw/te9.dev/status | bash
 
 **After (1 unified script):**
 ```bash
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s install
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s update
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s status
 ```
 
 ## Available Commands
@@ -177,16 +177,16 @@ project/
 Updated installation section to use unified `te9` command:
 ```bash
 # Install
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s install
 
 # Update
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s update
 
 # Status
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash status
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s status
 
 # Help
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash help
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s help
 ```
 
 Added "Available Commands" section with command table.
@@ -236,7 +236,7 @@ curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
 **Update:**
 ```bash
 # Same pattern
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash update
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s update
 ```
 
 ## Benefits
@@ -312,7 +312,7 @@ If you have old scripts installed:
 curl -fsSL https://github.com/creatuluw/te9.dev/install | bash
 
 # New way (recommended)
-curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash install
+curl -fsSL https://github.com/creatuluw/te9.dev/te9/te9 | bash -s install
 ```
 
 ## Backward Compatibility

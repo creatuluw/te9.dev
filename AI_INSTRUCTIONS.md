@@ -5,7 +5,7 @@
 **Run this ONE command to install te9.dev:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 **Windows CMD:**
@@ -15,7 +15,7 @@ te9 install --llm
 
 **Windows PowerShell:**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 ---

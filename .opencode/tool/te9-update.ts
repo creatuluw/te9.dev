@@ -1,14 +1,14 @@
-import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { execSync } from 'child_process';
+import { readFileSync, writeFileSync, existsSync } from "fs";
+import { execSync } from "child_process";
 
-const LOG_DIR = 'te9.dev/logs';
+const LOG_DIR = "te9.dev/logs";
 const CHECK_FILE = `${LOG_DIR}/.te9-last-update-check`;
 const LOCAL_COMMIT_FILE = `${LOG_DIR}/.te9-local-commit`;
 
 function getLastCheck(): Date | null {
   if (!existsSync(CHECK_FILE)) return null;
   try {
-    const data = readFileSync(CHECK_FILE, 'utf8').trim();
+    const data = readFileSync(CHECK_FILE, "utf8").trim();
     return new Date(data);
   } catch {
     return null;
@@ -28,15 +28,17 @@ function shouldCheck(): boolean {
 }
 
 async function getLatestCommit(): Promise<string> {
-  const response = await fetch('https://api.github.com/repos/creatuluw/te9.dev/commits/main');
-  if (!response.ok) throw new Error('Failed to fetch latest commit');
+  const response = await fetch(
+    "https://api.github.com/repos/creatuluw/te9.dev/commits/main",
+  );
+  if (!response.ok) throw new Error("Failed to fetch latest commit");
   const data = await response.json();
   return data.sha;
 }
 
 function getLocalCommit(): string | null {
   if (!existsSync(LOCAL_COMMIT_FILE)) return null;
-  return readFileSync(LOCAL_COMMIT_FILE, 'utf8').trim();
+  return readFileSync(LOCAL_COMMIT_FILE, "utf8").trim();
 }
 
 function setLocalCommit(commit: string) {
@@ -54,7 +56,13 @@ async function checkForUpdates(): Promise<boolean> {
 }
 
 function performUpdate() {
-  execSync('curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update', { stdio: 'inherit' });
+  // Fetch the te9 script and pipe it to bash with 'update' as argument
+  // Note: bash -s reads commands from stdin (the piped script) and passes 'update' as $1
+  // This avoids the common mistake of 'bash update' which tries to execute a file named 'update'
+  execSync(
+    "curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update",
+    { stdio: "inherit" },
+  );
 }
 
 export { shouldCheck, checkForUpdates, performUpdate, setLastCheck };

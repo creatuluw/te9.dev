@@ -35,7 +35,7 @@ This skill is called at the start of each session to ensure the te9.dev system i
 - Uses GitHub API to get latest commit from main branch
 - Stores last check time in `.te9-last-update-check`
 - Stores local commit hash in `.te9-local-commit`
-- Update command: `curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update`
+- Update command: `curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update`
 
 ## Memory Integration
 

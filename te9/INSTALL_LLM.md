@@ -153,7 +153,7 @@ If all checks pass, te9.dev is installed and ready to use. The user can now:
 If the LLM can execute shell commands, use the bash script instead (faster and more reliable):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 ## 📚 File Purposes
