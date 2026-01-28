@@ -149,6 +149,7 @@ create_directories() {
     mkdir -p .opencode/skill/spec-store
     mkdir -p .opencode/skill/spec-track
     mkdir -p .opencode/skill/te9-init
+    mkdir -p .opencode/skill/te9-update
     mkdir -p .opencode/tool
     mkdir -p .opencode/prompts
     mkdir -p te9.dev/specs
