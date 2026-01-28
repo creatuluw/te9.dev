@@ -426,6 +426,8 @@ verify_update() {
         ".opencode/skill/spec-store/SKILL.md"
         ".opencode/skill/spec-track/SKILL.md"
         ".opencode/skill/te9-init/SKILL.md"
+        ".opencode/skill/te9-update/SKILL.md"
+        ".opencode/tool/te9-update.ts"
         ".opencode/prompts/rules.md"
     )
 
