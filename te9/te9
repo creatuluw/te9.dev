@@ -178,7 +178,7 @@ download_agents_md() {
     local dest="AGENTS.md"
 
     if [ -f "$dest" ]; then
-        log_info "AGENTS.md exists - backing up and prepending te9 version"
+        log_info "AGENTS.md exists - checking for te9 instructions"
 
         # Backup existing file
         cp "$dest" "${dest}.backup"
@@ -186,16 +186,26 @@ download_agents_md() {
         # Download new version to temp file
         local temp_file="${dest}.new"
         if curl -fsSL "$url" -o "$temp_file"; then
-            # Create new file with new content first, then old content
-            cat "$temp_file" > "$dest"
-            echo "" >> "$dest"
-            echo "---" >> "$dest"
-            echo "" >> "$dest"
-            cat "${dest}.backup" >> "$dest"
+            # Check if te9 instructions are already present
+            local new_header=$(head -1 "$temp_file")
+            local existing_header=$(head -1 "$dest")
+
+            if [ "$existing_header" = "$new_header" ]; then
+                # Already has te9 instructions, just replace
+                mv "$temp_file" "$dest"
+                log_success "AGENTS.md updated (te9 version already present, replaced)"
+            else
+                # Prepend new content to existing
+                cat "$temp_file" > "$dest"
+                echo "" >> "$dest"
+                echo "---" >> "$dest"
+                echo "" >> "$dest"
+                cat "${dest}.backup" >> "$dest"
+                log_success "AGENTS.md updated (te9 version prepended)"
+            fi
 
             # Clean up
-            rm "$temp_file"
-            log_success "AGENTS.md updated (te9 version prepended)"
+            rm -f "$temp_file"
         else
             log_error "Failed to download AGENTS.md"
             return 1
