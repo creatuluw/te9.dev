@@ -152,6 +152,7 @@ create_directories() {
     mkdir -p .opencode/skill/te9-update
     mkdir -p .opencode/tool
     mkdir -p .opencode/prompts
+    mkdir -p .opencode/plugins
     mkdir -p te9.dev/specs
     mkdir -p te9.dev/logs
 
@@ -228,6 +229,9 @@ download_files() {
     download_file "${RAW_URL}/te9.md" "te9.md"
     download_agents_md
 
+    # OpenCode config
+    download_file "${RAW_URL}/.opencode/package.json" ".opencode/package.json"
+
     # Skills
     download_file "${RAW_URL}/.opencode/skill/daisyui/SKILL.md" ".opencode/skill/daisyui/SKILL.md"
     download_file "${RAW_URL}/.opencode/skill/spec-branch-commit/SKILL.md" ".opencode/skill/spec-branch-commit/SKILL.md"
@@ -251,10 +255,29 @@ download_files() {
     download_file "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
     download_file "${RAW_URL}/.opencode/tool/te9-update.ts" ".opencode/tool/te9-update.ts"
 
+    # Plugins
+    download_file "${RAW_URL}/.opencode/plugins/te9-invoke.ts" ".opencode/plugins/te9-invoke.ts"
+
     # Prompts
     download_file "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
 
     log_success "All files downloaded"
+}
+
+# Install dependencies
+install_dependencies() {
+    if [ -f ".opencode/package.json" ]; then
+        log_info "Installing OpenCode dependencies..."
+        if command -v bun >/dev/null 2>&1; then
+            (cd .opencode && bun install >/dev/null 2>&1)
+            log_success "Dependencies installed with bun"
+        elif command -v npm >/dev/null 2>&1; then
+            (cd .opencode && npm install >/dev/null 2>&1)
+            log_success "Dependencies installed with npm"
+        else
+            log_warn "Neither bun nor npm found - plugin dependencies may not work"
+        fi
+    fi
 }
 
 # Initialize specs database
@@ -275,6 +298,7 @@ verify_installation() {
         "README.md"
         "te9.md"
         "AGENTS.md"
+        ".opencode/package.json"
         ".opencode/skill/daisyui/SKILL.md"
         ".opencode/skill/spec-branch-commit/SKILL.md"
         ".opencode/skill/spec-clarify/SKILL.md"
@@ -287,6 +311,7 @@ verify_installation() {
         ".opencode/skill/te9-init/SKILL.md"
         ".opencode/skill/te9-update/SKILL.md"
         ".opencode/tool/te9-update.ts"
+        ".opencode/plugins/te9-invoke.ts"
         ".opencode/prompts/rules.md"
     )
 
@@ -392,6 +417,9 @@ update_files() {
     download_file_with_backup "${RAW_URL}/te9.md" "te9.md"
     download_agents_md
 
+    # OpenCode config
+    download_file_with_backup "${RAW_URL}/.opencode/package.json" ".opencode/package.json"
+
     # Skills
     download_file_with_backup "${RAW_URL}/.opencode/skill/daisyui/SKILL.md" ".opencode/skill/daisyui/SKILL.md"
     download_file_with_backup "${RAW_URL}/.opencode/skill/spec-branch-commit/SKILL.md" ".opencode/skill/spec-branch-commit/SKILL.md"
@@ -415,6 +443,9 @@ update_files() {
     download_file_with_backup "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
     download_file_with_backup "${RAW_URL}/.opencode/tool/te9-update.ts" ".opencode/tool/te9-update.ts"
 
+    # Plugins
+    download_file_with_backup "${RAW_URL}/.opencode/plugins/te9-invoke.ts" ".opencode/plugins/te9-invoke.ts"
+
     # Prompts
     download_file_with_backup "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
 
@@ -428,6 +459,7 @@ verify_update() {
     local required=(
         "opencode.json"
         "openmemory.md"
+        ".opencode/package.json"
         ".opencode/skill/daisyui/SKILL.md"
         ".opencode/skill/spec-branch-commit/SKILL.md"
         ".opencode/skill/spec-clarify/SKILL.md"
@@ -440,6 +472,7 @@ verify_update() {
         ".opencode/skill/te9-init/SKILL.md"
         ".opencode/skill/te9-update/SKILL.md"
         ".opencode/tool/te9-update.ts"
+        ".opencode/plugins/te9-invoke.ts"
         ".opencode/prompts/rules.md"
     )
 
@@ -471,6 +504,7 @@ check_status() {
     declare -a REQUIRED=(
         "opencode.json:Core configuration"
         "openmemory.md:Memory system rules"
+        ".opencode/package.json:OpenCode dependencies"
         ".opencode/skill/daisyui/SKILL.md:DAISY UI components"
         ".opencode/skill/spec-branch-commit/SKILL.md:Branch and commit workflow"
         ".opencode/skill/spec-clarify/SKILL.md:Clarification"
@@ -481,6 +515,7 @@ check_status() {
         ".opencode/skill/spec-store/SKILL.md:Spec storage"
         ".opencode/skill/spec-track/SKILL.md:Progress tracking"
         ".opencode/skill/te9-init/SKILL.md:Initialization"
+        ".opencode/plugins/te9-invoke.ts:te9 workflow enforcement plugin"
     )
 
     local all_present=true
@@ -648,6 +683,7 @@ cmd_install() {
     check_git_repo
     create_directories
     download_files
+    install_dependencies
     init_specs
     verify_installation
 
@@ -687,6 +723,7 @@ cmd_update() {
     backup_files
     create_directories
     update_files
+    install_dependencies
     verify_update
 
     echo ""
