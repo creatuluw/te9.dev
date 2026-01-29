@@ -24,6 +24,35 @@ spec-track (anytime)
 
 ---
 
+## ⚠️ CRITICAL: STARTING THE WORKFLOW
+
+The te9.dev workflow can be started in two ways:
+
+### How to Start
+
+**Method 1: /te9 Command**
+1. User types `/te9` (with optional prompt: `/te9 <your request>`) in the OpenCode interface
+2. This invokes the te9 workflow command
+3. The workflow begins at **spec-clarify**
+
+**Method 2: File-Based Command**
+1. User adds `te9.md` file to the LLM context (by dragging, mentioning, or attaching)
+2. The workflow begins immediately (no /te9 command needed)
+
+### What NOT to Do
+- ❌ Do NOT start te9 workflow automatically on new sessions
+- ❌ Do NOT ask users if they want to use te9
+- ❌ Do NOT proceed with te9 workflow without explicit `/te9` command OR `te9.md` file
+
+### The Two Ways
+The te9.dev spec-driven development workflow can be invoked by:
+1. Using the `/te9` command (with optional prompt)
+2. Adding the `te9.md` file to LLM context
+
+Without either of these, work should proceed normally using standard AI assistance.
+
+---
+
 ## WORKFLOW STEPS (REFERENCES)
 
 ### Step 1: spec-clarify
@@ -250,7 +279,6 @@ PENDING → IN_PROGRESS → READY_FOR_COMMIT → COMPLETED
 - `AGENTS.md` - This file (workflow reference)
 
 ### AI-Specific Guides
-- `te9/llms.md` - AI installation guide
 - `.opencode/prompts/rules.md` - Mandatory workflow rules
 
 ### Configuration
@@ -347,8 +375,8 @@ Priority: <priority>
 
 ### Installation
 - Install: `te9 install` or `AI_INSTRUCTIONS.md#L1-L30`
-- Update: `te9 update` or `te9/llms.md#L195-L215`
-- Status: `te9 status` or `te9/llms.md#L217-L237`
+- Update: `te9 update`
+- Status: `te9 status`
 
 ### Workflow
 - Clarify: `.opencode/skill/spec-clarify/SKILL.md`

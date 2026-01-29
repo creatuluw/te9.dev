@@ -1,126 +1,132 @@
-# te9.dev Workflow
+# 🚀 TE9.DEV WORKFLOW COMMAND
 
-Simple, structured development with AI.
+## ⚠️ CRITICAL: COMMAND TRIGGER
 
-## Setup
+**This file is a COMMAND FILE.** When this file is added to the LLM context (by dragging, mentioning, or attaching), the te9.dev workflow MUST START immediately.
 
-Initialize te9.dev in your project:
+**Do NOT ask if the user wants to use te9.dev. This file IS the request to use te9.dev.**
 
+---
+
+## 📋 WHAT THIS COMMAND DOES
+
+This command triggers the te9.dev spec-driven development workflow. It provides a structured, 6-step process for AI-driven development:
+
+1. **spec-clarify** → Gather requirements with questions (max 5)
+2. **spec-store** → Save spec to file system
+3. **spec-execute** → Implement and test
+4. **spec-branch-commit** → Create branch, commit and push (with approval)
+5. **spec-pr-create** → Create pull request for collaborative review
+6. **spec-pr-review** → Provide PR link for manual merge on GitHub
+
+---
+
+## 🎯 IMMEDIATE ACTION REQUIRED
+
+**START NOW:** Begin the workflow by asking the user what they want to build.
+
+**Example opening:**
 ```
-te9-init
-```
+You've triggered the te9.dev workflow! Let's get started.
 
-This creates:
-- `te9.dev/specs/` - Spec storage
-- `te9.dev/logs/` - Execution logs
-- `opencode.json` - Configuration
-- `openmemory.md` - Memory rules
-
-## Update Check
-
-On initialization, te9.dev automatically checks once daily if updates are available from the GitHub repository. If updates are found, the AI will ask for user approval before applying them.
-
-This ensures the system stays current with the latest features and fixes.
-
-## Workflow
-
-```
-1. Enter your request
-2. spec-clarify → Ask questions (max 5)
-3. spec-store → Save spec file
-4. spec-execute → Implement and log
-5. spec-branch-commit → Create branch, commit + push (with approval)
-6. spec-pr-create → Create pull request for review
-7. spec-pr-review → Provide PR link for manual merge on GitHub
-8. spec-track → Check status anytime
+What would you like to build?
 ```
 
-## Skills
+If the user provided context along with this command (e.g., a specific task or request), use that context as the starting point and proceed to **spec-clarify**.
 
-| Skill | What It Does |
-|-------|--------------|
-| `te9-init` | Initialize te9.dev in project |
-| `spec-clarify` | Gather requirements with questions |
-| `spec-store` | Save spec to file system |
-| `spec-execute` | Implement and test |
-| `spec-branch-commit` | Create branch, commit and push with approval |
-| `spec-pr-create` | Create pull request for collaborative review |
-| `spec-pr-review` | Provide PR link for manual merge on GitHub |
-| `spec-track` | View progress and status |
+---
 
-## Example
+## 🔄 WORKFLOW STEPS
 
-**User:** Add a login button
+### Step 1: spec-clarify
 
-**AI:** Got it! Should it link to /login or open a modal?
+**What You MUST Do:**
+1. Read user's request (from context or ask if not provided)
+2. Determine complexity level (Simple/Medium/Complex)
+3. Ask clarification questions (MAXIMUM 5 TOTAL)
+   - Simple: 0-1 question (confirm understanding)
+   - Medium: 2-3 questions (clarify details)
+   - Complex: 4-5 questions (deep dive)
+4. Gather all answers
+5. Prepare requirements summary
+6. CONFIRM with user before proceeding to spec-store
 
-**User:** Link to /login
+**Question Guidelines:**
+- Always ask questions ONE BY ONE
+- Include question number: "Question X/Y"
+- Be targeted and specific
+- Don't ask technical implementation details (save for execution)
+- Maximum 5 questions total
 
-**AI:** ✓ Spec created: SPEC-20250115-abc123
-        Ready to execute?
+After user confirmation, automatically proceed to **spec-store**.
 
-**User:** Yes
+### Step 2: spec-store
 
-**AI:** ✓ Implemented login button
-        ✓ Linked to /login
-        ✓ Tests passing
-        Ready for branch commit?
+- Generate unique spec ID: `SPEC-<YYYYMMDD>-<HHMM>-<slug>`
+- Create `te9.dev/specs/<id>/spec.md`
+- Update `te9.dev/specs/specs.json`
+- Store in memory for context
+- Initialize execution log: `te9.dev/logs/<id>.log`
 
-**User:** approve
+### Step 3: spec-execute
 
-**AI:** ✓ Feature branch created: feature/SPEC-20250115-abc123-add-login-button
-        ✓ Commit created
-        ✓ Branch pushed to remote
-        ✓ Pull request created
-        ✓ PR link provided: https://github.com/org/repo/pull/123
-        ✓ Manual merge instructions given
-        ✓ Work complete!
+- Load spec file
+- Plan implementation approach
+- Execute requirements systematically
+- Log ALL changes to execution log
+- Verify each acceptance criterion
+- Run comprehensive tests
+- Update spec status to READY_FOR_BRANCH_COMMIT
 
-## Track Progress
+### Step 4: spec-branch-commit
 
-```
-spec-track                    # All specs
-spec-track <spec-id>          # Details
-spec-track <spec-id> --log    # Execution log
-spec-track --commits          # Commit history
-```
+- Create feature branch: `feature/SPEC-<id>-<slug>`
+- Commit changes with spec ID in brackets
+- Ask for user approval BEFORE pushing
+- Push branch to remote after user approval
+- Update spec status to BRANCH_COMMITTED
 
-## Spec Status
+### Step 5: spec-pr-create
 
-- **PENDING** - Waiting to start
-- **IN_PROGRESS** - Currently being executed
-- **READY_FOR_BRANCH_COMMIT** - Ready for branch commit
-- **BRANCH_COMMITTED** - Branch committed and pushed
-- **PR_CREATED** - Pull request created and under review
-- **COMPLETED** - PR link provided for manual merge
-- **FAILED** - Execution failed
-- **BLOCKED** - Has blockers
+- Create pull request against main branch
+- Include spec details and assign reviewers
+- Enable CI/CD checks
+- Update spec status to PR_CREATED
 
-## Files
+### Step 6: spec-pr-review
 
-```
-te9.dev/
-├── specs/
-│   ├── SPEC-<id>/
-│   │   └── spec.md
-│   └── specs.json
-└── logs/
-    └── SPEC-<id>.log
-```
+- Provide direct GitHub PR link for manual review
+- Give manual merge instructions
+- Mark spec as completed after user confirmation
 
-## Memory System
+---
 
-OpenMemory automatically stores:
-- Spec creation
-- Implementation decisions
-- Completion records
+## 📚 REFERENCE
 
-Context is maintained across sessions.
+- `AGENTS.md` - Complete workflow reference
+- `.opencode/skill/spec-clarify/SKILL.md` - Requirements gathering details
+- `.opencode/skill/spec-store/SKILL.md` - Spec file creation details
+- `.opencode/skill/spec-execute/SKILL.md` - Implementation details
+- `.opencode/skill/spec-branch-commit/SKILL.md` - Branch commit details
+- `.opencode/skill/spec-pr-create/SKILL.md` - PR creation details
+- `.opencode/skill/spec-pr-review/SKILL.md` - PR review details
 
-## Next Steps
+---
 
-1. Run `te9-init` in your project
-2. Enter your first request
-3. Follow the workflow
+## ⚠️ CRITICAL RULES
 
-**Fast. Simple. Easy.**
+- NEVER skip steps in the workflow
+- ALWAYS ask for user approval before committing or pushing
+- Log ALL changes to execution log
+- Store in memory at each step
+- Create knowledge graph facts for acceptance criteria
+- Update spec status after each step
+- Track progress with `spec-track` command anytime
+
+---
+
+## ✅ START NOW
+
+Begin the te9.dev workflow by asking the user what they want to build.
+
+**Ready. What would you like to build?**

@@ -38,7 +38,7 @@ Look for this output:
 STATUS: READY_TO_USE
 ```
 
-Then tell the user: "te9.dev is installed and ready! Start by describing what you want to build."
+Then tell the user: "te9.dev is installed and ready! Start the te9 workflow by typing `/te9` or adding the `te9.md` file to your context."
 
 ---
 
@@ -53,18 +53,24 @@ Then tell the user: "te9.dev is installed and ready! Start by describing what yo
 
 ## 📚 More Documentation:
 
-- `README.md` - Project overview
-- `te9/llms.md` - Detailed AI guide
-- `te9/QUICKSTART.md` - Quick reference
-- `te9/INSTALL_LLM.md` - LLM-native installation
-- `te9/CHEATSHEET.md` - Cheat sheet
-
 ---
 
 ## 💡 That's It!
 
 One command. No manual steps. Ready to use.
 
-After installation, the 6-step workflow begins when the user describes what they want to build.
+## ⚠️ IMPORTANT: How to Start the Workflow
+
+There are two ways to start the te9.dev workflow:
+
+**Method 1: /te9 Command**
+1. User types `/te9` (with optional prompt: `/te9 <your request>`) in the OpenCode interface
+2. The workflow begins automatically with spec-clarify
+
+**Method 2: File-Based Command**
+1. User adds `te9.md` file to the LLM context (by dragging, mentioning, or attaching)
+2. The workflow begins immediately (no /te9 command needed)
+
+**Without `/te9` command or `te9.md` file, the AI will work normally without following the te9 workflow.**
 
 **Fast. Simple. Easy.** 🚀

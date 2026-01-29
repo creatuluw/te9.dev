@@ -267,45 +267,78 @@ EOF
     download_file "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
     download_file "${RAW_URL}/.opencode/tool/te9-update.ts" ".opencode/tool/te9-update.ts"
 
-    # Plugins (optional - may not exist yet)
-    if curl -fsSL "${RAW_URL}/.opencode/plugins/te9-invoke.ts" -o /dev/null 2>&1; then
-        download_file "${RAW_URL}/.opencode/plugins/te9-invoke.ts" ".opencode/plugins/te9-invoke.ts"
-    else
-        log_info "Creating te9-invoke plugin locally..."
-        cat > ".opencode/plugins/te9-invoke.ts" << 'EOF'
-import type { Plugin } from "@opencode-ai/plugin";
+    # Create /te9 command directory and file
+    mkdir -p ".opencode/commands"
+    log_info "Creating /te9 command file..."
+    cat > ".opencode/commands/te9.md" << 'EOF'
+---
+description: Start the te9.dev spec-driven development workflow
+agent: coding
+model: anthropic/claude-3-5-sonnet-20241022
+subtask: true
+---
 
-export const Te9InvokePlugin: Plugin = async (ctx) => {
-  return {
-    "session.created": async (input, output) => {
-      // Force the LLM to always ask about te9 method first
-      output.prompt = `You MUST start EVERY new session by calling the check_te9_usage tool to ask the user this exact question:
+# Starting te9.dev Workflow
 
-"Do you want to use the te9-method for this? (Yes/No)"
+You are now entering the te9.dev spec-driven development workflow. This is the ONLY way to use the te9 method. Follow the mandatory 6-step sequence:
 
-- If the user says "Yes", invoke the full te9 workflow: start with spec-clarify, then spec-store, spec-execute, spec-branch-commit, spec-pr-create, spec-pr-review as per AGENTS.md
-- If the user says "No", skip the te9 process and work on the request normally
-- Do NOT proceed with any work until you have the user's answer to this question
+## 📋 MANDATORY WORKFLOW SEQUENCE
 
-After getting the answer, proceed accordingly.`;
-    },
+1. **spec-clarify** → Gather requirements with questions (max 5)
+2. **spec-store** → Save spec to file system
+3. **spec-execute** → Implement and test
+4. **spec-branch-commit** → Create branch, commit and push (with approval)
+5. **spec-pr-create** → Create pull request for collaborative review
+6. **spec-pr-review** → Provide PR link for manual merge on GitHub
 
-    tool: {
-      check_te9_usage: {
-        description:
-          "Present the te9 method usage question to the user. Call this FIRST for any new request.",
-        execute: async (args, context) => {
-          return `Do you want to use the te9-method for this? (Yes/No)
+## 🚀 STEP 1: spec-clarify
 
-Please respond with "Yes" to follow the full te9 workflow, or "No" to work normally.`;
-        },
-      },
-    },
-  };
-};
+Start by reading the user's request and following the spec-clarify skill:
+
+### What You MUST Do:
+1. Read user's initial prompt
+2. Determine complexity level (Simple/Medium/Complex)
+3. Ask clarification questions (MAXIMUM 5 TOTAL)
+   - Simple: 0-1 question (confirm understanding)
+   - Medium: 2-3 questions (clarify details)
+   - Complex: 4-5 questions (deep dive)
+4. Gather all answers
+5. Prepare requirements summary
+6. CONFIRM with user before proceeding to spec-store
+
+### Question Guidelines:
+- Always ask questions ONE BY ONE
+- Include question number: "Question X/Y"
+- Be targeted and specific
+- Don't ask technical implementation details (save for execution)
+- Maximum 5 questions total
+
+After user confirmation, automatically proceed to **spec-store**.
+
+## 📚 REFERENCE FILES
+
+For detailed instructions on each step, refer to:
+- `.opencode/skill/spec-clarify/SKILL.md` - Requirements gathering
+- `.opencode/skill/spec-store/SKILL.md` - Spec file creation
+- `.opencode/skill/spec-execute/SKILL.md` - Implementation
+- `.opencode/skill/spec-branch-commit/SKILL.md` - Branch commit & push
+- `.opencode/skill/spec-pr-create/SKILL.md` - Pull request creation
+- `.opencode/skill/spec-pr-review/SKILL.md` - Pull request review
+- `AGENTS.md` - Complete workflow reference
+- `.opencode/prompts/rules.md` - Mandatory workflow rules
+
+## ⚠️ CRITICAL RULES
+
+- NEVER skip steps in the workflow
+- ALWAYS ask for user approval before committing or pushing
+- Log ALL changes to execution log
+- Store in OpenMemory at each step
+- Create knowledge graph facts for acceptance criteria
+- Update spec status after each step
+
+Ready to begin. What would you like to build?
 EOF
-        log_success "Created te9-invoke plugin"
-    fi
+        log_success "Created /te9 command file"
 
     # Prompts
     download_file "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
@@ -374,7 +407,7 @@ verify_installation() {
         ".opencode/skill/te9-init/SKILL.md"
         ".opencode/skill/te9-update/SKILL.md"
         ".opencode/tool/te9-update.ts"
-        ".opencode/plugins/te9-invoke.ts"
+        ".opencode/commands/te9.md"
         ".opencode/prompts/rules.md"
     )
 
@@ -518,45 +551,78 @@ EOF
     download_file_with_backup "${RAW_URL}/.opencode/tool/uikit.ts" ".opencode/tool/uikit.ts"
     download_file_with_backup "${RAW_URL}/.opencode/tool/te9-update.ts" ".opencode/tool/te9-update.ts"
 
-    # Plugins (optional)
-    if curl -fsSL "${RAW_URL}/.opencode/plugins/te9-invoke.ts" -o /dev/null 2>&1; then
-        download_file_with_backup "${RAW_URL}/.opencode/plugins/te9-invoke.ts" ".opencode/plugins/te9-invoke.ts"
-    else
-        log_info "Creating te9-invoke plugin locally..."
-        cat > ".opencode/plugins/te9-invoke.ts" << 'EOF'
-import type { Plugin } from "@opencode-ai/plugin";
+    # Update /te9 command file
+    mkdir -p ".opencode/commands"
+    log_info "Updating /te9 command file..."
+    cat > ".opencode/commands/te9.md" << 'EOF'
+---
+description: Start the te9.dev spec-driven development workflow
+agent: coding
+model: anthropic/claude-3-5-sonnet-20241022
+subtask: true
+---
 
-export const Te9InvokePlugin: Plugin = async (ctx) => {
-  return {
-    "session.created": async (input, output) => {
-      // Force the LLM to always ask about te9 method first
-      output.prompt = `You MUST start EVERY new session by calling the check_te9_usage tool to ask the user this exact question:
+# Starting te9.dev Workflow
 
-"Do you want to use the te9-method for this? (Yes/No)"
+You are now entering the te9.dev spec-driven development workflow. This is the ONLY way to use the te9 method. Follow the mandatory 6-step sequence:
 
-- If the user says "Yes", invoke the full te9 workflow: start with spec-clarify, then spec-store, spec-execute, spec-branch-commit, spec-pr-create, spec-pr-review as per AGENTS.md
-- If the user says "No", skip the te9 process and work on the request normally
-- Do NOT proceed with any work until you have the user's answer to this question
+## 📋 MANDATORY WORKFLOW SEQUENCE
 
-After getting the answer, proceed accordingly.`;
-    },
+1. **spec-clarify** → Gather requirements with questions (max 5)
+2. **spec-store** → Save spec to file system
+3. **spec-execute** → Implement and test
+4. **spec-branch-commit** → Create branch, commit and push (with approval)
+5. **spec-pr-create** → Create pull request for collaborative review
+6. **spec-pr-review** → Provide PR link for manual merge on GitHub
 
-    tool: {
-      check_te9_usage: {
-        description:
-          "Present the te9 method usage question to the user. Call this FIRST for any new request.",
-        execute: async (args, context) => {
-          return `Do you want to use the te9-method for this? (Yes/No)
+## 🚀 STEP 1: spec-clarify
 
-Please respond with "Yes" to follow the full te9 workflow, or "No" to work normally.`;
-        },
-      },
-    },
-  };
-};
+Start by reading the user's request and following the spec-clarify skill:
+
+### What You MUST Do:
+1. Read user's initial prompt
+2. Determine complexity level (Simple/Medium/Complex)
+3. Ask clarification questions (MAXIMUM 5 TOTAL)
+   - Simple: 0-1 question (confirm understanding)
+   - Medium: 2-3 questions (clarify details)
+   - Complex: 4-5 questions (deep dive)
+4. Gather all answers
+5. Prepare requirements summary
+6. CONFIRM with user before proceeding to spec-store
+
+### Question Guidelines:
+- Always ask questions ONE BY ONE
+- Include question number: "Question X/Y"
+- Be targeted and specific
+- Don't ask technical implementation details (save for execution)
+- Maximum 5 questions total
+
+After user confirmation, automatically proceed to **spec-store**.
+
+## 📚 REFERENCE FILES
+
+For detailed instructions on each step, refer to:
+- `.opencode/skill/spec-clarify/SKILL.md` - Requirements gathering
+- `.opencode/skill/spec-store/SKILL.md` - Spec file creation
+- `.opencode/skill/spec-execute/SKILL.md` - Implementation
+- `.opencode/skill/spec-branch-commit/SKILL.md` - Branch commit & push
+- `.opencode/skill/spec-pr-create/SKILL.md` - Pull request creation
+- `.opencode/skill/spec-pr-review/SKILL.md` - Pull request review
+- `AGENTS.md` - Complete workflow reference
+- `.opencode/prompts/rules.md` - Mandatory workflow rules
+
+## ⚠️ CRITICAL RULES
+
+- NEVER skip steps in the workflow
+- ALWAYS ask for user approval before committing or pushing
+- Log ALL changes to execution log
+- Store in OpenMemory at each step
+- Create knowledge graph facts for acceptance criteria
+- Update spec status after each step
+
+Ready to begin. What would you like to build?
 EOF
-        log_success "Created te9-invoke plugin"
-    fi
+        log_success "Updated /te9 command file"
 
     # Prompts
     download_file_with_backup "${RAW_URL}/.opencode/prompts/rules.md" ".opencode/prompts/rules.md"
@@ -584,7 +650,7 @@ verify_update() {
         ".opencode/skill/te9-init/SKILL.md"
         ".opencode/skill/te9-update/SKILL.md"
         ".opencode/tool/te9-update.ts"
-        ".opencode/plugins/te9-invoke.ts"
+        ".opencode/commands/te9.md"
         ".opencode/prompts/rules.md"
     )
 
@@ -641,7 +707,7 @@ check_status() {
         ".opencode/skill/spec-store/SKILL.md:Spec storage"
         ".opencode/skill/spec-track/SKILL.md:Progress tracking"
         ".opencode/skill/te9-init/SKILL.md:Initialization"
-        ".opencode/plugins/te9-invoke.ts:te9 workflow enforcement plugin"
+        ".opencode/commands/te9.md:te9 workflow command"
     )
 
     local all_present=true
