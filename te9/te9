@@ -151,6 +151,7 @@ create_directories() {
     mkdir -p .opencode/skill/te9-init
     mkdir -p .opencode/skill/te9-update
     mkdir -p .opencode/tool
+    mkdir -p .opencode/commands
     mkdir -p .opencode/prompts
     mkdir -p .opencode/plugins
     mkdir -p te9.dev/specs
@@ -227,6 +228,7 @@ download_files() {
     download_file "${RAW_URL}/openmemory.md" "openmemory.md"
     download_file "${RAW_URL}/README.md" "README.md"
     download_file "${RAW_URL}/te9.md" "te9.md"
+    download_file "${RAW_URL}/AI_INSTRUCTIONS.md" "AI_INSTRUCTIONS.md"
     download_agents_md
 
     # OpenCode config (optional - may not exist yet)
@@ -511,6 +513,7 @@ update_files() {
     download_file_with_backup "${RAW_URL}/openmemory.md" "openmemory.md"
     download_file_with_backup "${RAW_URL}/README.md" "README.md"
     download_file_with_backup "${RAW_URL}/te9.md" "te9.md"
+    download_file_with_backup "${RAW_URL}/AI_INSTRUCTIONS.md" "AI_INSTRUCTIONS.md"
     download_agents_md
 
     # OpenCode config (optional)
@@ -649,9 +652,14 @@ verify_update() {
         ".opencode/skill/spec-track/SKILL.md"
         ".opencode/skill/te9-init/SKILL.md"
         ".opencode/skill/te9-update/SKILL.md"
+        ".opencode/tool/daisyui.ts"
+        ".opencode/tool/knowledge_graph.ts"
+        ".opencode/tool/melt.ts"
+        ".opencode/tool/uikit.ts"
         ".opencode/tool/te9-update.ts"
         ".opencode/commands/te9.md"
         ".opencode/prompts/rules.md"
+        "AI_INSTRUCTIONS.md"
     )
 
     local all_present=true
@@ -707,7 +715,13 @@ check_status() {
         ".opencode/skill/spec-store/SKILL.md:Spec storage"
         ".opencode/skill/spec-track/SKILL.md:Progress tracking"
         ".opencode/skill/te9-init/SKILL.md:Initialization"
+        ".opencode/tool/daisyui.ts:DAISY UI templates"
+        ".opencode/tool/knowledge_graph.ts:Memory graph exporter"
+        ".opencode/tool/melt.ts:Svelte UI builder"
+        ".opencode/tool/uikit.ts:UI component generator"
+        ".opencode/tool/te9-update.ts:Update management functions"
         ".opencode/commands/te9.md:te9 workflow command"
+        "AI_INSTRUCTIONS.md:AI installation guide"
     )
 
     local all_present=true
