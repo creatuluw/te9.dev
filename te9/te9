@@ -324,7 +324,19 @@ install_dependencies() {
             (cd .opencode && npm install >/dev/null 2>&1)
             log_success "Dependencies installed with npm"
         else
-            log_warn "Neither bun nor npm found - plugin dependencies may not work"
+            log_info "Neither bun nor npm found - installing Bun..."
+            if curl -fsSL https://bun.sh/install | bash; then
+                log_success "Bun installed successfully"
+                # Reload PATH or check again
+                if command -v bun >/dev/null 2>&1; then
+                    (cd .opencode && bun install >/dev/null 2>&1)
+                    log_success "Dependencies installed with bun"
+                else
+                    log_warn "Bun installed but not found in PATH - plugin dependencies may not work"
+                fi
+            else
+                log_error "Failed to install Bun - plugin dependencies may not work"
+            fi
         fi
     else
         log_info "No OpenCode dependencies to install"
@@ -588,8 +600,22 @@ verify_update() {
 
     if [ "$all_present" = true ]; then
         log_success "✅ Update verified!"
+        if [ "$LLM_MODE" = true ]; then
+            echo ""
+            echo "=== UPDATE SUMMARY ==="
+            echo "✅ All files updated"
+            echo "✅ Backup created"
+            echo "✅ Dependencies installed"
+            echo ""
+            echo "STATUS: UPDATED"
+        fi
     else
         log_error "❌ Update incomplete"
+        if [ "$LLM_MODE" = true ]; then
+            echo ""
+            echo "=== UPDATE FAILED ==="
+            echo "STATUS: INCOMPLETE"
+        fi
         return 1
     fi
 }
@@ -817,8 +843,16 @@ cmd_install() {
 cmd_update() {
     detect_platform
     check_installed
-    log_info "Updating te9.dev..."
-    echo ""
+
+    if [ "$LLM_MODE" = true ]; then
+        echo "=== TE9.DEV UPDATE ==="
+        echo "Platform: $PLATFORM"
+        echo "LLM Mode: enabled"
+        echo ""
+    else
+        log_info "Updating te9.dev..."
+        echo ""
+    fi
 
     backup_files
     create_directories
@@ -829,12 +863,20 @@ cmd_update() {
     echo ""
     log_success "🎉 te9.dev updated successfully!"
     echo ""
-    log_info "Your te9.dev folder and all its contents are fully preserved (never overwritten during updates)."
-    log_info "Backup created at: $BACKUP_DIR"
-    echo ""
-    log_info "Ready to continue using te9.dev!"
-    echo ""
-    log_info "For help: https://github.com/${REPO}"
+
+    if [ "$LLM_MODE" = true ]; then
+        echo "=== UPDATE COMPLETE ==="
+        echo "STATUS: UPDATED"
+        echo ""
+        log_info "te9.dev is updated and ready to use!"
+    else
+        log_info "Your te9.dev folder and all its contents are fully preserved (never overwritten during updates)."
+        log_info "Backup created at: $BACKUP_DIR"
+        echo ""
+        log_info "Ready to continue using te9.dev!"
+        echo ""
+        log_info "For help: https://github.com/${REPO}"
+    fi
 }
 
 # Status command
