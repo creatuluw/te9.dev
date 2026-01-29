@@ -3,7 +3,7 @@
   "theme": "opencode",
   "model": "zai-coding-plan/glm-4.7",
   "autoupdate": true,
-  "plugin": ["te9-invoke"],
+  "plugin": [],
   "instructions": [
     "openmemory.md",
     "AI_INSTRUCTIONS.md",
