@@ -28,7 +28,7 @@ te9.dev is a fast, simple, and easy AI-driven development workflow system. It pr
 
 **Linux/macOS/Git Bash:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 **Windows CMD:**
@@ -38,7 +38,7 @@ te9 install --llm
 
 **Windows PowerShell:**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash install --llm
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s install --llm
 ```
 
 ### What `--llm` Flag Does Automatically
@@ -121,7 +121,7 @@ This is automatically handled by the `--llm` installation flag.
 
 **Linux/macOS/Git Bash:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 ```
 
 **Windows CMD:**
@@ -131,7 +131,7 @@ te9 update
 
 **Windows PowerShell:**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash update
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s update
 ```
 
 ### What Update Does
@@ -147,7 +147,7 @@ iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bas
 
 **Linux/macOS/Git Bash:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+curl -fsSL https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s status
 ```
 
 **Windows CMD:**
@@ -157,7 +157,7 @@ te9 status
 
 **Windows PowerShell:**
 ```powershell
-iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash status
+iwr -useb https://raw.githubusercontent.com/creatuluw/te9.dev/main/te9/te9 | bash -s status
 ```
 
 Status shows:
