@@ -1,0 +1,117 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Web Fonts Optimization</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sat Feb 15 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Web Fonts Optimization">
+	<meta name="og:description" content="Load web fonts faster with these essential optimization techniques that improve performance without sacrificing typography.">
+	<meta name="description" content="Load web fonts faster with these essential optimization techniques that improve performance without sacrificing typography.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Web Fonts Optimization</h1>
+<p>Web fonts enhance design but can hurt performance. A poorly optimized font strategy adds seconds to page load. Here's how to load fonts efficiently.</p>
+<h2>The Problem with Web Fonts</h2>
+<p>Fonts block rendering:</p>
+<pre><code language="css"><label>@font-face</label> <i>{</i>
+  <b>font-family</b><i>:</i> <em>'CustomFont'</em><i>;</i>
+  <b>src</b><i>:</i> <b>url</b><i>(</i><em>'font.woff2'</em><i>)</i> <b>format</b><i>(</i><em>'woff2'</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p>While loading, browsers hide text (FOIT) or show fallbacks (FOUT).</p>
+<h2>Use font-display</h2>
+<p>Control font loading behavior:</p>
+<pre><code language="css"><label>@font-face</label> <i>{</i>
+  <b>font-family</b><i>:</i> <em>'CustomFont'</em><i>;</i>
+  <b>src</b><i>:</i> <b>url</b><i>(</i><em>'font.woff2'</em><i>)</i> <b>format</b><i>(</i><em>'woff2'</em><i>)</i><i>;</i>
+  <b>font-display</b><i>:</i> swap<i>;</i>
+<i>}</i></code></pre>
+<p>Options:</p>
+<ul><li><p><strong>swap</strong>: Show fallback immediately, swap when loaded</p></li>
+<li><p><strong>optional</strong>: Use only if cached or instant</p></li>
+<li><p><strong>block</strong>: Wait briefly, then fallback</p></li>
+<li><p><strong>fallback</strong>: Short block, then swap</p></li></ul>
+<p><code>swap</code> is usually best for content sites.</p>
+<h2>Preload Critical Fonts</h2>
+<p>Load important fonts sooner:</p>
+<pre><code language="html"><i>&lt;</i><strong>link </strong><b>rel</b><i>=</i><em>"preload"</em> 
+      <b>href</b><i>=</i><em>"/fonts/heading.woff2"</em> 
+      <b>as</b><i>=</i><em>"font"</em> 
+      <b>type</b><i>=</i><em>"font/woff2"</em> 
+      crossorigin<i>&gt;</i></code></pre>
+<p>Only preload fonts used in the initial viewport.</p>
+<h2>Subset Your Fonts</h2>
+<p>Include only characters you need:</p>
+<pre><code language="bash"><sup># Using pyftsubset</sup>
+pyftsubset font<i>.</i>ttf <i>\</i>
+  <i>-</i><i>-</i><b>output-file</b><i>=</i>font<i>-</i>subset<i>.</i>woff2 <i>\</i>
+  <i>-</i><i>-</i><b>flavor</b><i>=</i>woff2 <i>\</i>
+  <i>-</i><i>-</i><b>text</b><i>=</i><em>"ABCDEFGHIJKLMNOPQRSTUVWXYZ"</em></code></pre>
+<p>Or use unicode ranges for specific languages:</p>
+<pre><code language="css"><sup>unicode-range: U+0000-007F; /* Basic Latin */</sup></code></pre>
+<h2>Variable Fonts</h2>
+<p>One file, multiple styles:</p>
+<pre><code language="css"><label>@font-face</label> <i>{</i>
+  <b>font-family</b><i>:</i> <em>'Variable'</em><i>;</i>
+  <b>src</b><i>:</i> <b>url</b><i>(</i><em>'variable.woff2'</em><i>)</i> <b>format</b><i>(</i><em>'woff2-variations'</em><i>)</i><i>;</i>
+  <b>font-weight</b><i>:</i> <em>100</em> <em>900</em><i>;</i>
+<i>}</i>
+
+<i>.</i>element <i>{</i>
+  <b>font-variation-settings</b><i>:</i> <em>'wght'</em> <em>450</em><i>;</i>
+<i>}</i></code></pre>
+<p>Reduces file size by combining weights.</p>
+<h2>Self-Host When Possible</h2>
+<p>External requests add latency:</p>
+<pre><code language="css"><sup>/* Self-hosted */</sup>
+<label>@font-face</label> <i>{</i>
+  <b>font-family</b><i>:</i> <em>'Inter'</em><i>;</i>
+  <b>src</b><i>:</i> <b>url</b><i>(</i><em>'/fonts/inter.woff2'</em><i>)</i> <b>format</b><i>(</i><em>'woff2'</em><i>)</i><i>;</i>
+<i>}</i>
+
+<sup>/* vs external */</sup>
+<label>@import</label> <b>url</b><i>(</i><em>'https://fonts.googleapis.com/css2?family=Inter'</em><i>)</i><i>;</i></code></pre>
+<p>Self-hosting gives you control over caching and subsetting.</p>
+<h2>Measure Font Loading</h2>
+<p>Track loading performance:</p>
+<pre><code language="javascript">document<i>.</i>fonts<i>.</i>ready<i>.</i><strong>then</strong><i>(</i><i>(</i><i>)</i> <i>=</i><i>&gt;</i> <i>{</i>
+  console<i>.</i><b>log</b><i>(</i><em>'All fonts loaded'</em><i>)</i><i>;</i>
+<i>}</i><i>)</i><i>;</i>
+
+document<i>.</i>fonts<i>.</i><b>addEventListener</b><i>(</i><em>'loadingdone'</em><i>,</i> <i>(</i>event<i>)</i> <i>=</i><i>&gt;</i> <i>{</i>
+  console<i>.</i><b>log</b><i>(</i><em>'Font loaded:'</em><i>,</i> event<i>.</i>fontfaces<i>)</i><i>;</i>
+<i>}</i><i>)</i><i>;</i></code></pre>
+<h2>Keep It Simple</h2>
+<ul><li><p>Use system fonts for body text when possible</p></li>
+<li><p>Limit custom fonts to headings and branding</p></li>
+<li><p>Load maximum 2-3 font families</p></li>
+<li><p>Always include fallbacks</p></li></ul>
+<p>Good typography doesn't require dozens of fonts. Optimize aggressively, measure often.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

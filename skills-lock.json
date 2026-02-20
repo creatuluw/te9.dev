@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "self-learning": {
+      "source": "philschmid/self-learning-skill",
+      "sourceType": "github",
+      "computedHash": "49adf9d6e9027ad37066afa0b7d894b5c59c62bc429b4cc7a914d3617b764861"
+    }
+  }
+}

@@ -1,15 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "theme": "opencode",
-  "model": "zai-coding-plan/glm-4.7",
+  "model": "zai-coding-plan/glm-5",
   "autoupdate": true,
   "plugin": [],
-  "instructions": [
-    "openmemory.md",
-    "AI_INSTRUCTIONS.md",
-    "web/llms.txt",
-    ".opencode/prompts/rules.md"
-  ],
+  "instructions": ["openmemory.md"],
   "mcp": {
     "time-server": {
       "type": "remote",

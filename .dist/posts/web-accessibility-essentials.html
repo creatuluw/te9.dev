@@ -1,0 +1,82 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Web Accessibility Essentials</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Mon Feb 17 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Web Accessibility Essentials">
+	<meta name="og:description" content="Build inclusive websites with these fundamental accessibility practices that benefit everyone.">
+	<meta name="description" content="Build inclusive websites with these fundamental accessibility practices that benefit everyone.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Web Accessibility Essentials</h1>
+<p>Accessibility isn't optional—it's essential. Over 1 billion people worldwide have disabilities. Building accessible sites improves usability for everyone and is often legally required.</p>
+<h2>Start with Semantic HTML</h2>
+<p>Proper HTML is the foundation:</p>
+<pre><code language="html"><i>&lt;</i><strong>button </strong><b>onclick</b><i>=</i><em>"menu.toggle()"</em><i>&gt;</i>Menu<i>&lt;</i><i>/</i><strong>button</strong><i>&gt;</i>
+<sup>&lt;!-- Not: &lt;div onclick="menu.toggle()"&gt;Menu&lt;/div&gt; --&gt;</sup></code></pre>
+<p>Native elements have built-in accessibility. Use them.</p>
+<h2>Keyboard Navigation</h2>
+<p>Everything should be reachable by keyboard:</p>
+<pre><code language="css"><sup>/* Visible focus states */</sup>
+<i>:</i>focus<i>-</i>visible <i>{</i>
+  <b>outline</b><i>:</i> <em>2px</em> solid blue<i>;</i>
+  <b>outline-offset</b><i>:</i> <em>2px</em><i>;</i>
+<i>}</i></code></pre>
+<p>Tab through your site. Can you access everything?</p>
+<h2>Images Need Alt Text</h2>
+<p>Describe images meaningfully:</p>
+<pre><code language="html"><sup>&lt;!-- Informative images --&gt;</sup>
+<i>&lt;</i><strong>img </strong><b>src</b><i>=</i><em>"chart.png"</em> <b>alt</b><i>=</i><em>"Sales increased 40% in Q4"</em><i>&gt;</i>
+
+<sup>&lt;!-- Decorative images --&gt;</sup>
+<i>&lt;</i><strong>img </strong><b>src</b><i>=</i><em>"decoration.svg"</em> <b>alt</b><i>=</i><em>""</em><i>&gt;</i>
+
+<sup>&lt;!-- Complex images --&gt;</sup>
+<i>&lt;</i><strong>img </strong><b>src</b><i>=</i><em>"diagram.png"</em> <b>alt</b><i>=</i><em>"See description below"</em><i>&gt;</i></code></pre>
+<h2>Color and Contrast</h2>
+<p>Ensure text is readable:</p>
+<ul><li><p><strong>Normal text</strong>: 4.5:1 contrast ratio minimum</p></li>
+<li><p><strong>Large text</strong>: 3:1 contrast ratio minimum</p></li>
+<li><p>Don't rely on color alone to convey information</p></li></ul>
+<h2>ARIA When Needed</h2>
+<p>Use ARIA to enhance, not replace:</p>
+<pre><code language="html"><i>&lt;</i><strong>button </strong><b>aria-expanded</b><i>=</i><em>"false"</em> <b>aria-controls</b><i>=</i><em>"menu"</em><i>&gt;</i>
+  Menu
+<i>&lt;</i><i>/</i><strong>button</strong><i>&gt;</i></code></pre>
+<p>The first rule of ARIA: don't use ARIA if native HTML works.</p>
+<h2>Test with Real Tools</h2>
+<ul><li><p>Screen readers (NVDA, VoiceOver)</p></li>
+<li><p>Keyboard-only navigation</p></li>
+<li><p>Color contrast checkers</p></li>
+<li><p>Lighthouse accessibility audit</p></li></ul>
+<p>Start testing early. Fixing accessibility later is expensive.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

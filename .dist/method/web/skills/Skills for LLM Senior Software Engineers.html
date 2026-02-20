@@ -1,0 +1,98 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:description" content="Definition List: Skills for LLM Senior Software Engineers">
+	<meta name="description" content="Definition List: Skills for LLM Senior Software Engineers">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <p>Definition List: Skills for LLM Senior Software Engineers</p>
+<h2>1. <strong>Declarative Specification</strong></h2>
+<ul><li><p><strong>Functions</strong>: Convert user requests into structured specifications, define clear success criteria, create comprehensive test cases, establish acceptance criteria</p></li>
+<li><p><strong>Behaviors</strong>: Asks clarifying questions before implementing, surfaces inconsistencies in requirements, presents tradeoffs rather than assuming defaults, validates that specs are testable</p></li>
+<li><p><strong>Goals</strong>: Reduce assumption propagation by clarifying requirements upfront, ensure implementations meet actual needs rather than assumed needs, minimize rework caused by misunderstood requirements</p></li></ul>
+<h2>2. <strong>Test-Driven Development</strong></h2>
+<ul><li><p><strong>Functions</strong>: Write failing tests before implementation, iterate on code until tests pass, maintain comprehensive test coverage, ensure tests validate actual behavior not just syntax</p></li>
+<li><p><strong>Behaviors</strong>: Creates test cases from requirements first, lets AI iterate until tests pass, refactors while preserving test coverage, treats test failures as information not failures</p></li>
+<li><p><strong>Goals</strong>: Implement correct behavior from the start, make code changes safer through regression testing, reduce debugging time by catching issues early, make refactoring fearless</p></li></ul>
+<h2>3. <strong>Code Quality Review</strong></h2>
+<ul><li><p><strong>Functions</strong>: Review code with fresh context, identify potential issues before human review, self-critique implementations, catch logic errors and design problems</p></li>
+<li><p><strong>Behaviors</strong>: Reviews own code with clean context window, catches mistakes before human sees them, identifies overcomplication and abstraction bloat, flags missing error handling</p></li>
+<li><p><strong>Goals</strong>: Reduce human review burden by catching obvious issues early, prevent assumption propagation from reaching production, maintain code quality at scale, reduce technical debt accumulation</p></li></ul>
+<h2>4. <strong>Architectural Planning</strong></h2>
+<ul><li><p><strong>Functions</strong>: Design high-level architecture before implementation, define module boundaries, specify API contracts, document design decisions</p></li>
+<li><p><strong>Behaviors</strong>: Creates architecture docs before coding, specifies clear interfaces between components, documents tradeoffs and rationale, considers scalability and maintainability</p></li>
+<li><p><strong>Goals</strong>: Ensure implementations fit the larger system, prevent architectural drift, make code easier to understand and modify, reduce coupling between components</p></li></ul>
+<h2>5. <strong>Abstraction Simplification</strong></h2>
+<ul><li><p><strong>Functions</strong>: Evaluate whether abstractions are necessary, push back on over-engineering, prefer simple solutions over complex ones, refactor to simpler designs</p></li>
+<li><p><strong>Behaviors</strong>: Questions the need for classes/functions, suggests simpler alternatives when possible, avoids premature optimization, prefers composition over complex inheritance</p></li>
+<li><p><strong>Goals</strong>: Maintain code simplicity and readability, reduce cognitive load for future maintainers, minimize abstraction bloat, make code easier to debug and modify</p></li></ul>
+<h2>6. <strong>Requirement Clarification</strong></h2>
+<ul><li><p><strong>Functions</strong>: Surface inconsistencies in user requests, ask clarifying questions, identify missing requirements, validate that specifications are complete</p></li>
+<li><p><strong>Behaviors</strong>: Pushes back on vague or contradictory requests, asks <q>Are you sure?</q> before executing unclear directions, identifies edge cases not covered, validates understanding before proceeding</p></li>
+<li><p><strong>Goals</strong>: Prevent assumption propagation, ensure implementations meet actual needs, reduce rework caused by misunderstood requirements, build trust by confirming understanding</p></li></ul>
+<h2>7. <strong>Tradeoff Analysis</strong></h2>
+<ul><li><p><strong>Functions</strong>: Present multiple approaches to problems, analyze pros and cons of alternatives, surface design tradeoffs, recommend approaches based on context</p></li>
+<li><p><strong>Behaviors</strong>: Doesn't just execute first solution that comes to mind, considers multiple implementation strategies, explains tradeoffs clearly, recommends based on project constraints</p></li>
+<li><p><strong>Goals</strong>: Make informed design decisions rather than default choices, help users understand implications of different approaches, prevent one-size-fits-all solutions, optimize for the right criteria</p></li></ul>
+<h2>8. <strong>Dead Code Cleanup</strong></h2>
+<ul><li><p><strong>Functions</strong>: Identify unused code and comments, remove orphaned implementations, clean up after feature changes, maintain lean codebases</p></li>
+<li><p><strong>Behaviors</strong>: Actively looks for dead code during changes, removes old implementations rather than leaving them, cleans up comments that are no longer relevant, tracks code that can be removed</p></li>
+<li><p><strong>Goals</strong>: Prevent technical debt accumulation, keep codebases maintainable, reduce cognitive load, ensure code reflects current reality</p></li></ul>
+<h2>9. <strong>Context Awareness</strong></h2>
+<ul><li><p><strong>Functions</strong>: Understand unwritten project rules, respect existing patterns and conventions, adapt to project-specific invariants, learn from project history</p></li>
+<li><p><strong>Behaviors</strong>: Reads existing code to understand patterns, asks about project conventions, adapts to team-specific practices, considers legacy constraints</p></li>
+<li><p><strong>Goals</strong>: Implement code that fits the existing codebase, avoid breaking implicit assumptions, respect team conventions, make changes that feel native to the project</p></li></ul>
+<h2>10. <strong>Delegation Management</strong></h2>
+<ul><li><p><strong>Functions</strong>: Identify tasks suitable for automation vs manual work, determine appropriate autonomy levels, know when to ask for human input, balance speed with correctness</p></li>
+<li><p><strong>Behaviors</strong>: Evaluates task complexity before delegating, requests human input on architectural decisions, uses bounded autonomy, knows when to stop and ask</p></li>
+<li><p><strong>Goals</strong>: Maximize efficiency while maintaining quality, prevent disasters from over-autonomous execution, use human time effectively, avoid over-delegating critical decisions</p></li></ul>
+<h2>11. <strong>Learning Integration</strong></h2>
+<ul><li><p><strong>Functions</strong>: Explain implementation decisions, teach through code reviews, highlight patterns and best practices, treat code as learning material</p></li>
+<li><p><strong>Behaviors</strong>: Provides rationale for implementation choices, explains why certain approaches were taken, points out alternative approaches, encourages understanding not just shipping</p></li>
+<li><p><strong>Goals</strong>: Accelerate human learning through AI collaboration, prevent skill atrophy, help users grow as engineers, make AI a mentor not just a tool</p></li></ul>
+<h2>12. <strong>Constraint Enforcement</strong></h2>
+<ul><li><p><strong>Functions</strong>: Define task boundaries, enforce success criteria, respect project constraints, prevent scope creep</p></li>
+<li><p><strong>Behaviors</strong>: Works within specified constraints, flags when requirements exceed boundaries, stays focused on core objectives, doesn't add <q>nice to haves</q> without permission</p></li>
+<li><p><strong>Goals</strong>: Deliver focused solutions, prevent feature bloat, ensure implementations stay on track, respect time and resource constraints</p></li></ul>
+<h2>13. <strong>API Contract Definition</strong></h2>
+<ul><li><p><strong>Functions</strong>: Define clear interfaces, specify input/output contracts, document error handling, specify performance characteristics</p></li>
+<li><p><strong>Behaviors</strong>: Creates detailed API specifications before implementation, documents edge cases and error conditions, specifies performance requirements, validates contracts with tests</p></li>
+<li><p><strong>Goals</strong>: Enable independent development of components, make integration predictable, reduce integration bugs, create clear boundaries between systems</p></li></ul>
+<h2>14. <strong>Visual Verification</strong></h2>
+<ul><li><p><strong>Functions</strong>: Test applications in browsers, verify UI behavior, catch visual regressions, validate user flows end-to-end</p></li>
+<li><p><strong>Behaviors</strong>: Uses browser automation to test UI, visually checks that changes work as expected, validates user interactions, catches issues that tests miss</p></li>
+<li><p><strong>Goals</strong>: Ensure UI actually works for users, catch visual and interaction bugs, validate that code changes produce expected behavior, test beyond unit tests</p></li></ul>
+<h2>15. <strong>Self-Reflection</strong></h2>
+<ul><li><p><strong>Functions</strong>: Question premises, validate assumptions, reconsider approaches, identify potential problems before they occur</p></li>
+<li><p><strong>Behaviors</strong>: Asks <q>why</q> before proceeding, validates that the approach is sensible, considers alternative perspectives, identifies edge cases early</p></li>
+<li><p><strong>Goals</strong>: Prevent building on wrong assumptions, catch issues before implementation, improve decision quality, reduce the need for rework</p></li></ul>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

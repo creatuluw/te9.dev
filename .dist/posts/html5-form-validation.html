@@ -1,0 +1,97 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>HTML5 Form Validation</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sun Feb 16 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="HTML5 Form Validation">
+	<meta name="og:description" content="Use built-in HTML5 validation attributes to create user-friendly forms without JavaScript.">
+	<meta name="description" content="Use built-in HTML5 validation attributes to create user-friendly forms without JavaScript.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>HTML5 Form Validation</h1>
+<p>HTML5 provides powerful form validation without any JavaScript. Browser-native validation is faster, more accessible, and works even if JavaScript fails.</p>
+<h2>Required Fields</h2>
+<p>Mark fields as mandatory:</p>
+<pre><code language="html"><i>&lt;</i><strong>input </strong><b>type</b><i>=</i><em>"text"</em> required<i>&gt;</i>
+<i>&lt;</i><strong>textarea </strong>required<i>&gt;</i><i>&lt;</i><i>/</i><strong>textarea</strong><i>&gt;</i></code></pre>
+<p>Browsers prevent form submission and show error messages automatically.</p>
+<h2>Input Types</h2>
+<p>Use semantic types for built-in validation:</p>
+<pre><code language="html"><sup>&lt;input type="email"&gt;     &lt;!-- Validates email format --&gt;</sup>
+<sup>&lt;input type="url"&gt;       &lt;!-- Validates URL format --&gt;</sup>
+<sup>&lt;input type="number"&gt;    &lt;!-- Numbers only --&gt;</sup>
+<sup>&lt;input type="tel"&gt;       &lt;!-- Phone numbers --&gt;</sup>
+<sup>&lt;input type="date"&gt;      &lt;!-- Date picker --&gt;</sup></code></pre>
+<p>Mobile browsers show appropriate keyboards for each type.</p>
+<h2>Pattern Matching</h2>
+<p>Validate with regular expressions:</p>
+<pre><code language="html"><i>&lt;</i><strong>input </strong>
+  <b>type</b><i>=</i><em>"text"</em> 
+  <b>pattern</b><i>=</i><em>"[A-Za-z]<i>{<b>3</b>}</i>"</em> 
+  <b>title</b><i>=</i><em>"Three letters only"</em><i>&gt;</i></code></pre>
+<p>The <code>title</code> attribute provides custom error text.</p>
+<h2>Length Constraints</h2>
+<p>Control input length:</p>
+<pre><code language="html"><i>&lt;</i><strong>input </strong><b>type</b><i>=</i><em>"text"</em> <b>minlength</b><i>=</i><em>"3"</em> <b>maxlength</b><i>=</i><em>"20"</em><i>&gt;</i>
+<i>&lt;</i><strong>textarea </strong><b>minlength</b><i>=</i><em>"10"</em> <b>maxlength</b><i>=</i><em>"500"</em><i>&gt;</i><i>&lt;</i><i>/</i><strong>textarea</strong><i>&gt;</i></code></pre>
+<h2>Number Ranges</h2>
+<p>Set boundaries for numeric input:</p>
+<pre><code language="html"><i>&lt;</i><strong>input </strong><b>type</b><i>=</i><em>"number"</em> <b>min</b><i>=</i><em>"1"</em> <b>max</b><i>=</i><em>"100"</em> <b>step</b><i>=</i><em>"5"</em><i>&gt;</i></code></pre>
+<h2>Styling Validation</h2>
+<p>Use CSS pseudo-classes:</p>
+<pre><code language="css"><b>input</b><i>:</i>valid <i>{</i>
+  <b>border-color</b><i>:</i> green<i>;</i>
+<i>}</i>
+
+<b>input</b><i>:</i>invalid <i>{</i>
+  <b>border-color</b><i>:</i> red<i>;</i>
+<i>}</i>
+
+<b>input</b><i>:</i><b>focus</b><i>:</i>invalid <i>{</i>
+<sup>  /* Only show when focused */</sup>
+<i>}</i></code></pre>
+<h2>JavaScript Enhancement</h2>
+<p>For custom validation messages:</p>
+<pre><code language="javascript"><strong>const</strong> <b>input</b> <i>=</i> document<i>.</i><b>querySelector</b><i>(</i><em>'input'</em><i>)</i><i>;</i>
+
+input<i>.</i><b>addEventListener</b><i>(</i><em>'invalid'</em><i>,</i> <i>(</i><i>)</i> <i>=</i><i>&gt;</i> <i>{</i>
+  <strong>if</strong> <i>(</i>input<i>.</i>validity<i>.</i>valueMissing<i>)</i> <i>{</i>
+    input<i>.</i><b>setCustomValidity</b><i>(</i><em>'Please fill this field'</em><i>)</i><i>;</i>
+  <i>}</i>
+<i>}</i><i>)</i><i>;</i></code></pre>
+<h2>Best Practices</h2>
+<ul><li><p>Don't rely solely on validation—always validate server-side</p></li>
+<li><p>Show validation errors early, not just on submit</p></li>
+<li><p>Provide helpful error messages</p></li>
+<li><p>Don't be too restrictive with patterns</p></li></ul>
+<p>HTML5 validation handles most needs. Add JavaScript only for complex scenarios.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

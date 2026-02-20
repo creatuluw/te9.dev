@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        ::selection {
+            background: #18181B;
+            color: #FFFFFF;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-zinc-100">
+        <nav class="max-w-[2560px] mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+                    <span class="iconify text-white text-lg" data-icon="mdi:feather"></span>
+                </div>
+                <span class="font-semibold tracking-tight">te9-archives</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-sm text-zinc-900 font-medium">Home</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Articles</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">About</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Contact</a>
+            </div>
+            <button class="md:hidden p-2 hover:bg-zinc-50 rounded-lg transition-colors">
+                <span class="iconify text-xl" data-icon="mdi:menu"></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16 flex-1 flex flex-col">
+        <section class="flex-1 flex flex-col">
+            <div class="max-w-[2560px] mx-auto w-full flex-1 flex flex-col">
+
+                <!-- Row 1: 6 cards -->
+                <div class="grid grid-cols-6 border-x border-t border-zinc-200">
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 15, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">The Art of Minimalist Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Exploring how constraints breed creativity and why removing elements can strengthen design.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 12, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Building for the Future</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Sustainable development practices and why thinking long-term leads to better products.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 8, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Typography in Digital Spaces</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">How choosing the right typeface can transform user experience effectively.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 5, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">The Power of Constraints</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Why limitations are opportunities for innovation and creative problem-solving.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 1, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Color Theory Essentials</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Understanding the emotional impact of color choices and building palettes.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 28, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Designing for Accessibility</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Creating inclusive digital experiences that work for everyone.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Row 2: 8 cards -->
+                <div class="grid grid-cols-8 border-x border-zinc-200">
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 25, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Responsive Patterns</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Building layouts that adapt gracefully to any screen size.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 22, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Motion Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Subtle animations that enhance user experience without distraction.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 19, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Design Systems</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Creating scalable component libraries for consistent interfaces.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 16, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">User Research</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Methods for understanding your audience and their needs.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 13, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Performance First</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Optimizing for speed without sacrificing visual quality.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 10, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Dark Mode</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Designing interfaces that work beautifully in any theme.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 7, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Icon Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Crafting clear, consistent icons that communicate meaning.</p>
+                    </article>
+                    <article class="p-5 border-b border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 4, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">White Space</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">The power of nothing and how breathing room improves design.</p>
+                    </article>
+                </div>
+
+                <!-- Row 3: 5 cards -->
+                <div class="grid grid-cols-5 border-x border-zinc-200">
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 1, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Grid Systems</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Understanding the mathematical foundation of great layouts.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 28, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Form Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Creating intuitive forms that users actually want to fill out.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 25, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Navigation UX</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Guiding users through your content with clarity and purpose.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 22, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Button Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Crafting clickable elements that invite interaction and trust.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-b border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 19, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Card Patterns</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Using cards to organize content in digestible, scannable chunks.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Row 4: 7 cards -->
+                <div class="grid grid-cols-7 border-x border-zinc-200">
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 16, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Loading States</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Making wait times feel shorter with thoughtful design.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 13, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Error Messages</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Turning frustration into understanding with clear copy.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 10, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Empty States</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Opportunities to delight users when there's nothing to show.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 7, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Onboarding</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">First impressions matter: designing welcome experiences.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 4, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Modals</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">When and how to use overlay patterns effectively.</p>
+                    </article>
+                    <article class="p-5 border-b border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Oct 1, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Tooltips</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Providing helpful context without cluttering the interface.</p>
+                    </article>
+                    <article class="p-5 border-b border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 28, 2024</span>
+                        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">Notifications</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Alerting users without being annoying or intrusive.</p>
+                    </article>
+                </div>
+
+                <!-- Row 5: 6 cards -->
+                <div class="grid grid-cols-6 border-x border-b border-zinc-200">
+                    <article class="p-6 border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 25, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Search UX</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Helping users find what they're looking for quickly.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 22, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Data Tables</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Presenting complex information in an organized manner.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 19, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Dashboard Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Creating at-a-glance views for complex data sets.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 16, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Mobile First</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Designing for the smallest screen and scaling up.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 13, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Microinteractions</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Small details that make a big difference in user delight.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                    <article class="p-6 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Sep 10, 2024</span>
+                        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-2 group-hover:text-zinc-600 transition-colors">Design Debt</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">Managing technical and visual debt in growing products.</p>
+                        <div class="mt-4 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

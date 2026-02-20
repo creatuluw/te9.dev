@@ -1,0 +1,131 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Karpathy-Inspired Claude Code Guidelines</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Karpathy-Inspired Claude Code Guidelines">
+	<meta name="og:description" content="A single `CLAUDE.md` file to improve Claude Code behavior, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.">
+	<meta name="description" content="A single `CLAUDE.md` file to improve Claude Code behavior, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Karpathy-Inspired Claude Code Guidelines</h1>
+<p>A single <code>CLAUDE.md</code> file to improve Claude Code behavior, derived from <a href="https://x.com/karpathy/status/2015883857489522876">Andrej Karpathy's observations</a> on LLM coding pitfalls.</p>
+<h2>The Problems</h2>
+<p>From Andrej's post:</p>
+<blockquote><p><q>The models make wrong assumptions on your behalf and just run along with them without checking. They don't manage their confusion, don't seek clarifications, don't surface inconsistencies, don't present tradeoffs, don't push back when they should.</q></p></blockquote>
+
+<blockquote><p><q>They really like to overcomplicate code and APIs, bloat abstractions, don't clean up dead code... implement a bloated construction over 1000 lines when 100 would do.</q></p></blockquote>
+
+<blockquote><p><q>They still sometimes change/remove comments and code they don't sufficiently understand as side effects, even if orthogonal to the task.</q></p></blockquote>
+
+<h2>The Solution</h2>
+<p>Four principles in one file that directly address these issues:</p>
+<table><thead><tr><th>Principle</th><th>Addresses</th></tr></thead>
+<tr><td><strong>Think Before Coding</strong></td><td>Wrong assumptions, hidden confusion, missing tradeoffs</td></tr>
+<tr><td><strong>Simplicity First</strong></td><td>Overcomplication, bloated abstractions</td></tr>
+<tr><td><strong>Surgical Changes</strong></td><td>Orthogonal edits, touching code you shouldn't</td></tr>
+<tr><td><strong>Goal-Driven Execution</strong></td><td>Leverage through tests-first, verifiable success criteria</td></tr></table>
+
+<h2>The Four Principles in Detail</h2>
+<h3>1. Think Before Coding</h3>
+<p><strong>Don't assume. Don't hide confusion. Surface tradeoffs.</strong></p>
+<p>LLMs often pick an interpretation silently and run with it. This principle forces explicit reasoning:</p>
+<ul><li><p><strong>State assumptions explicitly</strong> — If uncertain, ask rather than guess</p></li>
+<li><p><strong>Present multiple interpretations</strong> — Don't pick silently when ambiguity exists</p></li>
+<li><p><strong>Push back when warranted</strong> — If a simpler approach exists, say so</p></li>
+<li><p><strong>Stop when confused</strong> — Name what's unclear and ask for clarification</p></li></ul>
+<h3>2. Simplicity First</h3>
+<p><strong>Minimum code that solves the problem. Nothing speculative.</strong></p>
+<p>Combat the tendency toward overengineering:</p>
+<ul><li><p>No features beyond what was asked</p></li>
+<li><p>No abstractions for single-use code</p></li>
+<li><p>No <q>flexibility</q> or <q>configurability</q> that wasn't requested</p></li>
+<li><p>No error handling for impossible scenarios</p></li>
+<li><p>If 200 lines could be 50, rewrite it</p></li></ul>
+<p><strong>The test:</strong> Would a senior engineer say this is overcomplicated? If yes, simplify.</p>
+<h3>3. Surgical Changes</h3>
+<p><strong>Touch only what you must. Clean up only your own mess.</strong></p>
+<p>When editing existing code:</p>
+<ul><li><p>Don't <q>improve</q> adjacent code, comments, or formatting</p></li>
+<li><p>Don't refactor things that aren't broken</p></li>
+<li><p>Match existing style, even if you'd do it differently</p></li>
+<li><p>If you notice unrelated dead code, mention it — don't delete it</p></li></ul>
+<p>When your changes create orphans:</p>
+<ul><li><p>Remove imports/variables/functions that YOUR changes made unused</p></li>
+<li><p>Don't remove pre-existing dead code unless asked</p></li></ul>
+<p><strong>The test:</strong> Every changed line should trace directly to the user's request.</p>
+<h3>4. Goal-Driven Execution</h3>
+<p><strong>Define success criteria. Loop until verified.</strong></p>
+<p>Transform imperative tasks into verifiable goals:</p>
+<table><thead><tr><th>Instead of...</th><th>Transform to...</th></tr></thead>
+<tr><td><q>Add validation</q></td><td><q>Write tests for invalid inputs, then make them pass</q></td></tr>
+<tr><td><q>Fix the bug</q></td><td><q>Write a test that reproduces it, then make it pass</q></td></tr>
+<tr><td><q>Refactor X</q></td><td><q>Ensure tests pass before and after</q></td></tr></table>
+
+<p>For multi-step tasks, state a brief plan:</p>
+<pre><code language="*"><em>1.</em> <i>[</i>Step<i>]</i> <i>→</i> <b>verify</b><i>:</i> <i>[</i>check<i>]</i>
+<em>2.</em> <i>[</i>Step<i>]</i> <i>→</i> <b>verify</b><i>:</i> <i>[</i>check<i>]</i>
+<em>3.</em> <i>[</i>Step<i>]</i> <i>→</i> <b>verify</b><i>:</i> <i>[</i>check<i>]</i></code></pre>
+<p>Strong success criteria let the LLM loop independently. Weak criteria (<q>make it work</q>) require constant clarification.</p>
+<h2>Install</h2>
+<p><strong>Option A: Skills CLI (recommended)</strong></p>
+<pre><code language="bash">npx skills add forrestchang<i>/</i>andrej<i>-</i>karpathy<i>-</i>skills</code></pre>
+<p><strong>Option B: CLAUDE.md</strong></p>
+<p>New project:</p>
+<pre><code language="bash">curl <i>-</i>o CLAUDE<i>.</i>md <b>https</b><i>:</i><i>/</i><i>/</i>raw<i>.</i>githubusercontent<i>.</i>com<i>/</i>forrestchang<i>/</i>andrej<i>-</i>karpathy<i>-</i>skills<i>/</i>main<i>/</i>CLAUDE<i>.</i>md</code></pre>
+<p>Existing project (append):</p>
+<pre><code language="bash">echo <em>""</em> <i>&gt;</i><i>&gt;</i> CLAUDE<i>.</i>md
+curl <b>https</b><i>:</i><i>/</i><i>/</i>raw<i>.</i>githubusercontent<i>.</i>com<i>/</i>forrestchang<i>/</i>andrej<i>-</i>karpathy<i>-</i>skills<i>/</i>main<i>/</i>CLAUDE<i>.</i>md <i>&gt;</i><i>&gt;</i> CLAUDE<i>.</i>md</code></pre>
+<h2>Key Insight</h2>
+<p>From Andrej:</p>
+<blockquote><p><q>LLMs are exceptionally good at looping until they meet specific goals... Don't tell it what to do, give it success criteria and watch it go.</q></p></blockquote>
+
+<p>The <q>Goal-Driven Execution</q> principle captures this: transform imperative instructions into declarative goals with verification loops.</p>
+<h2>How to Know It's Working</h2>
+<p>These guidelines are working if you see:</p>
+<ul><li><p><strong>Fewer unnecessary changes in diffs</strong> — Only requested changes appear</p></li>
+<li><p><strong>Fewer rewrites due to overcomplication</strong> — Code is simple the first time</p></li>
+<li><p><strong>Clarifying questions come before implementation</strong> — Not after mistakes</p></li>
+<li><p><strong>Clean, minimal PRs</strong> — No drive-by refactoring or <q>improvements</q></p></li></ul>
+<h2>Customization</h2>
+<p>These guidelines are designed to be merged with project-specific instructions. Add them to your existing <code>CLAUDE.md</code> or create a new one.</p>
+<p>For project-specific rules, add sections like:</p>
+<pre><code language="markdown"><i>#</i><sup># Project-Specific Guidelines</sup>
+
+<del>  <strong>Use</strong> TypeScript strict mode</del>
+<del>  All API endpoints must have tests</del>
+<del>  Follow the existing error handling patterns in <i>`</i>src<i>/</i>utils<i>/</i>errors<i>.</i>ts<i>`</i></del></code></pre>
+<h2>Tradeoff Note</h2>
+<p>These guidelines bias toward <strong>caution over speed</strong>. For trivial tasks (simple typo fixes, obvious one-liners), use judgment — not every change needs the full rigor.</p>
+<p>The goal is reducing costly mistakes on non-trivial work, not slowing down simple tasks.</p>
+<h2>License</h2>
+<p>MIT</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

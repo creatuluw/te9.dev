@@ -1,0 +1,120 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Git Best Practices</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Fri Feb 14 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Git Best Practices">
+	<meta name="og:description" content="Essential Git workflows and conventions that make collaboration smooth and history meaningful.">
+	<meta name="description" content="Essential Git workflows and conventions that make collaboration smooth and history meaningful.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Git Best Practices</h1>
+<p>Git is more than a backup system—it's a communication tool. Good Git practices make projects easier to understand, debug, and collaborate on. Here's how to use Git effectively.</p>
+<h2>Write Meaningful Commits</h2>
+<p>Commit messages tell a story:</p>
+<pre><code language="bash"><sup># Good</sup>
+git commit <i>-</i>m <em>"Add password validation to registration form"</em>
+git commit <i>-</i>m <em>"Fix memory leak in image processor"</em>
+git commit <i>-</i>m <em>"Refactor API client for better error handling"</em>
+
+<sup># Bad</sup>
+git commit <i>-</i>m <em>"Fix"</em>
+git commit <i>-</i>m <em>"Updates"</em>
+git commit <i>-</i>m <em>"WIP"</em></code></pre>
+<p>Use imperative mood: <q>Add feature</q> not <q>Added feature</q>.</p>
+<h2>Commit Often, Push Regularly</h2>
+<p>Small commits are easier to review and revert:</p>
+<pre><code language="bash"><sup># Good: One logical change per commit</sup>
+git add src<i>/</i>auth<i>.</i>js
+git commit <i>-</i>m <em>"Add email validation"</em>
+
+git add src<i>/</i>forms<i>.</i>js
+git commit <i>-</i>m <em>"Update form to use new validation"</em>
+
+<sup># Bad: Everything at once</sup>
+git add <i>.</i>
+git commit <i>-</i>m <em>"Add validation and update forms and fix bugs"</em></code></pre>
+<h2>Branch Strategy</h2>
+<p>Keep branches focused and short-lived:</p>
+<pre><code language="bash">main        <sup># Production-ready code</sup>
+  <i>├</i><i>─</i><i>─</i> develop   <sup># Integration branch</sup>
+  <i>│</i>   <i>├</i><i>─</i><i>─</i> feature<i>/</i>user<i>-</i>auth
+  <i>│</i>   <i>├</i><i>─</i><i>─</i> feature<i>/</i>password<i>-</i>reset
+  <i>│</i>   <i>└</i><i>─</i><i>─</i> bugfix<i>/</i>login<i>-</i>error</code></pre>
+<p>Delete branches after merging.</p>
+<h2>Use .gitignore Properly</h2>
+<p>Exclude files that shouldn't be tracked:</p>
+<pre><code language="gitignore"><sup># Dependencies</sup>
+node_modules<i>/</i>
+
+<sup># Build output</sup>
+dist<i>/</i>
+build<i>/</i>
+
+<sup># Environment files</sup>
+<i>.</i>env
+<i>.</i>env<i>.</i><strong>local</strong>
+
+<sup># IDE files</sup>
+<i>.</i>vscode<i>/</i>
+<i>.</i>idea<i>/</i>
+
+<sup># OS files</sup>
+<i>.</i>DS_Store
+Thumbs<i>.</i>db</code></pre>
+<p>Never commit secrets or dependencies.</p>
+<h2>Pull Request Workflow</h2>
+<p>Before merging:</p>
+<ul><li><p>[ ] Self-review your changes</p></li>
+<li><p>[ ] Write clear PR descriptions</p></li>
+<li><p>[ ] Link related issues</p></li>
+<li><p>[ ] Keep PRs small (&lt;400 lines)</p></li>
+<li><p>[ ] Respond to all comments</p></li></ul>
+<h2>Useful Commands</h2>
+<p>Daily workflows made easier:</p>
+<pre><code language="bash"><sup># Undo last commit (keep changes)</sup>
+git reset <i>-</i><i>-</i>soft HEAD<i>~</i><em>1</em>
+
+<sup># Stage parts of files</sup>
+git add <i>-</i>p
+
+<sup># See file history</sup>
+git log <i>-</i><i>-</i>follow <i>-</i><i>-</i> path<i>/</i>to<i>/</i>file
+
+<sup># Find who changed a line</sup>
+git blame file<i>.</i>js
+
+<sup># Clean untracked files</sup>
+git clean <i>-</i>fd</code></pre>
+<h2>Git is Communication</h2>
+<p>Every commit, branch, and PR communicates intent. Write code for humans, commit messages for your future self, and always consider the person reading your history next month.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

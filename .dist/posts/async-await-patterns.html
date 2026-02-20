@@ -1,0 +1,97 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Async/Await Patterns</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sun Feb 16 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Async/Await Patterns">
+	<meta name="og:description" content="Write cleaner asynchronous JavaScript with async/await patterns that make complex flows readable.">
+	<meta name="description" content="Write cleaner asynchronous JavaScript with async/await patterns that make complex flows readable.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Async/Await Patterns</h1>
+<p>Async/await makes asynchronous code look synchronous. No more callback hell or long <code>.then()</code> chains. Here's how to use it effectively.</p>
+<h2>The Basics</h2>
+<p>Mark functions as async:</p>
+<pre><code language="javascript"><strong>async</strong> <strong>function</strong> <b>fetchUser</b><i>(</i>id<i>)</i> <i>{</i>
+  <strong>const</strong> <b>response</b> <i>=</i> <strong>await</strong> <b>fetch</b><i>(</i><i>`</i><i>/</i>users<i>/</i><i>$</i><i>{</i>id<i>}</i><i>`</i><i>)</i><i>;</i>
+  <strong>return</strong> response<i>.</i><b>json</b><i>(</i><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p><code>await</code> pauses execution until the promise resolves.</p>
+<h2>Error Handling</h2>
+<p>Use try/catch for errors:</p>
+<pre><code language="javascript"><strong>async</strong> <strong>function</strong> <b>loadUser</b><i>(</i>id<i>)</i> <i>{</i>
+  <strong>try</strong> <i>{</i>
+    <strong>const</strong> <b>user</b> <i>=</i> <strong>await</strong> <b>fetchUser</b><i>(</i>id<i>)</i><i>;</i>
+    <strong>return</strong> user<i>;</i>
+  <i>}</i> <strong>catch</strong> <i>(</i>error<i>)</i> <i>{</i>
+    console<i>.</i><b>error</b><i>(</i><em>'Failed to load user:'</em><i>,</i> error<i>)</i><i>;</i>
+    <strong>throw</strong> error<i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<h2>Parallel Operations</h2>
+<p>Run promises concurrently:</p>
+<pre><code language="javascript"><strong>async</strong> <strong>function</strong> <b>loadDashboard</b><i>(</i><i>)</i> <i>{</i>
+  <strong>const</strong> <i>[</i>user<i>,</i> posts<i>,</i> notifications<i>]</i> <i>=</i> <strong>await</strong> Promise<i>.</i><b>all</b><i>(</i><i>[</i>
+    <b>fetchUser</b><i>(</i>userId<i>)</i><i>,</i>
+    <b>fetchPosts</b><i>(</i>userId<i>)</i><i>,</i>
+    <b>fetchNotifications</b><i>(</i>userId<i>)</i>
+  <i>]</i><i>)</i><i>;</i>
+  
+  <strong>return</strong> <i>{</i> user<i>,</i> posts<i>,</i> notifications <i>}</i><i>;</i>
+<i>}</i></code></pre>
+<h2>Sequential Operations</h2>
+<p>Run promises one after another:</p>
+<pre><code language="javascript"><strong>async</strong> <strong>function</strong> <b>processFiles</b><i>(</i>files<i>)</i> <i>{</i>
+  <strong>for</strong> <i>(</i><strong>const</strong> file of files<i>)</i> <i>{</i>
+    <strong>await</strong> <b>processFile</b><i>(</i>file<i>)</i><i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<h2>Promise Patterns</h2>
+<p>Handle multiple outcomes:</p>
+<pre><code language="javascript"><strong>async</strong> <strong>function</strong> <b>fetchWithTimeout</b><i>(</i>url<i>,</i> ms<i>)</i> <i>{</i>
+  <strong>const</strong> <b>response</b> <i>=</i> <strong>await</strong> Promise<i>.</i><b>race</b><i>(</i><i>[</i>
+    <b>fetch</b><i>(</i>url<i>)</i><i>,</i>
+    <strong>new</strong> <b>Promise</b><i>(</i><i>(</i>_<i>,</i> reject<i>)</i> <i>=</i><i>&gt;</i> 
+      <b>setTimeout</b><i>(</i><i>(</i><i>)</i> <i>=</i><i>&gt;</i> <b>reject</b><i>(</i><strong>new</strong> <b>Error</b><i>(</i><em>'Timeout'</em><i>)</i><i>)</i><i>,</i> ms<i>)</i>
+    <i>)</i>
+  <i>]</i><i>)</i><i>;</i>
+  
+  <strong>return</strong> response<i>;</i>
+<i>}</i></code></pre>
+<h2>Top-Level Await</h2>
+<p>Use await at module level:</p>
+<pre><code language="javascript"><sup>// config.js</sup>
+<strong>export</strong> <strong>const</strong> <b>data</b> <i>=</i> <strong>await</strong> <b>fetch</b><i>(</i><em>'/config.json'</em><i>)</i><i>.</i><strong>then</strong><i>(</i>r <i>=</i><i>&gt;</i> r<i>.</i><b>json</b><i>(</i><i>)</i><i>)</i><i>;</i></code></pre>
+<p>Works in modern browsers and Node.js modules.</p>
+<h2>Start Simple</h2>
+<p>Convert your promise chains to async/await. Your future self will thank you.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

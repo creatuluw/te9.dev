@@ -1,0 +1,115 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Flexbox Layout Patterns</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Mon Feb 17 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Flexbox Layout Patterns">
+	<meta name="og:description" content="Master the essential Flexbox patterns for common layout challenges.">
+	<meta name="description" content="Master the essential Flexbox patterns for common layout challenges.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Flexbox Layout Patterns</h1>
+<p>Flexbox excels at one-dimensional layouts. While Grid handles two dimensions, Flexbox is perfect for aligning items in a row or column. Here are the patterns you'll use most.</p>
+<h2>Centering Content</h2>
+<p>The classic centering problem, solved:</p>
+<pre><code language="css"><i>.</i>container <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>justify-content</b><i>:</i> center<i>;</i>
+  <b>align-items</b><i>:</i> center<i>;</i>
+  <b>min-height</b><i>:</i> <em>100vh</em><i>;</i>
+<i>}</i></code></pre>
+<p>Both horizontal and vertical centering in three lines.</p>
+<h2>Navigation Patterns</h2>
+<p>Spread items across a row:</p>
+<pre><code language="css"><i>.</i>nav <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>justify-content</b><i>:</i> space<i>-</i>between<i>;</i>
+  <b>align-items</b><i>:</i> center<i>;</i>
+<i>}</i></code></pre>
+<p>Or group them to one side:</p>
+<pre><code language="css"><i>.</i>nav <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>gap</b><i>:</i> <em>1rem</em><i>;</i>
+<i>}</i></code></pre>
+<h2>Card Layouts</h2>
+<p>Equal-height cards with flexible content:</p>
+<pre><code language="css"><i>.</i>card<i>-</i>container <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>gap</b><i>:</i> <em>1.5rem</em><i>;</i>
+<i>}</i>
+
+<i>.</i>card <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>flex-direction</b><i>:</i> column<i>;</i>
+  <b>flex</b><i>:</i> <em>1</em><i>;</i>
+<i>}</i>
+
+<i>.</i>card<i>-</i>content <i>{</i>
+<sup>  flex: 1; /* Fills remaining space */</sup>
+<i>}</i></code></pre>
+<h2>Split Layouts</h2>
+<p>Push items to opposite edges:</p>
+<pre><code language="css"><i>.</i>split <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>justify-content</b><i>:</i> space<i>-</i>between<i>;</i>
+<i>}</i>
+
+<sup>/* Or with one item taking remaining space */</sup>
+<i>.</i>split <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+<i>}</i>
+
+<i>.</i>split <i>&gt;</i> <i>:</i>last<i>-</i>child <i>{</i>
+  <b>margin-left</b><i>:</i> auto<i>;</i>
+<i>}</i></code></pre>
+<h2>Wrapping Content</h2>
+<p>Let items wrap naturally:</p>
+<pre><code language="css"><i>.</i>tags <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>flex-wrap</b><i>:</i> wrap<i>;</i>
+  <b>gap</b><i>:</i> <em>0.5rem</em><i>;</i>
+<i>}</i></code></pre>
+<h2>Responsive Patterns</h2>
+<p>Stack on mobile, row on desktop:</p>
+<pre><code language="css"><i>.</i>responsive <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>flex-direction</b><i>:</i> column<i>;</i>
+  <b>gap</b><i>:</i> <em>1rem</em><i>;</i>
+<i>}</i>
+
+<label>@media</label> <i>(</i><b>min-width</b><i>:</i> <em>768px</em><i>)</i> <i>{</i>
+  <i>.</i>responsive <i>{</i>
+    <b>flex-direction</b><i>:</i> row<i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<p>These patterns cover most alignment needs. Combine them for complex layouts.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

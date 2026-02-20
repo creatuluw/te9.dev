@@ -1,0 +1,131 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>CSS Architecture Tips</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Fri Feb 14 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="CSS Architecture Tips">
+	<meta name="og:description" content="Organize your CSS with proven architecture patterns that scale from small projects to large applications.">
+	<meta name="description" content="Organize your CSS with proven architecture patterns that scale from small projects to large applications.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>CSS Architecture Tips</h1>
+<p>CSS is easy to write but hard to maintain. Without structure, stylesheets become tangled messes. These architecture patterns help you write CSS that scales.</p>
+<h2>The Single Responsibility Principle</h2>
+<p>Each class should do one thing:</p>
+<pre><code language="css"><sup>/* Bad: Multiple responsibilities */</sup>
+<i>.</i>card <i>{</i>
+  <b>background</b><i>:</i> white<i>;</i>
+  <b>padding</b><i>:</i> <em>1rem</em><i>;</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>font-size</b><i>:</i> <em>1.2rem</em><i>;</i>
+  <b>color</b><i>:</i> blue<i>;</i>
+<i>}</i>
+
+<sup>/* Good: Separated concerns */</sup>
+<i>.</i>card <i>{</i> <b>padding</b><i>:</i> <em>1rem</em><i>;</i> <i>}</i>
+<i>.</i>card<i>-</i>primary <i>{</i> <b>background</b><i>:</i> white<i>;</i> <i>}</i>
+<i>.</i>card<i>-</i>large <i>{</i> <b>font-size</b><i>:</i> <em>1.2rem</em><i>;</i> <i>}</i></code></pre>
+<p>Compose classes instead of creating new ones.</p>
+<h2>BEM Methodology</h2>
+<p>Block, Element, Modifier:</p>
+<pre><code language="css"><sup>/* Block */</sup>
+<i>.</i>card <i>{</i> <i>}</i>
+
+<sup>/* Element */</sup>
+<i>.</i>card__title <i>{</i> <i>}</i>
+<i>.</i>card__body <i>{</i> <i>}</i>
+
+<sup>/* Modifier */</sup>
+<i>.</i>card<em>--featured</em> <i>{</i> <i>}</i>
+<i>.</i>card<em>--dark</em> <i>{</i> <i>}</i></code></pre>
+<p>Use BEM for component-based architecture.</p>
+<h2>Utility-First Approach</h2>
+<p>Use small, single-purpose classes:</p>
+<pre><code language="css"><i>.</i>mt<i>-</i><em>1</em> <i>{</i> <b>margin-top</b><i>:</i> <em>1rem</em><i>;</i> <i>}</i>
+<i>.</i>p<i>-</i><em>2</em> <i>{</i> <b>padding</b><i>:</i> <em>2rem</em><i>;</i> <i>}</i>
+<i>.</i>text<i>-</i>center <i>{</i> <b>text-align</b><i>:</i> center<i>;</i> <i>}</i>
+<i>.</i>flex <i>{</i> <b>display</b><i>:</i> flex<i>;</i> <i>}</i></code></pre>
+<pre><code language="html"><i>&lt;</i><strong>div </strong><b>class</b><i>=</i><em>"card p-2 mt-1 text-center"</em><i>&gt;</i></code></pre>
+<p>This is the Tailwind approach—fast for building, harder to maintain at scale.</p>
+<h2>Layered Architecture</h2>
+<p>Organize CSS in layers:</p>
+<pre><code language="css"><sup>/* 1. Settings - Variables */</sup>
+<i>:</i>root <i>{</i> <em>--color-primary</em><i>:</i> <strong>#3b82f6</strong><i>;</i> <i>}</i>
+
+<sup>/* 2. Base - Resets, element defaults */</sup>
+<i>*</i><i>,</i> <i>*</i><i>:</i><i>:</i>before<i>,</i> <i>*</i><i>:</i><i>:</i>after <i>{</i> <b>box-sizing</b><i>:</i> border<i>-</i>box<i>;</i> <i>}</i>
+
+<sup>/* 3. Objects - Layout patterns */</sup>
+<i>.</i>container <i>{</i> <b>max-width</b><i>:</i> <em>1200px</em><i>;</i> <b>margin</b><i>:</i> <em>0</em> auto<i>;</i> <i>}</i>
+
+<sup>/* 4. Components - UI components */</sup>
+<i>.</i>button <i>{</i> <b>padding</b><i>:</i> <em>0.5rem</em> <em>1rem</em><i>;</i> <i>}</i>
+
+<sup>/* 5. Utilities - Helper classes */</sup>
+<i>.</i>hidden <i>{</i> <b>display</b><i>:</i> none<i>;</i> <i>}</i></code></pre>
+<p>Import in this order to control the cascade.</p>
+<h2>Naming Conventions</h2>
+<p>Be consistent and descriptive:</p>
+<pre><code language="css"><sup>/* Bad */</sup>
+<i>.</i>btn1 <i>{</i> <i>}</i>
+<i>.</i>red <i>{</i> <i>}</i>
+<i>.</i>bigButton <i>{</i> <i>}</i>
+
+<sup>/* Good */</sup>
+<i>.</i>button <i>{</i> <i>}</i>
+<i>.</i>button<em>--danger</em> <i>{</i> <i>}</i>
+<i>.</i>button<em>--large</em> <i>{</i> <i>}</i></code></pre>
+<p>Names should describe purpose, not appearance.</p>
+<h2>Avoid Deep Nesting</h2>
+<p>Keep selectors flat:</p>
+<pre><code language="css"><sup>/* Bad */</sup>
+<i>.</i>header <i>.</i>nav <i>.</i>list <i>.</i>item <i>.</i>link <i>{</i> <i>}</i>
+
+<sup>/* Good */</sup>
+<i>.</i>nav<i>-</i>link <i>{</i> <i>}</i></code></pre>
+<p>Flat selectors are more performant and easier to override.</p>
+<h2>File Organization</h2>
+<p>Split CSS by concern:</p>
+<pre><code language="*">styles<i>/</i>
+<i>├</i><i>─</i><i>─</i> base<i>/</i>
+<i>│</i>   <i>├</i><i>─</i><i>─</i> reset<i>.</i>css
+<i>│</i>   <i>└</i><i>─</i><i>─</i> typography<i>.</i>css
+<i>├</i><i>─</i><i>─</i> components<i>/</i>
+<i>│</i>   <i>├</i><i>─</i><i>─</i> button<i>.</i>css
+<i>│</i>   <i>└</i><i>─</i><i>─</i> card<i>.</i>css
+<i>├</i><i>─</i><i>─</i> layout<i>/</i>
+<i>│</i>   <i>└</i><i>─</i><i>─</i> grid<i>.</i>css
+<i>└</i><i>─</i><i>─</i> main<i>.</i>css</code></pre>
+<p>Import all in your main stylesheet.</p>
+<h2>Start Simple</h2>
+<p>Don't over-engineer. For small projects, a single file works fine. Add complexity only when you feel the pain of scale.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

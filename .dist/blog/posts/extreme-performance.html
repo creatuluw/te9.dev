@@ -1,0 +1,128 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Extreme performance</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Mon Sep 15 2025 02:00:00 GMT+0200 (Central European Summer Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Extreme performance">
+	<meta name="og:description" content="Today the web performance industry optimizes the wrong things. Complex bundlers, code splitting, and tree shaking treat symptoms while ignoring the root cause: JavaScript dependency for basic functionality.">
+	<meta name="description" content="Today the web performance industry optimizes the wrong things. Complex bundlers, code splitting, and tree shaking treat symptoms while ignoring the root cause: JavaScript dependency for basic functionality.">
+	<link rel="stylesheet" href="/blog\index.css">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      <header><a href="/"></a></header>
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Extreme performance</h1>
+<p>Today the web performance industry optimizes the wrong things. Complex bundlers, code splitting, and tree shaking treat symptoms while ignoring the root cause: JavaScript dependency for basic functionality.</p>
+<placeholder nue="placeholder" class="blue hero"><script type="application/json">{"height":450}</script></placeholder>
+<h2>The bundler trap</h2>
+<p>Modern web development assumes you need complex build tools to achieve performance. Webpack configurations span hundreds of lines. Vite promises speed through clever caching. Next.js provides automatic optimization through framework magic.</p>
+<p>These tools work around a fundamental problem: applications that require JavaScript to render basic content. When your page needs 200KB of JavaScript to display a blog post, optimization becomes an arms race. Bundle splitting, lazy loading, and preloading try to make the inevitable download faster.</p>
+<p>But faster delivery of unnecessary code is still unnecessary code. The real win is not needing the code at all.</p>
+<h2>Progressive enhancement</h2>
+<p>The web was designed as a layered medium. HTML provides structure and content. CSS adds presentation. JavaScript enables interaction. Each layer enhances the previous one.</p>
+<p>This architecture enables extreme performance through careful layering:</p>
+<p><strong>HTML first</strong> - Content and structure load immediately. No JavaScript required for reading, navigation, or basic functionality. Screen readers work. Search engines index everything. Users get instant content.</p>
+<p><strong>CSS enhancement</strong> - Visual design loads as a separate layer. Typography, colors, spacing, and layout enhance the structured content. The page becomes beautiful as styles load.</p>
+<p><strong>JavaScript optional</strong> - Interactive features enhance the styled content. Form validation, dynamic updates, and complex interactions layer on top. But the core experience works without them.</p>
+<p>Most web applications need surprisingly little JavaScript. Content sites need none. Marketing pages need minimal interaction. Even complex applications can render their initial state as HTML.</p>
+<h2>Going extreme</h2>
+<p>With proper layering, you can achieve performance that no bundler can match: everything needed to render the page in the first HTML response.</p>
+<h3>CSS inlining</h3>
+<p>Modern CSS best practices keep stylesheets small enough to inline completely:</p>
+<pre><code language="yaml"><sup># In site.yaml</sup>
+<b>design</b><i>:</i>
+<b>  inline_css</b><i>:</i> true</code></pre>
+<p>When your entire design system weighs less than Tailwind's reset CSS, inlining becomes viable. The initial HTML download contains everything needed for perfect rendering. No secondary requests, no flash of unstyled content, no layout shifts.</p>
+<p>This eliminates the CSS network request entirely. While bundlers debate optimal chunking strategies, inlined CSS delivers instantaneous rendering. Nothing can beat zero network requests.</p>
+<placeholder nue="placeholder" class="red"><script type="application/json">{"height":250}</script></placeholder>
+<h3>HTML-driven interactivity</h3>
+<p>Many <q>interactive</q> features work with pure HTML:</p>
+<pre><code language="html"><sup>&lt;!-- Expandable content --&gt;</sup>
+<i>&lt;</i><strong>details</strong><i>&gt;</i>
+  <i>&lt;</i><strong>summary</strong><i>&gt;</i>Advanced options<i>&lt;</i><i>/</i><strong>summary</strong><i>&gt;</i>
+  <i>&lt;</i><strong>div</strong><i>&gt;</i>Content hidden by default<i>&lt;</i><i>/</i><strong>div</strong><i>&gt;</i>
+<i>&lt;</i><i>/</i><strong>details</strong><i>&gt;</i>
+
+<sup>&lt;!-- Modal dialogs --&gt;</sup>
+<i>&lt;</i><strong>button </strong><b>popovertarget</b><i>=</i><em>"settings"</em><i>&gt;</i>Settings<i>&lt;</i><i>/</i><strong>button</strong><i>&gt;</i>
+<i>&lt;</i><strong>dialog </strong><b>id</b><i>=</i><em>"settings"</em> popover<i>&gt;</i>
+  <i>&lt;</i><strong>h2</strong><i>&gt;</i>Settings<i>&lt;</i><i>/</i><strong>h2</strong><i>&gt;</i>
+  <i>&lt;</i><strong>button </strong><b>popovertarget</b><i>=</i><em>"settings"</em><i>&gt;</i>Close<i>&lt;</i><i>/</i><strong>button</strong><i>&gt;</i>
+<i>&lt;</i><i>/</i><strong>dialog</strong><i>&gt;</i>
+
+<sup>&lt;!-- Form validation --&gt;</sup>
+<i>&lt;</i><strong>form</strong><i>&gt;</i>
+  <i>&lt;</i><strong>input </strong><b>type</b><i>=</i><em>"email"</em> required<i>&gt;</i>
+  <i>&lt;</i><strong>input </strong><b>type</b><i>=</i><em>"url"</em> required<i>&gt;</i>
+  <i>&lt;</i><strong>button</strong><i>&gt;</i>Submit<i>&lt;</i><i>/</i><strong>button</strong><i>&gt;</i>
+<i>&lt;</i><i>/</i><strong>form</strong><i>&gt;</i></code></pre>
+<p>No JavaScript required. The browser provides rich interactivity through semantic HTML. Your <q>complex</q> interface becomes a collection of standard elements.</p>
+<h3>Minimal JavaScript</h3>
+<p>When JavaScript is needed, modern approaches keep it tiny:</p>
+<pre><code language="html"><sup>&lt;!-- Component with minimal enhancement --&gt;</sup>
+<i>&lt;</i><strong>form </strong><b>onsubmit</b><i>=</i><em>"handleSubmit(event)"</em><i>&gt;</i>
+  <i>&lt;</i><strong>input </strong><b>name</b><i>=</i><em>"email"</em> <b>type</b><i>=</i><em>"email"</em> required<i>&gt;</i>
+  <i>&lt;</i><strong>button</strong><i>&gt;</i>Subscribe<i>&lt;</i><i>/</i><strong>button</strong><i>&gt;</i>
+
+  <i>&lt;</i><strong>script</strong><i>&gt;</i>
+    async function <b>handleSubmit</b><i>(</i>e<i>)</i> <i>{</i>
+      e<i>.</i><b>preventDefault</b><i>(</i><i>)</i>
+      const <b>data</b> <i>=</i> new <b>FormData</b><i>(</i>e<i>.</i>target<i>)</i>
+      await <b>fetch</b><i>(</i><em>'/subscribe'</em><i>,</i> <i>{</i> <b>method</b><i>:</i> <em>'POST'</em><i>,</i> <b>body</b><i>:</i> data <i>}</i><i>)</i>
+      location<i>.</i><b>href</b> <i>=</i> <em>'/thanks'</em>
+    <i>}</i>
+  <i>&lt;</i><i>/</i><strong>script</strong><i>&gt;</i>
+
+<i>&lt;</i><i>/</i><strong>form</strong><i>&gt;</i></code></pre>
+<p>The form works without JavaScript - server-side processing handles submission. JavaScript enhances with smoother UX. Total enhancement cost: 200 bytes.</p>
+<h2>The performance hierarchy</h2>
+<p>Different optimization strategies have dramatically different impact:</p>
+<p><strong>Bundler optimization</strong> - 10-30% improvement. Code splitting, tree shaking, and compression optimize delivery of necessary code.</p>
+<p><strong>Framework switching</strong> - 50-70% improvement. Moving from React to lighter alternatives reduces baseline JavaScript requirements.</p>
+<p><strong>Progressive enhancement</strong> - 80-95% improvement. Making JavaScript optional eliminates most performance bottlenecks.</p>
+<p><strong>CSS inlining</strong> - 99% improvement for initial render. Zero network requests for visual presentation beats any bundler optimization.</p>
+<p>The biggest gains come from architectural decisions, not build tools.</p>
+<h2>Measuring what matters</h2>
+<p>Traditional metrics miss the point:</p>
+<p><strong>Time to Interactive</strong> becomes irrelevant when the page is interactive immediately through HTML.</p>
+<p><strong>First Contentful Paint</strong> happens instantly when CSS is inlined and content is in HTML.</p>
+<p><strong>Cumulative Layout Shift</strong> becomes zero when all styling loads with initial HTML.</p>
+<p><strong>Lighthouse scores</strong> improve dramatically when you need fewer resources to begin with.</p>
+<p>The ultimate performance optimization is not needing to optimize. When your architecture eliminates bottlenecks, complex tooling becomes unnecessary.</p>
+<h2>The benefits</h2>
+<p>Extreme performance changes user experience fundamentally:</p>
+<p><strong>Instant loading</strong> - Pages render immediately. No loading states, no progressive enhancement delays, no <q>app is loading</q> screens.</p>
+<p><strong>Reliable experience</strong> - Works on slow connections, old devices, with JavaScript disabled. Progressive enhancement ensures universal access.</p>
+<p><strong>Simple deployment</strong> - No build complexity, no CDN configuration, no cache invalidation strategies. Static HTML files work everywhere.</p>
+<p><strong>Maintainable codebase</strong> - Less JavaScript means fewer bugs. Smaller surface area means easier debugging. Standard HTML/CSS means longer-lasting code.</p>
+<p><strong>Lower costs</strong> - Less bandwidth, less server processing, less CDN usage. Extreme performance is also extreme efficiency.</p>
+<p>The web's layered architecture enables performance that modern frameworks can't achieve. HTML, CSS, and minimal JavaScript create experiences faster than any bundler optimization. When you optimize architecture instead of build tools, users notice the difference.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      <footer>
+  © Copyright 2026 / </footer>
+      
+    </body>
+  
+    </html>
+  

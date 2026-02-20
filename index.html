@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>te9.dev</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/global.css">
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-zinc-100">
+  <nav class="max-w-[2560px] mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+        <span class="iconify text-white text-lg" data-icon="mdi:feather"></span>
+      </div>
+      <span class="font-semibold tracking-tight">te9.dev</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="/" class="text-sm font-medium">Home</a>
+      <a href="/blog/" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Blog</a>
+      <a href="/about/" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">About</a>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-16 flex-1 flex flex-col">
+  <section class="flex-1 flex flex-col">
+    <div id="card-grid" class="max-w-[2560px] mx-auto w-full">
+      <div id="posts-container" class="grid border-x border-zinc-200" style="grid-template-columns: repeat(3, 1fr);"></div>
+    </div>
+  </section>
+</main>
+
+<canvas id="three-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100;"></canvas>
+
+<footer class="border-t border-zinc-100 py-8 mt-auto">
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    <p class="text-sm text-zinc-400">&copy; 2025 te9.dev. Built with <a href="https://nuejs.org" class="text-zinc-600 hover:text-zinc-900">Nue.js</a></p>
+  </div>
+</footer>
+
+<script>
+  const posts = [
+    { title: "Getting Started with Nue.js", date: "2025-02-20", description: "Learn how to build content-focused websites with Nue.js, a modern framework that puts content first.", url: "/blog/getting-started-with-nue/" },
+    { title: "Building Developer Workflows", date: "2025-02-18", description: "How to create efficient developer workflows that scale with your team and project complexity.", url: "/blog/building-developer-workflows/" },
+    { title: "The Art of Clean CSS", date: "2025-02-15", description: "Write maintainable CSS using design tokens, logical properties, and modern layout techniques.", url: "/blog/art-of-clean-css/" }
+  ];
+
+  const animations = ['anim-slide', 'anim-fade', 'anim-zoom', 'anim-fall', 'anim-swipe', 'anim-warp', 'anim-flip', 'anim-bounce', 'anim-rotate', 'anim-scale'];
+
+  function getRandomAnimation() {
+    return animations[Math.floor(Math.random() * animations.length)];
+  }
+
+  function renderPosts() {
+    const container = document.getElementById('posts-container');
+    
+    posts.forEach((post, index) => {
+      const card = document.createElement('a');
+      card.href = post.url;
+      card.className = 'p-5 border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col card-hidden border-r border-b';
+      card.dataset.animation = getRandomAnimation();
+      card.dataset.animated = 'false';
+      
+      if (index < posts.length - 1) {
+        card.classList.add('border-r');
+      }
+      
+      card.innerHTML = `
+        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">${post.date}</span>
+        <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">${post.title}</h2>
+        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">${post.description}</p>
+      `;
+      
+      container.appendChild(card);
+    });
+  }
+
+  function initializeAnimations() {
+    const cards = document.querySelectorAll('.card-hidden');
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.classList.remove('card-hidden');
+        card.classList.add(card.dataset.animation);
+        card.dataset.animated = 'true';
+      }, index * 100 + Math.random() * 100);
+    });
+  }
+
+  class ThreeBackground {
+    constructor() {
+      this.canvas = document.getElementById('three-canvas');
+      if (!this.canvas) return;
+      
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, alpha: true, antialias: true });
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      
+      this.camera.position.z = 5;
+      this.particles = [];
+      this.initParticles();
+      this.animate();
+      
+      window.addEventListener('resize', () => this.onResize());
+    }
+
+    initParticles() {
+      const geometry = new THREE.CircleGeometry(0.02, 8);
+      const material = new THREE.MeshBasicMaterial({ 
+        color: 0x18181B,
+        transparent: true,
+        opacity: 0.1
+      });
+
+      for (let i = 0; i < 50; i++) {
+        const particle = new THREE.Mesh(geometry, material.clone());
+        particle.position.x = (Math.random() - 0.5) * 10;
+        particle.position.y = (Math.random() - 0.5) * 10;
+        particle.position.z = (Math.random() - 0.5) * 5;
+        particle.userData = {
+          velocityX: (Math.random() - 0.5) * 0.002,
+          velocityY: (Math.random() - 0.5) * 0.002,
+          velocityZ: (Math.random() - 0.5) * 0.001
+        };
+        this.particles.push(particle);
+        this.scene.add(particle);
+      }
+    }
+
+    animate() {
+      requestAnimationFrame(() => this.animate());
+      
+      this.particles.forEach(particle => {
+        particle.position.x += particle.userData.velocityX;
+        particle.position.y += particle.userData.velocityY;
+        particle.position.z += particle.userData.velocityZ;
+
+        if (Math.abs(particle.position.x) > 5) particle.userData.velocityX *= -1;
+        if (Math.abs(particle.position.y) > 5) particle.userData.velocityY *= -1;
+        if (Math.abs(particle.position.z) > 2.5) particle.userData.velocityZ *= -1;
+      });
+
+      this.renderer.render(this.scene, this.camera);
+    }
+
+    onResize() {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderPosts();
+    initializeAnimations();
+    new ThreeBackground();
+  });
+</script>
+
+</body>
+</html>

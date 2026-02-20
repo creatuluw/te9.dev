@@ -1,0 +1,194 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Modern CSS is awesome</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Tue Aug 05 2025 02:00:00 GMT+0200 (Central European Summer Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Modern CSS is awesome">
+	<meta name="og:description" content="CSS has transformed dramatically over the past decade, but the JavaScript ecosystem hasn't noticed. While React developers debate CSS-in-JS solutions, the language itself evolved into something unrecognizable from its 2013 limitations.">
+	<meta name="description" content="CSS has transformed dramatically over the past decade, but the JavaScript ecosystem hasn't noticed. While React developers debate CSS-in-JS solutions, the language itself evolved into something unrecognizable from its 2013 limitations.">
+	<link rel="stylesheet" href="/blog\index.css">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      <header><a href="/"></a></header>
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Modern CSS is awesome</h1>
+<p>CSS has transformed dramatically over the past decade, but the JavaScript ecosystem hasn't noticed. While React developers debate CSS-in-JS solutions, the language itself evolved into something unrecognizable from its 2013 limitations.</p>
+<placeholder nue="placeholder" class="blue hero"><script type="application/json">{"height":400}</script></placeholder>
+<h2>Stuck in the past</h2>
+<p>React emerged when CSS was genuinely limited. No variables, no nesting, no real layout system. Global scope created conflicts. Cascade felt unpredictable. The community built tools to work around these limitations: preprocessors, naming conventions, CSS-in-JS.</p>
+<p>These solutions became orthodoxy. We normalized the idea that CSS needs fixing, that styling should live inside components, that global scope is dangerous. The JavaScript ecosystem created an entire industry around CSS's perceived brokenness.</p>
+<p>But CSS kept evolving. While developers debated utility frameworks and CSS-in-JS libraries, the language gained powerful native features. Variables arrived. Nesting landed in browsers. Container queries, layers, and scope solved real problems. Grid and flexbox revolutionized layout.</p>
+<p>The gap between perception and reality widened. Modern CSS can do things that seemed impossible in 2013, but the ecosystem remains stuck in defensive patterns.</p>
+<h2>CSS in 2025</h2>
+<p>Today's CSS bears little resemblance to the language React was designed to fix. Modern CSS has everything needed for sophisticated design systems.</p>
+<p><strong>CSS variables</strong> create design tokens that cascade and inherit naturally:</p>
+<pre><code language="css"><i>:</i>root <i>{</i>
+  <em>--primary-hue</em><i>:</i> <em>210</em><i>;</i>
+  <em>--primary-color</em><i>:</i> <b>hsl</b><i>(</i><strong>var</strong><i>(</i><em>--primary-hue</em><i>)</i> <em>60%</em> <em>50%</em><i>)</i><i>;</i>
+  <em>--primary-light</em><i>:</i> <b>hsl</b><i>(</i><strong>var</strong><i>(</i><em>--primary-hue</em><i>)</i> <em>60%</em> <em>90%</em><i>)</i><i>;</i>
+<i>}</i>
+
+button <i>{</i>
+  <b>background</b><i>:</i> <strong>var</strong><i>(</i><em>--primary-color</em><i>)</i><i>;</i>
+  <b>border</b><i>:</i> <em>1px</em> solid <strong>var</strong><i>(</i><em>--primary-color</em><i>)</i><i>;</i>
+<i>}</i>
+
+<b>button</b><i>:</i>hover <i>{</i>
+  <b>background</b><i>:</i> <strong>var</strong><i>(</i><em>--primary-light</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p><strong>Native nesting</strong> eliminates preprocessor complexity:</p>
+<pre><code language="css"><i>.</i>card <i>{</i>
+  <b>padding</b><i>:</i> <em>1rem</em><i>;</i>
+  <b>border-radius</b><i>:</i> <em>8px</em><i>;</i>
+
+  h3 <i>{</i>
+    <b>margin-top</b><i>:</i> <em>0</em><i>;</i>
+  <i>}</i>
+
+  <i>&</i><i>:</i>hover <i>{</i>
+    <b>box-shadow</b><i>:</i> <em>0</em> <em>4px</em> <em>8px</em> <b>rgba</b><i>(</i><em>0</em><i>,</i><em>0</em><i>,</i><em>0</em><i>,</i><em>0.1</em><i>)</i><i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<p><strong>CSS layers</strong> solve specificity wars forever:</p>
+<pre><code language="css"><label>@layer</label> base<i>,</i> layout<i>,</i> components<i>,</i> overrides<i>;</i>
+
+<label>@layer</label> base <i>{</i>
+  button <i>{</i>  <i>}</i>
+<i>}</i>
+
+<label>@layer</label> components <i>{</i>
+  <i>.</i>primary <i>{</i>  <i>}</i>
+<i>}</i>
+
+<label>@layer</label> overrides <i>{</i>
+  <i>.</i>hidden <i>{</i>
+    <b>display</b><i>:</i> <b>none</b> <label>!important</label><i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<p><strong>Container queries</strong> create truly responsive components:</p>
+<pre><code language="css"><i>.</i>sidebar <i>{</i>
+  <b>container-type</b><i>:</i> inline<i>-</i>size<i>;</i>
+<i>}</i>
+
+<i>.</i>card <i>{</i>
+  <b>padding</b><i>:</i> <em>1rem</em><i>;</i>
+<i>}</i>
+
+<label>@container</label> <i>(</i><b>min-width</b><i>:</i> <em>300px</em><i>)</i> <i>{</i>
+  <i>.</i>card <i>{</i>
+    <b>display</b><i>:</i> grid<i>;</i>
+    <b>grid-template-columns</b><i>:</i> auto <em>1fr</em><i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<p><strong>CSS scope</strong> provides encapsulation without JavaScript:</p>
+<pre><code language="css"><label>@scope</label> <i>(</i><i>.</i>component<i>)</i> <i>{</i>
+  button <i>{</i>
+<sup>    /* Only affects buttons inside .component */</sup>
+  <i>}</i>
+<i>}</i></code></pre>
+<p>This is a completely different language from what React was built to replace.</p>
+<h2>Design system best practices</h2>
+<p>Modern CSS enables new patterns for building maintainable design systems.</p>
+<h3>Trust HTML semantics</h3>
+<p>HTML already provides most of what a design system needs. Lists have <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;dl&gt;</code>. Tables have semantic structure. Forms have fieldsets and labels. Navigation has <code>&lt;nav&gt;</code>. Interactive elements have <code>&lt;button&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code>.</p>
+<p>Style these native elements directly:</p>
+<pre><code language="css"><sup>/* Not this: component classes */</sup>
+<i>.</i>list<i>-</i>component <i>{</i> <i>}</i>
+<i>.</i>nav<i>-</i>component <i>{</i> <i>}</i>
+<i>.</i>button<i>-</i>component <i>{</i> <i>}</i>
+
+<sup>/* This: semantic elements */</sup>
+ul <i>{</i> <i>}</i>
+nav <i>{</i> <i>}</i>
+button <i>{</i> <i>}</i></code></pre>
+<p>Use attribute selectors (<code>[disabled]</code>, <code>[aria-expanded]</code>), pseudo-classes (<code>:invalid</code>, <code>:checked</code>), and <code>:has()</code> for state-based styling. The browser already knows what's interactive and what's not.</p>
+<h3>Class names for layout</h3>
+<p>HTML can't express spatial relationships. These aren't semantic, so class names handle layout:</p>
+<pre><code language="css"><i>.</i>stack <i>{</i>
+  <b>display</b><i>:</i> flex<i>;</i>
+  <b>flex-direction</b><i>:</i> column<i>;</i>
+  <b>gap</b><i>:</i> <strong>var</strong><i>(</i><em>--space-m</em><i>)</i><i>;</i>
+<i>}</i>
+
+<i>.</i>grid <i>{</i>
+  <b>display</b><i>:</i> grid<i>;</i>
+  <b>grid-template-columns</b><i>:</i> <b>repeat</b><i>(</i>auto<i>-</i>fit<i>,</i> <b>minmax</b><i>(</i><em>250px</em><i>,</i> <em>1fr</em><i>)</i><i>)</i><i>;</i>
+  <b>gap</b><i>:</i> <strong>var</strong><i>(</i><em>--space-l</em><i>)</i><i>;</i>
+<i>}</i>
+
+<i>.</i>columns <i>{</i>
+  <b>column-count</b><i>:</i> <strong>var</strong><i>(</i><em>--count</em><i>,</i> <em>2</em><i>)</i><i>;</i>
+  <b>column-gap</b><i>:</i> <strong>var</strong><i>(</i><em>--space-m</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p>Add minimal modifiers for variations:</p>
+<pre><code language="css"><i>.</i>thin <i>{</i> <b>max-width</b><i>:</i> <em>40ch</em><i>;</i> <i>}</i>
+<i>.</i>wide <i>{</i> <b>max-width</b><i>:</i> <em>80ch</em><i>;</i> <i>}</i>
+<i>.</i>compact <i>{</i> <em>--space-m</em><i>:</i> <em>0.5rem</em><i>;</i> <i>}</i></code></pre>
+<p>Modern nested CSS eliminates the need for inner class names. A constrained system enables creative combinations without chaos.</p>
+<h3>Layer everything</h3>
+<p>CSS layers solve specificity wars forever:</p>
+<pre><code language="css"><label>@layer</label> base<i>,</i> layout<i>,</i> components<i>,</i> overrides<i>;</i>
+
+<label>@layer</label> base <i>{</i>
+<sup>  /* Variables, semantic elements */</sup>
+  <i>:</i>root <i>{</i> <em>--primary</em><i>:</i> <strong>#0066cc</strong><i>;</i> <i>}</i>
+  button <i>{</i> <b>padding</b><i>:</i> <em>0.5rem</em> <em>1rem</em><i>;</i> <i>}</i>
+<i>}</i>
+
+<label>@layer</label> layout <i>{</i>
+<sup>  /* Spatial relationships */</sup>
+  <i>.</i>stack <i>{</i> <b>display</b><i>:</i> flex<i>;</i> <b>flex-direction</b><i>:</i> column<i>;</i> <i>}</i>
+  <i>.</i>grid <i>{</i> <b>display</b><i>:</i> grid<i>;</i> <i>}</i>
+<i>}</i>
+
+<label>@layer</label> components <i>{</i>
+<sup>  /* Component variations */</sup>
+  <i>.</i>primary <i>{</i> <b>background</b><i>:</i> <strong>var</strong><i>(</i><em>--primary</em><i>)</i><i>;</i> <b>color</b><i>:</i> white<i>;</i> <i>}</i>
+<i>}</i>
+
+<label>@layer</label> overrides <i>{</i>
+<sup>  /* Overrides */</sup>
+  <i>.</i>hidden <i>{</i> <b>display</b><i>:</i> <b>none</b> <label>!important</label><i>;</i> <i>}</i>
+<i>}</i></code></pre>
+<p>Each layer has clear boundaries and purpose. No more specificity hacks, no more source order gymnastics. The cascade becomes predictable.</p>
+<h3>Keep it minimal</h3>
+<p>Even complex design systems need surprisingly few classes. Maybe 10-30 total. Not 50. Definitely not 500. A design system fails when developers escape to local styling.</p>
+<p>The best way to ensure adoption is constraint. Learning 10 classes is manageable. Learning 100 is not. Minimal systems force creative solutions within boundaries—exactly what good design requires.</p>
+<h2>The benefits</h2>
+<p>Modern CSS creates possibilities that CSS-in-JS can't match.</p>
+<p><strong>Performance</strong> - Native CSS parsing and rendering beats JavaScript-generated styles. No runtime overhead, no flash of unstyled content, no hydration delays.</p>
+<p><strong>Debugging</strong> - Browser dev tools understand CSS natively. Inspect elements, edit properties, see computed values. No source maps, no JavaScript debugging for visual issues.</p>
+<p><strong>Maintainability</strong> - Design changes happen in design files. A single variable update cascades everywhere. No hunting through component props or JavaScript configurations.</p>
+<p><strong>Standards compliance</strong> - CSS follows web standards that evolve carefully. Your investment compounds over decades. Framework APIs change every few years.</p>
+<p><strong>Design workflow</strong> - Designers work directly with CSS. No translation layer between design tools and implementation. The feedback loop becomes immediate.</p>
+<p><strong>Future-proof</strong> - Modern CSS features work in all browsers. No polyfills, no build steps, no runtime dependencies. The platform provides everything.</p>
+<p>CSS in 2025 is a mature, powerful language for building design systems. The JavaScript ecosystem just hasn't caught up yet.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      <footer>
+  © Copyright 2026 / </footer>
+      
+    </body>
+  
+    </html>
+  

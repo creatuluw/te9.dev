@@ -1,0 +1,75 @@
+---
+title: About
+description: About te9.dev
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{ title } | te9.dev</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/global.css">
+  <link rel="stylesheet" href="/posts/posts.css">
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-zinc-100">
+  <nav class="max-w-[2560px] mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+        <span class="iconify text-white text-lg" data-icon="mdi:feather"></span>
+      </div>
+      <span class="font-semibold tracking-tight">te9.dev</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="/" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Home</a>
+      <a href="/blog/" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Blog</a>
+      <a href="/about/" class="text-sm font-medium">About</a>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-24 pb-16 flex-1">
+  <article class="max-w-2xl mx-auto px-6">
+    <h1 class="text-4xl font-bold tracking-tight mb-8">About te9.dev</h1>
+    
+    <div class="prose">
+      <p class="text-lg text-zinc-500 font-light leading-relaxed mb-8">
+        A tech blog focused on developer tools, workflows, and modern web development.
+      </p>
+      
+      <h2>What We Cover</h2>
+      <ul>
+        <li><strong>Developer Tools</strong> — Reviews and guides for the tools you use daily</li>
+        <li><strong>Workflows</strong> — How to build efficient processes for your team</li>
+        <li><strong>Web Development</strong> — Modern techniques and best practices</li>
+        <li><strong>Architecture</strong> — Systems thinking for growing applications</li>
+      </ul>
+      
+      <h2>Philosophy</h2>
+      <ul>
+        <li>Simplicity over complexity</li>
+        <li>Content over frameworks</li>
+        <li>Standards over proprietary solutions</li>
+        <li>Documentation over tribal knowledge</li>
+      </ul>
+      
+      <p>Built with <a href="https://nuejs.org">Nue.js</a>.</p>
+    </div>
+  </article>
+</main>
+
+<footer class="border-t border-zinc-100 py-8 mt-auto">
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    <p class="text-sm text-zinc-400">&copy; 2025 te9.dev. Built with <a href="https://nuejs.org" class="text-zinc-600 hover:text-zinc-900">Nue.js</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

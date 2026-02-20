@@ -1,0 +1,87 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>What is a CSS design system?</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Fri Aug 01 2025 02:00:00 GMT+0200 (Central European Summer Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="What is a CSS design system?">
+	<meta name="og:description" content="Modern CSS has everything needed for real design systems. Variables, nesting, layers, and scope create visual languages that scale across product lines. When design lives in one place, both designers and developers work at full speed.">
+	<meta name="description" content="Modern CSS has everything needed for real design systems. Variables, nesting, layers, and scope create visual languages that scale across product lines. When design lives in one place, both designers and developers work at full speed.">
+	<link rel="stylesheet" href="/blog\index.css">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      <header><a href="/"></a></header>
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>What is a CSS design system?</h1>
+<p>Modern CSS has everything needed for real design systems. Variables, nesting, layers, and scope create visual languages that scale across product lines. When design lives in one place, both designers and developers work at full speed.</p>
+<placeholder nue="placeholder" class="red hero"><script type="application/json">{"height":500}</script></placeholder>
+<h2>The problem we created</h2>
+<p>For 15 years we've been writing CSS to survive in chaos. We use BEM because we gave up on the cascade. We use CSS-in-JS because we're scared of namespace collisions. We write utility classes because we stopped trusting our ability to name things. We compile, process, and transform CSS because we think native CSS isn't enough.</p>
+<p>These practices assume CSS is broken and needs fixing. They're defensive strategies. They're about working around the language rather than harnessing its potential.</p>
+<h2>CSS design system defined</h2>
+<p>A design system isn't a component library or a utility framework. It's a visual language expressed through CSS. Modern CSS gives us everything we need: variables, nesting, container queries, layers, and scope. Here's what makes a real design system:</p>
+<h3>Central</h3>
+<p>A design system lives in one place. Not scattered across components, not mixed with JavaScript, not generated at build time. When you can see the whole system at once, you understand it. When it's fragmented across a thousand files, you have no system—just a collection of accidents waiting to happen.</p>
+<h3>Semantic</h3>
+<p>HTML already contains a rich design vocabulary. Lists, tables, forms, buttons, navigation—they all have meaning. A design system extends this vocabulary rather than replacing it. A <code>&lt;button&gt;</code> is already interactive. A <code>&lt;nav&gt;</code> already means navigation. The system styles what exists instead of recreating it with divs and classes.</p>
+<h3>Minimal</h3>
+<p>Constraints create consistency. A design system with 20 well-chosen classes beats one with 2000 utilities. HTML can't express spatial relationships, so classes handle layout: <code>.stack</code>, <code>.grid</code>, <code>.columns</code>. A few modifiers capture variations: <code>.primary</code>, <code>.compact</code>, <code>.inverted</code>. Everything else? Already in HTML.</p>
+<h2>Small projects</h2>
+<p>Start with global styles plus area-specific CSS. This follows the classic web development pattern that pre-dated the component revolution - global stylesheets with area-specific additions. It's perfect for personal projects, prototypes, or small teams where you need the flexibility to add styles ad-hoc without teaching a formal system to others:</p>
+<pre><code language="*"><i>├</i><i>─</i><i>─</i> global<i>.</i>css       <sup># Site-wide design system</sup>
+<i>├</i><i>─</i><i>─</i> index<i>.</i>md
+<i>└</i><i>─</i><i>─</i> blog<i>/</i>
+    <i>├</i><i>─</i><i>─</i> blog<i>.</i>css     <sup># Blog-specific styles</sup>
+    <i>├</i><i>─</i><i>─</i> css<i>-</i>is<i>-</i>awesome<i>.</i>md
+    <i>├</i><i>─</i><i>─</i> design<i>-</i>systems<i>.</i>md
+    <i>└</i><i>─</i><i>─</i> <i>.</i><i>.</i><i>.</i></code></pre>
+<p>Files are loaded automatically based on location. The <code>global.css</code> applies everywhere. The <code>blog.css</code> only applies to pages in the blog directory. No imports, no bundling - just files where you need them.</p>
+<h2>Larger projects</h2>
+<p>Scale up with a centralized design system for larger teams, client work, or any project where consistency and maintainability matter more than development speed. This approach enforces constraints that prevent the CSS sprawl that kills long-term projects:</p>
+<pre><code language="bash">nue create full</code></pre>
+<p>This creates a complete design system in <code>@shared/design/</code>:</p>
+<pre><code language="*"><label>@shared</label><i>/</i>design<i>/</i>
+<i>├</i><i>─</i><i>─</i> base<i>.</i>css         <sup># Typography, colors, spacing</sup>
+<i>├</i><i>─</i><i>─</i> button<i>.</i>css       <sup># All button variants</sup>
+<i>├</i><i>─</i><i>─</i> content<i>.</i>css      <sup># Blog posts, documentation</sup>
+<i>├</i><i>─</i><i>─</i> dialog<i>.</i>css       <sup># Modals, popovers</sup>
+<i>├</i><i>─</i><i>─</i> document<i>.</i>css     <sup># Page structure</sup>
+<i>├</i><i>─</i><i>─</i> form<i>.</i>css         <sup># All form elements</sup>
+<i>├</i><i>─</i><i>─</i> layout<i>.</i>css       <sup># Grid, stack, columns</sup>
+<i>├</i><i>─</i><i>─</i> syntax<i>.</i>css       <sup># Code highlighting</sup>
+<i>├</i><i>─</i><i>─</i> table<i>.</i>css        <sup># Data tables</sup>
+<i>└</i><i>─</i><i>─</i> apps<i>.</i>css         <sup># SPA-specific components</sup></code></pre>
+<p>All files load automatically across your entire site. Marketing pages, documentation, blogs, login screens, and single-page apps all use the same visual language. Change a variable in <code>base.css</code> and see it everywhere.</p>
+<h2>The compound effect</h2>
+<p>A real design system compounds its value over time. Each project strengthens the system. Each use case refines the patterns. Each team member contributes to a shared language.</p>
+<p>When design is scattered in components, every project starts from scratch. You rebuild the same button in every framework migration. You rewrite the same styles for every new component library. Nothing compounds. Everything churns.</p>
+<p>When design is central and semantic, it goes beyond frameworks. Your CSS design system works with any HTML. It worked with jQuery. It works with React. It will work with whatever comes next. The investment compounds across technologies and time.</p>
+<p>This is why CSS matters. Not because it's powerful—though it is. Not because it's fast—though it is. But because CSS is the only layer that survives every paradigm shift. Your React components from 2016 are obsolete. Your CSS from 2016 still works.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      <footer>
+  © Copyright 2026 / </footer>
+      
+    </body>
+  
+    </html>
+  

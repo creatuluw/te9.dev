@@ -1,0 +1,454 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>OpenMemory Mandatory Operations</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="OpenMemory Mandatory Operations">
+	<meta name="og:description" content="This document covers the mandatory rules and CRUD operations for working with OpenMemory, **including knowledge graph operations which are REQUIRED for every project**.">
+	<meta name="description" content="This document covers the mandatory rules and CRUD operations for working with OpenMemory, **including knowledge graph operations which are REQUIRED for every project**.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>OpenMemory Mandatory Operations</h1>
+<p>This document covers the mandatory rules and CRUD operations for working with OpenMemory, <strong>including knowledge graph operations which are REQUIRED for every project</strong>.</p>
+<h2>⚠️ CRITICAL: Knowledge Graph is MANDATORY</h2>
+<p><strong>For EVERY project, you MUST build and maintain a full knowledge graph.</strong> This is not optional.</p>
+<p>The knowledge graph MUST track:</p>
+<ul><li><p>Technologies and frameworks used</p></li>
+<li><p>Dependencies between components</p></li>
+<li><p>Features and capabilities</p></li>
+<li><p>Deployment environments and infrastructure</p></li>
+<li><p>Architectural decisions and trade-offs</p></li>
+<li><p>Migrations and technology changes</p></li>
+<li><p>Team structure and ownership</p></li>
+<li><p>Configuration values and settings</p></li>
+<li><p>External integrations and services</p></li>
+<li><p>Performance characteristics</p></li>
+<li><p>Security policies and requirements</p></li></ul>
+<p><strong>Without a complete knowledge graph, the project lacks temporal context, historical analysis, and fact verification capabilities essential for long-term success.</strong></p>
+<hr>
+<h2>⚠️ CRITICAL: Session Variables MUST Be Initialized First</h2>
+<p><strong>Before ANY OpenMemory operations, following variables MUST be initialized:</strong></p>
+<table><thead><tr><th>Variable</th><th>Description</th><th>Example</th><th>Source</th></tr></thead>
+<tr><td><code>{{PROJECT_FOLDER_NAME}}</code></td><td><strong>Root folder name</strong> of current project (not full path)</td><td><code>te9.dev</code>, <code>myproject</code>, <code>recipes-app</code></td><td>Extracted from working directory</td></tr>
+<tr><td><code>{{OPENMEMORY_API_URL}}</code></td><td>OpenMemory MCP endpoint URL</td><td><code>https://openmemory-production-f483.up.railway.app/mcp</code></td><td>Configuration (<code>opencode.json</code> MCP settings)</td></tr></table>
+
+<p><strong>Documentation:</strong></p>
+<ul><li><p>See <code>[.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md)</code> for complete variable setup guide</p></li>
+<li><p>See <code>[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)</code> for complete API mappings</p></li></ul>
+<p><strong>MCP Note:</strong> OpenMemory is accessed via MCP server configured in <code>opencode.json</code>. Authentication is handled by MCP connection.</p>
+<hr>
+<h2>⚠️ CRITICAL: user_id MUST Be Project Folder Name</h2>
+<p><strong>For ALL OpenMemory operations, the <code>user_id</code> parameter MUST be the project folder name (not the full path).</strong></p>
+<p>This ensures <strong>context isolation</strong> between projects/repositories. Each project has its own memory space, preventing cross-contamination.</p>
+<p><strong>How to determine PROJECT_FOLDER_NAME:</strong></p>
+<ul><li><p>Extract the <strong>folder name</strong> from the project root path</p></li>
+<li><p>Example: <code>"E:/projects/te9.dev"</code> → <code>PROJECT_FOLDER_NAME: "te9.dev"</code></p></li>
+<li><p>Example: <code>"/home/user/myproject"</code> → <code>PROJECT_FOLDER_NAME: "myproject"</code></p></li></ul>
+<hr>
+<h2>MANDATORY MEMORY WORKFLOW</h2>
+<h3>Rule 1: QUERY FIRST</h3>
+<p>Before responding to ANY user request, you MUST query OpenMemory:</p>
+<pre><code language="javascript"><b>openmemory_openmemory_query</b><i>(</i><i>{</i>
+  <b>query</b><i>:</i> <em>"[relevant keywords]"</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>  <sup>// Automatically resolves to folder name</sup>
+  <b>limit</b><i>:</i> <em>20</em>
+<i>}</i><i>)</i></code></pre>
+<p><strong>API Mapping:</strong></p>
+<ul><li><p>Function: <code>openmemory_openmemory_query()</code></p></li>
+<li><p>Endpoint: <code>POST /memory/query</code></p></li>
+<li><p>Parameters: <code>query</code> → body.query, <code>limit</code> → body.k, <code>user_id</code> → body.filters.user_id</p></li></ul>
+<h3>Rule 2: ANALYZE</h3>
+<p>Review memory results and identify:</p>
+<ul><li><p>Past interactions on this topic</p></li>
+<li><p>User preferences and patterns</p></li>
+<li><p>Decisions made previously</p></li>
+<li><p>Technical context and code history</p></li>
+<li><p>Relationships between entities</p></li></ul>
+<h3>Rule 3: INCORPORATE</h3>
+<p>Your response MUST reflect memory context:</p>
+<ul><li><p>Reference past interactions explicitly</p></li>
+<li><p>Adapt to user preferences found in memory</p></li>
+<li><p>Build upon previous decisions</p></li>
+<li><p>Maintain consistency with established patterns</p></li></ul>
+<h3>Rule 4: STORE LAST</h3>
+<p>After EVERY important interaction, you MUST:</p>
+<pre><code language="javascript"><sup>// Store memory - user_id uses PROJECT_FOLDER_NAME variable</sup>
+<b>openmemory_openmemory_store</b><i>(</i><i>{</i>
+  <b>content</b><i>:</i> <em>"[key learnings/decisions]"</em><i>,</i>
+  <b>sector</b><i>:</i> <em>"episodic|semantic|procedural|emotional|reflective"</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>  <sup>// Automatically resolves to folder name</sup>
+  <b>tags</b><i>:</i> <i>[</i><em>"preference"</em><i>,</i> <em>"decision"</em><i>,</i> <em>"PRD-001"</em><i>,</i> <em>"authentication"</em><i>]</i>  <sup>// Array of descriptive tag strings</sup>
+<i>}</i><i>)</i></code></pre>
+<p><strong>API Mapping:</strong></p>
+<ul><li><p>Function: <code>openmemory_openmemory_store()</code></p></li>
+<li><p>Endpoint: <code>POST /memory/add</code></p></li>
+<li><p>Parameters: <code>content</code> → body.content, <code>sector</code> → body.metadata.sector, <code>user_id</code> → body.user_id, <code>tags</code> → body.tags</p></li></ul>
+<h3>Rule 5: MAINTAIN KNOWLEDGE GRAPH (MANDATORY)</h3>
+<p>For EVERY project, you MUST maintain a complete knowledge graph that tracks all entity relationships and facts. This includes:</p>
+<ol><li><p><strong>Initial Setup</strong>: Create facts for the project's starting state</p></li>
+<li><p><strong>Ongoing Updates</strong>: Add facts as new entities/relationships are discovered</p></li>
+<li><p><strong>Change Tracking</strong>: Invalidate old facts when changes occur (don't delete!)</p></li>
+<li><p><strong>Verification</strong>: Regularly verify facts in the codebase</p></li>
+<li><p><strong>Metadata</strong>: Always include source information (PRD IDs, commit hashes)</p></li></ol>
+<p><strong>This is MANDATORY - not optional.</strong></p>
+<pre><code language="javascript"><b>openmemory_openmemory_store</b><i>(</i><i>{</i>
+  <b>content</b><i>:</i> <em>"[key learnings/decisions]"</em><i>,</i>
+  <b>sector</b><i>:</i> <em>"episodic|semantic|procedural|emotional|reflective"</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>  <sup>// Automatically resolves to folder name</sup>
+  <b>tags</b><i>:</i> <i>[</i><em>"preference"</em><i>,</i> <em>"decision"</em><i>,</i> <em>"PRD-001"</em><i>,</i> <em>"authentication"</em><i>]</i>  <sup>// Array of descriptive tag strings</sup>
+<i>}</i><i>)</i></code></pre>
+<p><strong>API Mapping:</strong></p>
+<ul><li><p>Function: <code>openmemory_openmemory_store()</code></p></li>
+<li><p>Endpoint: <code>POST /memory/add</code></p></li>
+<li><p>Parameters: <code>content</code> → body.content, <code>sector</code> → body.metadata.sector, <code>user_id</code> → body.user_id, <code>tags</code> → body.tags</p></li></ul>
+<hr>
+<h2>MEMORY CRUD OPERATIONS</h2>
+<h3>CREATE - Store Memory</h3>
+<pre><code language="javascript"><b>openmemory_openmemory_store</b><i>(</i><i>{</i>
+  <b>content</b><i>:</i> <strong>string</strong><i>,</i>         <sup>// Memory content (1-2000 characters)</sup>
+  <b>user_id</b><i>:</i> <strong>string</strong><i>,</i>         <sup>// MUST be {{PROJECT_FOLDER_NAME}}</sup>
+  sector<i>?</i><i>:</i> <strong>string</strong><i>,</i>         <sup>// Stored in metadata</sup>
+  tags<i>?</i><i>:</i> <strong>string</strong><i>[</i><i>]</i><i>,</i>         <sup>// Array of descriptive tags</sup>
+  metadata<i>?</i><i>:</i> object<i>,</i>       <sup>// Additional structured data</sup>
+  reinforce<i>?</i><i>:</i> boolean<i>,</i>     <sup>// Boost memory salience</sup>
+  importance<i>?</i><i>:</i> <strong>string</strong><i>,</i>     <sup>// low|medium|high|critical</sup>
+  ttl<i>?</i><i>:</i> <strong>number</strong>            <sup>// Time-to-live in days</sup>
+<i>}</i><i>)</i></code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code language="javascript"><sup>// Store user preference</sup>
+<b>openmemory_openmemory_store</b><i>(</i><i>{</i>
+  <b>content</b><i>:</i> <em>"User prefers JWT over session-based authentication"</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>
+  <b>sector</b><i>:</i> <em>"emotional"</em><i>,</i>
+  <b>tags</b><i>:</i> <i>[</i><em>"preference"</em><i>,</i> <em>"authentication"</em><i>,</i> <em>"JWT"</em><i>]</i><i>,</i>
+  <b>metadata</b><i>:</i> <i>{</i>
+    <b>source</b><i>:</i> <em>"chat"</em><i>,</i>
+    <b>confidence</b><i>:</i> <em>"high"</em>
+  <i>}</i>
+<i>}</i><i>)</i>
+
+<sup>// Store critical decision with reinforcement</sup>
+<b>openmemory_openmemory_store</b><i>(</i><i>{</i>
+  <b>content</b><i>:</i> <em>"Production endpoints require 256-bit encryption"</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>
+  <b>sector</b><i>:</i> <em>"semantic"</em><i>,</i>
+  <b>reinforce</b><i>:</i> <strong>true</strong><i>,</i>
+  <b>importance</b><i>:</i> <em>"critical"</em>
+<i>}</i><i>)</i></code></pre>
+<hr>
+<h3>READ - Query Memory</h3>
+<pre><code language="javascript"><b>openmemory_openmemory_query</b><i>(</i><i>{</i>
+  <b>query</b><i>:</i> <strong>string</strong><i>,</i>           <sup>// Search query or keywords</sup>
+  <b>limit</b><i>:</i> <strong>number</strong> <i>=</i> <em>20</em><i>,</i>      <sup>// Maps to: k in API</sup>
+  <b>user_id</b><i>:</i> <strong>string</strong><i>,</i>         <sup>// MUST be {{PROJECT_FOLDER_NAME}}</sup>
+  sector<i>?</i><i>:</i> <strong>string</strong><i>,</i>         <sup>// Filter by sector</sup>
+  min_score<i>?</i><i>:</i> <strong>number</strong><i>,</i>      <sup>// Minimum relevance score</sup>
+  timeframe<i>?</i><i>:</i> <i>{</i>            <sup>// Time-based filtering</sup>
+    <b>start</b><i>:</i> <strong>string</strong><i>,</i>         <sup>// ISO 8601 date</sup>
+    <strong>end</strong><i>:</i> <strong>string</strong>           <sup>// ISO 8601 date</sup>
+  <i>}</i>
+<i>}</i><i>)</i></code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code language="javascript"><sup>// Basic query</sup>
+<b>openmemory_openmemory_query</b><i>(</i><i>{</i>
+  <b>query</b><i>:</i> <em>"authentication patterns"</em><i>,</i>
+  <b>limit</b><i>:</i> <em>20</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em>
+<i>}</i><i>)</i>
+
+<sup>// Query with filters</sup>
+<b>openmemory_openmemory_query</b><i>(</i><i>{</i>
+  <b>query</b><i>:</i> <em>"database technology decisions"</em><i>,</i>
+  <b>limit</b><i>:</i> <em>15</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>
+  <b>sector</b><i>:</i> <em>"semantic"</em><i>,</i>
+  <b>min_score</b><i>:</i> <em>0.6</em>
+<i>}</i><i>)</i></code></pre>
+<p><strong>Alternative: Get All Memories</strong></p>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>memory<i>/</i>all<i>?</i>l<i>=</i><em>100</em><i>&</i>u<i>=</i><em>0</em><i>&</i><b>sector</b><i>=</i>semantic<i>&</i><b>user_id</b><i>=</i><i>{</i><i>{</i>PROJECT_FOLDER_NAME<i>}</i><i>}</i></code></pre>
+<p>Query Parameters:</p>
+<ul><li><p><code>l</code> - Limit (default: 100)</p></li>
+<li><p><code>u</code> - Offset (default: 0)</p></li>
+<li><p><code>sector</code> - Filter by sector</p></li>
+<li><p><code>user_id</code> - Filter by user</p></li></ul>
+<hr>
+<h3>UPDATE - Reinforce Memory</h3>
+<pre><code language="javascript"><sup>// Reinforce via API</sup>
+POST <i>/</i>memory<i>/</i>reinforce
+<i>{</i>
+  <em>"id"</em><i>:</i> <em>"memory-uuid-here"</em><i>,</i>
+  <em>"boost"</em><i>:</i> <em>0.1</em>
+<i>}</i></code></pre>
+<p><strong>Via store function:</strong></p>
+<pre><code language="javascript"><b>openmemory_openmemory_store</b><i>(</i><i>{</i>
+  <b>content</b><i>:</i> <em>"Important decision"</em><i>,</i>
+  <b>user_id</b><i>:</i> <em>"<i>{<b>{PROJECT_FOLDER_NAME</b>}</i>}"</em><i>,</i>
+  <b>reinforce</b><i>:</i> <strong>true</strong><i>,</i>
+  <b>importance</b><i>:</i> <em>"high"</em>  <sup>// Maps to boost: 0.2</sup>
+<i>}</i><i>)</i></code></pre>
+<p><strong>Importance → Boost Mapping:</strong></p>
+<ul><li><p><code>low</code> → <code>0.05</code></p></li>
+<li><p><code>medium</code> → <code>0.1</code></p></li>
+<li><p><code>high</code> → <code>0.2</code></p></li>
+<li><p><code>critical</code> → <code>0.5</code></p></li></ul>
+<hr>
+<h3>DELETE - Remove Memory</h3>
+<pre><code language="javascript">DELETE <i>/</i>memory<i>/</i><i>:</i>id</code></pre>
+<p><strong>Query/Body:</strong> <code>user_id</code> (optional, for ownership check)</p>
+<hr>
+<h2>MEMORY SECTORS</h2>
+<table><thead><tr><th>Sector</th><th>Purpose</th><th>Examples</th></tr></thead>
+<tr><td><strong>episodic</strong></td><td>Events/conversations</td><td><q>User mentioned they like dark mode in yesterday's meeting</q></td></tr>
+<tr><td><strong>semantic</strong></td><td>Facts/knowledge</td><td><q>Project uses PostgreSQL 14 for production</q></td></tr>
+<tr><td><strong>procedural</strong></td><td>Workflows/approaches</td><td><q>To deploy: run build, test, then push to staging</q></td></tr>
+<tr><td><strong>emotional</strong></td><td>Preferences/feelings</td><td><q>User prefers blue color scheme for UI components</q></td></tr>
+<tr><td><strong>reflective</strong></td><td>Insights/patterns</td><td><q>Pattern: User prioritizes security over performance</q></td></tr></table>
+
+<hr>
+<h2>KNOWLEDGE GRAPH OPERATIONS</h2>
+<h3>⚠️ CRITICAL: Knowledge Graph is MANDATORY for Every Project</h3>
+<p><strong>Building and maintaining a full knowledge graph is NOT optional - it is REQUIRED for ALL projects.</strong></p>
+<p>The knowledge graph provides:</p>
+<ul><li><p><strong>Entity Tracking</strong>: Know exactly what relationships exist at any point in time</p></li>
+<li><p><strong>Temporal Context</strong>: Understand how relationships change over time (migrations, refactors, upgrades)</p></li>
+<li><p><strong>Fact Verification</strong>: Track confidence levels and validity periods for critical information</p></li>
+<li><p><strong>Historical Analysis</strong>: Compare state across time periods to understand evolution</p></li>
+<li><p><strong>Complete Project Understanding</strong>: No ambiguity about what the project uses, depends on, or provides</p></li></ul>
+<h3>Why Knowledge Graph Matters</h3>
+<p>The Knowledge Graph stores <strong>entity relationships</strong> and <strong>facts</strong> that evolve over time, separate from contextual memories. This is critical for:</p>
+<ul><li><p><strong>Entity Tracking</strong>: Know what relationships exist at any point in time</p></li>
+<li><p><strong>Temporal Context</strong>: Understand how relationships change over time</p></li>
+<li><p><strong>Fact Verification</strong>: Track confidence levels and validity periods</p></li>
+<li><p><strong>Historical Analysis</strong>: Compare state across time periods</p></li></ul>
+<p><strong>Example Use Cases:</strong></p>
+<ul><li><p><q>Who was the CEO of the company in 2023?</q></p></li>
+<li><p><q>What database was used before the migration?</q></p></li>
+<li><p><q>What technologies are currently in production?</q></p></li>
+<li><p><q>When did we switch from framework A to B?</q></p></li></ul>
+<hr>
+<h3>CREATE - Create Fact</h3>
+<pre><code language="javascript">POST <i>/</i>api<i>/</i>temporal<i>/</i>fact
+<i>{</i>
+  <em>"subject"</em><i>:</i> <em>"Company"</em><i>,</i>
+  <em>"predicate"</em><i>:</i> <em>"has_CEO"</em><i>,</i>
+  <em>"object"</em><i>:</i> <em>"Alice"</em><i>,</i>
+  <em>"valid_from"</em><i>:</i> <em>"2024-01-01"</em><i>,</i>
+  <em>"confidence"</em><i>:</i> <em>1.0</em><i>,</i>
+  <em>"metadata"</em><i>:</i> <i>{</i><i>}</i>
+<i>}</i></code></pre>
+<p><strong>Parameters:</strong></p>
+<ul><li><p><code>subject</code>: Entity being described (e.g., project name, component)</p></li>
+<li><p><code>predicate</code>: Relationship type (e.g., uses, depends_on, has_feature)</p></li>
+<li><p><code>object</code>: Related entity or value</p></li>
+<li><p><code>valid_from</code>: ISO 8601 date when fact becomes valid</p></li>
+<li><p><code>confidence</code>: 0.0-1.0 (how certain we are)</p></li>
+<li><p><code>metadata</code>: Additional context</p></li></ul>
+<p><strong>Examples:</strong></p>
+<pre><code language="javascript"><sup>// Store technology stack</sup>
+POST <i>/</i>api<i>/</i>temporal<i>/</i>fact
+<i>{</i>
+  <em>"subject"</em><i>:</i> <em>"te9.dev"</em><i>,</i>
+  <em>"predicate"</em><i>:</i> <em>"uses"</em><i>,</i>
+  <em>"object"</em><i>:</i> <em>"PostgreSQL"</em><i>,</i>
+  <em>"valid_from"</em><i>:</i> <em>"2024-01-15"</em><i>,</i>
+  <em>"confidence"</em><i>:</i> <em>1.0</em>
+<i>}</i>
+
+<sup>// Store dependency</sup>
+POST <i>/</i>api<i>/</i>temporal<i>/</i>fact
+<i>{</i>
+  <em>"subject"</em><i>:</i> <em>"AuthService"</em><i>,</i>
+  <em>"predicate"</em><i>:</i> <em>"depends_on"</em><i>,</i>
+  <em>"object"</em><i>:</i> <em>"PostgreSQL"</em><i>,</i>
+  <em>"valid_from"</em><i>:</i> <em>"2024-02-01"</em><i>,</i>
+  <em>"confidence"</em><i>:</i> <em>0.9</em>
+<i>}</i>
+
+<sup>// Store feature</sup>
+POST <i>/</i>api<i>/</i>temporal<i>/</i>fact
+<i>{</i>
+  <em>"subject"</em><i>:</i> <em>"te9.dev"</em><i>,</i>
+  <em>"predicate"</em><i>:</i> <em>"has_feature"</em><i>,</i>
+  <em>"object"</em><i>:</i> <em>"JWT Authentication"</em><i>,</i>
+  <em>"valid_from"</em><i>:</i> <em>"2024-03-01"</em><i>,</i>
+  <em>"confidence"</em><i>:</i> <em>1.0</em><i>,</i>
+  <em>"metadata"</em><i>:</i> <i>{</i>
+    <em>"prdId"</em><i>:</i> <em>"PRD-20250115-143022"</em>
+  <i>}</i>
+<i>}</i></code></pre>
+<p><strong>Note:</strong> Facts do NOT require <code>user_id</code> - they are shared across the knowledge graph.</p>
+<hr>
+<h3>READ - Query Facts</h3>
+<h4>Get Current Fact</h4>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>api<i>/</i>temporal<i>/</i>fact<i>/</i>current<i>?</i><b>subject</b><i>=</i>te9<i>.</i>dev<i>&</i><b>predicate</b><i>=</i>uses</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code language="json"><i>{</i>
+  <b>"object"</b><i>:</i> <em>"PostgreSQL"</em><i>,</i>
+  <b>"valid_from"</b><i>:</i> <em>"2024-01-15"</em><i>,</i>
+  <b>"confidence"</b><i>:</i> <em>1.0</em>
+<i>}</i></code></pre>
+<h4>Search Facts</h4>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>api<i>/</i>temporal<i>/</i>search<i>?</i><b>subject</b><i>=</i>te9<i>.</i>dev</code></pre>
+<p><strong>Response:</strong></p>
+<pre><code language="json"><i>[</i>
+  <i>{</i>
+    <b>"subject"</b><i>:</i> <em>"te9.dev"</em><i>,</i>
+    <b>"predicate"</b><i>:</i> <em>"uses"</em><i>,</i>
+    <b>"object"</b><i>:</i> <em>"PostgreSQL"</em><i>,</i>
+    <b>"valid_from"</b><i>:</i> <em>"2024-01-15"</em><i>,</i>
+    <b>"confidence"</b><i>:</i> <em>1.0</em>
+  <i>}</i><i>,</i>
+  <i>{</i>
+    <b>"subject"</b><i>:</i> <em>"te9.dev"</em><i>,</i>
+    <b>"predicate"</b><i>:</i> <em>"depends_on"</em><i>,</i>
+    <b>"object"</b><i>:</i> <em>"Node.js"</em><i>,</i>
+    <b>"valid_from"</b><i>:</i> <em>"2024-01-15"</em><i>,</i>
+    <b>"confidence"</b><i>:</i> <em>1.0</em>
+  <i>}</i>
+<i>]</i></code></pre>
+<h4>Get Timeline</h4>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>api<i>/</i>temporal<i>/</i>timeline<i>?</i><b>subject</b><i>=</i>te9<i>.</i>dev</code></pre>
+<p>Shows all facts for a subject, including historical changes.</p>
+<h4>Compare States</h4>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>api<i>/</i>temporal<i>/</i>compare<i>?</i><b>subject</b><i>=</i>te9<i>.</i>dev<i>&</i><b>date1</b><i>=</i><em>2024</em><i>-</i><em>01</em><i>-</i><em>01</em><i>&</i><b>date2</b><i>=</i><em>2024</em><i>-</i><em>12</em><i>-</i><em>31</em></code></pre>
+<p>Shows how facts changed between two dates.</p>
+<h4>Get Statistics</h4>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>api<i>/</i>temporal<i>/</i>stats</code></pre>
+<p>Returns aggregate information about the knowledge graph.</p>
+<h4>Get Volatile Facts</h4>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>api<i>/</i>temporal<i>/</i>volatile</code></pre>
+<p>Returns facts with low confidence or short validity periods.</p>
+<hr>
+<h3>UPDATE - Update Fact</h3>
+<pre><code language="javascript">PATCH <i>/</i>api<i>/</i>temporal<i>/</i>fact<i>/</i><i>:</i>id
+<i>{</i>
+  <em>"confidence"</em><i>:</i> <em>0.8</em><i>,</i>
+  <em>"metadata"</em><i>:</i> <i>{</i>
+    <em>"verified"</em><i>:</i> <strong>true</strong><i>,</i>
+    <em>"source"</em><i>:</i> <em>"code-review"</em>
+  <i>}</i>
+<i>}</i></code></pre>
+<p><strong>Parameters:</strong></p>
+<ul><li><p><code>confidence</code>: Update confidence level</p></li>
+<li><p><code>metadata</code>: Add or update metadata fields</p></li></ul>
+<hr>
+<h3>DELETE - Invalidate Fact</h3>
+<pre><code language="javascript">DELETE <i>/</i>api<i>/</i>temporal<i>/</i>fact<i>/</i><i>:</i>id
+<i>{</i>
+  <em>"valid_to"</em><i>:</i> <em>"2024-12-31"</em>
+<i>}</i></code></pre>
+<p><strong>Best Practice:</strong> When a fact is no longer true, don't delete it - <strong>invalidate it</strong> by setting <code>valid_to</code>. This preserves historical context.</p>
+<p><strong>Example:</strong></p>
+<pre><code language="javascript"><sup>// Old fact: te9.dev uses MySQL</sup>
+<sup>// Instead of deleting, invalidate and create new fact</sup>
+
+DELETE <i>/</i>api<i>/</i>temporal<i>/</i>fact<i>/</i><i>:</i>old<i>-</i>fact<i>-</i>id
+<i>{</i>
+  <em>"valid_to"</em><i>:</i> <em>"2024-12-31"</em>
+<i>}</i>
+
+<sup>// Create new fact</sup>
+POST <i>/</i>api<i>/</i>temporal<i>/</i>fact
+<i>{</i>
+  <em>"subject"</em><i>:</i> <em>"te9.dev"</em><i>,</i>
+  <em>"predicate"</em><i>:</i> <em>"uses"</em><i>,</i>
+  <em>"object"</em><i>:</i> <em>"PostgreSQL"</em><i>,</i>
+  <em>"valid_from"</em><i>:</i> <em>"2025-01-01"</em><i>,</i>
+  <em>"confidence"</em><i>:</i> <em>1.0</em>
+<i>}</i></code></pre>
+<hr>
+<h2>USER OPERATIONS</h2>
+<h3>Get User Summary</h3>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>users<i>/</i><i>{</i><i>{</i>PROJECT_FOLDER_NAME<i>}</i><i>}</i><i>/</i>summary</code></pre>
+<p><strong>Response:</strong> Summary of user's memories, patterns, and insights.</p>
+<h3>Get User Memories</h3>
+<pre><code language="javascript"><strong>GET</strong> <i>/</i>users<i>/</i><i>{</i><i>{</i>PROJECT_FOLDER_NAME<i>}</i><i>}</i><i>/</i>memories</code></pre>
+<p><strong>Response:</strong> All memories for the specified user_id.</p>
+<h3>Delete User Memories</h3>
+<pre><code language="javascript">DELETE <i>/</i>users<i>/</i><i>{</i><i>{</i>PROJECT_FOLDER_NAME<i>}</i><i>}</i><i>/</i>memories</code></pre>
+<p><strong>⚠️ WARNING:</strong> This is a destructive operation - deletes all memories for the user.</p>
+<hr>
+<h2>BEST PRACTICES</h2>
+<h3>Memory Storage</h3>
+<ol><li><p><strong>Always use <code>{{PROJECT_FOLDER_NAME}}</code> for <code>user_id</code></strong></p></li>
+<li><p><strong>Tag consistently</strong></p></li>
+<li><p><strong>Use appropriate limit values</strong></p></li>
+<li><p><strong>Leverage metadata for filtering</strong></p></li>
+<li><p><strong>Reinforce important memories</strong></p></li></ol>
+<h3>Knowledge Graph</h3>
+<ol><li><p><strong>Invalidate, don't delete</strong> facts to preserve history</p></li>
+<li><p><strong>Use confidence levels</strong> for uncertain information</p></li>
+<li><p><strong>Store metadata</strong> to track sources (PRD IDs, commit hashes, etc.)</p></li>
+<li><p><strong>Query timeline</strong> for historical analysis</p></li>
+<li><p><strong>Use compare</strong> to see changes over time</p></li></ol>
+<h3>When to Use Memory vs Knowledge Graph</h3>
+<table><thead><tr><th>Use Case</th><th>Memory</th><th>Knowledge Graph</th></tr></thead>
+<tr><td>User preferences</td><td>✅</td><td>❌</td></tr>
+<tr><td>Past conversations</td><td>✅</td><td>❌</td></tr>
+<tr><td>Insights/patterns</td><td>✅</td><td>❌</td></tr>
+<tr><td>Entity relationships</td><td>❌</td><td>✅ (MANDATORY)</td></tr>
+<tr><td>Technology stack facts</td><td>❌</td><td>✅ (MANDATORY)</td></tr>
+<tr><td>Historical entity state</td><td>❌</td><td>✅ (MANDATORY)</td></tr>
+<tr><td>Dependencies</td><td>❌</td><td>✅ (MANDATORY)</td></tr>
+<tr><td>Features/Capabilities</td><td>❌</td><td>✅ (MANDATORY)</td></tr></table>
+
+<p><strong>Key Rule</strong>: If it's an entity relationship or project fact, it MUST go in the Knowledge Graph.</p>
+<hr>
+<h2>CRITICAL RULES SUMMARY</h2>
+<ol><li><p><strong>QUERY FIRST</strong> - Before responding to ANY request</p></li>
+<li><p><strong>STORE LAST</strong> - After EVERY important interaction</p></li>
+<li><p><strong>user_id = PROJECT_FOLDER_NAME</strong> - Always, no exceptions</p></li>
+<li><p><strong>MAINTAIN KNOWLEDGE GRAPH</strong> - MANDATORY for every project - track all entities, relationships, and facts</p></li>
+<li><p><strong>REINFORCE IMPORTANT</strong> - Use <code>reinforce: true</code> for critical info</p></li>
+<li><p><strong>INVALIDATE, DON'T DELETE</strong> - Preserve knowledge graph history</p></li>
+<li><p><strong>TAG CONSISTENTLY</strong> - Use standard tag patterns</p></li>
+<li><p><strong>USE APPROPRIATE SECTORS</strong> - episodic, semantic, procedural, emotional, reflective</p></li></ol>
+<hr>
+<h2>REFERENCE</h2>
+<h3>Complete API Documentation</h3>
+<ul><li><p><strong>Memory Operations</strong>: <code>[.opencode/mappings/OPENMEMORY.md](.opencode/mappings/OPENMEMORY.md)</code></p></li>
+<li><p><strong>Variable Setup</strong>: <code>[.opencode/mappings/VARIABLES.md](.opencode/mappings/VARIABLES.md)</code></p></li></ul>
+<h3>Tool Function Summary</h3>
+<table><thead><tr><th>Tool Function</th><th>API Endpoint</th><th>Required</th></tr></thead>
+<tr><td><code>openmemory_openmemory_query()</code></td><td><code>POST /memory/query</code></td><td><code>user_id</code> = <code>{{PROJECT_FOLDER_NAME}}</code></td></tr>
+<tr><td><code>openmemory_openmemory_store()</code></td><td><code>POST /memory/add</code></td><td><code>user_id</code> = <code>{{PROJECT_FOLDER_NAME}}</code></td></tr>
+<tr><td><code>GET /memory/all</code></td><td><code>GET /memory/all</code></td><td><code>user_id</code> = <code>{{PROJECT_FOLDER_NAME}}</code></td></tr>
+<tr><td><code>POST /memory/reinforce</code></td><td><code>POST /memory/reinforce</code></td><td>Memory ID</td></tr>
+<tr><td><code>DELETE /memory/:id</code></td><td><code>DELETE /memory/:id</code></td><td>Memory ID</td></tr>
+<tr><td><code>POST /api/temporal/fact</code></td><td><code>POST /api/temporal/fact</code></td><td>subject, predicate, object (<strong>MANDATORY</strong>)</td></tr>
+<tr><td><code>GET /api/temporal/fact/current</code></td><td><code>GET /api/temporal/fact/current</code></td><td>subject, predicate</td></tr>
+<tr><td><code>PATCH /api/temporal/fact/:id</code></td><td><code>PATCH /api/temporal/fact/:id</code></td><td>Fact ID</td></tr>
+<tr><td><code>DELETE /api/temporal/fact/:id</code></td><td><code>DELETE /api/temporal/fact/:id</code></td><td>Fact ID</td></tr></table>
+
+<p><strong>Remember: All memory operations MUST use <code>{{PROJECT_FOLDER_NAME}}</code> as the <code>user_id</code> parameter to ensure proper project context isolation.</strong></p>
+<p><strong>AND: Building a full knowledge graph is MANDATORY for every project - use temporal facts to track all entities and relationships.</strong></p>
+<p><strong>Remember: All memory operations MUST use <code>{{PROJECT_FOLDER_NAME}}</code> as the <code>user_id</code> parameter to ensure proper project context isolation.</strong></p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

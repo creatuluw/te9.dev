@@ -1,0 +1,69 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:description" content="Definition List: Concepts for LLMs to Become Senior Software Engineers">
+	<meta name="description" content="Definition List: Concepts for LLMs to Become Senior Software Engineers">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <p>Definition List: Concepts for LLMs to Become Senior Software Engineers</p>
+<h2>Core Concepts</h2>
+<h3><strong>Comprehension Debt</strong></h3>
+<p>The gradual loss of understanding of your own codebase that occurs when you review but don't write code. When you can review code competently but can no longer write it from scratch, you've crossed a dangerous threshold where <q>review</q> becomes <q>rubber stamping.</q></p>
+<h3><strong>Assumption Propagation</strong></h3>
+<p>A failure mode where a model misunderstands a requirement early in development and builds an entire feature or system on those faulty premises. These errors compound and often aren't discovered until the architecture is cemented, making corrections expensive.</p>
+<h3><strong>Abstraction Bloat</strong></h3>
+<p>The tendency of AI agents to overcomplicate solutions unnecessarily—creating elaborate class hierarchies where a simple function would suffice, or scaffolding 1000 lines where 100 would do. This stems from optimizing for looking comprehensive rather than maintainable.</p>
+<h3><strong>Dead Code Accumulation</strong></h3>
+<p>The practice of leaving old implementations, orphaned code, and comments in the codebase after implementing changes. Agents often don't clean up after themselves, leading to technical debt that accumulates silently.</p>
+<h3><strong>Sycophantic Agreement</strong></h3>
+<p>The failure mode where AI agents don't push back on unclear, contradictory, or incomplete requests. Instead of asking clarifying questions or surfacing inconsistencies, they enthusiastically execute whatever is described, even when the direction is flawed.</p>
+<h3><strong>Declarative Communication</strong></h3>
+<p>The practice of specifying what needs to happen (requirements, success criteria, constraints) rather than how to do it. Instead of <q>Write a function that does X using this library,</q> you say <q>Here are the requirements and tests—figure out the implementation.</q></p>
+<h3><strong>Automated Verification</strong></h3>
+<p>The use of tests, lint rules, type checkers, and CI/CD pipelines as guardrails around AI-generated code. When you repeatedly fix the same class of mistake, you write preventive verification rather than reactive fixes.</p>
+<h3><strong>Architectural Hygiene</strong></h3>
+<p>The practice of maintaining clear API boundaries, modularization, well-documented style guides, and high-level architecture descriptions before coding begins. This includes feeding architecture docs into prompts and ensuring the planning phase is thorough.</p>
+<h3><strong>Agent-First Drafting</strong></h3>
+<p>A pattern where you generate complete first drafts via AI, then refine them iteratively. Rather than using AI for one-off suggestions or small fragments, you let it create substantial implementations, then guide it through tight iteration loops.</p>
+<h3><strong>Tight Iteration Loops</strong></h3>
+<p>The practice of rapidly iterating on code with fresh context windows. The Claude Code team's approach: have the model review its own code with a clean context before human review, catching issues early and preventing them from accumulating.</p>
+<h3><strong>Problem Definition</strong></h3>
+<p>The cognitive shift from spending most effort on implementation to spending most effort on defining the problem. Effective teams now spend 70% of effort on requirements, success criteria, and verification strategy, and only 30% on execution.</p>
+<h3><strong>Success Criteria</strong></h3>
+<p>Clear, testable conditions that specify when a feature or implementation is complete. Instead of vague descriptions, success criteria include specific test cases, performance requirements, API contracts, and behavioral expectations.</p>
+<h3><strong>Skill Atrophy Mitigation</strong></h3>
+<p>Practices to prevent the degradation of fundamental engineering skills when relying heavily on AI. This includes writing some code manually, using TDD, pair programming with humans, and treating AI-generated code as learning material rather than just deliverables.</p>
+<h3><strong>Code Review Quality</strong></h3>
+<p>The standard of actually understanding code during review rather than rubber stamping. High-quality review requires that your ability to <q>read</q> scales with the agent's ability to <q>output,</q> or you're not engineering—you're hoping.</p>
+<h3><strong>Verification Bottleneck</strong></h3>
+<p>The emergent bottleneck that occurs when AI generates code faster than humans can properly review it. Faros AI data shows PR review time increased 91% in high-adoption teams, shifting the bottleneck from coding to review.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

@@ -1,0 +1,82 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>CSS Grid Common Patterns</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Tue Feb 18 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="CSS Grid Common Patterns">
+	<meta name="og:description" content="Practical CSS Grid layout patterns you can use in your projects today.">
+	<meta name="description" content="Practical CSS Grid layout patterns you can use in your projects today.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>CSS Grid Common Patterns</h1>
+<p>CSS Grid has revolutionized web layouts. Here are the most common patterns you'll use in everyday development.</p>
+<h2>Holy Grail Layout</h2>
+<p>The classic three-column layout with header and footer:</p>
+<pre><code language="css"><i>.</i>page <i>{</i>
+  <b>display</b><i>:</i> grid<i>;</i>
+  <b>grid-template</b><i>:</i>
+    <em>"header header header"</em> auto
+    <em>"nav main aside"</em> <em>1fr</em>
+    <em>"footer footer footer"</em> auto
+    <i>/</i> <em>200px</em> <em>1fr</em> <em>200px</em><i>;</i>
+  <b>min-height</b><i>:</i> <em>100vh</em><i>;</i>
+<i>}</i></code></pre>
+<h2>Card Grid</h2>
+<p>Responsive card layouts without media queries:</p>
+<pre><code language="css"><i>.</i>cards <i>{</i>
+  <b>display</b><i>:</i> grid<i>;</i>
+  <b>grid-template-columns</b><i>:</i> <b>repeat</b><i>(</i>auto<i>-</i>fit<i>,</i> <b>minmax</b><i>(</i><em>280px</em><i>,</i> <em>1fr</em><i>)</i><i>)</i><i>;</i>
+  <b>gap</b><i>:</i> <em>1.5rem</em><i>;</i>
+<i>}</i></code></pre>
+<h2>Centering Everything</h2>
+<p>The easiest way to center content:</p>
+<pre><code language="css"><i>.</i>center <i>{</i>
+  <b>display</b><i>:</i> grid<i>;</i>
+  <b>place-items</b><i>:</i> center<i>;</i>
+  <b>min-height</b><i>:</i> <em>100vh</em><i>;</i>
+<i>}</i></code></pre>
+<h2>Sticky Footer</h2>
+<p>Keep footer at the bottom:</p>
+<pre><code language="css">body <i>{</i>
+  <b>display</b><i>:</i> grid<i>;</i>
+  <b>grid-template-rows</b><i>:</i> auto <em>1fr</em> auto<i>;</i>
+  <b>min-height</b><i>:</i> <em>100vh</em><i>;</i>
+<i>}</i></code></pre>
+<h2>Responsive Without Media Queries</h2>
+<p>Grid adapts naturally:</p>
+<pre><code language="css"><i>.</i>grid <i>{</i>
+  <b>display</b><i>:</i> grid<i>;</i>
+  <b>grid-template-columns</b><i>:</i> <b>repeat</b><i>(</i>auto<i>-</i>fill<i>,</i> <b>minmax</b><i>(</i><em>250px</em><i>,</i> <em>1fr</em><i>)</i><i>)</i><i>;</i>
+  <b>gap</b><i>:</i> <em>1rem</em><i>;</i>
+<i>}</i></code></pre>
+<p>These patterns handle most layout needs. Master them and you'll rarely need anything else.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

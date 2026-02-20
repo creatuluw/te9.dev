@@ -1,0 +1,93 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Implementing Dark Mode</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Mon Feb 17 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Implementing Dark Mode">
+	<meta name="og:description" content="Add dark mode to your website using CSS custom properties and prefers-color-scheme.">
+	<meta name="description" content="Add dark mode to your website using CSS custom properties and prefers-color-scheme.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Implementing Dark Mode</h1>
+<p>Dark mode isn't just a trend—it reduces eye strain and saves battery on OLED screens. Here's how to implement it properly.</p>
+<h2>CSS Custom Properties</h2>
+<p>Define color tokens for both modes:</p>
+<pre><code language="css"><i>:</i>root <i>{</i>
+  <em>--bg</em><i>:</i> <strong>#ffffff</strong><i>;</i>
+  <em>--text</em><i>:</i> <strong>#1a1a1a</strong><i>;</i>
+  <em>--accent</em><i>:</i> <strong>#0066cc</strong><i>;</i>
+<i>}</i>
+
+<i>[</i><b>data-theme</b><i>=</i><em>"dark"</em><i>]</i> <i>{</i>
+  <em>--bg</em><i>:</i> <strong>#1a1a1a</strong><i>;</i>
+  <em>--text</em><i>:</i> <strong>#e5e5e5</strong><i>;</i>
+  <em>--accent</em><i>:</i> <strong>#66b3ff</strong><i>;</i>
+<i>}</i></code></pre>
+<p>Use these throughout your styles:</p>
+<pre><code language="css">body <i>{</i>
+  <b>background</b><i>:</i> <strong>var</strong><i>(</i><em>--bg</em><i>)</i><i>;</i>
+  <b>color</b><i>:</i> <strong>var</strong><i>(</i><em>--text</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<h2>System Preference</h2>
+<p>Respect user's system setting automatically:</p>
+<pre><code language="css"><label>@media</label> <i>(</i><b>prefers-color-scheme</b><i>:</i> dark<i>)</i> <i>{</i>
+  <i>:</i>root <i>{</i>
+    <em>--bg</em><i>:</i> <strong>#1a1a1a</strong><i>;</i>
+    <em>--text</em><i>:</i> <strong>#e5e5e5</strong><i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<h2>Manual Toggle</h2>
+<p>Let users override their preference:</p>
+<pre><code language="javascript"><strong>const</strong> <b>toggle</b> <i>=</i> document<i>.</i><b>querySelector</b><i>(</i><em>'#theme-toggle'</em><i>)</i><i>;</i>
+
+toggle<i>.</i><b>addEventListener</b><i>(</i><em>'click'</em><i>,</i> <i>(</i><i>)</i> <i>=</i><i>&gt;</i> <i>{</i>
+  <strong>const</strong> <b>isDark</b> <i>=</i> document<i>.</i>documentElement<i>.</i>dataset<i>.</i><b>theme</b> <i>=</i><i>=</i><i>=</i> <em>'dark'</em><i>;</i>
+  document<i>.</i>documentElement<i>.</i>dataset<i>.</i><b>theme</b> <i>=</i> isDark <i>?</i> <em>'light'</em> <i>:</i> <em>'dark'</em><i>;</i>
+  localStorage<i>.</i><b>setItem</b><i>(</i><em>'theme'</em><i>,</i> isDark <i>?</i> <em>'light'</em> <i>:</i> <em>'dark'</em><i>)</i><i>;</i>
+<i>}</i><i>)</i><i>;</i></code></pre>
+<h2>Persist Choice</h2>
+<p>Remember user's preference:</p>
+<pre><code language="javascript"><sup>// On load</sup>
+<strong>const</strong> <b>saved</b> <i>=</i> localStorage<i>.</i><b>getItem</b><i>(</i><em>'theme'</em><i>)</i><i>;</i>
+<strong>const</strong> <b>prefersDark</b> <i>=</i> window<i>.</i><b>matchMedia</b><i>(</i><em>'(prefers-color-scheme: dark)'</em><i>)</i><i>.</i>matches<i>;</i>
+document<i>.</i>documentElement<i>.</i>dataset<i>.</i><b>theme</b> <i>=</i> saved <i>|</i><i>|</i> <i>(</i>prefersDark <i>?</i> <em>'dark'</em> <i>:</i> <em>'light'</em><i>)</i><i>;</i></code></pre>
+<h2>Avoid Flash</h2>
+<p>Prevent flash of unstyled content:</p>
+<pre><code language="html"><i>&lt;</i><strong>script</strong><i>&gt;</i>
+  <b>if</b> <i>(</i>localStorage<i>.</i><b>getItem</b><i>(</i><em>'theme'</em><i>)</i> <i>=</i><i>=</i><i>=</i> <em>'dark'</em><i>)</i> <i>{</i>
+    document<i>.</i>documentElement<i>.</i>dataset<i>.</i><b>theme</b> <i>=</i> <em>'dark'</em><i>;</i>
+  <i>}</i>
+<i>&lt;</i><i>/</i><strong>script</strong><i>&gt;</i></code></pre>
+<p>Place this in <code>&lt;head&gt;</code> before CSS loads.</p>
+<h2>Test Both Modes</h2>
+<p>Always test your design in both modes. What looks good in light might need adjustment in dark.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | te9.dev</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/global.css">
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+<header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-zinc-100">
+  <nav class="max-w-[2560px] mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+        <span class="iconify text-white text-lg" data-icon="mdi:feather"></span>
+      </div>
+      <span class="font-semibold tracking-tight">te9.dev</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="/" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Home</a>
+      <a href="/blog/" class="text-sm font-medium">Blog</a>
+      <a href="/about/" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">About</a>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-24 pb-16 flex-1">
+  <div class="max-w-2xl mx-auto px-6">
+    <h1 class="text-4xl font-bold tracking-tight mb-8">Blog</h1>
+    
+    <div class="space-y-0 divide-y divide-zinc-200 border-t border-zinc-200">
+      <a href="/blog/getting-started-with-nue/" class="block py-6 hover:bg-zinc-50 transition-colors -mx-6 px-6">
+        <time class="text-xs font-medium text-zinc-400 uppercase tracking-widest">2025-02-20</time>
+        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-1">Getting Started with Nue.js</h2>
+        <p class="text-zinc-500 text-sm font-light leading-relaxed">Learn how to build content-focused websites with Nue.js, a modern framework that puts content first.</p>
+      </a>
+      <a href="/blog/building-developer-workflows/" class="block py-6 hover:bg-zinc-50 transition-colors -mx-6 px-6">
+        <time class="text-xs font-medium text-zinc-400 uppercase tracking-widest">2025-02-18</time>
+        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-1">Building Developer Workflows</h2>
+        <p class="text-zinc-500 text-sm font-light leading-relaxed">How to create efficient developer workflows that scale with your team and project complexity.</p>
+      </a>
+      <a href="/blog/art-of-clean-css/" class="block py-6 hover:bg-zinc-50 transition-colors -mx-6 px-6">
+        <time class="text-xs font-medium text-zinc-400 uppercase tracking-widest">2025-02-15</time>
+        <h2 class="text-lg font-semibold tracking-tight mt-2 mb-1">The Art of Clean CSS</h2>
+        <p class="text-zinc-500 text-sm font-light leading-relaxed">Write maintainable CSS using design tokens, logical properties, and modern layout techniques.</p>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-zinc-100 py-8 mt-auto">
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    <p class="text-sm text-zinc-400">&copy; 2025 te9.dev</p>
+  </div>
+</footer>
+
+</body>
+</html>

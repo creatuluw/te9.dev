@@ -1,0 +1,242 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:description" content="**File**: `openmemory.md`">
+	<meta name="description" content="**File**: `openmemory.md`">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h2>CRITICAL RULES (REFERENCES)</h2>
+<h3>OpenMemory Integration</h3>
+<p><strong>File</strong>: <code>openmemory.md</code></p>
+<ul><li><p><strong>Mandatory Memory Workflow</strong>: <code>openmemory.md#L56-L112</code></p>
+<ul><li><p>Query first, analyze, incorporate, store last, maintain knowledge graph</p></li></ul></li>
+<li><p><strong>CRITICAL</strong>: Knowledge graph is MANDATORY: <code>openmemory.md#L5-L24</code></p></li>
+<li><p><strong>User ID Rule</strong>: Must use project folder name: <code>openmemory.md#L43-L55</code></p></li>
+<li><p><strong>Session Variables</strong>: Initialize first: <code>openmemory.md#L26-L42</code></p></li>
+<li><p><strong>CREATE operations</strong>: <code>openmemory.md#L141-L181</code></p></li>
+<li><p><strong>READ operations</strong>: <code>openmemory.md#L183-L231</code></p></li>
+<li><p><strong>UPDATE operations</strong>: <code>openmemory.md#L233-L260</code></p></li>
+<li><p><strong>Knowledge Graph CREATE</strong>: <code>openmemory.md#L314-L372</code></p></li>
+<li><p><strong>Knowledge Graph READ</strong>: <code>openmemory.md#L377-L451</code></p></li>
+<li><p><strong>Knowledge Graph UPDATE</strong>: <code>openmemory.md#L454-L471</code></p></li>
+<li><p><strong>Knowledge Graph DELETE</strong>: <code>openmemory.md#L473-L506</code></p></li></ul>
+<h3>Workflow Rules</h3>
+<p><strong>File</strong>: <code>.opencode/prompts/rules.md</code></p>
+<ul><li><p><strong>Critical Workflow Rules</strong>: <code>rules.md#L372-L392</code></p></li>
+<li><p><strong>Status Transitions</strong>: <code>rules.md#L459-L469</code></p></li>
+<li><p><strong>Error Handling</strong>: <code>rules.md#L471-L495</code></p></li>
+<li><p><strong>Validation Checklists</strong>: <code>rules.md#L497-L545</code></p></li></ul>
+<hr>
+<h2>SKILLS (REFERENCES)</h2>
+<h3>Core Skills</h3>
+<p><strong>Location</strong>: <code>.opencode/skill/</code></p>
+<ul><li><p><code>te9-init/SKILL.md</code> - Project initialization</p></li>
+<li><p><code>spec-clarify/SKILL.md</code> - Requirements gathering</p></li>
+<li><p><code>spec-store/SKILL.md</code> - Spec file creation</p></li>
+<li><p><code>spec-execute/SKILL.md</code> - Implementation</p></li>
+<li><p><code>spec-branch-commit/SKILL.md</code> - Branch commit & push</p></li>
+<li><p><code>spec-pr-create/SKILL.md</code> - Pull request creation</p></li>
+<li><p><code>spec-pr-review/SKILL.md</code> - Pull request review link</p></li>
+<li><p><code>spec-track/SKILL.md</code> - Progress tracking</p></li>
+<li><p><code>te9-update/SKILL.md</code> - Update checking and application</p></li></ul>
+<h3>Technical Tools</h3>
+<p><strong>Location</strong>: <code>.opencode/tool/</code></p>
+<ul><li><p><code>daisyui.ts</code> - UI component templates</p></li>
+<li><p><code>knowledge_graph.ts</code> - Memory graph exporter</p></li>
+<li><p><code>melt.ts</code> - Svelte UI builder</p></li>
+<li><p><code>uikit.ts</code> - UI component generator</p></li>
+<li><p><code>te9-update.ts</code> - Update management functions</p></li></ul>
+<hr>
+<h2>STATUS TRANSITIONS (REFERENCE)</h2>
+<pre><code language="*">PENDING <i>→</i> IN_PROGRESS <i>→</i> READY_FOR_COMMIT <i>→</i> COMPLETED
+                                <i>↓</i>
+                              FAILED <i>/</i> BLOCKED</code></pre>
+<p><strong>Reference</strong>: <code>.opencode/prompts/rules.md#L394-L404</code></p>
+<hr>
+<h2>VALIDATION CHECKLISTS (REFERENCES)</h2>
+<h3>spec-clarify → spec-store</h3>
+<p><code>rules.md#L455-L463</code></p>
+<ul><li><p>Requirements understood</p></li>
+<li><p>Ambiguity resolved</p></li>
+<li><p>Max 5 questions</p></li>
+<li><p>User confirmed</p></li></ul>
+<h3>spec-store → spec-execute</h3>
+<p><code>rules.md#L465-L475</code></p>
+<ul><li><p>Spec ID generated</p></li>
+<li><p>Spec file created</p></li>
+<li><p>Database updated</p></li>
+<li><p>OpenMemory updated</p></li>
+<li><p>Knowledge graph facts created</p></li>
+<li><p>Execution log initialized</p></li></ul>
+<h3>spec-execute → spec-commit</h3>
+<p><code>rules.md#L477-L487</code></p>
+<ul><li><p>All requirements implemented</p></li>
+<li><p>Acceptance criteria verified</p></li>
+<li><p>Tests passing</p></li>
+<li><p>No regressions</p></li>
+<li><p>Execution log complete</p></li>
+<li><p>Knowledge graph updated</p></li></ul>
+<h3>Before completion</h3>
+<p><code>rules.md#L489-L500</code></p>
+<ul><li><p>Commit created with spec ID</p></li>
+<li><p>User approved commit</p></li>
+<li><p>User approved push</p></li>
+<li><p>Changes pushed</p></li>
+<li><p>All logged</p></li>
+<li><p>OpenMemory updated</p></li></ul>
+<hr>
+<h2>MEMORY STORAGE MANDATES (REFERENCES)</h2>
+<h3>During spec-clarify</h3>
+<ul><li><p>Store conversation: <code>openmemory.md#L141-L181</code> (CREATE)</p></li></ul>
+<h3>During spec-store</h3>
+<ul><li><p>Store spec creation: <code>openmemory.md#L141-L181</code> (CREATE)</p></li>
+<li><p>Create knowledge graph facts: <code>openmemory.md#L314-L372</code> (KG CREATE)</p></li></ul>
+<h3>During spec-execute</h3>
+<ul><li><p>Store <q>started executing</q>: <code>openmemory.md#L141-L181</code> (CREATE)</p></li>
+<li><p>Create facts for completed requirements: <code>openmemory.md#L314-L372</code> (KG CREATE)</p></li>
+<li><p>Create facts for verified criteria: <code>openmemory.md#L314-L372</code> (KG CREATE)</p></li></ul>
+<h3>During spec-commit</h3>
+<ul><li><p>Store <q>completed spec</q>: <code>openmemory.md#L141-L181</code> (CREATE)</p></li></ul>
+<hr>
+<h2>CRITICAL RESTRICTIONS (REFERENCE)</h2>
+<p><strong>File</strong>: <code>.opencode/prompts/rules.md</code></p>
+<ul><li><p>No auto-commit without approval: <code>rules.md#L306-L310</code></p></li>
+<li><p>No auto-push without approval: <code>rules.md#L312-L316</code></p></li>
+<li><p>Max 5 clarification questions: <code>rules.md#L47-L53</code></p></li>
+<li><p>Always show previews: <code>rules.md#L302-L304</code></p></li>
+<li><p>Never skip workflow steps: <code>rules.md#L378-L390</code></p></li></ul>
+<hr>
+<h2>DOCUMENTATION INDEX (REFERENCES)</h2>
+<h3>Core Documentation</h3>
+<ul><li><p><code>README.md</code> - Project overview</p></li>
+<li><p><code>te9.md</code> - Workflow guide</p></li>
+<li><p><code>openmemory.md</code> - Memory system rules</p></li>
+<li><p><code>AI_INSTRUCTIONS.md</code> - Installation guide</p></li>
+<li><p><code>AGENTS.md</code> - This file (workflow reference)</p></li></ul>
+<h3>AI-Specific Guides</h3>
+<ul><li><p><code>.opencode/prompts/rules.md</code> - Mandatory workflow rules</p></li></ul>
+<h3>Configuration</h3>
+<ul><li><p><code>opencode.json</code> - Main configuration</p></li>
+<li><p><code>openmemory.md#L26-L42</code> - Session variables setup</p></li></ul>
+<hr>
+<h2>BEST PRACTICES (REFERENCES)</h2>
+<p><strong>Communication</strong>: <code>.opencode/prompts/rules.md#L515-L522</code></p>
+<ul><li><p>Be conversational and helpful</p></li>
+<li><p>Keep user informed</p></li>
+<li><p>Never assume approval</p></li>
+<li><p>Always confirm before proceeding</p></li></ul>
+<p><strong>Code Quality</strong>: <code>.opencode/prompts/rules.md#L524-L531</code></p>
+<ul><li><p>Follow existing patterns</p></li>
+<li><p>Test early and often</p></li>
+<li><p>Keep changes minimal</p></li>
+<li><p>Document decisions</p></li></ul>
+<p><strong>Logging</strong>: <code>.opencode/prompts/rules.md#L533-L540</code></p>
+<ul><li><p>Log EVERYTHING</p></li>
+<li><p>Be specific</p></li>
+<li><p>Include timestamps</p></li>
+<li><p>Note workarounds</p></li>
+<li><p>Record test results</p></li></ul>
+<p><strong>Safety</strong>: <code>.opencode/prompts/rules.md#L542-L549</code></p>
+<ul><li><p>Never auto-commit/push</p></li>
+<li><p>Always show previews</p></li>
+<li><p>Maintain complete logs</p></li></ul>
+<hr>
+<h2>SPEC FILE TEMPLATE (REFERENCE)</h2>
+<p><strong>File</strong>: <code>.opencode/prompts/rules.md#L102-L120</code></p>
+<pre><code language="markdown"><sup># Spec: SPEC-<YYYYMMDD>-<HHMM>-<title-slug></sup>
+
+<i>#</i><sup># Status</sup>
+<b>State</b><i>:</i> PENDING
+<b>Created</b><i>:</i> <i>&lt;</i>timestamp<i>&gt;</i>
+<b>Updated</b><i>:</i> <i>&lt;</i>timestamp<i>&gt;</i>
+
+<i>#</i><sup># Objective</sup>
+<i>[</i>Clear objective statement<i>]</i>
+
+<i>#</i><sup># Requirements</sup>
+<del>  Requirement <em>1</em></del>
+<del>  Requirement <em>2</em></del>
+
+<i>#</i><sup># Acceptance Criteria</sup>
+<del>  <i>[</i> <i>]</i> Criterion <em>1</em></del>
+<del>  <i>[</i> <i>]</i> Criterion <em>2</em></del>
+
+<i>#</i><sup># Context</sup>
+<i>*</i><i>*</i>Original <b>Prompt</b><i>:</i><i>*</i><i>*</i> <i>[</i>user<i>'</i>s request<i>]</i>
+<i>*</i><i>*</i>Clarification Questions <b>Asked</b><i>:</i><i>*</i><i>*</i> <i>[</i><strong>number</strong><i>]</i>
+<i>*</i><i>*</i>Key <b>Decisions</b><i>:</i><i>*</i><i>*</i> <i>[</i>list<i>]</i>
+
+<i>#</i><sup># Technical Notes</sup>
+<i>[</i>Any considerations<i>,</i> constraints<i>]</i></code></pre>
+<hr>
+<h2>COMMIT MESSAGE TEMPLATE (REFERENCE)</h2>
+<p><strong>File</strong>: <code>.opencode/prompts/rules.md#L276-L291</code></p>
+<pre><code language="html"><i>&lt;</i><strong>type</strong><i>&gt;</i><i>:</i> <i>&lt;</i><strong>spec </strong>title<i>&gt;</i> <i>[</i>SPEC<i>-</i><i>&lt;</i><strong>id</strong><i>&gt;</i><i>]</i>
+
+<del>  Implemented all acceptance criteria</del>
+<del>  All unit tests <b>passing</b> <i>(</i><em>100%</em><i>)</i></del>
+<del>  No regressions detected</del>
+<del>  Code quality verified</del>
+
+<b>Changes</b><i>:</i>
+<del>  <i>[</i>brief summary<i>]</i></del>
+
+<b>Spec</b><i>:</i> SPEC<i>-</i><i>&lt;</i><strong>id</strong><i>&gt;</i>
+<b>Type</b><i>:</i> <i>&lt;</i>feature<i>|</i>bugfix<i>|</i>refactor<i>|</i>other<i>&gt;</i>
+<b>Priority</b><i>:</i> <i>&lt;</i><strong>priority</strong><i>&gt;</i></code></pre>
+<hr>
+<h2>QUICK COMMANDS</h2>
+<h3>Installation</h3>
+<ul><li><p>Install: <code>te9 install</code> or <code>AI_INSTRUCTIONS.md#L1-L30</code></p></li>
+<li><p>Update: <code>te9 update</code></p></li>
+<li><p>Status: <code>te9 status</code></p></li></ul>
+<h3>Workflow</h3>
+<ul><li><p>Clarify: <code>.opencode/skill/spec-clarify/SKILL.md</code></p></li>
+<li><p>Store: <code>.opencode/skill/spec-store/SKILL.md</code></p></li>
+<li><p>Execute: <code>.opencode/skill/spec-execute/SKILL.md</code></p></li>
+<li><p>Branch Commit: <code>.opencode/skill/spec-branch-commit/SKILL.md</code></p></li>
+<li><p>PR Create: <code>.opencode/skill/spec-pr-create/SKILL.md</code></p></li>
+<li><p>PR Review: <code>.opencode/skill/spec-pr-review/SKILL.md</code></p></li>
+<li><p>Track: <code>.opencode/skill/spec-track/SKILL.md</code></p></li></ul>
+<hr>
+<h2>CRITICAL REMINDERS</h2>
+<ol><li><p><strong>ALWAYS follow the exact 6-step sequence</strong>: <code>.opencode/prompts/rules.md#L372-L392</code></p></li>
+<li><p><strong>NEVER skip steps</strong>: <code>.opencode/prompts/rules.md#L378-L390</code></p></li>
+<li><p><strong>Knowledge graph is MANDATORY</strong>: <code>openmemory.md#L5-L24</code></p></li>
+<li><p><strong>User ID must be project folder name</strong>: <code>openmemory.md#L43-L55</code></p></li>
+<li><p><strong>Max 5 clarification questions</strong>: <code>.opencode/prompts/rules.md#L47-L53</code></p></li>
+<li><p><strong>NEVER auto-commit/push</strong>: <code>.opencode/prompts/rules.md#L306-L316</code></p></li>
+<li><p><strong>Log EVERYTHING</strong>: <code>.opencode/prompts/rules.md#L214-L220</code></p></li>
+<li><p><strong>Store in OpenMemory</strong>: <code>openmemory.md#L56-L112</code></p></li></ol>
+<hr>
+<p><strong>Fast. Simple. Easy. Multi-Contributor Ready.</strong> <strong>Fast. Simple. Easy.</strong></p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

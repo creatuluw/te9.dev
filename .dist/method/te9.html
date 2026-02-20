@@ -1,0 +1,131 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>🚀 TE9.DEV WORKFLOW COMMAND</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="🚀 TE9.DEV WORKFLOW COMMAND">
+	<meta name="og:description" content="**This file is a COMMAND FILE.** When this file is added to the LLM context (by dragging, mentioning, or attaching), the te9.dev workflow MUST START immediately.">
+	<meta name="description" content="**This file is a COMMAND FILE.** When this file is added to the LLM context (by dragging, mentioning, or attaching), the te9.dev workflow MUST START immediately.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>🚀 TE9.DEV WORKFLOW COMMAND</h1>
+<h2>⚠️ CRITICAL: COMMAND TRIGGER</h2>
+<p><strong>This file is a COMMAND FILE.</strong> When this file is added to the LLM context (by dragging, mentioning, or attaching), the te9.dev workflow MUST START immediately.</p>
+<p><strong>Do NOT ask if the user wants to use te9.dev. This file IS the request to use te9.dev.</strong></p>
+<hr>
+<h2>📋 WHAT THIS COMMAND DOES</h2>
+<p>This command triggers the te9.dev spec-driven development workflow. It provides a structured, 6-step process for AI-driven development:</p>
+<ol><li><p><strong>spec-clarify</strong> → Gather requirements with questions (max 5)</p></li>
+<li><p><strong>spec-store</strong> → Save spec to file system</p></li>
+<li><p><strong>spec-execute</strong> → Implement and test</p></li>
+<li><p><strong>spec-branch-commit</strong> → Create branch, commit and push (with approval)</p></li>
+<li><p><strong>spec-pr-create</strong> → Create pull request for collaborative review</p></li>
+<li><p><strong>spec-pr-review</strong> → Provide PR link for manual merge on GitHub</p></li></ol>
+<hr>
+<h2>🎯 IMMEDIATE ACTION REQUIRED</h2>
+<p><strong>START NOW:</strong> Begin the workflow by asking the user what they want to build.</p>
+<p><strong>Example opening:</strong></p>
+<pre><code language="*">You<em>'ve triggered the te9.dev workflow! Let'</em>s <strong>get</strong> started<i>.</i>
+
+What would you like to build<i>?</i></code></pre>
+<p>If the user provided context along with this command (e.g., a specific task or request), use that context as the starting point and proceed to <strong>spec-clarify</strong>.</p>
+<hr>
+<h2>🔄 WORKFLOW STEPS</h2>
+<h3>Step 1: spec-clarify</h3>
+<p><strong>What You MUST Do:</strong></p>
+<ol><li><p>Read user's request (from context or ask if not provided)</p></li>
+<li><p>Determine complexity level (Simple/Medium/Complex)</p></li>
+<li><p>Ask clarification questions (MAXIMUM 5 TOTAL)</p>
+<ul><li><p>Simple: 0-1 question (confirm understanding)</p></li>
+<li><p>Medium: 2-3 questions (clarify details)</p></li>
+<li><p>Complex: 4-5 questions (deep dive)</p></li></ul></li>
+<li><p>Gather all answers</p></li>
+<li><p>Prepare requirements summary</p></li>
+<li><p>CONFIRM with user before proceeding to spec-store</p></li></ol>
+<p><strong>Question Guidelines:</strong></p>
+<ul><li><p>Always ask questions ONE BY ONE</p></li>
+<li><p>Include question number: <q>Question X/Y</q></p></li>
+<li><p>Be targeted and specific</p></li>
+<li><p>Don't ask technical implementation details (save for execution)</p></li>
+<li><p>Maximum 5 questions total</p></li></ul>
+<p>After user confirmation, automatically proceed to <strong>spec-store</strong>.</p>
+<h3>Step 2: spec-store</h3>
+<ul><li><p>Generate unique spec ID: <code>SPEC-&lt;YYYYMMDD&gt;-&lt;HHMM&gt;-&lt;slug&gt;</code></p></li>
+<li><p>Create <code>te9.dev/specs/&lt;id&gt;/spec.md</code></p></li>
+<li><p>Update <code>te9.dev/specs/specs.json</code></p></li>
+<li><p>Store in memory for context</p></li>
+<li><p>Initialize execution log: <code>te9.dev/logs/&lt;id&gt;.log</code></p></li></ul>
+<h3>Step 3: spec-execute</h3>
+<ul><li><p>Load spec file</p></li>
+<li><p>Plan implementation approach</p></li>
+<li><p>Execute requirements systematically</p></li>
+<li><p>Log ALL changes to execution log</p></li>
+<li><p>Verify each acceptance criterion</p></li>
+<li><p>Run comprehensive tests</p></li>
+<li><p>Update spec status to READY_FOR_BRANCH_COMMIT</p></li></ul>
+<h3>Step 4: spec-branch-commit</h3>
+<ul><li><p>Create feature branch: <code>feature/SPEC-&lt;id&gt;-&lt;slug&gt;</code></p></li>
+<li><p>Commit changes with spec ID in brackets</p></li>
+<li><p>Ask for user approval BEFORE pushing</p></li>
+<li><p>Push branch to remote after user approval</p></li>
+<li><p>Update spec status to BRANCH_COMMITTED</p></li></ul>
+<h3>Step 5: spec-pr-create</h3>
+<ul><li><p>Create pull request against main branch</p></li>
+<li><p>Include spec details and assign reviewers</p></li>
+<li><p>Enable CI/CD checks</p></li>
+<li><p>Update spec status to PR_CREATED</p></li></ul>
+<h3>Step 6: spec-pr-review</h3>
+<ul><li><p>Provide direct GitHub PR link for manual review</p></li>
+<li><p>Give manual merge instructions</p></li>
+<li><p>Mark spec as completed after user confirmation</p></li></ul>
+<hr>
+<h2>📚 REFERENCE</h2>
+<ul><li><p><code>AGENTS.md</code> - Complete workflow reference</p></li>
+<li><p><code>.opencode/skill/spec-clarify/SKILL.md</code> - Requirements gathering details</p></li>
+<li><p><code>.opencode/skill/spec-store/SKILL.md</code> - Spec file creation details</p></li>
+<li><p><code>.opencode/skill/spec-execute/SKILL.md</code> - Implementation details</p></li>
+<li><p><code>.opencode/skill/spec-branch-commit/SKILL.md</code> - Branch commit details</p></li>
+<li><p><code>.opencode/skill/spec-pr-create/SKILL.md</code> - PR creation details</p></li>
+<li><p><code>.opencode/skill/spec-pr-review/SKILL.md</code> - PR review details</p></li></ul>
+<hr>
+<h2>⚠️ CRITICAL RULES</h2>
+<ul><li><p>NEVER skip steps in the workflow</p></li>
+<li><p>ALWAYS ask for user approval before committing or pushing</p></li>
+<li><p>Log ALL changes to execution log</p></li>
+<li><p>Store in memory at each step</p></li>
+<li><p>Create knowledge graph facts for acceptance criteria</p></li>
+<li><p>Update spec status after each step</p></li>
+<li><p>Track progress with <code>spec-track</code> command anytime</p></li></ul>
+<hr>
+<h2>✅ START NOW</h2>
+<p>Begin the te9.dev workflow by asking the user what they want to build.</p>
+<p><strong>Ready. What would you like to build?</strong></p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

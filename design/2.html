@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        ::selection {
+            background: #18181B;
+            color: #FFFFFF;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-zinc-100">
+        <nav class="max-w-[2560px] mx-auto px-6 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+                    <span class="iconify text-white text-lg" data-icon="mdi:feather"></span>
+                </div>
+                <span class="font-semibold tracking-tight">minimalblog</span>
+            </a>
+
+            <!-- Nav Links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-sm text-zinc-900 font-medium">Home</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Articles</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">About</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Contact</a>
+            </div>
+
+            <!-- Mobile Menu -->
+            <button class="md:hidden p-2 hover:bg-zinc-50 rounded-lg transition-colors">
+                <span class="iconify text-xl" data-icon="mdi:menu"></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16 flex-1 flex flex-col">
+
+        <!-- Blog Grid -->
+        <section class="flex-1 flex flex-col">
+            <div class="max-w-[2560px] mx-auto w-full flex-1 flex flex-col">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr border border-zinc-200">
+
+                    <!-- Blog Card 1 -->
+                    <article class="p-8 border-b md:border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 15, 2024</span>
+                        <h2 class="text-xl font-semibold tracking-tight mt-3 mb-3 group-hover:text-zinc-600 transition-colors">The Art of Minimalist Design</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-3">Exploring how constraints breed creativity and why removing elements can often strengthen a design more than adding them.</p>
+                        <div class="mt-6 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 2 -->
+                    <article class="p-8 border-b lg:border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 12, 2024</span>
+                        <h2 class="text-xl font-semibold tracking-tight mt-3 mb-3 group-hover:text-zinc-600 transition-colors">Building for the Future</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-3">Sustainable development practices and why thinking long-term leads to better products and happier teams.</p>
+                        <div class="mt-6 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 3 -->
+                    <article class="p-8 border-b border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 8, 2024</span>
+                        <h2 class="text-xl font-semibold tracking-tight mt-3 mb-3 group-hover:text-zinc-600 transition-colors">Typography in Digital Spaces</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-3">How choosing the right typeface can transform user experience and communicate brand personality effectively.</p>
+                        <div class="mt-6 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 4 -->
+                    <article class="p-8 border-b md:border-b-0 md:border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 5, 2024</span>
+                        <h2 class="text-xl font-semibold tracking-tight mt-3 mb-3 group-hover:text-zinc-600 transition-colors">The Power of Constraints</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-3">Why limitations are not obstacles but opportunities for innovation and creative problem-solving.</p>
+                        <div class="mt-6 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 5 -->
+                    <article class="p-8 border-b lg:border-b-0 lg:border-r border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Dec 1, 2024</span>
+                        <h2 class="text-xl font-semibold tracking-tight mt-3 mb-3 group-hover:text-zinc-600 transition-colors">Color Theory Essentials</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-3">Understanding the emotional impact of color choices and how to build palettes that resonate with users.</p>
+                        <div class="mt-6 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 6 -->
+                    <article class="p-8 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">Nov 28, 2024</span>
+                        <h2 class="text-xl font-semibold tracking-tight mt-3 mb-3 group-hover:text-zinc-600 transition-colors">Designing for Accessibility</h2>
+                        <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-3">Creating inclusive digital experiences that work for everyone, regardless of ability or context.</p>
+                        <div class="mt-6 flex items-center gap-2 text-zinc-400 group-hover:text-zinc-900 transition-colors">
+                            <span class="text-sm font-medium">Read more</span>
+                            <span class="iconify text-lg" data-icon="mdi:arrow-right"></span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>JavaScript ES Modules</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sat Feb 15 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="JavaScript ES Modules">
+	<meta name="og:description" content="Master the modern JavaScript module system with import/export syntax and best practices.">
+	<meta name="description" content="Master the modern JavaScript module system with import/export syntax and best practices.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>JavaScript ES Modules</h1>
+<p>ES Modules are the official standard for JavaScript modules. After years of competing formats (CommonJS, AMD, UMD), native modules are now supported in all modern browsers and Node.js.</p>
+<h2>Exporting Code</h2>
+<p>Share code from a module:</p>
+<pre><code language="javascript"><sup>// Named exports</sup>
+<strong>export</strong> <strong>const</strong> <b>name</b> <i>=</i> <em>'MyLib'</em><i>;</i>
+<strong>export</strong> <strong>function</strong> <b>greet</b><i>(</i>user<i>)</i> <i>{</i>
+  <strong>return</strong> <i>`</i>Hello<i>,</i> <i>$</i><i>{</i>user<i>}</i><i>`</i><i>;</i>
+<i>}</i>
+<strong>export</strong> <strong>class</strong> User <i>{</i>
+  <b>constructor</b><i>(</i>name<i>)</i> <i>{</i>
+    this<i>.</i><b>name</b> <i>=</i> name<i>;</i>
+  <i>}</i>
+<i>}</i>
+
+<sup>// Default export (one per module)</sup>
+<strong>export</strong> <strong>default</strong> <strong>function</strong><i>(</i><i>)</i> <i>{</i>
+  console<i>.</i><b>log</b><i>(</i><em>'Default export'</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<h2>Importing Code</h2>
+<p>Use exports in another file:</p>
+<pre><code language="javascript"><sup>// Named imports</sup>
+<strong>import</strong> <i>{</i> name<i>,</i> greet <i>}</i> <strong>from</strong> <em>'./utils.js'</em><i>;</i>
+
+<sup>// Default import</sup>
+<strong>import</strong> myFunction <strong>from</strong> <em>'./main.js'</em><i>;</i>
+
+<sup>// Both</sup>
+<strong>import</strong> greet<i>,</i> <i>{</i> name <i>}</i> <strong>from</strong> <em>'./utils.js'</em><i>;</i>
+
+<sup>// Import everything</sup>
+<strong>import</strong> <i>*</i> as utils <strong>from</strong> <em>'./utils.js'</em><i>;</i>
+utils<i>.</i><b>greet</b><i>(</i><em>'World'</em><i>)</i><i>;</i></code></pre>
+<h2>Dynamic Imports</h2>
+<p>Load modules on demand:</p>
+<pre><code language="javascript"><strong>async</strong> <strong>function</strong> <b>loadModule</b><i>(</i><i>)</i> <i>{</i>
+  <strong>const</strong> <b>module</b> <i>=</i> <strong>await</strong> <strong>import</strong><i>(</i><em>'./heavy-module.js'</em><i>)</i><i>;</i>
+  module<i>.</i><b>doSomething</b><i>(</i><i>)</i><i>;</i>
+<i>}</i>
+
+<sup>// Conditional loading</sup>
+<strong>if</strong> <i>(</i>userNeedsFeature<i>)</i> <i>{</i>
+  <strong>const</strong> <b>feature</b> <i>=</i> <strong>await</strong> <strong>import</strong><i>(</i><em>'./feature.js'</em><i>)</i><i>;</i>
+  feature<i>.</i><b>init</b><i>(</i><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<h2>Browser Usage</h2>
+<p>Use modules directly in browsers:</p>
+<pre><code language="html"><i>&lt;</i><strong>script </strong><b>type</b><i>=</i><em>"module"</em><i>&gt;</i>
+  import <i>{</i> greet <i>}</i> from <em>'./utils.js'</em><i>;</i>
+  <b>greet</b><i>(</i><em>'Browser'</em><i>)</i><i>;</i>
+<i>&lt;</i><i>/</i><strong>script</strong><i>&gt;</i>
+
+<i>&lt;</i><strong>script </strong><b>type</b><i>=</i><em>"module"</em> <b>src</b><i>=</i><em>"app.js"</em><i>&gt;</i><i>&lt;</i><i>/</i><strong>script</strong><i>&gt;</i></code></pre>
+<h2>Module Patterns</h2>
+<p>Re-export from other modules:</p>
+<pre><code language="javascript"><sup>// Re-export everything</sup>
+<strong>export</strong> <i>*</i> <strong>from</strong> <em>'./utils.js'</em><i>;</i>
+
+<sup>// Re-export specific</sup>
+<strong>export</strong> <i>{</i> name<i>,</i> greet <i>}</i> <strong>from</strong> <em>'./utils.js'</em><i>;</i>
+
+<sup>// Rename while exporting</sup>
+<strong>export</strong> <i>{</i> greet as sayHello <i>}</i> <strong>from</strong> <em>'./utils.js'</em><i>;</i></code></pre>
+<h2>Best Practices</h2>
+<ul><li><p>Use named exports for utilities</p></li>
+<li><p>Use default exports for main functionality</p></li>
+<li><p>Keep modules focused and small</p></li>
+<li><p>Use relative paths for local modules</p></li>
+<li><p>Consider tree-shaking in bundlers</p></li></ul>
+<p>ES Modules are the future. Start using them today for cleaner, more maintainable code.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

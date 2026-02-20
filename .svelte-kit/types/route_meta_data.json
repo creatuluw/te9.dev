@@ -1,0 +1,98 @@
+{
+	"/": [
+		"src/routes/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/api/ai/test": [
+		"src/routes/api/ai/test/+server.ts"
+	],
+	"/api/auth/keys": [
+		"src/routes/api/auth/keys/+server.ts"
+	],
+	"/api/auth/keys/[id]": [
+		"src/routes/api/auth/keys/[id]/+server.ts"
+	],
+	"/api/auth/key": [
+		"src/routes/api/auth/key/+server.ts"
+	],
+	"/api/auth/raindrop/callback": [
+		"src/routes/api/auth/raindrop/callback/+server.ts"
+	],
+	"/api/auth/raindrop/disconnect": [
+		"src/routes/api/auth/raindrop/disconnect/+server.ts"
+	],
+	"/api/auth/raindrop/status": [
+		"src/routes/api/auth/raindrop/status/+server.ts"
+	],
+	"/api/bookmarks": [
+		"src/routes/api/bookmarks/+server.ts"
+	],
+	"/api/bookmarks/[id]": [
+		"src/routes/api/bookmarks/[id]/+server.ts"
+	],
+	"/api/categories": [
+		"src/routes/api/categories/+server.ts"
+	],
+	"/api/config": [
+		"src/routes/api/config/+server.ts"
+	],
+	"/api/drafts": [
+		"src/routes/api/drafts/+server.ts"
+	],
+	"/api/drafts/suggest-goals": [
+		"src/routes/api/drafts/suggest-goals/+server.ts"
+	],
+	"/api/drafts/[id]": [
+		"src/routes/api/drafts/[id]/+server.ts"
+	],
+	"/api/drafts/[id]/publish": [
+		"src/routes/api/drafts/[id]/publish/+server.ts"
+	],
+	"/api/drafts/[id]/stream": [
+		"src/routes/api/drafts/[id]/stream/+server.ts"
+	],
+	"/api/generate/[id]": [
+		"src/routes/api/generate/[id]/+server.ts"
+	],
+	"/api/sync": [
+		"src/routes/api/sync/+server.ts"
+	],
+	"/articles/[id]": [
+		"src/routes/articles/[id]/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/bookmarks": [
+		"src/routes/bookmarks/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/bookmarks/[id]": [
+		"src/routes/bookmarks/[id]/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/drafts": [
+		"src/routes/drafts/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/drafts/[id]": [
+		"src/routes/drafts/[id]/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/posts": [
+		"src/routes/posts/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	],
+	"/posts/[slug]": [
+		"src/routes/posts/[slug]/+page.server.ts",
+		"src/routes/+layout.ts",
+		"src/routes/+layout.server.ts"
+	]
+}

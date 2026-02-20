@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>te9-archives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        ::selection {
+            background: #18181B;
+            color: #FFFFFF;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        .card-placeholder {
+            background: linear-gradient(90deg, #f4f4f5 25%, #e4e4e7 50%, #f4f4f5 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            min-height: 180px;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .card-hidden {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        .card-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .anim-slide { animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-fade { animation: fadeIn 0.6s ease-out forwards; }
+        .anim-zoom { animation: zoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .anim-fall { animation: fallIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .anim-swipe { animation: swipeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-warp { animation: warpIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+        .anim-flip { animation: flipIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-bounce { animation: bounceIn 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+        .anim-rotate { animation: rotateIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-scale { animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fallIn {
+            from { opacity: 0; transform: translateY(-80px) rotate(10deg); }
+            to { opacity: 1; transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes swipeIn {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes warpIn {
+            from { opacity: 0; transform: perspective(500px) rotateX(45deg) translateY(40px); }
+            to { opacity: 1; transform: perspective(500px) rotateX(0deg) translateY(0); }
+        }
+        @keyframes flipIn {
+            from { opacity: 0; transform: perspective(500px) rotateY(90deg); }
+            to { opacity: 1; transform: perspective(500px) rotateY(0deg); }
+        }
+        @keyframes bounceIn {
+            from { opacity: 0; transform: scale(0.3); }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes rotateIn {
+            from { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+            to { opacity: 1; transform: rotate(0deg) scale(1); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scaleY(0); }
+            to { opacity: 1; transform: scaleY(1); }
+        }
+    </style>
+</head>
+<body class="bg-white text-zinc-900 min-h-screen flex flex-col">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-zinc-100">
+        <nav class="max-w-[2560px] mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+                    <span class="iconify text-white text-lg" data-icon="mdi:feather"></span>
+                </div>
+                <span class="font-semibold tracking-tight">te9-archives</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-sm text-zinc-900 font-medium">Home</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Articles</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">About</a>
+                <a href="#" class="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">Contact</a>
+            </div>
+            <button class="md:hidden p-2 hover:bg-zinc-50 rounded-lg transition-colors">
+                <span class="iconify text-xl" data-icon="mdi:menu"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="pt-16 flex-1 flex flex-col">
+        <section class="flex-1 flex flex-col">
+            <div id="card-grid" class="max-w-[2560px] mx-auto w-full">
+            </div>
+        </section>
+    </main>
+
+    <canvas id="three-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100;"></canvas>
+
+    <script>
+        const articles = [
+            { title: "The Art of Minimalist Design", date: "Dec 15, 2024", desc: "Exploring how constraints breed creativity and why removing elements can strengthen design." },
+            { title: "Building for the Future", date: "Dec 12, 2024", desc: "Sustainable development practices and why thinking long-term leads to better products." },
+            { title: "Typography in Digital Spaces", date: "Dec 8, 2024", desc: "How choosing the right typeface can transform user experience effectively." },
+            { title: "The Power of Constraints", date: "Dec 5, 2024", desc: "Why limitations are opportunities for innovation and creative problem-solving." },
+            { title: "Color Theory Essentials", date: "Dec 1, 2024", desc: "Understanding the emotional impact of color choices and building palettes." },
+            { title: "Designing for Accessibility", date: "Nov 28, 2024", desc: "Creating inclusive digital experiences that work for everyone." },
+            { title: "Responsive Patterns", date: "Nov 25, 2024", desc: "Building layouts that adapt gracefully to any screen size." },
+            { title: "Motion Design", date: "Nov 22, 2024", desc: "Subtle animations that enhance user experience without distraction." },
+            { title: "Design Systems", date: "Nov 19, 2024", desc: "Creating scalable component libraries for consistent interfaces." },
+            { title: "User Research", date: "Nov 16, 2024", desc: "Methods for understanding your audience and their needs." },
+            { title: "Performance First", date: "Nov 13, 2024", desc: "Optimizing for speed without sacrificing visual quality." },
+            { title: "Dark Mode Done Right", date: "Nov 10, 2024", desc: "Designing interfaces that work beautifully in any theme." },
+            { title: "Icon Design Principles", date: "Nov 7, 2024", desc: "Crafting clear, consistent icons that communicate meaning." },
+            { title: "White Space Mastery", date: "Nov 4, 2024", desc: "The power of nothing and how breathing room improves design." },
+            { title: "Grid Systems Explained", date: "Nov 1, 2024", desc: "Understanding the mathematical foundation of great layouts." },
+            { title: "Form Design Excellence", date: "Oct 28, 2024", desc: "Creating intuitive forms that users actually want to fill out." },
+            { title: "Navigation UX Patterns", date: "Oct 25, 2024", desc: "Guiding users through your content with clarity and purpose." },
+            { title: "Button Design Craft", date: "Oct 22, 2024", desc: "Crafting clickable elements that invite interaction and trust." },
+            { title: "Card Pattern Library", date: "Oct 19, 2024", desc: "Using cards to organize content in digestible, scannable chunks." },
+            { title: "Loading State Design", date: "Oct 16, 2024", desc: "Making wait times feel shorter with thoughtful design." },
+            { title: "Error Message Clarity", date: "Oct 13, 2024", desc: "Turning frustration into understanding with clear copy." },
+            { title: "Empty State Design", date: "Oct 10, 2024", desc: "Opportunities to delight users when there's nothing to show." },
+            { title: "Onboarding Excellence", date: "Oct 7, 2024", desc: "First impressions matter: designing welcome experiences." },
+            { title: "Modal Design Patterns", date: "Oct 4, 2024", desc: "When and how to use overlay patterns effectively." },
+            { title: "Tooltip Best Practices", date: "Oct 1, 2024", desc: "Providing helpful context without cluttering the interface." },
+            { title: "Notification Design", date: "Sep 28, 2024", desc: "Alerting users without being annoying or intrusive." },
+            { title: "Search UX Optimization", date: "Sep 25, 2024", desc: "Helping users find what they're looking for quickly." },
+            { title: "Data Table Design", date: "Sep 22, 2024", desc: "Presenting complex information in an organized manner." },
+            { title: "Dashboard Design Tips", date: "Sep 19, 2024", desc: "Creating at-a-glance views for complex data sets." },
+            { title: "Mobile First Strategy", date: "Sep 16, 2024", desc: "Designing for the smallest screen and scaling up." },
+            { title: "Microinteractions Guide", date: "Sep 13, 2024", desc: "Small details that make a big difference in user delight." },
+            { title: "Managing Design Debt", date: "Sep 10, 2024", desc: "Managing technical and visual debt in growing products." },
+            { title: "Progressive Enhancement", date: "Sep 7, 2024", desc: "Building resilient experiences that work everywhere." },
+            { title: "CSS Architecture", date: "Sep 4, 2024", desc: "Organizing styles for maintainability and scale." },
+            { title: "Design Tokens Guide", date: "Sep 1, 2024", desc: "Creating consistent design language with variables." },
+            { title: "Accessibility Testing", date: "Aug 28, 2024", desc: "Tools and techniques for inclusive design validation." },
+            { title: "Voice UI Design", date: "Aug 25, 2024", desc: "Designing conversational interfaces for voice assistants." },
+            { title: "Animation Performance", date: "Aug 22, 2024", desc: "Creating smooth animations that don't kill performance." },
+            { title: "Cross-Browser Testing", date: "Aug 19, 2024", desc: "Ensuring consistent experiences across all browsers." },
+            { title: "Design Handoff Process", date: "Aug 16, 2024", desc: "Bridging the gap between design and development." },
+            { title: "Component Composition", date: "Aug 13, 2024", desc: "Building complex UIs from simple, reusable parts." },
+            { title: "Responsive Images", date: "Aug 10, 2024", desc: "Serving the right image for every screen and context." },
+            { title: "Design Critique Guide", date: "Aug 7, 2024", desc: "Giving and receiving feedback that improves designs." },
+            { title: "Prototype fidelity", date: "Aug 4, 2024", desc: "Choosing the right level of detail for your prototypes." },
+            { title: "User Flow Mapping", date: "Aug 1, 2024", desc: "Visualizing the paths users take through your product." },
+            { title: "Information Architecture", date: "Jul 28, 2024", desc: "Organizing content so users can find what they need." },
+            { title: "Design Sprint Process", date: "Jul 25, 2024", desc: "Rapid ideation and validation in just five days." },
+            { title: "A/B Testing Design", date: "Jul 22, 2024", desc: "Designing experiments that yield meaningful insights." },
+            { title: "Accessibility Laws", date: "Jul 19, 2024", desc: "Understanding legal requirements for accessible design." },
+            { title: "DesignOps Basics", date: "Jul 16, 2024", desc: "Scaling design teams and processes effectively." },
+            { title: "UX Writing Guide", date: "Jul 13, 2024", desc: "Crafting clear, helpful copy for user interfaces." },
+            { title: "Design Version Control", date: "Jul 10, 2024", desc: "Managing design files like code with proper versioning." },
+            { title: "Color Accessibility", date: "Jul 7, 2024", desc: "Creating color palettes that work for everyone." },
+            { title: "Mobile Gestures", date: "Jul 4, 2024", desc: "Designing intuitive touch interactions for mobile." },
+            { title: "Design System Docs", date: "Jul 1, 2024", desc: "Documenting components for easy adoption and use." },
+            { title: "Figma Plugins Guide", date: "Jun 28, 2024", desc: "Essential plugins to supercharge your Figma workflow." },
+            { title: "Design Metrics", date: "Jun 25, 2024", desc: "Measuring the impact of design decisions on business." },
+            { title: "Consent Design", date: "Jun 22, 2024", desc: "Designing ethical consent flows that respect users." },
+            { title: "Skeleton Screens", date: "Jun 19, 2024", desc: "Better loading states than spinners and progress bars." },
+            { title: "Design Collaboration", date: "Jun 16, 2024", desc: "Working effectively with developers and stakeholders." },
+            { title: "Typography Scale", date: "Jun 13, 2024", desc: "Creating harmonious type systems with modular scales." },
+            { title: "Shadow Design", date: "Jun 10, 2024", desc: "Using elevation and depth to create visual hierarchy." },
+            { title: "Border Radius Systems", date: "Jun 7, 2024", desc: "Creating consistent rounded corners across your UI." },
+            { title: "Spacing Systems", date: "Jun 4, 2024", desc: "Building rhythm and consistency with spacing tokens." },
+            { title: "Icon Systems", date: "Jun 1, 2024", desc: "Creating cohesive icon sets that scale with your product." },
+            { title: "Illustration Style", date: "May 28, 2024", desc: "Developing a consistent illustration language for your brand." },
+            { title: "Photography Guidelines", date: "May 25, 2024", desc: "Selecting and treating images for visual consistency." },
+            { title: "Brand Expression", date: "May 22, 2024", desc: "Injecting personality into functional interfaces." },
+            { title: "Design Reviews", date: "May 19, 2024", desc: "Running effective design review sessions with your team." },
+            { title: "Stakeholder Management", date: "May 16, 2024", desc: "Navigating feedback and building design consensus." },
+            { title: "Design Presentation", date: "May 13, 2024", desc: "Presenting design work in a compelling, clear way." },
+            { title: "Portfolio Design", date: "May 10, 2024", desc: "Showcasing your work effectively to potential employers." },
+            { title: "Case Study Writing", date: "May 7, 2024", desc: "Documenting your process and impact convincingly." },
+            { title: "Design Interview Prep", date: "May 4, 2024", desc: "Preparing for design interviews and portfolio reviews." },
+            { title: "Freelance Design Tips", date: "May 1, 2024", desc: "Building a successful freelance design practice." },
+            { title: "Design Mentorship", date: "Apr 28, 2024", desc: "Finding and being a mentor in the design community." },
+            { title: "Design Community", date: "Apr 25, 2024", desc: "Building connections and learning from other designers." },
+            { title: "Conference Speaking", date: "Apr 22, 2024", desc: "Sharing your knowledge through talks and workshops." },
+            { title: "Design Blog Writing", date: "Apr 19, 2024", desc: "Creating content that establishes your design expertise." },
+            { title: "Side Projects", date: "Apr 16, 2024", desc: "Using personal projects to explore and grow as a designer." },
+            { title: "Design Burnout", date: "Apr 13, 2024", desc: "Recognizing and recovering from creative exhaustion." },
+            { title: "Work-Life Balance", date: "Apr 10, 2024", desc: "Maintaining sustainability in a demanding creative career." },
+            { title: "Remote Design Work", date: "Apr 7, 2024", desc: "Thriving as a designer in distributed teams." },
+            { title: "Design Tools Evolution", date: "Apr 4, 2024", desc: "Adapting to new tools while mastering fundamentals." },
+            { title: "AI in Design", date: "Apr 1, 2024", desc: "Leveraging artificial intelligence in your design process." },
+            { title: "Future of Design", date: "Mar 28, 2024", desc: "Trends and predictions shaping the design industry." },
+            { title: "Design Leadership", date: "Mar 25, 2024", desc: "Growing from individual contributor to design leader." },
+            { title: "Team Culture", date: "Mar 22, 2024", desc: "Building healthy, creative team environments." },
+            { title: "Hiring Designers", date: "Mar 19, 2024", desc: "Finding and evaluating design talent effectively." },
+            { title: "Design Education", date: "Mar 16, 2024", desc: "Continuous learning in an ever-evolving field." },
+            { title: "Design Ethics", date: "Mar 13, 2024", desc: "Making responsible choices in design decisions." },
+            { title: "Inclusive Design", date: "Mar 10, 2024", desc: "Designing for the full spectrum of human diversity." },
+            { title: "Sustainable Design", date: "Mar 7, 2024", desc: "Reducing environmental impact through design choices." },
+            { title: "Privacy by Design", date: "Mar 4, 2024", desc: "Building user trust through privacy-conscious design." },
+            { title: "Dark Patterns", date: "Mar 1, 2024", desc: "Avoiding manipulative design and building trust instead." }
+        ];
+
+        const rowConfigs = [6, 8, 5, 7, 6, 8, 5, 7, 6, 5, 8, 7, 6, 5, 8, 7];
+        const animations = ['anim-slide', 'anim-fade', 'anim-zoom', 'anim-fall', 'anim-swipe', 'anim-warp', 'anim-flip', 'anim-bounce', 'anim-rotate', 'anim-scale'];
+
+        let cardIndex = 0;
+        const totalCards = 100;
+        const cardGrid = document.getElementById('card-grid');
+
+        function getRandomAnimation() {
+            return animations[Math.floor(Math.random() * animations.length)];
+        }
+
+        function createCard(article, isAboveFold) {
+            const card = document.createElement('article');
+            card.className = `p-5 border-zinc-200 hover:bg-zinc-50 transition-colors duration-200 group flex flex-col card-hidden`;
+            card.dataset.animation = getRandomAnimation();
+            card.dataset.animated = 'false';
+            
+            if (isAboveFold) {
+                card.dataset.initAnimate = 'true';
+            }
+            
+            card.innerHTML = `
+                <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest">${article.date}</span>
+                <h2 class="text-base font-semibold tracking-tight mt-2 mb-1 group-hover:text-zinc-600 transition-colors">${article.title}</h2>
+                <p class="text-zinc-500 text-sm font-light leading-relaxed line-clamp-2">${article.desc}</p>
+            `;
+            
+            return card;
+        }
+
+        function buildGrid() {
+            const viewportHeight = window.innerHeight;
+            let currentHeight = 64;
+            let rowIndex = 0;
+
+            while (cardIndex < totalCards) {
+                const colsInRow = rowConfigs[rowIndex % rowConfigs.length];
+                const row = document.createElement('div');
+                row.className = 'grid border-x border-zinc-200';
+                row.style.gridTemplateColumns = `repeat(${colsInRow}, 1fr)`;
+
+                for (let col = 0; col < colsInRow && cardIndex < totalCards; col++) {
+                    const isAboveFold = currentHeight < viewportHeight;
+                    const article = articles[cardIndex % articles.length];
+                    const card = createCard(article, isAboveFold);
+                    
+                    if (col < colsInRow - 1) {
+                        card.classList.add('border-r');
+                    }
+                    card.classList.add('border-b');
+                    
+                    row.appendChild(card);
+                    cardIndex++;
+                }
+
+                cardGrid.appendChild(row);
+                currentHeight += 200;
+                rowIndex++;
+            }
+
+            const lastRow = cardGrid.lastElementChild;
+            if (lastRow) {
+                lastRow.classList.add('border-b');
+            }
+
+            initializeAnimations();
+            setupIntersectionObserver();
+        }
+
+        function initializeAnimations() {
+            const initCards = document.querySelectorAll('[data-init-animate="true"]');
+            initCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.remove('card-hidden');
+                    card.classList.add(card.dataset.animation);
+                    card.dataset.animated = 'true';
+                }, index * 50 + Math.random() * 100);
+            });
+        }
+
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.dataset.animated === 'false') {
+                        const card = entry.target;
+                        if (card.dataset.initAnimate !== 'true') {
+                            setTimeout(() => {
+                                card.classList.remove('card-hidden');
+                                card.classList.add(card.dataset.animation);
+                                card.dataset.animated = 'true';
+                            }, Math.random() * 150);
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '100px',
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.card-hidden').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        class ThreeBackground {
+            constructor() {
+                this.canvas = document.getElementById('three-canvas');
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, alpha: true, antialias: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                
+                this.camera.position.z = 5;
+                this.particles = [];
+                this.initParticles();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.onResize());
+            }
+
+            initParticles() {
+                const geometry = new THREE.CircleGeometry(0.02, 8);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0x18181B,
+                    transparent: true,
+                    opacity: 0.1
+                });
+
+                for (let i = 0; i < 50; i++) {
+                    const particle = new THREE.Mesh(geometry, material.clone());
+                    particle.position.x = (Math.random() - 0.5) * 10;
+                    particle.position.y = (Math.random() - 0.5) * 10;
+                    particle.position.z = (Math.random() - 0.5) * 5;
+                    particle.userData = {
+                        velocityX: (Math.random() - 0.5) * 0.002,
+                        velocityY: (Math.random() - 0.5) * 0.002,
+                        velocityZ: (Math.random() - 0.5) * 0.001
+                    };
+                    this.particles.push(particle);
+                    this.scene.add(particle);
+                }
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                this.particles.forEach(particle => {
+                    particle.position.x += particle.userData.velocityX;
+                    particle.position.y += particle.userData.velocityY;
+                    particle.position.z += particle.userData.velocityZ;
+
+                    if (Math.abs(particle.position.x) > 5) particle.userData.velocityX *= -1;
+                    if (Math.abs(particle.position.y) > 5) particle.userData.velocityY *= -1;
+                    if (Math.abs(particle.position.z) > 2.5) particle.userData.velocityZ *= -1;
+                });
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            onResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            buildGrid();
+            new ThreeBackground();
+        });
+    </script>
+
+</body>
+</html>

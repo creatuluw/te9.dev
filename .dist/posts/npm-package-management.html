@@ -1,0 +1,128 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>NPM Package Management</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Fri Feb 14 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="NPM Package Management">
+	<meta name="og:description" content="Master npm with these essential commands, scripts, and best practices for managing JavaScript dependencies.">
+	<meta name="description" content="Master npm with these essential commands, scripts, and best practices for managing JavaScript dependencies.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>NPM Package Management</h1>
+<p>NPM is the backbone of JavaScript development. Understanding it deeply will save you countless hours of dependency hell. Here's what every developer should know.</p>
+<h2>Install with Intention</h2>
+<p>Different install commands serve different purposes:</p>
+<pre><code language="bash"><sup># Production dependency</sup>
+npm install lodash
+
+<sup># Development dependency</sup>
+npm install <i>-</i><i>-</i>save<i>-</i>dev jest
+
+<sup># Global tool</sup>
+npm install <i>-</i><i>-</i>global typescript
+
+<sup># Exact version</sup>
+npm install lodash <i>-</i><i>-</i>save<i>-</i>exact</code></pre>
+<p>Keep <code>node_modules</code> lean by using <code>--save-dev</code> appropriately.</p>
+<h2>Semantic Versioning</h2>
+<p>Version numbers have meaning:</p>
+<pre><code language="*"><em>1.2</em><i>.</i><em>3</em>
+<i>│</i> <i>│</i> <i>│</i>
+<i>│</i> <i>│</i> <i>└</i><i>─</i><i>─</i> <b>Patch</b><i>:</i> Bug fixes
+<i>│</i> <i>└</i><i>─</i><i>─</i><i>─</i><i>─</i><i>─</i> <b>Minor</b><i>:</i> <strong>New</strong> features
+<i>└</i><i>─</i><i>─</i><i>─</i><i>─</i><i>─</i><i>─</i><i>─</i><i>─</i> <b>Major</b><i>:</i> Breaking changes</code></pre>
+<p>Control updates in <code>package.json</code>:</p>
+<pre><code language="json"><i>{</i>
+  <b>"dependencies"</b><i>:</i> <i>{</i>
+    <b>"lodash"</b><i>:</i> <em>"4.17.21"</em><i>,</i>     <sup>// Exact version</sup>
+    <b>"express"</b><i>:</i> <em>"^4.18.0"</em><i>,</i>    <sup>// Compatible (4.x.x)</sup>
+    <b>"react"</b><i>:</i> <em>"~18.2.0"</em>       <sup>// Approximately (18.2.x)</sup>
+  <i>}</i>
+<i>}</i></code></pre>
+<h2>Useful Scripts</h2>
+<p>Automate common tasks:</p>
+<pre><code language="json"><i>{</i>
+  <b>"scripts"</b><i>:</i> <i>{</i>
+    <b>"dev"</b><i>:</i> <em>"vite"</em><i>,</i>
+    <b>"build"</b><i>:</i> <em>"vite build"</em><i>,</i>
+    <b>"test"</b><i>:</i> <em>"jest"</em><i>,</i>
+    <b>"lint"</b><i>:</i> <em>"eslint src/"</em><i>,</i>
+    <b>"format"</b><i>:</i> <em>"prettier --write ."</em><i>,</i>
+    <b>"clean"</b><i>:</i> <em>"rm -rf node_modules && npm install"</em>
+  <i>}</i>
+<i>}</i></code></pre>
+<p>Run with <code>npm run &lt;script&gt;</code> or <code>npm &lt;script&gt;</code> for built-in commands.</p>
+<h2>Audit Dependencies</h2>
+<p>Check for vulnerabilities:</p>
+<pre><code language="bash"><sup># Check for issues</sup>
+npm audit
+
+<sup># Fix automatically</sup>
+npm audit fix
+
+<sup># See what would change</sup>
+npm audit fix <i>-</i><i>-</i>dry<i>-</i>run</code></pre>
+<p>Run audits regularly in your CI pipeline.</p>
+<h2>Outdated Packages</h2>
+<p>Stay current:</p>
+<pre><code language="bash"><sup># Check for updates</sup>
+npm outdated
+
+<sup># Update all to latest</sup>
+npm update
+
+<sup># Update specific package</sup>
+npm install lodash<i>@</i>latest</code></pre>
+<h2>Lock Files Matter</h2>
+<p>Never delete <code>package-lock.json</code>. It ensures:</p>
+<ul><li><p>Consistent installs across machines</p></li>
+<li><p>Exact dependency versions</p></li>
+<li><p>Faster npm install</p></li></ul>
+<p>Commit it to version control.</p>
+<h2>npx for One-offs</h2>
+<p>Run packages without installing:</p>
+<pre><code language="bash"><sup># Create new project</sup>
+npx create<i>-</i>react<i>-</i>app myapp
+
+<sup># Run tools</sup>
+npx prettier <i>-</i><i>-</i>write <i>.</i>
+
+<sup># Use different versions</sup>
+npx node<i>@</i><em>16</em> script<i>.</i>js</code></pre>
+<h2>Keep It Healthy</h2>
+<ul><li><p>Review dependencies regularly</p></li>
+<li><p>Remove unused packages</p></li>
+<li><p>Prefer well-maintained packages</p></li>
+<li><p>Check bundle size impact</p></li>
+<li><p>Lock critical versions</p></li></ul>
+<p>A clean <code>package.json</code> is a sign of a healthy project.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

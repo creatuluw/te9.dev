@@ -1,0 +1,75 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Modern JavaScript Array Methods</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Tue Feb 18 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Modern JavaScript Array Methods">
+	<meta name="og:description" content="Master the essential array methods that make JavaScript a joy to write.">
+	<meta name="description" content="Master the essential array methods that make JavaScript a joy to write.">
+	<link rel="stylesheet" href="/blog\index.css">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      <header><a href="/"></a></header>
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Modern JavaScript Array Methods</h1>
+<p>Array methods transform how we work with data in JavaScript. Gone are the days of <code>for</code> loops. These methods make your code declarative, readable, and functional.</p>
+<h2>The Big Three</h2>
+<p><strong>map</strong> transforms each element:</p>
+<pre><code language="javascript"><strong>const</strong> <b>prices</b> <i>=</i> <i>[</i><em>10</em><i>,</i> <em>20</em><i>,</i> <em>30</em><i>]</i><i>;</i>
+<strong>const</strong> <b>withTax</b> <i>=</i> prices<i>.</i><b>map</b><i>(</i>p <i>=</i><i>&gt;</i> p <i>*</i> <em>1.2</em><i>)</i><i>;</i>
+<sup>// [12, 24, 36]</sup></code></pre>
+<p><strong>filter</strong> keeps matching elements:</p>
+<pre><code language="javascript"><strong>const</strong> <b>nums</b> <i>=</i> <i>[</i><em>1</em><i>,</i> <em>2</em><i>,</i> <em>3</em><i>,</i> <em>4</em><i>,</i> <em>5</em><i>]</i><i>;</i>
+<strong>const</strong> <b>evens</b> <i>=</i> nums<i>.</i><b>filter</b><i>(</i>n <i>=</i><i>&gt;</i> n <i>%</i> <em>2</em> <i>=</i><i>=</i><i>=</i> <em>0</em><i>)</i><i>;</i>
+<sup>// [2, 4]</sup></code></pre>
+<p><strong>reduce</strong> accumulates values:</p>
+<pre><code language="javascript"><strong>const</strong> <b>cart</b> <i>=</i> <i>[</i><em>10</em><i>,</i> <em>20</em><i>,</i> <em>30</em><i>]</i><i>;</i>
+<strong>const</strong> <b>total</b> <i>=</i> cart<i>.</i><b>reduce</b><i>(</i><i>(</i>sum<i>,</i> p<i>)</i> <i>=</i><i>&gt;</i> sum <i>+</i> p<i>,</i> <em>0</em><i>)</i><i>;</i>
+<sup>// 60</sup></code></pre>
+<h2>Finding Elements</h2>
+<p><strong>find</strong> returns the first match:</p>
+<pre><code language="javascript"><strong>const</strong> <b>users</b> <i>=</i> <i>[</i><i>{</i> <b>id</b><i>:</i> <em>1</em> <i>}</i><i>,</i> <i>{</i> <b>id</b><i>:</i> <em>2</em> <i>}</i><i>]</i><i>;</i>
+<strong>const</strong> <b>user</b> <i>=</i> users<i>.</i><b>find</b><i>(</i>u <i>=</i><i>&gt;</i> u<i>.</i><b>id</b> <i>=</i><i>=</i><i>=</i> <em>2</em><i>)</i><i>;</i></code></pre>
+<p><strong>some</strong> and <strong>every</strong> test conditions:</p>
+<pre><code language="javascript"><strong>const</strong> <b>hasAdmin</b> <i>=</i> users<i>.</i><b>some</b><i>(</i>u <i>=</i><i>&gt;</i> u<i>.</i><b>role</b> <i>=</i><i>=</i><i>=</i> <em>'admin'</em><i>)</i><i>;</i>
+<strong>const</strong> <b>allActive</b> <i>=</i> users<i>.</i><b>every</b><i>(</i>u <i>=</i><i>&gt;</i> u<i>.</i>active<i>)</i><i>;</i></code></pre>
+<h2>Flattening Arrays</h2>
+<p>Handle nested arrays elegantly:</p>
+<pre><code language="javascript"><strong>const</strong> <b>nested</b> <i>=</i> <i>[</i><em>1</em><i>,</i> <i>[</i><em>2</em><i>,</i> <em>3</em><i>]</i><i>,</i> <i>[</i><em>4</em><i>,</i> <i>[</i><em>5</em><i>]</i><i>]</i><i>]</i><i>;</i>
+nested<i>.</i><b>flat</b><i>(</i><em>2</em><i>)</i><i>;</i> <sup>// [1, 2, 3, 4, 5]</sup></code></pre>
+<h2>Chain Them Together</h2>
+<p>The real power comes from chaining:</p>
+<pre><code language="javascript"><strong>const</strong> <b>result</b> <i>=</i> items
+  <i>.</i><b>filter</b><i>(</i><b>item</b> <i>=</i><i>&gt;</i> item<i>.</i>active<i>)</i>
+  <i>.</i><b>map</b><i>(</i><b>item</b> <i>=</i><i>&gt;</i> item<i>.</i>price<i>)</i>
+  <i>.</i><b>reduce</b><i>(</i><i>(</i>sum<i>,</i> price<i>)</i> <i>=</i><i>&gt;</i> sum <i>+</i> price<i>,</i> <em>0</em><i>)</i><i>;</i></code></pre>
+<p>Learn these methods deeply—they're the foundation of modern JavaScript.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      <footer>
+  © Copyright 2026 / </footer>
+      
+    </body>
+  
+    </html>
+  

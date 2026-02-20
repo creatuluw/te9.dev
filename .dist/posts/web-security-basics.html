@@ -1,0 +1,102 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Web Security Basics</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sun Feb 16 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Web Security Basics">
+	<meta name="og:description" content="Essential security practices every web developer should know to protect applications and users.">
+	<meta name="description" content="Essential security practices every web developer should know to protect applications and users.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Web Security Basics</h1>
+<p>Security isn't an afterthought—it's a fundamental requirement. Every developer needs to understand the basics of web security to protect users and applications from common threats.</p>
+<h2>Use HTTPS Everywhere</h2>
+<p>HTTPS encrypts data in transit:</p>
+<pre><code language="html"><sup>&lt;!-- Force HTTPS --&gt;</sup>
+<i>&lt;</i><strong>meta </strong><b>http-equiv</b><i>=</i><em>"Content-Security-Policy"</em> 
+      <b>content</b><i>=</i><em>"upgrade-insecure-requests"</em><i>&gt;</i></code></pre>
+<p>Enable HSTS headers on your server:</p>
+<pre><code language="*"><b>Strict-Transport-Security</b><i>:</i> <b>max-age</b><i>=</i><em>31536000</em><i>;</i> includeSubDomains</code></pre>
+<h2>Prevent XSS Attacks</h2>
+<p>Cross-site scripting (XSS) injects malicious scripts:</p>
+<pre><code language="javascript"><sup>// Bad: Direct HTML insertion</sup>
+element<i>.</i><b>innerHTML</b> <i>=</i> userInput<i>;</i>
+
+<sup>// Good: Text content</sup>
+element<i>.</i><b>textContent</b> <i>=</i> userInput<i>;</i>
+
+<sup>// Better: Sanitize</sup>
+<strong>import</strong> DOMPurify <strong>from</strong> <em>'dompurify'</em><i>;</i>
+element<i>.</i><b>innerHTML</b> <i>=</i> DOMPurify<i>.</i><b>sanitize</b><i>(</i>userInput<i>)</i><i>;</i></code></pre>
+<h2>Protect Against CSRF</h2>
+<p>Cross-site request forgery tricks users into unwanted actions:</p>
+<pre><code language="html"><i>&lt;</i><strong>form </strong><b>method</b><i>=</i><em>"POST"</em><i>&gt;</i>
+  <i>&lt;</i><strong>input </strong><b>type</b><i>=</i><em>"hidden"</em> 
+         <b>name</b><i>=</i><em>"csrf_token"</em> 
+         <b>value</b><i>=</i><em>"<i>{<b>{ csrfToken </b>}</i>}"</em><i>&gt;</i>
+<sup>  &lt;!-- form fields --&gt;</sup>
+<i>&lt;</i><i>/</i><strong>form</strong><i>&gt;</i></code></pre>
+<p>Verify the token server-side on every POST request.</p>
+<h2>Content Security Policy</h2>
+<p>CSP restricts what resources can load:</p>
+<pre><code language="html"><i>&lt;</i><strong>meta </strong><b>http-equiv</b><i>=</i><em>"Content-Security-Policy"</em> 
+      <b>content</b><i>=</i><i>"</i>default<i>-</i>src <em>'self'</em><i>;</i> 
+               script<i>-</i>src <em>'self'</em> <b>https</b><i>:</i><i>/</i><i>/</i>trusted<i>.</i>cdn<i>.</i>com<i>;</i> 
+               style<i>-</i>src <em>'self'</em> <em>'unsafe-inline'</em><i>;</i><i>"</i><i>&gt;</i></code></pre>
+<p>Start restrictive, add exceptions as needed.</p>
+<h2>Input Validation</h2>
+<p>Validate on both client and server:</p>
+<pre><code language="javascript"><sup>// Client-side</sup>
+<strong>const</strong> <b>email</b> <i>=</i> formData<i>.</i><strong>get</strong><i>(</i><em>'email'</em><i>)</i><i>;</i>
+<strong>if</strong> <i>(</i><i>!</i><b>isValidEmail</b><i>(</i>email<i>)</i><i>)</i> <i>{</i>
+  <b>showError</b><i>(</i><em>'Invalid email format'</em><i>)</i><i>;</i>
+  <strong>return</strong><i>;</i>
+<i>}</i>
+
+<sup>// Server-side (always required)</sup>
+<strong>if</strong> <i>(</i><i>!</i><b>validateInput</b><i>(</i>email<i>,</i> <em>'email'</em><i>)</i><i>)</i> <i>{</i>
+  <strong>return</strong> res<i>.</i><b>status</b><i>(</i><em>400</em><i>)</i><i>.</i><b>json</b><i>(</i><i>{</i> <b>error</b><i>:</i> <em>'Invalid email'</em> <i>}</i><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<h2>Security Headers</h2>
+<p>Add these headers to every response:</p>
+<pre><code language="*"><b>X-Frame-Options</b><i>:</i> DENY
+<b>X-Content-Type-Options</b><i>:</i> nosniff
+<b>Referrer-Policy</b><i>:</i> strict<i>-</i>origin<i>-</i>when<i>-</i>cross<i>-</i>origin
+<b>Permissions-Policy</b><i>:</i> <b>geolocation</b><i>=</i><i>(</i><i>)</i><i>,</i> <b>microphone</b><i>=</i><i>(</i><i>)</i></code></pre>
+<h2>Stay Updated</h2>
+<p>Security evolves constantly:</p>
+<ul><li><p>Subscribe to security advisories</p></li>
+<li><p>Keep dependencies updated</p></li>
+<li><p>Use tools like <code>npm audit</code></p></li>
+<li><p>Test with OWASP ZAP</p></li></ul>
+<p>Security is an ongoing process, not a one-time task.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

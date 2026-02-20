@@ -1,0 +1,123 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>CSS Animations Essentials</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sat Feb 15 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="CSS Animations Essentials">
+	<meta name="og:description" content="Create smooth, performant animations with CSS that enhance user experience without JavaScript.">
+	<meta name="description" content="Create smooth, performant animations with CSS that enhance user experience without JavaScript.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>CSS Animations Essentials</h1>
+<p>CSS animations bring interfaces to life. When used thoughtfully, they guide users, provide feedback, and make interactions feel polished. Here's how to create animations that perform well and serve a purpose.</p>
+<h2>Transitions for Simple Changes</h2>
+<p>Use transitions for state changes:</p>
+<pre><code language="css"><i>.</i>button <i>{</i>
+  <b>background</b><i>:</i> <strong>#3b82f6</strong><i>;</i>
+  <b>transition</b><i>:</i> background <em>0.3s</em> ease<i>,</i> transform <em>0.2s</em> ease<i>;</i>
+<i>}</i>
+
+<i>.</i><b>button</b><i>:</i>hover <i>{</i>
+  <b>background</b><i>:</i> <strong>#2563eb</strong><i>;</i>
+  <b>transform</b><i>:</i> <b>translateY</b><i>(</i><i>-</i><em>2px</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p>Transitions are perfect for hover effects and focus states.</p>
+<h2>Keyframe Animations</h2>
+<p>For complex sequences, use keyframes:</p>
+<pre><code language="css"><label>@keyframes</label> fadeIn <i>{</i>
+  <strong>from</strong> <i>{</i>
+    <b>opacity</b><i>:</i> <em>0</em><i>;</i>
+    <b>transform</b><i>:</i> <b>translateY</b><i>(</i><em>20px</em><i>)</i><i>;</i>
+  <i>}</i>
+  to <i>{</i>
+    <b>opacity</b><i>:</i> <em>1</em><i>;</i>
+    <b>transform</b><i>:</i> <b>translateY</b><i>(</i><em>0</em><i>)</i><i>;</i>
+  <i>}</i>
+<i>}</i>
+
+<i>.</i>card <i>{</i>
+  <b>animation</b><i>:</i> fadeIn <em>0.6s</em> ease<i>-</i>out<i>;</i>
+<i>}</i></code></pre>
+<h2>Timing Functions</h2>
+<p>Choose the right easing:</p>
+<pre><code language="css"><sup>/* Smooth deceleration */</sup>
+<b>transition-timing-function</b><i>:</i> ease<i>-</i>out<i>;</i>
+
+<sup>/* Bounce effect */</sup>
+<b>animation-timing-function</b><i>:</i> <b>cubic-bezier</b><i>(</i><em>0.68</em><i>,</i> <i>-</i><em>0.55</em><i>,</i> <em>0.265</em><i>,</i> <em>1.55</em><i>)</i><i>;</i>
+
+<sup>/* Linear movement */</sup>
+<b>animation-timing-function</b><i>:</i> linear<i>;</i></code></pre>
+<p>Avoid <code>ease-in</code> for user interactions—it feels sluggish.</p>
+<h2>Performance Matters</h2>
+<p>Only animate these properties for 60fps:</p>
+<pre><code language="css"><sup>/* Good - GPU accelerated */</sup>
+<b>transform</b><i>:</i> <b>translateX</b><i>(</i><em>100px</em><i>)</i><i>;</i>
+<b>opacity</b><i>:</i> <em>0</em><i>;</i>
+
+<sup>/* Avoid - causes repaints */</sup>
+<b>width</b><i>:</i> <em>200px</em><i>;</i>
+<b>height</b><i>:</i> <em>100px</em><i>;</i>
+<b>left</b><i>:</i> <em>50px</em><i>;</i></code></pre>
+<p>Use <code>will-change</code> sparingly:</p>
+<pre><code language="css"><i>.</i>animated<i>-</i>element <i>{</i>
+  <b>will-change</b><i>:</i> transform<i>,</i> opacity<i>;</i>
+<i>}</i></code></pre>
+<h2>Controlling Animations</h2>
+<p>Pause and resume animations:</p>
+<pre><code language="css"><i>.</i>animation <i>{</i>
+  <b>animation-play-state</b><i>:</i> paused<i>;</i>
+<i>}</i>
+
+<i>.</i><b>animation</b><i>:</i>hover <i>{</i>
+  <b>animation-play-state</b><i>:</i> running<i>;</i>
+<i>}</i></code></pre>
+<p>Loop animations infinitely:</p>
+<pre><code language="css"><i>.</i>spinner <i>{</i>
+  <b>animation</b><i>:</i> spin <em>1s</em> linear infinite<i>;</i>
+<i>}</i></code></pre>
+<h2>Reduced Motion</h2>
+<p>Respect user preferences:</p>
+<pre><code language="css"><label>@media</label> <i>(</i><b>prefers-reduced-motion</b><i>:</i> reduce<i>)</i> <i>{</i>
+  <i>*</i> <i>{</i>
+    <b>animation-duration</b><i>:</i> <em>0.01ms</em> <label>!important</label><i>;</i>
+    <b>transition-duration</b><i>:</i> <em>0.01ms</em> <label>!important</label><i>;</i>
+  <i>}</i>
+<i>}</i></code></pre>
+<h2>Purpose Over Flash</h2>
+<p>Animations should:</p>
+<ul><li><p>Guide attention</p></li>
+<li><p>Provide feedback</p></li>
+<li><p>Show relationships</p></li>
+<li><p>Add personality</p></li></ul>
+<p>Avoid animations that distract or slow users down. Subtle usually beats dramatic.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

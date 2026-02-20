@@ -1,0 +1,137 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>JavaScript Error Handling</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Sun Feb 16 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="JavaScript Error Handling">
+	<meta name="og:description" content="Write robust JavaScript applications with proper error handling patterns and techniques.">
+	<meta name="description" content="Write robust JavaScript applications with proper error handling patterns and techniques.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>JavaScript Error Handling</h1>
+<p>Errors happen. Networks fail, users input unexpected data, and APIs change. Good error handling separates production-ready code from fragile scripts. Here's how to handle errors gracefully.</p>
+<h2>Try-Catch Basics</h2>
+<p>Wrap risky code in try-catch blocks:</p>
+<pre><code language="javascript"><strong>try</strong> <i>{</i>
+  <strong>const</strong> <b>data</b> <i>=</i> JSON<i>.</i><b>parse</b><i>(</i>jsonString<i>)</i><i>;</i>
+  <b>processData</b><i>(</i>data<i>)</i><i>;</i>
+<i>}</i> <strong>catch</strong> <i>(</i>error<i>)</i> <i>{</i>
+  console<i>.</i><b>error</b><i>(</i><em>'Failed to parse JSON:'</em><i>,</i> error<i>.</i>message<i>)</i><i>;</i>
+  <sup>// Graceful fallback</sup>
+  <b>showUserError</b><i>(</i><em>'Invalid data format'</em><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p>Never catch errors silently. Always handle or rethrow.</p>
+<h2>Throwing Meaningful Errors</h2>
+<p>Create descriptive error messages:</p>
+<pre><code language="javascript"><strong>function</strong> <b>fetchUser</b><i>(</i>id<i>)</i> <i>{</i>
+  <strong>if</strong> <i>(</i><i>!</i>id<i>)</i> <i>{</i>
+    <strong>throw</strong> <strong>new</strong> <b>Error</b><i>(</i><em>'User ID is required'</em><i>)</i><i>;</i>
+  <i>}</i>
+  <strong>if</strong> <i>(</i>typeof <b>id</b> <i>!</i><i>=</i><i>=</i> <em>'string'</em><i>)</i> <i>{</i>
+    <strong>throw</strong> <strong>new</strong> <b>TypeError</b><i>(</i><em>'User ID must be a string'</em><i>)</i><i>;</i>
+  <i>}</i>
+  <sup>// ...</sup>
+<i>}</i></code></pre>
+<p>Use the right error type: <code>Error</code>, <code>TypeError</code>, <code>RangeError</code>, <code>SyntaxError</code>.</p>
+<h2>Custom Error Classes</h2>
+<p>Create domain-specific errors:</p>
+<pre><code language="javascript"><strong>class</strong> ValidationError extends Error <i>{</i>
+  <b>constructor</b><i>(</i>message<i>,</i> field<i>)</i> <i>{</i>
+    <strong>super</strong><i>(</i>message<i>)</i><i>;</i>
+    this<i>.</i><b>name</b> <i>=</i> <em>'ValidationError'</em><i>;</i>
+    this<i>.</i><b>field</b> <i>=</i> field<i>;</i>
+  <i>}</i>
+<i>}</i>
+
+<strong>throw</strong> <strong>new</strong> <b>ValidationError</b><i>(</i><em>'Email is invalid'</em><i>,</i> <em>'email'</em><i>)</i><i>;</i></code></pre>
+<p>This makes error handling more specific.</p>
+<h2>Async Error Handling</h2>
+<p>Handle promise rejections properly:</p>
+<pre><code language="javascript"><sup>// With async/await</sup>
+<strong>async</strong> <strong>function</strong> <b>loadUser</b><i>(</i>id<i>)</i> <i>{</i>
+  <strong>try</strong> <i>{</i>
+    <strong>const</strong> <b>response</b> <i>=</i> <strong>await</strong> <b>fetch</b><i>(</i><i>`</i><i>/</i>users<i>/</i><i>$</i><i>{</i>id<i>}</i><i>`</i><i>)</i><i>;</i>
+    <strong>if</strong> <i>(</i><i>!</i>response<i>.</i>ok<i>)</i> <i>{</i>
+      <strong>throw</strong> <strong>new</strong> <b>Error</b><i>(</i><i>`</i>HTTP <i>$</i><i>{</i>response<i>.</i>status<i>}</i><i>`</i><i>)</i><i>;</i>
+    <i>}</i>
+    <strong>return</strong> <strong>await</strong> response<i>.</i><b>json</b><i>(</i><i>)</i><i>;</i>
+  <i>}</i> <strong>catch</strong> <i>(</i>error<i>)</i> <i>{</i>
+    <b>logError</b><i>(</i>error<i>)</i><i>;</i>
+    <strong>return</strong> <strong>null</strong><i>;</i>
+  <i>}</i>
+<i>}</i>
+
+<sup>// With promises</sup>
+<b>fetch</b><i>(</i><em>'/api/data'</em><i>)</i>
+  <i>.</i><strong>then</strong><i>(</i><b>response</b> <i>=</i><i>&gt;</i> response<i>.</i><b>json</b><i>(</i><i>)</i><i>)</i>
+  <i>.</i><strong>catch</strong><i>(</i><b>error</b> <i>=</i><i>&gt;</i> console<i>.</i><b>error</b><i>(</i><em>'Fetch failed:'</em><i>,</i> error<i>)</i><i>)</i><i>;</i></code></pre>
+<h2>Global Error Handling</h2>
+<p>Catch unhandled errors at the application level:</p>
+<pre><code language="javascript"><sup>// Synchronous errors</sup>
+window<i>.</i><b>onerror</b> <i>=</i> <i>(</i>message<i>,</i> source<i>,</i> line<i>,</i> col<i>,</i> error<i>)</i> <i>=</i><i>&gt;</i> <i>{</i>
+  <b>logToService</b><i>(</i><i>{</i> message<i>,</i> source<i>,</i> line<i>,</i> error <i>}</i><i>)</i><i>;</i>
+  <strong>return</strong> <strong>true</strong><i>;</i> <sup>// Prevent default</sup>
+<i>}</i><i>;</i>
+
+<sup>// Promise rejections</sup>
+window<i>.</i><b>onunhandledrejection</b> <i>=</i> <i>(</i>event<i>)</i> <i>=</i><i>&gt;</i> <i>{</i>
+  <b>logToService</b><i>(</i>event<i>.</i>reason<i>)</i><i>;</i>
+  event<i>.</i><b>preventDefault</b><i>(</i><i>)</i><i>;</i>
+<i>}</i><i>;</i></code></pre>
+<h2>Error Logging</h2>
+<p>Send errors to a monitoring service:</p>
+<pre><code language="javascript"><strong>function</strong> <b>logToService</b><i>(</i>error<i>,</i> <b>context</b> <i>=</i> <i>{</i><i>}</i><i>)</i> <i>{</i>
+  navigator<i>.</i><b>sendBeacon</b><i>(</i><em>'/api/errors'</em><i>,</i> JSON<i>.</i><b>stringify</b><i>(</i><i>{</i>
+    <b>message</b><i>:</i> error<i>.</i>message<i>,</i>
+    <b>stack</b><i>:</i> error<i>.</i>stack<i>,</i>
+    <b>url</b><i>:</i> window<i>.</i>location<i>.</i>href<i>,</i>
+    <b>timestamp</b><i>:</i> <strong>new</strong> <b>Date</b><i>(</i><i>)</i><i>.</i><b>toISOString</b><i>(</i><i>)</i><i>,</i>
+    <i>.</i><i>.</i><i>.</i>context
+  <i>}</i><i>)</i><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p>Services like Sentry, LogRocket, or Rollbar help track production errors.</p>
+<h2>User-Friendly Messages</h2>
+<p>Never show technical errors to users:</p>
+<pre><code language="javascript"><strong>const</strong> <b>ERROR_MESSAGES</b> <i>=</i> <i>{</i>
+  <b>NetworkError</b><i>:</i> <em>'Please check your internet connection'</em><i>,</i>
+  <b>ValidationError</b><i>:</i> <em>'Please check your input'</em><i>,</i>
+  <b>AuthError</b><i>:</i> <em>'Please log in again'</em><i>,</i>
+  <strong>default</strong><i>:</i> <em>'Something went wrong. Please try again.'</em>
+<i>}</i><i>;</i>
+
+<strong>function</strong> <b>showUserError</b><i>(</i>error<i>)</i> <i>{</i>
+  <strong>const</strong> <b>message</b> <i>=</i> <b>ERROR_MESSAGES</b><i>[</i>error<i>.</i>name<i>]</i> <i>|</i><i>|</i> ERROR_MESSAGES<i>.</i><strong>default</strong><i>;</i>
+  toast<i>.</i><b>error</b><i>(</i>message<i>)</i><i>;</i>
+<i>}</i></code></pre>
+<h2>Start Handling Errors Today</h2>
+<p>Every <code>try-catch</code> you write makes your app more resilient. Start with critical paths: network requests, form submissions, and user inputs.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

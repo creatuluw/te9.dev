@@ -1,0 +1,14 @@
+- https://github.com/medusajs/medusa
+- https://github.com/evidence-dev/evidence
+- https://github.com/skeletonlabs/skeleton
+- https://github.com/sveltejs/realworld
+- https://github.com/firefly-iii/firefly-iii
+- https://github.com/MicroPyramid/opensource-startup-crm
+- https://github.com/nocobase/nocobase
+- https://github.com/saltcorn/saltcorn
+- https://github.com/makeplane/plane
+- https://github.com/invoiceninja/invoiceninja
+- https://github.com/deta/surf
+- https://github.com/itswadesh/svelte-commerce
+- https://github.com/payloadcms/payload
+- https://github.com/umami-software/umami

@@ -1,0 +1,141 @@
+@import 'tailwindcss';
+
+* {
+	font-family: 'Inter', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+	background: #18181B;
+	color: #FFFFFF;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+.glass-panel {
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(12px);
+}
+
+.card-hidden {
+	opacity: 0;
+	transform: translateY(50px);
+}
+
+.card-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.anim-slide { animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.anim-fade { animation: fadeIn 0.6s ease-out forwards; }
+.anim-zoom { animation: zoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.anim-fall { animation: fallIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.anim-swipe { animation: swipeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.anim-warp { animation: warpIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+.anim-flip { animation: flipIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.anim-bounce { animation: bounceIn 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+.anim-rotate { animation: rotateIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.anim-scale { animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+@keyframes slideIn {
+	from { opacity: 0; transform: translateY(60px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+@keyframes zoomIn {
+	from { opacity: 0; transform: scale(0.5); }
+	to { opacity: 1; transform: scale(1); }
+}
+@keyframes fallIn {
+	from { opacity: 0; transform: translateY(-80px) rotate(10deg); }
+	to { opacity: 1; transform: translateY(0) rotate(0deg); }
+}
+@keyframes swipeIn {
+	from { opacity: 0; transform: translateX(-100px); }
+	to { opacity: 1; transform: translateX(0); }
+}
+@keyframes warpIn {
+	from { opacity: 0; transform: perspective(500px) rotateX(45deg) translateY(40px); }
+	to { opacity: 1; transform: perspective(500px) rotateX(0deg) translateY(0); }
+}
+@keyframes flipIn {
+	from { opacity: 0; transform: perspective(500px) rotateY(90deg); }
+	to { opacity: 1; transform: perspective(500px) rotateY(0deg); }
+}
+@keyframes bounceIn {
+	from { opacity: 0; transform: scale(0.3); }
+	50% { transform: scale(1.05); }
+	70% { transform: scale(0.9); }
+	to { opacity: 1; transform: scale(1); }
+}
+@keyframes rotateIn {
+	from { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+	to { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+@keyframes scaleIn {
+	from { opacity: 0; transform: scaleY(0); }
+	to { opacity: 1; transform: scaleY(1); }
+}
+
+.prose {
+	max-width: 65ch;
+}
+
+.prose h1 {
+	font-size: 2rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+}
+
+.prose h2 {
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-top: 2rem;
+	margin-bottom: 0.75rem;
+}
+
+.prose p {
+	color: #52525b;
+	line-height: 1.75;
+	margin-bottom: 1rem;
+}
+
+.prose code {
+	background: #EDF4F7;
+	color: #000000;
+	padding: 0.125rem 0.375rem;
+	border-radius: 0.25rem;
+	font-size: 0.875rem;
+}
+
+.prose pre {
+	background: #EDF4F7;
+	color: #000000;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	overflow-x: auto;
+	margin-bottom: 1rem;
+}
+
+.prose pre code {
+	background: transparent;
+	padding: 0;
+}
+
+.prose ul, .prose ol {
+	padding-left: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+.prose li {
+	color: #52525b;
+	margin-bottom: 0.25rem;
+}

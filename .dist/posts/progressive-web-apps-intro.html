@@ -1,0 +1,111 @@
+
+    <!doctype html>
+
+    <html lang="en-US">
+      <head>
+        <title>Introduction to Progressive Web Apps</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="article:published_time" content="Fri Feb 14 2025 01:00:00 GMT+0100 (Central European Standard Time)">
+	<meta name="generator" content="Nue v2.0.0-beta.2 (nuejs.org)">
+	<meta name="date.updated" content="2026-02-20T16:19Z">
+	<meta name="og:title" content="Introduction to Progressive Web Apps">
+	<meta name="og:description" content="Build web apps that work offline, install like native apps, and deliver exceptional user experiences.">
+	<meta name="description" content="Build web apps that work offline, install like native apps, and deliver exceptional user experiences.">
+	<link rel="stylesheet" href="/global.css">
+        
+      </head>
+      
+    <body>
+      
+      
+      
+      
+    <main>
+      
+      
+    <article>
+      
+      <h1>Introduction to Progressive Web Apps</h1>
+<p>Progressive Web Apps (PWAs) combine the best of web and native apps. They work offline, load instantly, and can be installed on users' devices. Here's what makes PWAs powerful.</p>
+<h2>Core Features</h2>
+<p>PWAs provide three key capabilities:</p>
+<ul><li><p><strong>Offline support</strong>: Work without network connectivity</p></li>
+<li><p><strong>Installable</strong>: Add to home screen like native apps</p></li>
+<li><p><strong>App-like</strong>: Full-screen, smooth animations, native feel</p></li></ul>
+<h2>Service Workers</h2>
+<p>The heart of offline functionality:</p>
+<pre><code language="javascript"><sup>// Register service worker</sup>
+<strong>if</strong> <i>(</i><em>'serviceWorker'</em> in navigator<i>)</i> <i>{</i>
+  navigator<i>.</i>serviceWorker<i>.</i><b>register</b><i>(</i><em>'/sw.js'</em><i>)</i>
+    <i>.</i><strong>then</strong><i>(</i><b>reg</b> <i>=</i><i>&gt;</i> console<i>.</i><b>log</b><i>(</i><em>'Registered:'</em><i>,</i> reg<i>.</i>scope<i>)</i><i>)</i>
+    <i>.</i><strong>catch</strong><i>(</i><b>err</b> <i>=</i><i>&gt;</i> console<i>.</i><b>error</b><i>(</i><em>'Registration failed:'</em><i>,</i> err<i>)</i><i>)</i><i>;</i>
+<i>}</i></code></pre>
+<p>Cache resources for offline use:</p>
+<pre><code language="javascript"><sup>// sw.js</sup>
+<strong>const</strong> <b>CACHE_NAME</b> <i>=</i> <em>'v1'</em><i>;</i>
+<strong>const</strong> <b>urlsToCache</b> <i>=</i> <i>[</i>
+  <em>'/'</em><i>,</i>
+  <em>'/styles.css'</em><i>,</i>
+  <em>'/app.js'</em>
+<i>]</i><i>;</i>
+
+self<i>.</i><b>addEventListener</b><i>(</i><em>'install'</em><i>,</i> <b>event</b> <i>=</i><i>&gt;</i> <i>{</i>
+  event<i>.</i><b>waitUntil</b><i>(</i>
+    caches<i>.</i><b>open</b><i>(</i>CACHE_NAME<i>)</i>
+      <i>.</i><strong>then</strong><i>(</i><b>cache</b> <i>=</i><i>&gt;</i> cache<i>.</i><b>addAll</b><i>(</i>urlsToCache<i>)</i><i>)</i>
+  <i>)</i><i>;</i>
+<i>}</i><i>)</i><i>;</i></code></pre>
+<h2>Web App Manifest</h2>
+<p>Make your app installable:</p>
+<pre><code language="json"><i>{</i>
+  <b>"name"</b><i>:</i> <em>"My Progressive App"</em><i>,</i>
+  <b>"short_name"</b><i>:</i> <em>"MyApp"</em><i>,</i>
+  <b>"start_url"</b><i>:</i> <em>"/"</em><i>,</i>
+  <b>"display"</b><i>:</i> <em>"standalone"</em><i>,</i>
+  <b>"background_color"</b><i>:</i> <em>"#ffffff"</em><i>,</i>
+  <b>"theme_color"</b><i>:</i> <em>"#3b82f6"</em><i>,</i>
+  <b>"icons"</b><i>:</i> <i>[</i>
+    <i>{</i>
+      <b>"src"</b><i>:</i> <em>"/icon-192.png"</em><i>,</i>
+      <b>"sizes"</b><i>:</i> <em>"192x192"</em><i>,</i>
+      <b>"type"</b><i>:</i> <em>"image/png"</em>
+    <i>}</i>
+  <i>]</i>
+<i>}</i></code></pre>
+<p>Link it in your HTML:</p>
+<pre><code language="html"><i>&lt;</i><strong>link </strong><b>rel</b><i>=</i><em>"manifest"</em> <b>href</b><i>=</i><em>"/manifest.json"</em><i>&gt;</i></code></pre>
+<h2>Serving Cached Content</h2>
+<p>Handle fetch requests:</p>
+<pre><code language="javascript">self<i>.</i><b>addEventListener</b><i>(</i><em>'fetch'</em><i>,</i> <b>event</b> <i>=</i><i>&gt;</i> <i>{</i>
+  event<i>.</i><b>respondWith</b><i>(</i>
+    caches<i>.</i><b>match</b><i>(</i>event<i>.</i>request<i>)</i>
+      <i>.</i><strong>then</strong><i>(</i><b>response</b> <i>=</i><i>&gt;</i> response <i>|</i><i>|</i> <b>fetch</b><i>(</i>event<i>.</i>request<i>)</i><i>)</i>
+  <i>)</i><i>;</i>
+<i>}</i><i>)</i><i>;</i></code></pre>
+<h2>Benefits Over Native</h2>
+<ul><li><p><strong>No app store</strong>: Deploy instantly, no review process</p></li>
+<li><p><strong>Cross-platform</strong>: One codebase for all devices</p></li>
+<li><p><strong>Discoverable</strong>: Searchable by search engines</p></li>
+<li><p><strong>Linkable</strong>: Share via URL</p></li>
+<li><p><strong>Small size</strong>: No massive downloads</p></li></ul>
+<h2>Getting Started</h2>
+<ol><li><p>Add HTTPS (required for service workers)</p></li>
+<li><p>Create a manifest.json file</p></li>
+<li><p>Register a service worker</p></li>
+<li><p>Test with Lighthouse PWA audit</p></li>
+<li><p>Deploy and iterate</p></li></ol>
+<h2>Start Building</h2>
+<p>PWAs aren't all-or-nothing. Start with offline support for key pages, then add features progressively. Your users will thank you.</p>
+      
+    </article>
+  
+      
+    </main>
+  
+      
+      
+    </body>
+  
+    </html>
+  

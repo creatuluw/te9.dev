@@ -1,0 +1,4 @@
+collections:
+  posts:
+    match: [*.md]
+    sort: date desc
