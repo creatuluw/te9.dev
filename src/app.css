@@ -1,5 +1,332 @@
 @import "tailwindcss";
 
+/* View Transitions - Multiple Variations */
+
+/* Base fade animations */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+    }
+}
+
+/* Slide animations */
+@keyframes slide-from-right {
+    from {
+        transform: translateX(30px);
+    }
+}
+
+@keyframes slide-to-left {
+    to {
+        transform: translateX(-30px);
+    }
+}
+
+/* Rotate animations */
+@keyframes rotate-in {
+    from {
+        transform: rotate(-5deg) scale(0.95);
+        opacity: 0;
+    }
+}
+
+@keyframes rotate-out {
+    to {
+        transform: rotate(5deg) scale(1.05);
+        opacity: 0;
+    }
+}
+
+/* Flip animations */
+@keyframes flip-in {
+    from {
+        transform: perspective(1000px) rotateY(-30deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes flip-out {
+    to {
+        transform: perspective(1000px) rotateY(30deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+/* Blur animations */
+@keyframes blur-in {
+    from {
+        filter: blur(10px);
+        opacity: 0;
+    }
+}
+
+@keyframes blur-out {
+    to {
+        filter: blur(10px);
+        opacity: 0;
+    }
+}
+
+/* Curtain animations */
+@keyframes curtain-in {
+    from {
+        clip-path: inset(0 0 100% 0);
+    }
+}
+
+@keyframes curtain-out {
+    to {
+        clip-path: inset(100% 0 0 0);
+    }
+}
+
+/* Spiral animations */
+@keyframes spiral-in {
+    from {
+        transform: rotate(-180deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes spiral-out {
+    to {
+        transform: rotate(180deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Explode animations */
+@keyframes explode-in {
+    from {
+        transform: scale(0.1);
+        opacity: 0;
+        filter: blur(20px);
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes explode-out {
+    to {
+        transform: scale(1.5);
+        opacity: 0;
+        filter: blur(20px);
+    }
+}
+
+/* Zoom animations */
+@keyframes zoom-in {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+}
+
+@keyframes zoom-out {
+    to {
+        transform: scale(1.05);
+        opacity: 0;
+    }
+}
+
+/* Scale up animations */
+@keyframes scale-up {
+    from {
+        transform: scale(1.1);
+        opacity: 0;
+    }
+}
+
+@keyframes scale-down {
+    to {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}
+
+/* Drop animations */
+@keyframes drop-in {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+}
+
+@keyframes drop-out {
+    to {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+}
+
+/* Swipe animations */
+@keyframes swipe-from-bottom {
+    from {
+        transform: translateY(50px);
+    }
+}
+
+@keyframes swipe-to-top {
+    to {
+        transform: translateY(-50px);
+    }
+}
+
+/* Default (slide) */
+:root.transition-slide::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+:root.transition-slide::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+/* Zoom transition */
+:root.transition-zoom::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both zoom-out;
+}
+
+:root.transition-zoom::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both zoom-in;
+}
+
+/* Rotate transition */
+:root.transition-rotate::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both rotate-out;
+}
+
+:root.transition-rotate::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both rotate-in;
+}
+
+/* Flip transition */
+:root.transition-flip::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both flip-out;
+}
+
+:root.transition-flip::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both flip-in;
+}
+
+/* Blur transition */
+:root.transition-blur::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both blur-out;
+}
+
+:root.transition-blur::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both blur-in;
+}
+
+/* Curtain transition */
+:root.transition-curtain::view-transition-old(root) {
+    animation: 800ms cubic-bezier(0.4, 0, 0.2, 1) both curtain-out;
+}
+
+:root.transition-curtain::view-transition-new(root) {
+    animation: 800ms cubic-bezier(0.4, 0, 0.2, 1) both curtain-in;
+}
+
+/* Spiral transition */
+:root.transition-spiral::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both spiral-out;
+}
+
+:root.transition-spiral::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both spiral-in;
+}
+
+/* Explode transition */
+:root.transition-explode::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both explode-out;
+}
+
+:root.transition-explode::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both explode-in;
+}
+
+/* Scale transition */
+:root.transition-scale::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both scale-down;
+}
+
+:root.transition-scale::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both scale-up;
+}
+
+/* Drop transition */
+:root.transition-drop::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both drop-out;
+}
+
+:root.transition-drop::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both drop-in;
+}
+
+/* Swipe transition */
+:root.transition-swipe::view-transition-old(root) {
+    animation:
+        250ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both swipe-to-top;
+}
+
+:root.transition-swipe::view-transition-new(root) {
+    animation:
+        550ms cubic-bezier(0, 0, 0.2, 1) 250ms both fade-in,
+        800ms cubic-bezier(0.4, 0, 0.2, 1) both swipe-from-bottom;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: no-preference) {
+    :root::view-transition-old(root),
+    :root::view-transition-new(root) {
+        animation-duration: 0.3s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
 /* Custom font families */
 @font-face {
     font-family: "Bricolage Grotesque";

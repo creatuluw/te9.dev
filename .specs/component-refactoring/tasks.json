@@ -1,0 +1,350 @@
+{
+  "project": "component-refactoring",
+  "spec": ".specs/component-refactoring/spec.md",
+  "developmentMethodology": "TDD (RED-GREEN-REFACTOR cycle)",
+  "tasks": [
+    {
+      "id": "setup-001",
+      "phase": "Setup & Foundation",
+      "title": "Create component directory structure",
+      "description": "Establish the directory structure for component organization",
+      "acceptanceCriteria": [
+        "TDD: Verify src/lib/components/ui directory exists before creating components",
+        "TDD: Test fails when directory structure is incomplete",
+        "TDD: Refactor directory organization if needed after verification"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Infrastructure"
+    },
+    {
+      "id": "setup-002",
+      "phase": "Setup & Foundation",
+      "title": "Extract type definitions to types.ts",
+      "description": "FR-9: Create types.ts with PathData, GardenCard, and QuickLink interfaces",
+      "acceptanceCriteria": [
+        "TDD: Write test importing types before creating types.ts file",
+        "TDD: TypeScript compilation fails when types.ts doesn't exist or has incomplete definitions",
+        "TDD: Refactor type definitions for clarity and reusability after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-9"
+    },
+    {
+      "id": "setup-003",
+      "phase": "Setup & Foundation",
+      "title": "Extract static data to data.ts",
+      "description": "FR-9: Create data.ts with gardenCards and quickLinks arrays",
+      "acceptanceCriteria": [
+        "TDD: Write test importing data arrays before creating data.ts file",
+        "TDD: Test fails when data.ts doesn't export expected arrays with correct structure",
+        "TDD: Refactor data organization if needed after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-9"
+    },
+    {
+      "id": "layout-004",
+      "phase": "Layout Components",
+      "title": "Create BackgroundEffects component",
+      "description": "FR-3: Build BackgroundEffects.svelte with noise overlay and scanlines",
+      "acceptanceCriteria": [
+        "TDD: Write test rendering BackgroundEffects component before implementation",
+        "TDD: Test fails when component doesn't render noise-overlay and scanlines divs",
+        "TDD: Refactor component structure for clarity after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-3"
+    },
+    {
+      "id": "layout-005",
+      "phase": "Layout Components",
+      "title": "Create Header component with typing animation",
+      "description": "FR-1: Build Header.svelte with logo typing effect and scroll behavior",
+      "acceptanceCriteria": [
+        "TDD: Write test for typing animation behavior before implementing effect logic",
+        "TDD: Test fails when typedText doesn't match expected sequence or cursor doesn't blink",
+        "TDD: Refactor animation logic and cleanup handlers after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-1"
+    },
+    {
+      "id": "layout-006",
+      "phase": "Layout Components",
+      "title": "Add scroll behavior to Header",
+      "description": "FR-1: Implement scroll-based background changes in Header component",
+      "acceptanceCriteria": [
+        "TDD: Write test simulating scroll event before implementing scroll handler",
+        "TDD: Test fails when navScrolled state doesn't update on scroll",
+        "TDD: Refactor event listener setup and cleanup after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-1"
+    },
+    {
+      "id": "layout-007",
+      "phase": "Layout Components",
+      "title": "Create Footer component",
+      "description": "FR-2: Build Footer.svelte with brand section, link columns, and status",
+      "acceptanceCriteria": [
+        "TDD: Write test rendering Footer component before implementation",
+        "TDD: Test fails when component doesn't render brand, links, and status sections",
+        "TDD: Refactor responsive layout and link structure after tests pass"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "FR-2"
+    },
+    {
+      "id": "page-008",
+      "phase": "Page Components",
+      "title": "Create Hero section component",
+      "description": "FR-4: Build Hero.svelte with label, title, subtitle, CTAs, and decorations",
+      "acceptanceCriteria": [
+        "TDD: Write test rendering Hero component before implementation",
+        "TDD: Test fails when component doesn't render all required sections (label, title, subtitle, description, CTAs, decorations)",
+        "TDD: Refactor component structure and styling after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-4"
+    },
+    {
+      "id": "page-009",
+      "phase": "Page Components",
+      "title": "Create GardenCard component",
+      "description": "FR-5: Build GardenCard.svelte with SVG icon support and animations",
+      "acceptanceCriteria": [
+        "TDD: Write test rendering GardenCard with sample data before implementation",
+        "TDD: Test fails when component doesn't render SVG paths or apply correct animations",
+        "TDD: Refactor SVG rendering logic and animation configuration after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-5"
+    },
+    {
+      "id": "page-010",
+      "phase": "Page Components",
+      "title": "Add SVG path rendering to GardenCard",
+      "description": "FR-5: Implement multi-type SVG path rendering (path, rect, polyline, line, circle)",
+      "acceptanceCriteria": [
+        "TDD: Write tests for each SVG element type before implementing conditional rendering",
+        "TDD: Test fails when specific SVG element types don't render correctly",
+        "TDD: Refactor conditional logic for clarity after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-5"
+    },
+    {
+      "id": "page-011",
+      "phase": "Page Components",
+      "title": "Create QuickLink component",
+      "description": "FR-6: Build QuickLink.svelte with slide animation and hover effects",
+      "acceptanceCriteria": [
+        "TDD: Write test rendering QuickLink with sample data before implementation",
+        "TDD: Test fails when component doesn't render as anchor or apply slide animation",
+        "TDD: Refactor animation and hover behavior after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-6"
+    },
+    {
+      "id": "shared-012",
+      "phase": "Shared Components",
+      "title": "Create SectionHeader component",
+      "description": "FR-7: Build SectionHeader.svelte for reusable section headers",
+      "acceptanceCriteria": [
+        "TDD: Write test rendering SectionHeader with label and title props before implementation",
+        "TDD: Test fails when component doesn't render label or title with correct styling",
+        "TDD: Refactor component for reusability after tests pass"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "FR-7"
+    },
+    {
+      "id": "shared-013",
+      "phase": "Shared Components",
+      "title": "Create Button component with variants",
+      "description": "FR-8: Build Button.svelte with primary and secondary variants",
+      "acceptanceCriteria": [
+        "TDD: Write tests for both primary and secondary button variants before implementation",
+        "TDD: Test fails when variant doesn't apply correct styles or animations",
+        "TDD: Refactor variant logic and hover effects after tests pass"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "FR-8"
+    },
+    {
+      "id": "integration-014",
+      "phase": "Integration",
+      "title": "Integrate components into +layout.svelte",
+      "description": "FR-10: Add Header, Footer, and BackgroundEffects to layout file",
+      "acceptanceCriteria": [
+        "TDD: Write test verifying layout renders all three components before integration",
+        "TDD: Test fails when any layout component is missing or improperly positioned",
+        "TDD: Refactor layout structure and component ordering after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-10"
+    },
+    {
+      "id": "integration-015",
+      "phase": "Integration",
+      "title": "Refactor +page.svelte to use extracted components",
+      "description": "Replace inline markup with imported components in homepage",
+      "acceptanceCriteria": [
+        "TDD: Write test verifying homepage renders with all components before refactoring",
+        "TDD: Test fails when page doesn't use extracted components or functionality breaks",
+        "TDD: Refactor page structure and component composition after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Integration"
+    },
+    {
+      "id": "integration-016",
+      "phase": "Integration",
+      "title": "Verify visual parity with original implementation",
+      "description": "Ensure refactored site matches original design exactly",
+      "acceptanceCriteria": [
+        "TDD: Write visual regression tests or comparison checklist before refactoring",
+        "TDD: Test fails when any visual differences are detected",
+        "TDD: Refactor styling and positioning until tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Success Criteria"
+    },
+    {
+      "id": "integration-017",
+      "phase": "Integration",
+      "title": "Verify all animations and interactions preserved",
+      "description": "Test all animations, hover states, and interactive behaviors",
+      "acceptanceCriteria": [
+        "TDD: Write interaction tests for typing animation, scroll behavior, and hover effects",
+        "TDD: Test fails when any animation timing or interaction behavior differs",
+        "TDD: Refactor animation configuration if needed after tests pass"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Success Criteria"
+    },
+    {
+      "id": "testing-018",
+      "phase": "Testing & Validation",
+      "title": "Verify TypeScript compilation with strict mode",
+      "description": "Ensure no TypeScript errors in refactored codebase",
+      "acceptanceCriteria": [
+        "TDD: Run TypeScript compiler before marking task complete",
+        "TDD: Compilation fails when type errors exist",
+        "TDD: Fix all type errors and verify strict mode compatibility"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Success Criteria"
+    },
+    {
+      "id": "testing-019",
+      "phase": "Testing & Validation",
+      "title": "Test responsive behavior across breakpoints",
+      "description": "Verify components work correctly at various viewport sizes",
+      "acceptanceCriteria": [
+        "TDD: Write tests or manual checklist for responsive breakpoints (320px, 375px, 768px, 1024px, 1440px)",
+        "TDD: Test fails when layout breaks at any viewport size",
+        "TDD: Refactor responsive styles after identifying issues"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "EC-7"
+    },
+    {
+      "id": "testing-020",
+      "phase": "Testing & Validation",
+      "title": "Verify accessibility and keyboard navigation",
+      "description": "Ensure all interactive elements are accessible",
+      "acceptanceCriteria": [
+        "TDD: Write accessibility tests for keyboard navigation and screen reader compatibility",
+        "TDD: Test fails when focus states or ARIA attributes are missing",
+        "TDD: Refactor accessibility implementation after tests pass"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "Edge Cases"
+    },
+    {
+      "id": "testing-021",
+      "phase": "Testing & Validation",
+      "title": "Performance validation and bundle size check",
+      "description": "Verify refactored code doesn't negatively impact performance",
+      "acceptanceCriteria": [
+        "TDD: Measure bundle size and load time before and after refactoring",
+        "TDD: Test fails if performance degrades significantly",
+        "TDD: Optimize imports and component structure if needed"
+      ],
+      "priority": 3,
+      "status": "pending",
+      "mapsTo": "Design Goals"
+    },
+    {
+      "id": "documentation-022",
+      "phase": "Documentation",
+      "title": "Update component documentation",
+      "description": "Add JSDoc comments and update README if needed",
+      "acceptanceCriteria": [
+        "TDD: Review code for missing documentation before marking complete",
+        "TDD: Documentation incomplete without JSDoc for all public props",
+        "TDD: Refactor documentation for clarity after initial pass"
+      ],
+      "priority": 3,
+      "status": "pending",
+      "mapsTo": "Secondary Goals"
+    }
+  ],
+  "tddWorkflow": {
+    "enforced": true,
+    "cycle": "RED-GREEN-REFACTOR",
+    "rules": [
+      "Write test first (RED) - test must fail",
+      "Write minimal code to pass (GREEN) - no optimization",
+      "Refactor only after test passes (REFACTOR) - maintain quality",
+      "All tasks must follow TDD cycle as acceptance criteria"
+    ]
+  },
+  "estimatedEffort": {
+    "setup": "1-2 hours",
+    "layoutComponents": "3-4 hours",
+    "pageComponents": "4-5 hours",
+    "sharedComponents": "2-3 hours",
+    "integration": "2-3 hours",
+    "testing": "2-3 hours",
+    "total": "14-20 hours"
+  },
+  "dependencies": {
+    "setup-003": ["setup-002"],
+    "layout-006": ["layout-005"],
+    "page-010": ["page-009"],
+    "integration-014": ["layout-004", "layout-005", "layout-007"],
+    "integration-015": ["page-008", "page-009", "page-011", "shared-012", "shared-013"],
+    "integration-016": ["integration-014", "integration-015"],
+    "testing-018": ["integration-016"]
+  },
+  "riskMitigation": [
+    "Test visual parity continuously during refactoring",
+    "Keep original +page.svelte as backup until integration verified",
+    "Use TypeScript strict mode to catch issues early",
+    "Test on multiple browsers and devices",
+    "Monitor bundle size throughout refactoring"
+  ]
+}
