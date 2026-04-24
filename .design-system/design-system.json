@@ -1,0 +1,2232 @@
+{
+  "meta": {
+    "name": "te9.dev Design System",
+    "version": "2.0",
+    "description": "Design system for te9.dev — Patrick's Digital Garden. Extracted from the SvelteKit codebase and documented as a light theme. Vanilla CSS with semantic class names, zero external CSS dependencies, full accessibility.",
+    "theme": "light",
+    "darkThemeSource": {
+      "backgroundPrimary": "#0a0a0a",
+      "backgroundSecondary": "#111111",
+      "textPrimary": "#e8e8e8",
+      "textSecondary": "#888888",
+      "textTertiary": "#666666",
+      "accentPrimary": "#ff9500",
+      "gardenGreen": "#00ff88",
+      "emerald": "#10b981",
+      "borderSubtle": "#2a2a2a",
+      "borderSecondary": "#1a1a1a"
+    },
+    "fonts": {
+      "heading": {
+        "family": "'Bricolage Grotesque', system-ui, sans-serif",
+        "weights": [400, 500, 600, 700],
+        "usage": "Page titles, hero headings, section headings, card titles, logo"
+      },
+      "mono": {
+        "family": "'JetBrains Mono', monospace",
+        "weights": [400, 500, 700],
+        "usage": "Navigation logo, section labels, footer logo, code text, link names, tags"
+      },
+      "body": {
+        "family": "'Lekton', monospace",
+        "weights": [400, 700],
+        "usage": "Body text, descriptions, button labels, subtitles, hero descriptions, card descriptions, nav links"
+      },
+      "loadHTML": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Lekton:wght@400;700&display=swap\" rel=\"stylesheet\" />"
+    },
+    "icons": {
+      "library": "Lucide Icons",
+      "variant": "Regular stroke weight, 1.5px stroke",
+      "package": "@lucide/svelte",
+      "usage": "Import as Svelte components: import { IconName } from '@lucide/svelte';",
+      "sizes": {
+        "inline": 12,
+        "button": 18,
+        "navigation": 20,
+        "card": 24,
+        "decorative": 40
+      }
+    }
+  },
+  "tokens": {
+    "global": {
+      "colors": {
+        "brand-bg": {
+          "value": "#F8F8F6",
+          "usage": "Page background, main surface"
+        },
+        "brand-bg-secondary": {
+          "value": "#EFEFEA",
+          "usage": "Alternate section backgrounds, footer gradient end"
+        },
+        "brand-dark": {
+          "value": "#1A1A1A",
+          "usage": "Primary text, headings, strong emphasis"
+        },
+        "accent": {
+          "value": "#E88500",
+          "usage": "Primary accent — CTAs, highlights, logo dot, section labels, nav active"
+        },
+        "accent-light": {
+          "value": "#FFF4E6",
+          "usage": "Accent background tint, button hover bg"
+        },
+        "accent-dark": {
+          "value": "#C47000",
+          "usage": "Accent hover/pressed states"
+        },
+        "accent-gradient-start": {
+          "value": "#E88500",
+          "usage": "Primary button gradient start"
+        },
+        "accent-gradient-end": {
+          "value": "#D07000",
+          "usage": "Primary button gradient end"
+        },
+        "accent-hover-start": {
+          "value": "#F09500",
+          "usage": "Primary button hover gradient start"
+        },
+        "accent-hover-end": {
+          "value": "#E08000",
+          "usage": "Primary button hover gradient end"
+        },
+        "brand-muted": {
+          "value": "#6B6B6B",
+          "usage": "Secondary text, descriptions, labels, footer tagline"
+        },
+        "brand-light": {
+          "value": "#9A9A9A",
+          "usage": "Tertiary text, hero description, decorative elements (not AA compliant)"
+        },
+        "garden-green": {
+          "value": "#00A855",
+          "usage": "Garden icon color, tag pill color, card top border gradient start"
+        },
+        "garden-green-light": {
+          "value": "#E6F9EF",
+          "usage": "Tag pill background, green tint backgrounds"
+        },
+        "garden-green-dark": {
+          "value": "#008F47",
+          "usage": "Tag text, green on light backgrounds requiring AA contrast"
+        },
+        "emerald": {
+          "value": "#059669",
+          "usage": "Selection color, focus rings, scrollbar hover"
+        },
+        "emerald-light": {
+          "value": "#ECFDF5",
+          "usage": "Selection background tint"
+        },
+        "success-50": { "value": "#F0FDF4", "usage": "Success background" },
+        "success-500": {
+          "value": "#22C55E",
+          "usage": "Success primary, status dot"
+        },
+        "success-700": {
+          "value": "#15803D",
+          "usage": "Success text on light bg"
+        },
+        "warning-50": { "value": "#FFFBEB", "usage": "Warning background" },
+        "warning-500": { "value": "#F59E0B", "usage": "Warning primary" },
+        "warning-700": {
+          "value": "#B45309",
+          "usage": "Warning text on light bg"
+        },
+        "error-50": { "value": "#FEF2F2", "usage": "Error background" },
+        "error-500": { "value": "#EF4444", "usage": "Error primary" },
+        "error-700": { "value": "#B91C1C", "usage": "Error text on light bg" },
+        "info-50": { "value": "#EFF6FF", "usage": "Info background" },
+        "info-500": { "value": "#3B82F6", "usage": "Info primary" },
+        "info-700": { "value": "#1D4ED8", "usage": "Info text on light bg" },
+        "neutral-50": {
+          "value": "#FAFAF8",
+          "usage": "Subtle card backgrounds, hover states"
+        },
+        "neutral-100": {
+          "value": "#F5F5F0",
+          "usage": "Link item hover background"
+        },
+        "neutral-500": { "value": "#6B7280", "usage": "Neutral primary" },
+        "neutral-700": {
+          "value": "#374151",
+          "usage": "Neutral text on light bg"
+        },
+        "white": {
+          "value": "#FFFFFF",
+          "usage": "Card backgrounds, elevated surfaces, inverted text on accent"
+        },
+        "navbar-bg": {
+          "value": "rgba(248, 248, 246, 0.9)",
+          "usage": "Navbar with blur backdrop"
+        },
+        "overlay": {
+          "value": "rgba(0, 0, 0, 0.3)",
+          "usage": "Card hover overlay"
+        },
+        "modal-backdrop": {
+          "value": "rgba(0, 0, 0, 0.5)",
+          "usage": "Modal backdrop"
+        },
+        "input-border": {
+          "value": "#D4D4CC",
+          "usage": "Default input/select border color"
+        },
+        "border-subtle": {
+          "value": "#E0DDD8",
+          "usage": "Card borders, nav border, footer top border, section dividers"
+        },
+        "border-hover": {
+          "value": "#CCCCC4",
+          "usage": "Card hover border, interactive hover borders"
+        },
+        "border-secondary": {
+          "value": "#E8E8E0",
+          "usage": "Link item default border"
+        },
+        "border-tertiary": {
+          "value": "#D4D4CC",
+          "usage": "Secondary hover border (btn-secondary hover)"
+        }
+      },
+      "borderSubtle": {
+        "value": "1px solid #E0DDD8",
+        "usage": "Default card/divider border"
+      },
+      "typography": {
+        "scale": {
+          "hero-xl": {
+            "size": "clamp(3rem, 8vw, 6rem)",
+            "weight": 700,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Hero heading title (responsive, desktop up to 96px)"
+          },
+          "hero-md": {
+            "size": "3rem",
+            "weight": 700,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Hero heading (tablet/mobile min)"
+          },
+          "hero-sm": {
+            "size": "2.5rem",
+            "weight": 700,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Hero heading (small mobile)"
+          },
+          "section-xl": {
+            "size": "2.5rem",
+            "weight": 700,
+            "lineHeight": 1.2,
+            "letterSpacing": "0",
+            "usage": "Section heading (desktop)"
+          },
+          "section-md": {
+            "size": "2rem",
+            "weight": 700,
+            "lineHeight": 1.2,
+            "letterSpacing": "0",
+            "usage": "Section heading (tablet)"
+          },
+          "section-sm": {
+            "size": "1.75rem",
+            "weight": 700,
+            "lineHeight": 1.2,
+            "letterSpacing": "0",
+            "usage": "Section heading (mobile)"
+          },
+          "modal-title": {
+            "size": "1.5rem",
+            "weight": 600,
+            "lineHeight": 1.3,
+            "letterSpacing": "0",
+            "usage": "Modal heading"
+          },
+          "card-title": {
+            "size": "1.25rem",
+            "weight": 600,
+            "lineHeight": 1.4,
+            "letterSpacing": "0",
+            "usage": "Card title, garden card title"
+          },
+          "h1": {
+            "size": "2.5rem",
+            "weight": 700,
+            "lineHeight": 1.2,
+            "letterSpacing": "0",
+            "usage": "Page H1"
+          },
+          "h2": {
+            "size": "2rem",
+            "weight": 600,
+            "lineHeight": 1.3,
+            "letterSpacing": "0",
+            "usage": "Page H2"
+          },
+          "h3": {
+            "size": "1.25rem",
+            "weight": 600,
+            "lineHeight": 1.4,
+            "letterSpacing": "0",
+            "usage": "Page H3"
+          },
+          "h4": {
+            "size": "1.125rem",
+            "weight": 600,
+            "lineHeight": 1.4,
+            "letterSpacing": "0",
+            "usage": "Page H4, footer headings"
+          },
+          "subtitle": {
+            "size": "1.25rem",
+            "weight": 400,
+            "lineHeight": 1.6,
+            "letterSpacing": "0",
+            "usage": "Hero subtitle, lead paragraphs"
+          },
+          "body-lg": {
+            "size": "1.125rem",
+            "weight": 400,
+            "lineHeight": 1.7,
+            "letterSpacing": "0",
+            "usage": "Lead text, hero description"
+          },
+          "body": {
+            "size": "1rem",
+            "weight": 400,
+            "lineHeight": 1.7,
+            "letterSpacing": "0",
+            "usage": "Default body text"
+          },
+          "body-sm": {
+            "size": "0.875rem",
+            "weight": 400,
+            "lineHeight": 1.6,
+            "letterSpacing": "0",
+            "usage": "Card descriptions, UI text, nav links, footer text"
+          },
+          "body-xs": {
+            "size": "0.8125rem",
+            "weight": 400,
+            "lineHeight": 1.5,
+            "letterSpacing": "0",
+            "usage": "Helper text, hints, link descriptions"
+          },
+          "small": {
+            "size": "0.75rem",
+            "weight": 400,
+            "lineHeight": 1.4,
+            "letterSpacing": "0",
+            "usage": "Small text, footer copyright, meta"
+          },
+          "label": {
+            "size": "0.875rem",
+            "weight": 500,
+            "lineHeight": 1.4,
+            "letterSpacing": "0.1em",
+            "usage": "Uppercase labels, section labels"
+          },
+          "caption": {
+            "size": "0.6875rem",
+            "weight": 400,
+            "lineHeight": 1.4,
+            "letterSpacing": "0.05em",
+            "usage": "Tag pills, micro labels"
+          },
+          "button": {
+            "size": "0.9375rem",
+            "weight": 500,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Primary/secondary button text"
+          },
+          "button-sm": {
+            "size": "0.875rem",
+            "weight": 500,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Small button text, outlined variant"
+          },
+          "logo": {
+            "size": "1.5rem",
+            "weight": 700,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Footer logo"
+          },
+          "logo-sm": {
+            "size": "1rem",
+            "weight": 500,
+            "lineHeight": 1,
+            "letterSpacing": "0",
+            "usage": "Navbar logo text"
+          }
+        }
+      },
+      "spacing": {
+        "baseUnit": "8px",
+        "halfStep": "4px (for icon alignment, tag padding only)",
+        "scale": {
+          "0": { "rem": "0", "px": 0, "usage": "Reset" },
+          "0.25": { "rem": "0.0625rem", "px": 1, "usage": "Hairline gaps" },
+          "0.5": {
+            "rem": "0.125rem",
+            "px": 2,
+            "usage": "Micro adjustments, tag vertical padding"
+          },
+          "1": {
+            "rem": "0.25rem",
+            "px": 4,
+            "usage": "Tag horizontal padding, focus ring offset"
+          },
+          "1.5": {
+            "rem": "0.375rem",
+            "px": 6,
+            "usage": "Status dot size, scrollbar width"
+          },
+          "2": {
+            "rem": "0.5rem",
+            "px": 8,
+            "usage": "Button icon gap, scrollbar height, small icon gaps"
+          },
+          "2.5": {
+            "rem": "0.625rem",
+            "px": 10,
+            "usage": "Nav link gap, hero label gap"
+          },
+          "3": {
+            "rem": "0.75rem",
+            "px": 12,
+            "usage": "Small icon size, arrow offset, card header margin bottom"
+          },
+          "3.5": {
+            "rem": "0.875rem",
+            "px": 14,
+            "usage": "Link description margin"
+          },
+          "4": {
+            "rem": "1rem",
+            "px": 16,
+            "usage": "Standard spacing, button icon shift, footer social gap"
+          },
+          "5": {
+            "rem": "1.25rem",
+            "px": 20,
+            "usage": "Link item padding-y, fly transition y offset"
+          },
+          "6": {
+            "rem": "1.5rem",
+            "px": 24,
+            "usage": "Button padding, card padding mobile, section margin bottom"
+          },
+          "7": {
+            "rem": "1.75rem",
+            "px": 28,
+            "usage": "Button padding-x (secondary)"
+          },
+          "8": {
+            "rem": "2rem",
+            "px": 32,
+            "usage": "Card padding, page padding-x, grid gap, footer padding-x"
+          },
+          "9": { "rem": "2.25rem", "px": 36, "usage": "Link item padding" },
+          "10": {
+            "rem": "2.5rem",
+            "px": 40,
+            "usage": "Section label margin bottom"
+          },
+          "12": {
+            "rem": "3rem",
+            "px": 48,
+            "usage": "Section margin bottom, footer padding-top, footer main margin bottom"
+          },
+          "16": {
+            "rem": "4rem",
+            "px": 64,
+            "usage": "Hero padding, page-level spacing"
+          },
+          "20": { "rem": "5rem", "px": 80, "usage": "Link item padding-x" },
+          "24": {
+            "rem": "6rem",
+            "px": 96,
+            "usage": "Section padding-y, footer padding-top"
+          },
+          "32": { "rem": "8rem", "px": 128, "usage": "Large section padding" }
+        }
+      },
+      "radius": {
+        "none": { "value": "0", "px": 0, "usage": "Garden cards, sharp edges" },
+        "xs": {
+          "value": "0.125rem",
+          "px": 2,
+          "usage": "Tag pills, micro elements"
+        },
+        "sm": {
+          "value": "0.25rem",
+          "px": 4,
+          "usage": "Buttons (outlined variant), inline elements"
+        },
+        "md": {
+          "value": "0.375rem",
+          "px": 6,
+          "usage": "Hero CTA buttons, inputs"
+        },
+        "lg": {
+          "value": "0.5rem",
+          "px": 8,
+          "usage": "Link items, cards, selects, tables"
+        },
+        "xl": {
+          "value": "0.75rem",
+          "px": 12,
+          "usage": "Modals, dialogs, elevated cards"
+        },
+        "2xl": { "value": "1rem", "px": 16, "usage": "Modal content" },
+        "3xl": {
+          "value": "1.5rem",
+          "px": 24,
+          "usage": "Large modals, feature sections"
+        },
+        "full": {
+          "value": "9999px",
+          "px": null,
+          "usage": "Pills, badges, avatars, status dots"
+        }
+      },
+      "shadows": {
+        "sm": {
+          "value": "0 1px 3px rgba(0,0,0,0.06)",
+          "usage": "Card resting state, subtle elevation"
+        },
+        "md": {
+          "value": "0 4px 12px rgba(0,0,0,0.08)",
+          "usage": "Hovered cards, navbar scrolled, dropdowns"
+        },
+        "lg": {
+          "value": "0 12px 24px rgba(0,0,0,0.1)",
+          "usage": "Tooltips, notifications, toasts, card hover"
+        },
+        "xl": {
+          "value": "0 20px 40px rgba(0,0,0,0.12)",
+          "usage": "Drawers, side panels, dialogs"
+        },
+        "2xl": {
+          "value": "0 25px 50px rgba(0,0,0,0.16)",
+          "usage": "Full-screen modals, alert dialogs"
+        },
+        "accent": {
+          "value": "0 8px 25px rgba(232, 133, 0, 0.25)",
+          "usage": "Primary button hover shadow"
+        },
+        "accent-sm": {
+          "value": "0 4px 12px rgba(232, 133, 0, 0.15)",
+          "usage": "Outlined button hover shadow"
+        },
+        "inner": {
+          "value": "inset 0 2px 4px rgba(0,0,0,0.06)",
+          "usage": "Active/pressed states, inset focus"
+        }
+      },
+      "zIndex": {
+        "base": 0,
+        "dropdown": 100,
+        "sticky": 200,
+        "overlay": 500,
+        "modal": 600,
+        "popover": 700,
+        "toast": 800,
+        "navbar": 1000,
+        "effects": 9998,
+        "scanlines": 9999,
+        "skipLink": 10000
+      }
+    },
+    "semantic": {
+      "surface-primary": {
+        "mapsTo": "--color-brand-bg",
+        "value": "#F8F8F6",
+        "usage": "Main page background"
+      },
+      "surface-secondary": {
+        "mapsTo": "--color-brand-bg-secondary",
+        "value": "#EFEFEA",
+        "usage": "Alternate section backgrounds"
+      },
+      "surface-elevated": {
+        "mapsTo": "--color-white",
+        "value": "#FFFFFF",
+        "usage": "Card backgrounds, elevated surfaces"
+      },
+      "surface-subtle": {
+        "mapsTo": "--color-neutral-50",
+        "value": "#FAFAF8",
+        "usage": "Subtle backgrounds, hover states"
+      },
+      "text-primary": {
+        "mapsTo": "--color-brand-dark",
+        "value": "#1A1A1A",
+        "usage": "Headings, primary text, card titles"
+      },
+      "text-secondary": {
+        "mapsTo": "--color-brand-muted",
+        "value": "#6B6B6B",
+        "usage": "Descriptions, labels, secondary text"
+      },
+      "text-tertiary": {
+        "mapsTo": "--color-brand-light",
+        "value": "#9A9A9A",
+        "usage": "Decorative, placeholder (not AA compliant)"
+      },
+      "text-accent": {
+        "mapsTo": "--color-accent",
+        "value": "#E88500",
+        "usage": "Accent text, labels, active nav"
+      },
+      "text-on-accent": {
+        "mapsTo": "--color-white",
+        "value": "#FFFFFF",
+        "usage": "Text on accent backgrounds"
+      },
+      "border-default": {
+        "mapsTo": "--color-border-subtle",
+        "value": "#E0DDD8",
+        "usage": "Default card and divider borders"
+      },
+      "border-hover": {
+        "mapsTo": "--color-border-hover",
+        "value": "#CCCCC4",
+        "usage": "Hover state borders"
+      }
+    },
+    "component": {
+      "button": {
+        "primaryBg": "linear-gradient(135deg, #E88500 0%, #D07000 100%)",
+        "primaryHoverBg": "linear-gradient(135deg, #F09500 0%, #E08000 100%)",
+        "primaryText": "#FFFFFF",
+        "primaryHoverText": "#FFFFFF",
+        "secondaryBg": "transparent",
+        "secondaryText": "#1A1A1A",
+        "secondaryBorder": "1px solid #E0DDD8",
+        "secondaryHoverBorder": "1px solid #E88500",
+        "outlinedBg": "transparent",
+        "outlinedText": "#6B6B6B",
+        "outlinedBorder": "1px solid #E88500",
+        "outlinedHoverBg": "rgba(232, 133, 0, 0.08)"
+      },
+      "card": {
+        "bg": "#FFFFFF",
+        "bgGradientStart": "#FFFFFF",
+        "bgGradientEnd": "#FAFAF8",
+        "border": "1px solid #E0DDD8",
+        "hoverBorder": "1px solid #CCCCC4",
+        "shadow": "var(--shadow-sm)",
+        "hoverShadow": "var(--shadow-lg)"
+      },
+      "input": {
+        "border": "#D4D4CC",
+        "focusBorder": "#E88500",
+        "focusRing": "0 0 0 3px rgba(232, 133, 0, 0.15)"
+      },
+      "navbar": {
+        "bg": "rgba(248, 248, 246, 0.9)",
+        "borderBottom": "1px solid #E0DDD8",
+        "scrolledShadow": "0 4px 20px rgba(0,0,0,0.08)"
+      },
+      "footer": {
+        "bgGradientStart": "#EFEFEA",
+        "bgGradientEnd": "#F8F8F6",
+        "borderTop": "1px solid #E0DDD8"
+      }
+    }
+  },
+  "animation": {
+    "durations": {
+      "instant": { "value": "100ms", "usage": "Typing effect per character" },
+      "fast": { "value": "200ms", "usage": "Fade out, quick feedback" },
+      "normal": {
+        "value": "300ms",
+        "usage": "Hover transitions, slide transitions, default interactions"
+      },
+      "moderate": {
+        "value": "500ms",
+        "usage": "Fly transitions, card entrance, fade in"
+      },
+      "slow": {
+        "value": "550ms",
+        "usage": "View transition new content fade-in"
+      },
+      "slower": {
+        "value": "800ms",
+        "usage": "View transition full animations, curtain"
+      },
+      "pulse": {
+        "value": "2000ms",
+        "usage": "Status dot pulse, glow animations"
+      },
+      "ring": { "value": "11000ms", "usage": "Decorative ring pulse cycle" },
+      "cursor": { "value": "500ms", "usage": "Cursor blink interval" }
+    },
+    "easing": {
+      "default": { "value": "ease", "usage": "Simple transitions" },
+      "standard": {
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "usage": "Standard material easing, hover effects"
+      },
+      "decelerate": {
+        "value": "cubic-bezier(0, 0, 0.2, 1)",
+        "usage": "Entrances, fade-ins, view transition new"
+      },
+      "accelerate": {
+        "value": "cubic-bezier(0.4, 0, 1, 1)",
+        "usage": "Exits, fade-outs, view transition old"
+      },
+      "spring": {
+        "value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "usage": "Bouncy entrances, section reveals"
+      },
+      "bounce": {
+        "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+        "usage": "Playful micro-interactions"
+      }
+    },
+    "keyframes": {
+      "fadeIn": {
+        "from": { "opacity": 0 },
+        "to": { "opacity": 1 },
+        "usage": "Basic entrance animation"
+      },
+      "fadeOut": {
+        "from": { "opacity": 1 },
+        "to": { "opacity": 0 },
+        "usage": "Basic exit animation"
+      },
+      "fadeInUp": {
+        "from": { "opacity": 0, "transform": "translateY(30px)" },
+        "to": { "opacity": 1, "transform": "translateY(0)" },
+        "usage": "Section reveal entrance, card stagger entrance"
+      },
+      "slideFromRight": {
+        "from": { "transform": "translateX(30px)" },
+        "to": { "transform": "translateX(0)" },
+        "usage": "View transition slide entrance"
+      },
+      "slideToLeft": {
+        "from": { "transform": "translateX(0)" },
+        "to": { "transform": "translateX(-30px)" },
+        "usage": "View transition slide exit"
+      },
+      "zoomIn": {
+        "from": { "transform": "scale(0.95)", "opacity": 0 },
+        "to": { "transform": "scale(1)", "opacity": 1 },
+        "usage": "View transition zoom entrance"
+      },
+      "zoomOut": {
+        "from": { "transform": "scale(1)", "opacity": 1 },
+        "to": { "transform": "scale(1.05)", "opacity": 0 },
+        "usage": "View transition zoom exit"
+      },
+      "rotateIn": {
+        "from": { "transform": "rotate(-5deg) scale(0.95)", "opacity": 0 },
+        "to": { "transform": "rotate(0) scale(1)", "opacity": 1 },
+        "usage": "View transition rotate entrance"
+      },
+      "rotateOut": {
+        "from": { "transform": "rotate(0) scale(1)", "opacity": 1 },
+        "to": { "transform": "rotate(5deg) scale(1.05)", "opacity": 0 },
+        "usage": "View transition rotate exit"
+      },
+      "flipIn": {
+        "from": {
+          "transform": "perspective(1000px) rotateY(-30deg) scale(0.8)",
+          "opacity": 0
+        },
+        "to": {
+          "transform": "perspective(1000px) rotateY(0) scale(1)",
+          "opacity": 1
+        },
+        "usage": "View transition flip entrance"
+      },
+      "flipOut": {
+        "from": {
+          "transform": "perspective(1000px) rotateY(0) scale(1)",
+          "opacity": 1
+        },
+        "to": {
+          "transform": "perspective(1000px) rotateY(30deg) scale(0.8)",
+          "opacity": 0
+        },
+        "usage": "View transition flip exit"
+      },
+      "blurIn": {
+        "from": { "filter": "blur(10px)", "opacity": 0 },
+        "to": { "filter": "blur(0)", "opacity": 1 },
+        "usage": "View transition blur entrance"
+      },
+      "blurOut": {
+        "from": { "filter": "blur(0)", "opacity": 1 },
+        "to": { "filter": "blur(10px)", "opacity": 0 },
+        "usage": "View transition blur exit"
+      },
+      "curtainIn": {
+        "from": { "clip-path": "inset(0 0 100% 0)" },
+        "to": { "clip-path": "inset(0 0 0 0)" },
+        "usage": "View transition curtain entrance"
+      },
+      "curtainOut": {
+        "from": { "clip-path": "inset(0 0 0 0)" },
+        "to": { "clip-path": "inset(100% 0 0 0)" },
+        "usage": "View transition curtain exit"
+      },
+      "spiralIn": {
+        "from": { "transform": "rotate(-180deg) scale(0.5)", "opacity": 0 },
+        "to": { "transform": "rotate(0) scale(1)", "opacity": 1 },
+        "usage": "View transition spiral entrance"
+      },
+      "spiralOut": {
+        "from": { "transform": "rotate(0) scale(1)", "opacity": 1 },
+        "to": { "transform": "rotate(180deg) scale(0.5)", "opacity": 0 },
+        "usage": "View transition spiral exit"
+      },
+      "explodeIn": {
+        "from": {
+          "transform": "scale(0.1)",
+          "opacity": 0,
+          "filter": "blur(20px)"
+        },
+        "50%": { "opacity": 0.5 },
+        "to": { "transform": "scale(1)", "opacity": 1, "filter": "blur(0)" },
+        "usage": "View transition explode entrance"
+      },
+      "explodeOut": {
+        "from": { "transform": "scale(1)", "opacity": 1, "filter": "blur(0)" },
+        "to": {
+          "transform": "scale(1.5)",
+          "opacity": 0,
+          "filter": "blur(20px)"
+        },
+        "usage": "View transition explode exit"
+      },
+      "scaleUp": {
+        "from": { "transform": "scale(1.1)", "opacity": 0 },
+        "to": { "transform": "scale(1)", "opacity": 1 },
+        "usage": "View transition scale entrance"
+      },
+      "scaleDown": {
+        "from": { "transform": "scale(1)", "opacity": 1 },
+        "to": { "transform": "scale(0.9)", "opacity": 0 },
+        "usage": "View transition scale exit"
+      },
+      "dropIn": {
+        "from": { "transform": "translateY(-20px)", "opacity": 0 },
+        "to": { "transform": "translateY(0)", "opacity": 1 },
+        "usage": "View transition drop entrance"
+      },
+      "dropOut": {
+        "from": { "transform": "translateY(0)", "opacity": 1 },
+        "to": { "transform": "translateY(20px)", "opacity": 0 },
+        "usage": "View transition drop exit"
+      },
+      "swipeFromBottom": {
+        "from": { "transform": "translateY(50px)" },
+        "to": { "transform": "translateY(0)" },
+        "usage": "View transition swipe entrance"
+      },
+      "swipeToTop": {
+        "from": { "transform": "translateY(0)" },
+        "to": { "transform": "translateY(-50px)" },
+        "usage": "View transition swipe exit"
+      },
+      "pulse": {
+        "0%, 100%": { "opacity": 1, "transform": "scale(1)" },
+        "50%": { "opacity": 0.5, "transform": "scale(0.95)" },
+        "usage": "Status dot pulse animation"
+      },
+      "blink": {
+        "0%, 50%": { "opacity": 1 },
+        "51%, 100%": { "opacity": 0 },
+        "usage": "Cursor blink, terminal cursor"
+      },
+      "pulseGlow": {
+        "0%, 100%": { "opacity": 1 },
+        "50%": { "opacity": 0.5 },
+        "usage": "Glow pulse effect"
+      },
+      "ringPulse1": {
+        "0%, 100%": {
+          "opacity": 0,
+          "transform": "translate(-50%, -50%) scale(1)",
+          "borderColor": "#E0DDD8"
+        },
+        "27%": {
+          "opacity": 0.15,
+          "transform": "translate(-50%, -50%) scale(1.03)",
+          "borderColor": "#E88500"
+        },
+        "38%": {
+          "opacity": 0,
+          "transform": "translate(-50%, -50%) scale(1)",
+          "borderColor": "#E0DDD8"
+        },
+        "usage": "Hero decorative ring 1 (200px)"
+      },
+      "ringPulse2": {
+        "0%, 100%": {
+          "opacity": 0,
+          "transform": "translate(-50%, -50%) scale(1)",
+          "borderColor": "#E0DDD8"
+        },
+        "27%": {
+          "opacity": 0.12,
+          "transform": "translate(-50%, -50%) scale(1.44)",
+          "borderColor": "#E88500"
+        },
+        "38%": {
+          "opacity": 0,
+          "transform": "translate(-50%, -50%) scale(1)",
+          "borderColor": "#E0DDD8"
+        },
+        "usage": "Hero decorative ring 2 (450px)"
+      },
+      "ringPulse3": {
+        "0%, 100%": {
+          "opacity": 0,
+          "transform": "translate(-50%, -50%) scale(1)",
+          "borderColor": "#E0DDD8"
+        },
+        "27%": {
+          "opacity": 0.12,
+          "transform": "translate(-50%, -50%) scale(2.22)",
+          "borderColor": "#E88500"
+        },
+        "38%": {
+          "opacity": 0,
+          "transform": "translate(-50%, -50%) scale(1)",
+          "borderColor": "#E0DDD8"
+        },
+        "usage": "Hero decorative ring 3 (600px, 2px border)"
+      },
+      "scrollBounce": {
+        "0%, 100%": { "transform": "translateY(0)" },
+        "50%": { "transform": "translateY(6px)" },
+        "usage": "Scroll indicator bounce"
+      },
+      "drawLine": {
+        "from": { "height": "0" },
+        "to": { "height": "100%" },
+        "usage": "Timeline line draw animation"
+      }
+    },
+    "delays": {
+      "delay-1": {
+        "value": "100ms",
+        "usage": "First card stagger, typing per character"
+      },
+      "delay-2": { "value": "200ms", "usage": "Second item stagger" },
+      "delay-3": {
+        "value": "300ms",
+        "usage": "Third item stagger, slide transition delay"
+      },
+      "delay-4": {
+        "value": "400ms",
+        "usage": "Fourth item stagger, ring pulse stagger"
+      },
+      "delay-5": { "value": "500ms", "usage": "Fifth item stagger" },
+      "delay-6": { "value": "600ms", "usage": "Sixth item stagger" },
+      "delay-7": { "value": "700ms", "usage": "Seventh item stagger" },
+      "delay-8": {
+        "value": "800ms",
+        "usage": "Ring pulse stagger 3, view transition new"
+      },
+      "staggerCard": {
+        "value": "100ms",
+        "usage": "Garden card entrance stagger increment"
+      },
+      "staggerLink": {
+        "value": "50ms",
+        "usage": "Quick link entrance stagger increment"
+      },
+      "viewTransitionOld": {
+        "value": "0ms",
+        "usage": "Old content exit start"
+      },
+      "viewTransitionNew": {
+        "value": "250ms",
+        "usage": "New content entrance delay after old exits"
+      }
+    },
+    "viewTransitions": {
+      "description": "10 randomized page transition effects using View Transitions API",
+      "variants": [
+        "slide",
+        "zoom",
+        "scale",
+        "drop",
+        "swipe",
+        "rotate",
+        "flip",
+        "curtain",
+        "blur",
+        "explode"
+      ],
+      "timing": {
+        "oldExit": {
+          "duration": "250ms",
+          "easing": "cubic-bezier(0.4, 0, 1, 1)",
+          "fill": "both"
+        },
+        "newEnter": {
+          "duration": "550ms",
+          "easing": "cubic-bezier(0, 0, 0.2, 1)",
+          "delay": "250ms",
+          "fill": "both"
+        },
+        "sharedDuration": {
+          "duration": "800ms",
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "fill": "both"
+        },
+        "curtainDuration": {
+          "duration": "800ms",
+          "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "fill": "both"
+        }
+      }
+    },
+    "patterns": {
+      "fadeInUp": {
+        "description": "Elements fade in and slide up from below",
+        "class": "animate-fade-in-up",
+        "duration": "var(--duration-moderate)",
+        "easing": "var(--ease-spring)",
+        "usage": "Card entrances, section content"
+      },
+      "staggerChildren": {
+        "description": "Child elements animate in sequence with incremental delay",
+        "class": "stagger-in",
+        "duration": "500ms",
+        "staggerIncrement": "100ms (cards) / 50ms (links)",
+        "usage": "Garden card grid, quick links list"
+      },
+      "sectionReveal": {
+        "description": "Sections start hidden and animate in when scrolled into view",
+        "class": "section-reveal → .revealed",
+        "duration": "800ms",
+        "threshold": 0.1,
+        "rootMargin": "0px 0px -60px 0px",
+        "usage": "Below-fold sections"
+      },
+      "navUnderline": {
+        "description": "Navigation links show an underline on hover/active that grows from left",
+        "property": "width of ::after pseudo-element",
+        "duration": "300ms",
+        "easing": "ease",
+        "usage": "Header nav links"
+      },
+      "imageHoverScale": {
+        "description": "Images slightly scale up on parent hover",
+        "scale": "1.05",
+        "duration": "300ms",
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "usage": "Hero decoration rings, card hover effects"
+      },
+      "cardHoverReveal": {
+        "description": "Card top border grows from left on hover, accent glow appears",
+        "properties": [
+          "border-top scaleX(0→1)",
+          "radial-gradient opacity(0→1)"
+        ],
+        "duration": "300ms",
+        "easing": "ease",
+        "usage": "Garden cards"
+      },
+      "buttonSweep": {
+        "description": "Gradient sweep slides across button on hover",
+        "class": "btn-primary::before",
+        "transform": "left: -100% → left: 100%",
+        "duration": "500ms",
+        "easing": "ease",
+        "usage": "Primary CTA buttons"
+      },
+      "modalSlideUp": {
+        "description": "Modal slides up from below with backdrop fade",
+        "modalTransform": "translateY(20px) → translateY(0)",
+        "backdropDuration": "300ms",
+        "modalDuration": "300ms",
+        "usage": "Modal dialogs"
+      },
+      "tagPillHover": {
+        "description": "Tag pill background darkens slightly on hover",
+        "transition": "all 300ms ease",
+        "usage": "Category tag pills"
+      },
+      "scrollIndicator": {
+        "description": "Bouncing scroll indicator to prompt user interaction",
+        "class": "scroll-indicator",
+        "duration": "2000ms",
+        "easing": "ease-in-out infinite",
+        "usage": "Long pages, hero sections"
+      },
+      "reducedMotion": {
+        "description": "All animations disabled for users who prefer reduced motion",
+        "mediaQuery": "@media (prefers-reduced-motion: reduce)",
+        "behavior": "Disable all keyframe animations, show final states, remove transitions"
+      }
+    }
+  },
+  "breakpoints": {
+    "mobile": {
+      "min": 0,
+      "max": "479px",
+      "columns": 1,
+      "margin": "16px",
+      "usage": "Small phones, default styles"
+    },
+    "mobileL": {
+      "min": 480,
+      "max": "599px",
+      "columns": 1,
+      "margin": "16px",
+      "usage": "Large phones, garden card stack"
+    },
+    "tablet": {
+      "min": 600,
+      "max": "767px",
+      "columns": 2,
+      "margin": "24px",
+      "usage": "Small tablets, link item column layout"
+    },
+    "desktop": {
+      "min": 768,
+      "max": "1023px",
+      "columns": 2,
+      "margin": "32px",
+      "usage": "Tablets landscape, desktop start"
+    },
+    "wide": {
+      "min": 1024,
+      "max": "1199px",
+      "columns": 3,
+      "margin": "32px",
+      "usage": "Desktop, auto-fit grid kicks in"
+    },
+    "max": {
+      "min": 1200,
+      "max": null,
+      "columns": 3,
+      "margin": "auto",
+      "usage": "Wide desktop, max-width container"
+    }
+  },
+  "maxWidth": {
+    "container": {
+      "value": "1200px",
+      "usage": "Garden section, links section, footer content"
+    },
+    "hero": { "value": "800px", "usage": "Hero content max-width" },
+    "heroDesc": { "value": "600px", "usage": "Hero description max-width" },
+    "modal": { "value": "500px", "usage": "Modal dialog max-width" }
+  },
+  "components": {
+    "button": {
+      "description": "CTA buttons with primary (filled gradient), secondary (ghost), and outlined (border-only) variants. All use Lekton font, lowercase text.",
+      "variants": {
+        "primary": {
+          "class": "btn btn-primary",
+          "structure": "<a class=\"btn btn-primary\"><span class=\"btn-text\">label</span><Icon class=\"btn-icon\" /></a>",
+          "css": {
+            "display": "inline-flex",
+            "alignItems": "center",
+            "gap": "0.5rem",
+            "padding": "0.875rem 2rem",
+            "fontSize": "0.9375rem",
+            "fontWeight": 500,
+            "fontFamily": "var(--font-body)",
+            "borderRadius": "6px",
+            "textTransform": "lowercase",
+            "background": "linear-gradient(135deg, #E88500 0%, #D07000 100%)",
+            "color": "#FFFFFF",
+            "border": "none",
+            "position": "relative",
+            "overflow": "hidden",
+            "transition": "all 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+            "hoverTransform": "translateY(-2px)",
+            "hoverBoxShadow": "0 8px 25px rgba(232, 133, 0, 0.25)",
+            "hoverBackground": "linear-gradient(135deg, #F09500 0%, #E08000 100%)",
+            "cursor": "pointer"
+          }
+        },
+        "secondary": {
+          "class": "btn btn-secondary",
+          "structure": "<a class=\"btn btn-secondary\"><span class=\"btn-text\">label</span></a>",
+          "css": {
+            "display": "inline-flex",
+            "alignItems": "center",
+            "gap": "0.5rem",
+            "padding": "0.875rem 2rem",
+            "fontSize": "0.9375rem",
+            "fontWeight": 500,
+            "fontFamily": "var(--font-body)",
+            "borderRadius": "6px",
+            "textTransform": "lowercase",
+            "background": "transparent",
+            "color": "#1A1A1A",
+            "border": "1px solid #E0DDD8",
+            "transition": "all 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+            "hoverBorderColor": "#E88500",
+            "hoverBackground": "rgba(232, 133, 0, 0.05)",
+            "hoverTransform": "translateY(-2px)",
+            "cursor": "pointer"
+          }
+        },
+        "outlined": {
+          "class": "btn btn-outlined",
+          "structure": "<a class=\"btn btn-outlined\"><span class=\"btn-text\">label</span><Icon class=\"btn-icon\" /></a>",
+          "css": {
+            "display": "inline-flex",
+            "alignItems": "center",
+            "gap": "0.5rem",
+            "padding": "0.75rem 1.5rem",
+            "fontSize": "0.875rem",
+            "fontWeight": 500,
+            "fontFamily": "var(--font-body)",
+            "borderRadius": "4px",
+            "textTransform": "lowercase",
+            "background": "transparent",
+            "color": "#1A1A1A",
+            "border": "1px solid #E88500",
+            "transition": "all 300ms ease",
+            "hoverBackground": "rgba(232, 133, 0, 0.08)",
+            "hoverBorderColor": "#E88500",
+            "hoverColor": "#E88500",
+            "hoverTransform": "translateY(-2px)",
+            "hoverBoxShadow": "0 4px 12px rgba(232, 133, 0, 0.15)",
+            "cursor": "pointer"
+          }
+        },
+        "danger": {
+          "class": "btn btn-danger",
+          "description": "Destructive action button",
+          "css": {
+            "background": "#EF4444",
+            "color": "#FFFFFF"
+          }
+        }
+      },
+      "baseCss": {
+        "display": "inline-flex",
+        "alignItems": "center",
+        "fontWeight": 500,
+        "cursor": "pointer",
+        "border": "none",
+        "fontFamily": "var(--font-body)",
+        "textDecoration": "none"
+      },
+      "innerCss": {
+        "display": "inline-flex",
+        "alignItems": "center",
+        "gap": "0.5rem",
+        "textDecoration": "none",
+        "color": "inherit"
+      },
+      "sweepEffect": {
+        "description": "Gradient sweep slides left-to-right on hover (primary variant)",
+        "selector": ".btn-primary::before",
+        "from": { "left": "-100%" },
+        "to": { "left": "0" },
+        "duration": "500ms",
+        "easing": "ease",
+        "background": "linear-gradient(135deg, #F09500 0%, #E08000 100%)"
+      }
+    },
+    "input": {
+      "description": "Text input fields for forms",
+      "class": "input",
+      "structure": "<input type=\"text\" class=\"input\" placeholder=\"...\" />",
+      "css": {
+        "width": "100%",
+        "padding": "0.75rem 1rem",
+        "border": "1px solid #D4D4CC",
+        "borderRadius": "8px",
+        "fontSize": "0.875rem",
+        "fontFamily": "var(--font-body)",
+        "color": "#1A1A1A",
+        "background": "#FFFFFF",
+        "focusBorder": "#E88500",
+        "focusRing": "0 0 0 3px rgba(232, 133, 0, 0.15)",
+        "placeholderColor": "#9A9A9A",
+        "transition": "all 200ms ease"
+      }
+    },
+    "select": {
+      "description": "Dropdown select with custom chevron",
+      "class": "select",
+      "structure": "<select class=\"select\"><option>...</option></select>",
+      "css": {
+        "width": "100%",
+        "padding": "0.75rem 1rem",
+        "border": "1px solid #D4D4CC",
+        "borderRadius": "8px",
+        "fontSize": "0.875rem",
+        "fontFamily": "var(--font-body)",
+        "color": "#1A1A1A",
+        "background": "#FFFFFF",
+        "appearance": "none",
+        "focusBorder": "#E88500",
+        "focusRing": "0 0 0 3px rgba(232, 133, 0, 0.15)",
+        "focusBorderBottomRadius": "0"
+      }
+    },
+    "checkbox": {
+      "description": "Custom checkbox with accent color on check",
+      "class": "checkbox",
+      "wrapperClass": "checkbox-wrapper",
+      "structure": "<div class=\"checkbox-wrapper\"><input type=\"checkbox\" class=\"checkbox\" /><span></span></div>",
+      "css": {
+        "width": "1.125rem",
+        "height": "1.125rem",
+        "border": "1px solid #D4D4CC",
+        "borderRadius": "4px",
+        "checkedBackground": "#E88500",
+        "checkedBorderColor": "#E88500",
+        "checkmark": "white",
+        "transition": "all 200ms ease"
+      }
+    },
+    "radio": {
+      "description": "Custom radio button with accent color on select",
+      "class": "radio",
+      "wrapperClass": "radio-wrapper",
+      "structure": "<div class=\"radio-wrapper\"><input type=\"radio\" class=\"radio\" /><span></span></div>",
+      "css": {
+        "width": "1.125rem",
+        "height": "1.125rem",
+        "border": "1px solid #D4D4CC",
+        "borderRadius": "50%",
+        "checkedBackground": "#E88500",
+        "checkedBorderColor": "#E88500",
+        "checkedDot": "white 6px circle",
+        "transition": "all 200ms ease"
+      }
+    },
+    "switch": {
+      "description": "Toggle switch with sliding knob",
+      "class": "switch",
+      "structure": "<div class=\"switch\" role=\"switch\" aria-checked=\"false\"></div>",
+      "css": {
+        "width": "2.25rem",
+        "height": "1.25rem",
+        "background": "#D4D4CC",
+        "borderRadius": "9999px",
+        "knobSize": "0.875rem",
+        "knobBackground": "#FFFFFF",
+        "knobShadow": "0 1px 3px rgba(0,0,0,0.15)",
+        "checkedBackground": "#E88500",
+        "checkedKnobTranslate": "1rem",
+        "transition": "all 300ms ease"
+      }
+    },
+    "gardenCard": {
+      "description": "Content card for the garden section with icon, title, description, and tag. Features top border grow on hover and radial glow.",
+      "class": "garden-card",
+      "structure": "<article class=\"garden-card\"><div class=\"garden-card-accent\"></div><div class=\"card-content\"><div class=\"garden-header\"><h3 class=\"garden-title\">Title</h3><div class=\"garden-icon\"><Icon size={24} /></div></div><p class=\"garden-desc\">Description</p><span class=\"garden-tag\">tag</span></div></article>",
+      "css": {
+        "position": "relative",
+        "background": "linear-gradient(135deg, #FFFFFF 0%, #FAFAF8 100%)",
+        "border": "1px solid #E0DDD8",
+        "borderRadius": "0",
+        "padding": "2rem",
+        "transition": "all 300ms ease",
+        "overflow": "hidden",
+        "hoverBorderColor": "#CCCCC4",
+        "hoverBoxShadow": "0 12px 24px rgba(0,0,0,0.1)"
+      },
+      "topBorderEffect": {
+        "description": "Gradient border grows from left on hover",
+        "selector": ".garden-card::before",
+        "properties": {
+          "height": "2px",
+          "background": "linear-gradient(90deg, #00A855, #E88500)",
+          "transform": "scaleX(0)",
+          "transformOrigin": "left",
+          "transition": "transform 300ms ease"
+        },
+        "hoverTransform": "scaleX(1)"
+      },
+      "radialGlowEffect": {
+        "description": "Subtle orange radial glow appears on hover",
+        "selector": ".garden-card-accent",
+        "properties": {
+          "background": "radial-gradient(circle, rgba(232, 133, 0, 0.04) 0%, transparent 70%)",
+          "opacity": 0,
+          "transition": "opacity 300ms ease"
+        },
+        "hoverOpacity": 1
+      },
+      "titleCss": {
+        "fontFamily": "var(--font-heading)",
+        "fontSize": "1.25rem",
+        "fontWeight": 600,
+        "color": "#1A1A1A",
+        "margin": 0
+      },
+      "descCss": {
+        "fontFamily": "var(--font-body)",
+        "fontSize": "0.875rem",
+        "color": "#6B6B6B",
+        "lineHeight": 1.6,
+        "margin": "0 0 1rem 0"
+      },
+      "iconCss": {
+        "color": "#00A855",
+        "flexShrink": 0
+      },
+      "tagCss": {
+        "display": "inline-block",
+        "padding": "0.25rem 0.75rem",
+        "fontSize": "0.6875rem",
+        "color": "#008F47",
+        "background": "rgba(0, 168, 85, 0.08)",
+        "borderRadius": "2px",
+        "fontFamily": "var(--font-body)",
+        "textTransform": "lowercase",
+        "letterSpacing": "0.05em"
+      },
+      "mobilePadding": "1.5rem"
+    },
+    "quickLink": {
+      "description": "External link item with name, description, and arrow icon. Translates on hover.",
+      "class": "link-item",
+      "structure": "<a href=\"...\" class=\"link-item\"><span class=\"link-name\">Name</span><span class=\"link-desc\">Description</span><ArrowUpRight class=\"link-arrow\" size={20} /></a>",
+      "css": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "padding": "1.25rem 1.5rem",
+        "background": "#FFFFFF",
+        "border": "1px solid #E8E8E0",
+        "borderRadius": "8px",
+        "textDecoration": "none",
+        "transition": "all 300ms ease",
+        "cursor": "pointer",
+        "hoverBackground": "#FAFAF8",
+        "hoverBorderColor": "#E0DDD8",
+        "hoverTransform": "translateY(-2px)"
+      },
+      "nameCss": {
+        "fontFamily": "var(--font-mono)",
+        "fontSize": "1rem",
+        "fontWeight": 500,
+        "color": "#1A1A1A",
+        "flex": 1
+      },
+      "descCss": {
+        "fontSize": "0.875rem",
+        "color": "#9A9A9A",
+        "margin": "0 1rem"
+      },
+      "arrowCss": {
+        "color": "#E88500",
+        "transition": "transform 300ms ease",
+        "hoverTransform": "translate(2px, -2px)"
+      },
+      "mobileLayout": {
+        "flexDirection": "column",
+        "alignItems": "flex-start",
+        "gap": "0.5rem"
+      }
+    },
+    "sectionHeader": {
+      "description": "Section label and optional title, centered. Label uses mono font with // prefix.",
+      "class": "section-header",
+      "structure": "<div class=\"section-header\"><span class=\"section-label\">// label</span><h2 class=\"section-title\">Title</h2></div>",
+      "labelCss": {
+        "fontFamily": "var(--font-mono)",
+        "fontSize": "0.875rem",
+        "color": "#E88500",
+        "marginBottom": "1rem",
+        "textTransform": "lowercase",
+        "letterSpacing": "0.05em",
+        "textAlign": "center",
+        "display": "block"
+      },
+      "titleCss": {
+        "fontFamily": "var(--font-heading)",
+        "fontSize": "2.5rem",
+        "fontWeight": 700,
+        "color": "#1A1A1A",
+        "lineHeight": 1.2,
+        "margin": 0,
+        "textAlign": "center"
+      },
+      "responsiveTitleSizes": {
+        "mobile": "1.75rem",
+        "tablet": "2rem",
+        "desktop": "2.5rem"
+      }
+    },
+    "navbar": {
+      "description": "Fixed top navigation with typing logo effect, nav links, and scroll-aware blur background.",
+      "class": "site-nav",
+      "structure": "<nav class=\"site-nav\"><div class=\"nav-inner\"><a class=\"nav-logo\">› te9.dev_</a><div class=\"nav-links\"><a>garden</a><a>links</a><a>patrick.te9.nl</a></div></div></nav>",
+      "css": {
+        "position": "fixed",
+        "top": 0,
+        "left": 0,
+        "right": 0,
+        "zIndex": 1000,
+        "transition": "all 300ms",
+        "borderBottom": "1px solid #E0DDD8",
+        "background": "rgba(248, 248, 246, 0.9)",
+        "backdropFilter": "blur(10px)",
+        "scrolledBackground": "rgba(248, 248, 246, 0.95)",
+        "scrolledBoxShadow": "0 4px 20px rgba(0,0,0,0.08)",
+        "height": "60px"
+      },
+      "logoCss": {
+        "fontFamily": "var(--font-mono)",
+        "fontSize": "1rem",
+        "fontWeight": 700,
+        "promptColor": "#E88500",
+        "textColor": "#1A1A1A",
+        "cursorColor": "#E88500"
+      },
+      "linksCss": {
+        "fontFamily": "var(--font-body)",
+        "fontSize": "0.875rem",
+        "color": "#6B6B6B",
+        "hoverColor": "#1A1A1A",
+        "textTransform": "lowercase",
+        "activeColor": "#1A1A1A",
+        "underlineColor": "#E88500",
+        "underlineHeight": "1px",
+        "underlineOffset": "-4px",
+        "underlineTransition": "width 300ms ease"
+      },
+      "behavior": {
+        "scrollThreshold": "100px",
+        "typingEffect": "100ms per character, cursor blinks 500ms"
+      }
+    },
+    "hero": {
+      "description": "Full-viewport hero with centered content, label brackets, accent dot, decorative pulsing rings.",
+      "class": "hero",
+      "structure": "<section class=\"hero\"><div class=\"hero-content\"><div class=\"hero-label\">[ digital-garden ]</div><h1 class=\"hero-title\">te9<span class=\"title-dot\">.</span>dev</h1><p class=\"hero-subtitle\">...</p><p class=\"hero-description\">...</p><div class=\"hero-cta\">buttons</div></div><div class=\"hero-decoration\">rings</div></section>",
+      "css": {
+        "minHeight": "calc(100vh - 60px)",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "position": "relative",
+        "padding": "4rem 2rem",
+        "overflow": "hidden"
+      },
+      "contentMaxWidth": "800px",
+      "labelCss": {
+        "fontFamily": "var(--font-body)",
+        "fontSize": "0.875rem",
+        "letterSpacing": "0.1em",
+        "textTransform": "uppercase",
+        "bracketColor": "#E88500",
+        "textColor": "#6B6B6B"
+      },
+      "titleCss": {
+        "fontFamily": "var(--font-heading)",
+        "fontSize": "clamp(3rem, 8vw, 6rem)",
+        "fontWeight": 700,
+        "lineHeight": 1,
+        "color": "#1A1A1A",
+        "dotColor": "#E88500"
+      },
+      "subtitleCss": {
+        "fontFamily": "var(--font-body)",
+        "fontSize": "1.25rem",
+        "color": "#6B6B6B",
+        "lineHeight": 1.6,
+        "accentColor": "#E88500",
+        "accentWeight": 500
+      },
+      "descriptionCss": {
+        "fontFamily": "var(--font-body)",
+        "fontSize": "1rem",
+        "color": "#9A9A9A",
+        "maxWidth": "600px",
+        "margin": "0 auto 2rem",
+        "lineHeight": 1.7
+      },
+      "decorationRings": {
+        "description": "3 concentric circles that pulse with accent color on an 11s cycle",
+        "ring1": {
+          "size": "200px",
+          "border": "1px solid #E0DDD8",
+          "animation": "ringPulse1 11s cubic-bezier(0.4,0,0.2,1) infinite"
+        },
+        "ring2": {
+          "size": "450px",
+          "border": "1px solid #E0DDD8",
+          "animation": "ringPulse2 11s cubic-bezier(0.4,0,0.2,1) infinite 0.4s"
+        },
+        "ring3": {
+          "size": "600px",
+          "border": "2px solid #E0DDD8",
+          "animation": "ringPulse3 11s cubic-bezier(0.4,0,0.2,1) infinite 0.8s"
+        }
+      }
+    },
+    "footer": {
+      "description": "Site footer with brand, navigation links, social icons, and status indicator.",
+      "class": "site-footer",
+      "structure": "<footer class=\"site-footer\"><div class=\"footer-content\"><div class=\"footer-main\"><div class=\"footer-brand\">...</div><div class=\"footer-links\">...</div></div><div class=\"footer-bottom\">...</div></div></footer>",
+      "css": {
+        "background": "linear-gradient(to bottom, #EFEFEA, #F8F8F6)",
+        "padding": "3rem 2rem 2rem",
+        "borderTop": "1px solid #E0DDD8"
+      },
+      "logoCss": {
+        "fontFamily": "var(--font-mono)",
+        "fontSize": "1.5rem",
+        "fontWeight": 700,
+        "color": "#E88500"
+      },
+      "taglineCss": {
+        "fontSize": "0.875rem",
+        "color": "#6B6B6B"
+      },
+      "headingCss": {
+        "fontSize": "0.75rem",
+        "fontWeight": 600,
+        "textTransform": "uppercase",
+        "letterSpacing": "0.1em",
+        "color": "#1A1A1A",
+        "marginBottom": "1rem"
+      },
+      "linkCss": {
+        "fontSize": "0.875rem",
+        "color": "#6B6B6B",
+        "hoverColor": "#E88500",
+        "transition": "color 300ms ease"
+      },
+      "socialCss": {
+        "display": "flex",
+        "gap": "1rem",
+        "color": "#6B6B6B",
+        "hoverColor": "#E88500"
+      },
+      "bottomCss": {
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "paddingTop": "2rem",
+        "borderTop": "1px solid #E0DDD8",
+        "fontSize": "0.875rem",
+        "color": "#9A9A9A"
+      },
+      "statusDot": {
+        "width": "8px",
+        "height": "8px",
+        "background": "#22C55E",
+        "borderRadius": "50%",
+        "animation": "pulse 2s ease-in-out infinite"
+      }
+    },
+    "backgroundEffects": {
+      "description": "Full-screen overlay effects: noise texture and CRT scanlines. Purely presentational, pointer-events none.",
+      "noise": {
+        "position": "fixed",
+        "inset": 0,
+        "zIndex": 9998,
+        "opacity": "0.02",
+        "backgroundImage": "SVG fractalNoise filter",
+        "pointerEvents": "none"
+      },
+      "scanlines": {
+        "position": "fixed",
+        "inset": 0,
+        "zIndex": 9999,
+        "background": "repeating-linear-gradient(to bottom, transparent 0, transparent 50%, rgba(0,0,0,0.04) 50%, rgba(0,0,0,0.04) 100%)",
+        "backgroundSize": "100% 4px",
+        "opacity": "0.06",
+        "pointerEvents": "none"
+      }
+    },
+    "card": {
+      "description": "Generic content card with title and description",
+      "class": "card",
+      "structure": "<div class=\"card\"><div class=\"card-title\">Title</div><p class=\"card-desc\">Description</p></div>",
+      "css": {
+        "background": "#FFFFFF",
+        "border": "1px solid #E0DDD8",
+        "borderRadius": "12px",
+        "padding": "1.5rem",
+        "boxShadow": "var(--shadow-sm)"
+      },
+      "titleCss": {
+        "fontFamily": "var(--font-heading)",
+        "fontSize": "1.25rem",
+        "fontWeight": 600,
+        "color": "#1A1A1A",
+        "marginBottom": "0.75rem",
+        "lineHeight": 1.4
+      },
+      "descCss": {
+        "fontSize": "0.875rem",
+        "lineHeight": 1.6,
+        "color": "#6B6B6B"
+      }
+    },
+    "table": {
+      "description": "Data table with header styling and optional striped rows",
+      "class": "table",
+      "structure": "<div class=\"table-container\"><table class=\"table\"><thead><tr><th>...</th></tr></thead><tbody><tr><td>...</td></tr></tbody></table></div>",
+      "css": {
+        "containerOverflow": "auto",
+        "containerBorder": "1px solid #E0DDD8",
+        "containerBorderRadius": "8px",
+        "thBackground": "#FAFAF8",
+        "thFontWeight": 600,
+        "thColor": "#1A1A1A",
+        "thPadding": "0.75rem 1rem",
+        "thBorderBottom": "1px solid #E0DDD8",
+        "tdPadding": "0.75rem 1rem",
+        "tdColor": "#6B6B6B",
+        "tdBorderBottom": "1px solid #E8E8E0",
+        "lastRowNoBorder": true,
+        "stripedRowBackground": "rgba(0,0,0,0.02)",
+        "fontSize": "0.875rem"
+      }
+    },
+    "list": {
+      "description": "Styled list with optional icons and spread layout",
+      "class": "list",
+      "structure": "<ul class=\"list\"><li class=\"list-item\"><span class=\"list-item-icon\">✓</span> Text</li></ul>",
+      "css": {
+        "listStyle": "none",
+        "border": "1px solid #E0DDD8",
+        "borderRadius": "12px",
+        "overflow": "hidden",
+        "itemPadding": "0.75rem 1rem",
+        "itemBorderBottom": "1px solid #E8E8E0",
+        "itemFontSize": "0.875rem",
+        "itemColor": "#1A1A1A",
+        "itemGap": "0.75rem",
+        "iconSize": "16px"
+      },
+      "variants": {
+        "spread": {
+          "class": "list-item-spread",
+          "description": "Justify-content: space-between for label + badge layout"
+        }
+      }
+    },
+    "tabs": {
+      "description": "Tab navigation with active indicator and panel switching",
+      "class": "tabs",
+      "structure": "<div class=\"tabs\" data-tab-group=\"name\"><div class=\"tab active\" data-tab=\"panel1\">Tab 1</div><div class=\"tab\" data-tab=\"panel2\">Tab 2</div></div><div data-tab-panel=\"panel1\">Content</div><div data-tab-panel=\"panel2\" style=\"display:none\">Content</div>",
+      "css": {
+        "display": "flex",
+        "borderBottom": "1px solid #E0DDD8",
+        "tabPadding": "0.75rem 1.5rem",
+        "tabFontSize": "0.875rem",
+        "tabFontWeight": 500,
+        "tabColor": "#6B6B6B",
+        "tabActiveColor": "#1A1A1A",
+        "tabActiveBorderBottom": "2px solid #E88500",
+        "tabHoverColor": "#1A1A1A",
+        "transition": "color 200ms ease"
+      },
+      "behavior": "Click toggles active class and shows/hides panels"
+    },
+    "modal": {
+      "description": "Accessible modal with backdrop blur, slide-up entrance, and ESC to close",
+      "class": "modal-overlay",
+      "structure": "<div class=\"modal-overlay\" id=\"id\"><div class=\"modal\"><button class=\"modal-close\">×</button><div class=\"modal-title\">Title</div><p class=\"modal-desc\">Description</p><div class=\"flex-row-end\">buttons</div></div></div>",
+      "css": {
+        "overlayBackground": "rgba(0,0,0,0.5)",
+        "overlayBackdropFilter": "blur(4px)",
+        "overlayZIndex": 600,
+        "overlayOpacityHidden": 0,
+        "overlayOpacityVisible": 1,
+        "overlayTransition": "all 300ms ease",
+        "modalBackground": "#FFFFFF",
+        "modalBorderRadius": "24px",
+        "modalPadding": "2rem",
+        "modalMaxWidth": "500px",
+        "modalBoxShadow": "0 25px 50px rgba(0,0,0,0.16)",
+        "modalTransformHidden": "translateY(20px)",
+        "modalTransformVisible": "translateY(0)",
+        "modalTransition": "all 300ms ease",
+        "titleFontSize": "1.5rem",
+        "titleFontWeight": 600,
+        "descFontSize": "0.875rem",
+        "descLineHeight": 1.6,
+        "closeButtonSize": "2rem",
+        "closeButtonRadius": "50%"
+      }
+    },
+    "alert": {
+      "description": "Contextual feedback banners with icon and message",
+      "variants": {
+        "success": {
+          "class": "alert alert-success",
+          "bg": "#F0FDF4",
+          "border": "#BBF7D0",
+          "color": "#15803D",
+          "icon": "check-circle"
+        },
+        "warning": {
+          "class": "alert alert-warning",
+          "bg": "#FFFBEB",
+          "border": "#FDE68A",
+          "color": "#B45309",
+          "icon": "alert-triangle"
+        },
+        "error": {
+          "class": "alert alert-error",
+          "bg": "#FEF2F2",
+          "border": "#FECACA",
+          "color": "#B91C1C",
+          "icon": "x-circle"
+        },
+        "info": {
+          "class": "alert alert-info",
+          "bg": "#EFF6FF",
+          "border": "#BFDBFE",
+          "color": "#1D4ED8",
+          "icon": "info"
+        },
+        "neutral": {
+          "class": "alert alert-neutral",
+          "bg": "#FAFAF8",
+          "border": "#E0DDD8",
+          "color": "#6B6B6B",
+          "icon": "help-circle"
+        }
+      },
+      "structure": "<div class=\"alert alert-success\"><iconify-icon icon=\"lucide:check-circle\" /><span>Message</span></div>",
+      "css": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "0.75rem",
+        "padding": "1rem",
+        "borderRadius": "8px",
+        "border": "1px solid",
+        "fontSize": "0.875rem",
+        "lineHeight": 1.5,
+        "marginBottom": "1rem",
+        "iconSize": "1.25rem"
+      }
+    },
+    "toast": {
+      "description": "Floating notification with shadow and icon",
+      "class": "toast",
+      "structure": "<div class=\"toast\"><iconify-icon icon=\"...\" /><span>Message</span></div>",
+      "css": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "0.75rem",
+        "padding": "0.75rem 1rem",
+        "background": "#FFFFFF",
+        "border": "1px solid #E0DDD8",
+        "borderRadius": "8px",
+        "boxShadow": "0 12px 24px rgba(0,0,0,0.1)",
+        "fontSize": "0.875rem",
+        "color": "#1A1A1A"
+      }
+    },
+    "badge": {
+      "description": "Inline status indicator pill",
+      "class": "badge",
+      "structure": "<span class=\"badge badge-success\">Live</span>",
+      "css": {
+        "display": "inline-flex",
+        "alignItems": "center",
+        "padding": "0.25rem 0.75rem",
+        "fontSize": "0.75rem",
+        "fontWeight": 500,
+        "borderRadius": "9999px",
+        "background": "#FAFAF8",
+        "color": "#6B6B6B"
+      },
+      "variants": {
+        "success": {
+          "class": "badge badge-success",
+          "bg": "#F0FDF4",
+          "color": "#15803D"
+        },
+        "warning": {
+          "class": "badge badge-warning",
+          "bg": "#FFFBEB",
+          "color": "#B45309"
+        },
+        "error": {
+          "class": "badge badge-error",
+          "bg": "#FEF2F2",
+          "color": "#B91C1C"
+        },
+        "info": {
+          "class": "badge badge-info",
+          "bg": "#EFF6FF",
+          "color": "#1D4ED8"
+        }
+      }
+    },
+    "tooltip": {
+      "description": "Hover-activated tooltip above element",
+      "class": "tooltip-container",
+      "structure": "<div class=\"tooltip-container\"><button>Hover me</button><div class=\"tooltip\">Tooltip text</div></div>",
+      "css": {
+        "position": "absolute",
+        "bottom": "100%",
+        "left": "50%",
+        "transform": "translateX(-50%)",
+        "background": "#1A1A1A",
+        "color": "#FFFFFF",
+        "padding": "0.5rem 0.75rem",
+        "borderRadius": "8px",
+        "fontSize": "0.75rem",
+        "whiteSpace": "nowrap",
+        "opacityHidden": 0,
+        "opacityVisible": 1,
+        "transition": "opacity 200ms ease",
+        "pointerEvents": "none"
+      }
+    },
+    "avatar": {
+      "description": "User avatar with initials or image",
+      "class": "avatar",
+      "structure": "<div class=\"avatar\">PT</div> or <div class=\"avatar\"><img src=\"...\" /></div>",
+      "css": {
+        "width": "2.5rem",
+        "height": "2.5rem",
+        "borderRadius": "50%",
+        "background": "#FAFAF8",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "fontSize": "0.875rem",
+        "fontWeight": 700,
+        "color": "#6B6B6B",
+        "overflow": "hidden",
+        "imgObjectFit": "cover"
+      }
+    },
+    "tag-pill": {
+      "description": "Category tag with optional hover state. Used in garden cards for category labels.",
+      "class": "tag-pill",
+      "structure": "<span class=\"tag-pill\">Category</span>",
+      "css": {
+        "padding": "0.375rem 0.75rem",
+        "fontSize": "0.6875rem",
+        "fontWeight": 400,
+        "border": "none",
+        "borderRadius": "2px",
+        "background": "rgba(0, 168, 85, 0.08)",
+        "color": "#008F47",
+        "hoverBackground": "#E6F9EF",
+        "hoverColor": "#00A855",
+        "transition": "all 300ms ease",
+        "cursor": "default",
+        "fontFamily": "var(--font-body)",
+        "textTransform": "lowercase",
+        "letterSpacing": "0.05em"
+      }
+    }
+  },
+  "patterns": {
+    "gridAndLayout": {
+      "description": "8px base unit grid with responsive auto-fit columns and max-width containers",
+      "containerMaxWidth": "1200px",
+      "containerPadding": {
+        "mobile": "16px",
+        "tablet": "24px",
+        "desktop": "32px"
+      },
+      "rules": [
+        "8px base unit, box-sizing: border-box on all elements",
+        "Gutters: 16px (1rem) or 32px (2rem) only",
+        "Margins scale with breakpoint: 16px → 24px → 32px",
+        "Auto-fit grid: repeat(auto-fit, minmax(300px, 1fr)) for garden cards",
+        "Flex column for quick links with 1rem gap"
+      ],
+      "columns": {
+        "mobile": 1,
+        "tablet": 2,
+        "desktop": "auto-fit (3+)",
+        "wide": "auto-fit (3+)"
+      }
+    },
+    "forms": {
+      "description": "Form stack layout with labeled inputs",
+      "class": "form-stack",
+      "structure": "<div class=\"form-stack\"><div><label class=\"form-label\">Label</label><input class=\"input\" /></div><button class=\"btn btn-primary\">Submit</button></div>",
+      "css": {
+        "stackGap": "1rem",
+        "labelFontSize": "0.75rem",
+        "labelFontWeight": 600,
+        "labelTextTransform": "uppercase",
+        "labelLetterSpacing": "0.05em",
+        "labelColor": "#6B6B6B",
+        "labelMarginBottom": "0.5rem"
+      }
+    },
+    "navigation": {
+      "description": "Fixed navbar with scroll-aware background and blur",
+      "keyProperties": {
+        "position": "fixed top",
+        "backdropFilter": "blur(10px)",
+        "scrollShadow": "0 4px 20px rgba(0,0,0,0.08)",
+        "scrollThreshold": "100px"
+      }
+    },
+    "emptyLoadingErrorStates": {
+      "description": "Centered layout for empty, loading, and error states",
+      "structure": "Icon/emoji → heading (var(--font-heading), 600) → meta-text description → CTA button"
+    },
+    "sectionReveal": {
+      "description": "Intersection Observer-based reveal animation for below-fold sections",
+      "threshold": 0.1,
+      "rootMargin": "0px 0px -60px 0px",
+      "css": {
+        "initial": { "opacity": 0, "transform": "translateY(30px)" },
+        "revealed": { "opacity": 1, "transform": "translateY(0)" },
+        "transition": "all 800ms var(--ease-spring)"
+      },
+      "js": "new IntersectionObserver callback adds .revealed class, then unobserves"
+    },
+    "viewTransitions": {
+      "description": "Randomized page transition effects using the View Transitions API. 10 variants selected randomly on each navigation.",
+      "variants": [
+        "slide",
+        "zoom",
+        "scale",
+        "drop",
+        "swipe",
+        "rotate",
+        "flip",
+        "curtain",
+        "blur",
+        "explode"
+      ],
+      "implementation": "On navigate: pick random variant, add transition-{variant} class to <html>, start view transition, remove class on finished"
+    },
+    "staggerEntrance": {
+      "description": "Child elements animate in with incremental delay for visual hierarchy",
+      "gardenCards": {
+        "delay": "100ms per card",
+        "animation": "fly({ y: 20, duration: 500 })"
+      },
+      "quickLinks": {
+        "delay": "50ms per link",
+        "animation": "slide({ axis: 'y', duration: 300 })"
+      }
+    }
+  },
+  "rules": {
+    "implementation": {
+      "methodology": "Vanilla CSS with :root custom properties. Svelte scoped styles in components. Tailwind used only for utility classes in templates (px-8, py-24, etc.)",
+      "noExternalCSSDependencies": "Only Google Fonts <link> allowed. No CSS frameworks.",
+      "tailwindUsage": "Tailwind utility classes used for layout in Svelte templates (flex, grid, padding, margin). Component styles use scoped <style> blocks.",
+      "mobileFirst": "Responsive approach starts with mobile, adds breakpoints for larger screens.",
+      "boxSizing": "border-box on all elements",
+      "sectionPadding": "Use py-24 (6rem) for section vertical padding, px-8 (2rem) for horizontal",
+      "semanticClassNames": "Use descriptive class names (.garden-card, .hero-content) not utility strings",
+      "fontSmoothing": "-webkit-font-smoothing: antialiased on body",
+      "smoothScrolling": "scroll-behavior: smooth on html",
+      "fontDisplay": "font-display: swap for all @font-face declarations"
+    },
+    "color60_30_10": {
+      "description": "Dominant background, structural elements, and accent proportions",
+      "dominant_60": {
+        "color": "#F8F8F6",
+        "role": "Background surfaces, breathing room"
+      },
+      "structure_30": {
+        "color": "#1A1A1A + #FFFFFF",
+        "role": "Text, cards, structural contrast"
+      },
+      "accent_10": {
+        "color": "#E88500 + #00A855",
+        "role": "CTAs, highlights, interactive elements"
+      }
+    },
+    "wcagAccessibility": {
+      "level": "AA",
+      "contrastRatios": {
+        "darkOnBg": "#1A1A1A on #F8F8F6 = 15.3:1 ✓",
+        "mutedOnBg": "#6B6B6B on #F8F8F6 = 4.7:1 ✓",
+        "lightOnBg": "#9A9A9A on #F8F8F6 = 2.8:1 ✗ (decorative only)",
+        "accentOnBg": "#E88500 on #F8F8F6 = 3.8:1 ✗ (large text only, 24px+)",
+        "accentOnWhite": "#E88500 on #FFFFFF = 3.9:1 ✗ (large text only)",
+        "accentDarkOnWhite": "#C47000 on #FFFFFF = 5.1:1 ✓",
+        "whiteOnAccent": "#FFFFFF on #E88500 = 3.9:1 (large text only, button labels 15px+)",
+        "greenOnWhite": "#008F47 on #FFFFFF = 4.6:1 ✓",
+        "greenLightOnWhite": "#00A855 on #FFFFFF = 3.7:1 ✗ (large text only)"
+      },
+      "requirements": [
+        "All body text must use #1A1A1A on light bg (15.3:1)",
+        "Secondary text uses #6B6B6B (4.7:1 — passes AA)",
+        "#9A9A9A is decorative only — never for meaningful text",
+        "Accent #E88500 used for large text (≥24px) or icons only on light bg",
+        "For small accent text, use #C47000 (5.1:1 — passes AA)",
+        "Button labels (#FFFFFF on #E88500) are ≥15px bold — passes AA large text"
+      ],
+      "skipLinkHTML": "<a href=\"#main-content\" class=\"skip-link\">Skip to content</a>",
+      "focusVisibleCSS": ":focus-visible { outline: 2px solid #E88500; outline-offset: 2px; }",
+      "reducedMotionCSS": "@media (prefers-reduced-motion: reduce) { /* disable animations */ }"
+    },
+    "interactionStates": {
+      "description": "5 required interaction states per interactive component",
+      "states": {
+        "default": "Resting state with base styles",
+        "hover": "Transition: all 300ms ease or cubic-bezier(0.4, 0, 0.2, 1). Cards lift (translateY(-2px)), buttons shift.",
+        "focus": "Outline ring via :focus-visible. Color: #E88500, offset: 2px.",
+        "active_pressed": "Subtle visual feedback (scale down, darker shade)",
+        "disabled": "opacity: 0.5, cursor: not-allowed"
+      }
+    },
+    "spatialHierarchy": {
+      "description": "Spacing levels that communicate visual importance",
+      "levels": {
+        "micro": {
+          "size": "2-4px",
+          "usage": "Icon-to-label gaps, tag padding, focus ring offset"
+        },
+        "tight": {
+          "size": "8-12px",
+          "usage": "Button internal gaps, list item spacing, scrollbar"
+        },
+        "standard": {
+          "size": "16-24px",
+          "usage": "Card padding, page padding, footer gaps"
+        },
+        "comfortable": {
+          "size": "32-48px",
+          "usage": "Section margins, hero padding, major separations"
+        },
+        "spacious": {
+          "size": "64-96px",
+          "usage": "Section padding-y, page-level whitespace"
+        }
+      }
+    },
+    "layoutComposition": {
+      "description": "Three layout strategies depending on content needs",
+      "strategies": {
+        "responsive": {
+          "description": "Fluid columns that scale with viewport using auto-fit/minmax",
+          "useFor": "Garden card grid, editorial layouts, dashboards"
+        },
+        "adaptive": {
+          "description": "Fixed-width boxes that wrap at breakpoints",
+          "useFor": "Quick link list, fixed-width components, profile cards"
+        },
+        "strict": {
+          "description": "Horizontal scroll at threshold, no wrapping",
+          "useFor": "Data tables, code blocks, wide content"
+        }
+      },
+      "decisionTree": "If content widths are predictable → adaptive. If content should fill available space → responsive. If content must not wrap → strict."
+    },
+    "usageGuidelines": [
+      "Use var(--font-heading) for all headings and titles",
+      "Use var(--font-mono) for code, labels, nav logo, and technical text",
+      "Use var(--font-body) for body text, descriptions, and UI labels",
+      "Garden cards use border-radius: 0 for sharp terminal aesthetic",
+      "Quick links use border-radius: 8px for softer feel",
+      "Hero section must always use clamp() for responsive title sizing",
+      "Navigation links use lowercase text-transform consistently",
+      "All section labels use // prefix in JetBrains Mono",
+      "Accent dot (.) in te9.dev uses #E88500 always",
+      "Status indicators use green (#22C55E) for active/growing states"
+    ],
+    "designPrinciples": [
+      {
+        "name": "Terminal Aesthetic",
+        "why": "The site evokes a developer's terminal — monospace labels, cursor blinks, prompt symbols (›), and sharp card edges.",
+        "purpose": "Creates a distinctive developer identity that feels technical yet approachable.",
+        "usage": "Use mono fonts for labels and navigation. Use sharp borders (radius-0) for content cards. Add prompt › before logo text."
+      },
+      {
+        "name": "Organic Growth",
+        "why": "The digital garden metaphor — content grows over time, sections are 'seeded' not 'published'.",
+        "purpose": "Reflects the personal, evolving nature of the content.",
+        "usage": "Use green (#00A855) for growth indicators. Status dot pulses to show 'alive'. Tags use lowercase 'experiments', 'knowledge'."
+      },
+      {
+        "name": "Warm Minimalism",
+        "why": "Clean layout with warm undertones — not cold/clinical, not maximalist.",
+        "purpose": "Makes the technical content feel approachable and personal.",
+        "usage": "Use warm off-white backgrounds (#F8F8F6, not pure white). Add subtle warmth to borders (#E0DDD8). Keep spacing generous."
+      },
+      {
+        "name": "Accent Restraint",
+        "why": "Orange (#E88500) is used sparingly — labels, CTAs, and hover states only.",
+        "purpose": "Draws the eye to interactive elements without overwhelming.",
+        "usage": "Accent for: section labels, button primary, nav active, logo prompt. Never fill large areas with accent."
+      },
+      {
+        "name": "Dual Accent System",
+        "why": "Orange for interaction, green for status/growth. Two distinct semantic channels.",
+        "purpose": "Orange = 'do this', green = 'this is alive/growing'.",
+        "usage": "Orange: buttons, links, labels, highlights. Green: status dots, garden icons, tags, card borders."
+      },
+      {
+        "name": "Progressive Disclosure",
+        "why": "Content reveals itself as needed — stagger animations, hover reveals, scroll-triggered sections.",
+        "purpose": "Reduces cognitive load, creates visual rhythm.",
+        "usage": "Cards fly in on scroll. Top border grows on hover. Radial glow appears on hover. Section content reveals below fold."
+      },
+      {
+        "name": "Motion with Purpose",
+        "why": "10 view transition variants create delightful navigation. Each serves the same function differently.",
+        "purpose": "Navigation feels alive without being distracting.",
+        "usage": "Randomized transitions on page change. Consistent timing (250/550/800ms). Respect prefers-reduced-motion."
+      },
+      {
+        "name": "Typographic Hierarchy",
+        "why": "Three font families create clear hierarchy: Bricolage (identity), JetBrains (technical), Lekton (narrative).",
+        "purpose": "Each font has a semantic role — heading, code, body.",
+        "usage": "Bricolage: page titles, hero, section headings. JetBrains: labels, logo, links. Lekton: descriptions, buttons, body text."
+      },
+      {
+        "name": "Cultural Layering",
+        "why": "Noise overlay + scanlines add texture without reducing readability.",
+        "purpose": "Creates depth and a retro-digital atmosphere.",
+        "usage": "Noise at 2-3% opacity, scanlines at 6% opacity, pointer-events: none on both. Light theme uses even subtler effects."
+      },
+      {
+        "name": "Consistent Interaction",
+        "why": "All interactive elements share the same hover pattern: translateY(-2px) + border/shadow change.",
+        "purpose": "Creates a unified interaction vocabulary.",
+        "usage": "Cards, buttons, links all lift 2px on hover. All use 300ms transition. All show accent color on hover."
+      },
+      {
+        "name": "Accessible First",
+        "why": "Focus rings, skip links, reduced motion, and AA contrast are non-negotiable.",
+        "purpose": "The site works for everyone.",
+        "usage": "Focus: 2px solid #E88500. Skip link at top. Reduced motion kills all animations. AA contrast for all meaningful text."
+      },
+      {
+        "name": "Intentional Whitespace",
+        "why": "6rem section padding, generous card padding, and centered content create breathing room.",
+        "purpose": "Whitespace is design, not emptiness.",
+        "usage": "Section py: 6rem. Card padding: 2rem. Hero min-height: calc(100vh - 60px). Content is centered by default."
+      }
+    ]
+  },
+  "boilerplate": {
+    "description": "Required starter code for implementing the design system",
+    "htmlStructure": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>te9.dev</title><!-- Font links --><!-- CSS variables --></head><body><a href=\"#main-content\" class=\"skip-link\">Skip to content</a><nav id=\"navbar\" class=\"site-nav\">...</nav><main id=\"main-content\">...</main><footer class=\"site-footer\">...</footer></body></html>",
+    "cssReset": "*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }\na { text-decoration: none; color: inherit; }\nbutton { cursor: pointer; border: none; background: none; font-family: inherit; }\nimg { display: block; max-width: 100%; }",
+    "bodyCss": "body { font-family: var(--font-body); background: var(--color-brand-bg); color: var(--color-brand-dark); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }",
+    "skipLinkCss": ".skip-link { position: absolute; left: -9999px; top: auto; background: #FFFFFF; padding: 0.5rem 1rem; z-index: 10000; font-size: 0.875rem; border: 2px solid #E88500; }\n.skip-link:focus { left: 1rem; top: 1rem; }",
+    "focusVisibleCss": ":focus-visible { outline: 2px solid #E88500; outline-offset: 2px; }",
+    "reducedMotionCss": "@media (prefers-reduced-motion: reduce) {\n  .section-reveal { opacity: 1; transform: none; transition: none; }\n  .animate-fade-in-up { animation: none; opacity: 1; transform: none; }\n  .stagger-in > * { animation: none; opacity: 1; transform: none; }\n  .timeline-line { animation: none; height: 100%; }\n  .scroll-indicator { animation: none; }\n  .deco-ring { animation: none; opacity: 0.1; }\n}",
+    "navbarScrollJs": "const navbar = document.getElementById('navbar');\nwindow.addEventListener('scroll', () => {\n  navbar.classList.toggle('scrolled', window.scrollY > 100);\n});",
+    "scrollRevealJs": "const revealObserver = new IntersectionObserver((entries) => {\n  entries.forEach((entry) => {\n    if (entry.isIntersecting) { entry.target.classList.add('revealed'); revealObserver.unobserve(entry.target); }\n  });\n}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });\ndocument.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));",
+    "viewTransitionJs": "onNavigate((navigation) => {\n  if (!document.startViewTransition) return;\n  const transitions = ['slide', 'zoom', 'scale', 'drop', 'swipe', 'rotate', 'flip', 'curtain', 'blur', 'explode'];\n  const random = transitions[Math.floor(Math.random() * transitions.length)];\n  document.documentElement.classList.add(`transition-${random}`);\n  return new Promise((resolve) => {\n    document.startViewTransition(async () => {\n      resolve();\n      await navigation.complete;\n    }).finished.then(() => {\n      document.documentElement.classList.remove(`transition-${random}`);\n    });\n  });\n});",
+    "cssVariables": ":root {\n  --color-brand-bg: #F8F8F6;\n  --color-brand-bg-secondary: #EFEFEA;\n  --color-brand-dark: #1A1A1A;\n  --color-accent: #E88500;\n  --color-accent-light: #FFF4E6;\n  --color-accent-dark: #C47000;\n  --color-accent-gradient-start: #E88500;\n  --color-accent-gradient-end: #D07000;\n  --color-brand-muted: #6B6B6B;\n  --color-brand-light: #9A9A9A;\n  --color-garden-green: #00A855;\n  --color-garden-green-light: #E6F9EF;\n  --color-garden-green-dark: #008F47;\n  --color-emerald: #059669;\n  --color-emerald-light: #ECFDF5;\n  --color-success-50: #F0FDF4;\n  --color-success-500: #22C55E;\n  --color-success-700: #15803D;\n  --color-warning-50: #FFFBEB;\n  --color-warning-500: #F59E0B;\n  --color-warning-700: #B45309;\n  --color-error-50: #FEF2F2;\n  --color-error-500: #EF4444;\n  --color-error-700: #B91C1C;\n  --color-info-50: #EFF6FF;\n  --color-info-500: #3B82F6;\n  --color-info-700: #1D4ED8;\n  --color-neutral-50: #FAFAF8;\n  --color-neutral-100: #F5F5F0;\n  --color-neutral-500: #6B7280;\n  --color-neutral-700: #374151;\n  --color-white: #FFFFFF;\n  --color-navbar-bg: rgba(248, 248, 246, 0.9);\n  --color-overlay: rgba(0, 0, 0, 0.3);\n  --color-modal-backdrop: rgba(0, 0, 0, 0.5);\n  --color-input-border: #D4D4CC;\n  --color-border-subtle: #E0DDD8;\n  --color-border-hover: #CCCCC4;\n  --color-border-secondary: #E8E8E0;\n  --color-border-tertiary: #D4D4CC;\n  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;\n  --font-mono: 'JetBrains Mono', monospace;\n  --font-body: 'Lekton', monospace;\n  --duration-instant: 100ms;\n  --duration-fast: 200ms;\n  --duration-normal: 300ms;\n  --duration-moderate: 500ms;\n  --duration-slow: 550ms;\n  --duration-slower: 800ms;\n  --duration-pulse: 2000ms;\n  --duration-ring: 11000ms;\n  --duration-cursor: 500ms;\n  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);\n  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);\n  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);\n  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);\n  --radius-none: 0;\n  --radius-xs: 0.125rem;\n  --radius-sm: 0.25rem;\n  --radius-md: 0.375rem;\n  --radius-lg: 0.5rem;\n  --radius-xl: 0.75rem;\n  --radius-2xl: 1rem;\n  --radius-3xl: 1.5rem;\n  --radius-full: 9999px;\n  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);\n  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);\n  --shadow-lg: 0 12px 24px rgba(0,0,0,0.1);\n  --shadow-xl: 0 20px 40px rgba(0,0,0,0.12);\n  --shadow-2xl: 0 25px 50px rgba(0,0,0,0.16);\n  --shadow-accent: 0 8px 25px rgba(232, 133, 0, 0.25);\n  --shadow-accent-sm: 0 4px 12px rgba(232, 133, 0, 0.15);\n  --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.06);\n  --border-subtle: 1px solid #E0DDD8;\n}"
+  }
+}

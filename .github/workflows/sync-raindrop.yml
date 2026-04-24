@@ -1,0 +1,25 @@
+name: Sync Raindrop Bookmarks
+
+on:
+  schedule:
+    - cron: "0 */4 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync raindrop bookmarks
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          RAINDROP_ACCESS_TOKEN: ${{ secrets.RAINDROP_ACCESS_TOKEN }}
+        run: node scripts/sync-raindrop.js
