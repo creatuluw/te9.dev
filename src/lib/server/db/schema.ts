@@ -48,3 +48,33 @@ export const bookmarks = te9Dev.table("bookmarks", {
 }, (table) => [
   uniqueIndex("bookmarks_raindrop_id_unique").on(table.raindropId),
 ]);
+
+export const bookmarkContent = te9Dev.table("bookmark_content", {
+  id: serial("id").primaryKey(),
+  bookmarkId: integer("bookmark_id").notNull(),
+  markdown: text("markdown"),
+  tokenCount: integer("token_count"),
+  status: text("status").notNull().default("pending"),
+  error: text("error"),
+  crawledAt: timestamp("crawled_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+}, (table) => [
+  uniqueIndex("bookmark_content_bookmark_id_unique").on(table.bookmarkId),
+]);
+
+export const bookmarkAnalysis = te9Dev.table("bookmark_analysis", {
+  id: serial("id").primaryKey(),
+  bookmarkId: integer("bookmark_id").notNull(),
+  relevance: text("relevance"),
+  purpose: text("purpose"),
+  howToUse: text("how_to_use"),
+  whenToUse: text("when_to_use"),
+  tags: text("tags"),
+  category: text("category"),
+  analyzedAt: timestamp("analyzed_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+}, (table) => [
+  uniqueIndex("bookmark_analysis_bookmark_id_unique").on(table.bookmarkId),
+]);

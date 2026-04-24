@@ -23,3 +23,14 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           RAINDROP_ACCESS_TOKEN: ${{ secrets.RAINDROP_ACCESS_TOKEN }}
         run: node scripts/sync-raindrop.js
+
+      - name: Crawl bookmark content
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node scripts/crawl-bookmarks.js
+
+      - name: Analyze bookmarks with LLM
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          LLM_GATEWAY_URL: ${{ secrets.LLM_GATEWAY_URL }}
+        run: node scripts/analyze-bookmarks.js
