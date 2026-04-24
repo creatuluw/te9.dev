@@ -19,6 +19,7 @@
     "sync:raindrop": "node scripts/sync-raindrop.js"
   },
   "devDependencies": {
+    "@mozilla/readability": "^0.6.0",
     "@sveltejs/adapter-auto": "^7.0.0",
     "@sveltejs/kit": "^2.50.2",
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
@@ -26,10 +27,12 @@
     "@types/node": "^24",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
+    "jsdom": "^29.0.2",
     "postgres": "^3.4.9",
     "svelte": "^5.54.0",
     "svelte-check": "^4.4.2",
     "tailwindcss": "^4.1.18",
+    "turndown": "^7.2.4",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.1.1",
