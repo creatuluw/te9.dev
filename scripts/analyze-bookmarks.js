@@ -1,9 +1,29 @@
 import postgres from "postgres";
 import { readFileSync } from "fs";
 
-const LLM_URL =
-  process.env.LLM_GATEWAY_URL || "https://llm-gateway-production-91d5.up.railway.app/v1";
-const MODEL = "unsloth/Qwen3.5-2B-GGUF";
+// ---------------------------------------------------------------------------
+// LLM Provider Configuration
+// ---------------------------------------------------------------------------
+// Primary: z.ai (GLM-5) — fast, high quality
+// Fallback: Railway-hosted Qwen3.5-2B — always available backup
+
+const PROVIDERS = {
+  primary: {
+    url: process.env.ZAI_LLM_URL || "https://api.z.ai/api/coding/paas/v4",
+    apiKey: process.env.ZAI_API_KEY || "",
+    model: "glm-5",
+    name: "z.ai",
+  },
+  fallback: {
+    url:
+      process.env.LLM_GATEWAY_URL ||
+      "https://llm-gateway-production-91d5.up.railway.app/v1",
+    apiKey: "",
+    model: "unsloth/Qwen3.5-2B-GGUF",
+    name: "Railway Qwen",
+  },
+};
+
 const DELAY_MS = 1000;
 
 const SYSTEM_PROMPT = `You are a web development resource analyst. Analyze the following webpage content and respond with a JSON object containing exactly these fields:
@@ -16,6 +36,10 @@ const SYSTEM_PROMPT = `You are a web development resource analyst. Analyze the f
 - "category": the single main category this resource belongs to from a web developer's perspective (e.g. "CSS Framework", "Build Tool", "Design System", "API Service", etc.)
 
 Respond ONLY with valid JSON. No markdown, no explanation, just the JSON object.`;
+
+// ---------------------------------------------------------------------------
+// Environment helpers
+// ---------------------------------------------------------------------------
 
 function loadEnv() {
   const env = {};
@@ -33,25 +57,47 @@ function loadEnv() {
 }
 
 const env = loadEnv();
+
+// Merge .env values into provider configs (env vars take precedence)
+PROVIDERS.primary.url =
+  process.env.ZAI_LLM_URL || env.ZAI_LLM_URL || PROVIDERS.primary.url;
+PROVIDERS.primary.apiKey =
+  process.env.ZAI_API_KEY || env.ZAI_API_KEY || PROVIDERS.primary.apiKey;
+PROVIDERS.fallback.url =
+  process.env.LLM_GATEWAY_URL || env.LLM_GATEWAY_URL || PROVIDERS.fallback.url;
+
 const DATABASE_URL = process.env.DATABASE_URL || env.DATABASE_URL;
 if (!DATABASE_URL) throw new Error("DATABASE_URL is not set");
 
+// ---------------------------------------------------------------------------
+// LLM call with automatic failover
+// ---------------------------------------------------------------------------
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function analyzeWithLLM(markdown, title, url) {
+/**
+ * Call a single LLM provider and return the parsed analysis.
+ * Throws on any error so the caller can fall back to the next provider.
+ */
+async function callLLM(provider, markdown, title, url) {
   const userContent = `URL: ${url}\nTitle: ${title}\n\nContent:\n${markdown}`;
 
-  const res = await fetch(`${LLM_URL}/chat/completions`, {
+  const headers = { "Content-Type": "application/json" };
+  if (provider.apiKey) {
+    headers["Authorization"] = `Bearer ${provider.apiKey}`;
+  }
+
+  const res = await fetch(`${provider.url}/chat/completions`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify({
-      model: MODEL,
+      model: provider.model,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: userContent },
       ],
-      temperature: 0.3,
-      max_tokens: 500,
+      temperature: 0.7,
+      max_tokens: 5000,
       response_format: { type: "json_object" },
       stream: false,
     }),
@@ -59,12 +105,12 @@ async function analyzeWithLLM(markdown, title, url) {
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`LLM API error ${res.status}: ${body}`);
+    throw new Error(`${provider.name} API error ${res.status}: ${body}`);
   }
 
   const data = await res.json();
   const content = data.choices?.[0]?.message?.content;
-  if (!content) throw new Error("Empty LLM response");
+  if (!content) throw new Error(`${provider.name}: Empty LLM response`);
 
   const parsed = JSON.parse(content);
 
@@ -73,15 +119,49 @@ async function analyzeWithLLM(markdown, title, url) {
     purpose: parsed.purpose || null,
     how_to_use: parsed.how_to_use || null,
     when_to_use: parsed.when_to_use || null,
-    tags: Array.isArray(parsed.tags) ? JSON.stringify(parsed.tags) : parsed.tags || null,
+    tags: Array.isArray(parsed.tags)
+      ? JSON.stringify(parsed.tags)
+      : parsed.tags || null,
     category: parsed.category || null,
   };
 }
 
+/**
+ * Try primary LLM first; fall back to the secondary if it fails.
+ */
+async function analyzeWithLLM(markdown, title, url) {
+  // --- Try primary (z.ai) ---
+  if (PROVIDERS.primary.apiKey) {
+    try {
+      const result = await callLLM(PROVIDERS.primary, markdown, title, url);
+      return { ...result, _provider: PROVIDERS.primary.name };
+    } catch (err) {
+      console.log(
+        `    ⚠ Primary (${PROVIDERS.primary.name}) failed: ${err.message}`,
+      );
+      console.log(`    ↻ Falling back to ${PROVIDERS.fallback.name}...`);
+    }
+  } else {
+    console.log(`    ℹ No ZAI_API_KEY set — skipping primary, using fallback`);
+  }
+
+  // --- Fallback (Railway Qwen) ---
+  const result = await callLLM(PROVIDERS.fallback, markdown, title, url);
+  return { ...result, _provider: PROVIDERS.fallback.name };
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
 async function analyze() {
   console.log("Bookmark Analyzer (LLM)");
-  console.log(`  LLM: ${LLM_URL}`);
-  console.log(`  Model: ${MODEL}`);
+  console.log(
+    `  Primary : ${PROVIDERS.primary.name} @ ${PROVIDERS.primary.url} (${PROVIDERS.primary.model})`,
+  );
+  console.log(
+    `  Fallback: ${PROVIDERS.fallback.name} @ ${PROVIDERS.fallback.url} (${PROVIDERS.fallback.model})`,
+  );
   console.log(`  DB: ${DATABASE_URL.replace(/:[^:@]+@/, ":****@")}`);
 
   const sql = postgres(DATABASE_URL, {
@@ -103,7 +183,9 @@ async function analyze() {
       ORDER BY b.raindrop_created_at DESC NULLS LAST, b.id DESC
       LIMIT 100
     `;
-    console.log(`  Pending: ${pending.length} bookmarks to analyze (most recent 100)`);
+    console.log(
+      `  Pending: ${pending.length} bookmarks to analyze (most recent 100)`,
+    );
 
     let success = 0;
     let failed = 0;
@@ -116,7 +198,7 @@ async function analyze() {
         const analysis = await analyzeWithLLM(
           bookmark.markdown,
           bookmark.title,
-          bookmark.url
+          bookmark.url,
         );
 
         await sql`
@@ -133,7 +215,7 @@ async function analyze() {
         `;
 
         console.log(
-          `  ${progress} OK   ${bookmark.url} [${analysis.category}]`
+          `  ${progress} OK   ${bookmark.url} [${analysis.category}] via ${analysis._provider}`,
         );
         success++;
       } catch (err) {

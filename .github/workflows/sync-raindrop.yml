@@ -32,5 +32,7 @@ jobs:
       - name: Analyze bookmarks with LLM
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ZAI_LLM_URL: ${{ secrets.ZAI_LLM_URL }}
+          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
           LLM_GATEWAY_URL: ${{ secrets.LLM_GATEWAY_URL }}
         run: node scripts/analyze-bookmarks.js
