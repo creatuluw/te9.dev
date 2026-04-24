@@ -1,7 +1,7 @@
 <script lang="ts">
     import GardenCard from "$lib/components/ui/GardenCard.svelte";
-    import SectionHeader from "$lib/components/ui/SectionHeader.svelte";
-    import { gardenCards } from "$lib/components/ui/data";
+
+    let { data } = $props();
 </script>
 
 <svelte:head>
@@ -15,8 +15,14 @@
 <section class="garden-page">
     <div class="w-full">
         <div class="garden-grid">
-            {#each gardenCards as card, i}
-                <GardenCard {card} index={i} />
+            {#each data.entrances as entrance, i}
+                <GardenCard
+                    title={entrance.title}
+                    description={entrance.description}
+                    tag={entrance.tag}
+                    icon={entrance.icon}
+                    index={i}
+                />
             {/each}
         </div>
     </div>

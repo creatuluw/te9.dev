@@ -1,13 +1,40 @@
 <script lang="ts">
     import { fade, fly } from "svelte/transition";
-    import type { GardenCard } from "./types";
+    import {
+        Code,
+        Package,
+        Link2,
+        Bookmark,
+        FileText,
+        Heart,
+        type LucideIcon,
+    } from "@lucide/svelte";
+
+    const iconMap: Record<string, LucideIcon> = {
+        code: Code,
+        package: Package,
+        link: Link2,
+        bookmark: Bookmark,
+        "file-text": FileText,
+        heart: Heart,
+    };
+
+    function resolveIcon(name: string | undefined): LucideIcon | null {
+        if (!name) return null;
+        return iconMap[name] ?? null;
+    }
 
     interface Props {
-        card: GardenCard;
+        title: string;
+        description: string;
+        tag: string;
+        icon?: string;
         index: number;
     }
 
-    let { card, index }: Props = $props();
+    let { title, description, tag, icon, index }: Props = $props();
+
+    const resolvedIcon = $derived(resolveIcon(icon));
 </script>
 
 <article
@@ -18,16 +45,16 @@
     <div class="garden-card-accent"></div>
     <div class="card-content">
         <div class="garden-header">
-            <h3 class="garden-title">{card.title}</h3>
+            <h3 class="garden-title">{title}</h3>
             <div class="garden-icon">
-                {#if card.icon}
-                    {@const Icon = card.icon}
+                {#if resolvedIcon}
+                    {@const Icon = resolvedIcon}
                     <Icon size={24} />
                 {/if}
             </div>
         </div>
-        <p class="garden-desc">{card.desc}</p>
-        <span class="garden-tag">{card.tag}</span>
+        <p class="garden-desc">{description}</p>
+        <span class="garden-tag">{tag}</span>
     </div>
 </article>
 

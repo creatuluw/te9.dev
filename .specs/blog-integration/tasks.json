@@ -1,0 +1,297 @@
+{
+  "project": "blog-integration",
+  "spec": ".specs/blog-integration/spec.md",
+  "developmentMethodology": "TDD (RED-GREEN-REFACTOR cycle)",
+  "tasks": [
+    {
+      "id": "setup-001",
+      "phase": "Setup",
+      "title": "Install blog dependencies",
+      "description": "Install required npm packages: @aureuma/svelta for blog functionality and marked for markdown rendering",
+      "acceptanceCriteria": [
+        "TDD: Write test that verifies @aureuma/svelta is installed in package.json dependencies",
+        "TDD: Write test that verifies marked is installed in package.json dependencies",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-1"
+    },
+    {
+      "id": "setup-002",
+      "phase": "Setup",
+      "title": "Create content directory structure",
+      "description": "Create src/content/blog/ directory for markdown post files with sample posts",
+      "acceptanceCriteria": [
+        "TDD: Write test that verifies src/content/blog/ directory exists",
+        "TDD: Write test that verifies sample markdown files with frontmatter exist",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-1"
+    },
+    {
+      "id": "core-001",
+      "phase": "Core Functionality",
+      "title": "Create blog utility module",
+      "description": "FR-1: Create src/lib/blog.ts with blog initialization using createRawBlog, including rawModules loading, getAuthor function, mapFrontmatter, and renderMarkdown configuration",
+      "acceptanceCriteria": [
+        "TDD: Write test for blog module exports (getAllPosts, getPostBySlug, getCategories, getAllTags, pickHero, getAdjacentPosts)",
+        "TDD: Test fails when blog module is missing",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-1"
+    },
+    {
+      "id": "core-002",
+      "phase": "Core Functionality",
+      "title": "Implement frontmatter parsing",
+      "description": "FR-1: Implement mapFrontmatter function to extract title, date, category, author, cover, excerpt, tags, featured, and draft from markdown frontmatter",
+      "acceptanceCriteria": [
+        "TDD: Write test for mapFrontmatter with valid frontmatter data",
+        "TDD: Test fails when frontmatter fields are missing or invalid",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-1"
+    },
+    {
+      "id": "core-003",
+      "phase": "Core Functionality",
+      "title": "Implement author lookup",
+      "description": "FR-5: Implement getAuthor function with author definitions and fallback to default author",
+      "acceptanceCriteria": [
+        "TDD: Write test for getAuthor with valid author id",
+        "TDD: Test fails when author id is not found (should return default)",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-5"
+    },
+    {
+      "id": "core-004",
+      "phase": "Core Functionality",
+      "title": "Implement blog listing page server load",
+      "description": "FR-2: Create src/routes/blog/+page.server.ts with load function that fetches all posts, hero, categories, and tags",
+      "acceptanceCriteria": [
+        "TDD: Write test for load function returning posts, hero, categories, and tags",
+        "TDD: Test fails when load function returns incorrect data structure",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-2"
+    },
+    {
+      "id": "core-005",
+      "phase": "Core Functionality",
+      "title": "Implement blog listing page component",
+      "description": "FR-2: Create src/routes/blog/+page.svelte with bento-grid layout, hero section, category filtering, and varied card sizes",
+      "acceptanceCriteria": [
+        "TDD: Write test for blog listing page rendering with posts data",
+        "TDD: Test fails when category filter doesn't update displayed posts",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-2"
+    },
+    {
+      "id": "core-006",
+      "phase": "Core Functionality",
+      "title": "Implement individual post page server load",
+      "description": "FR-3: Create src/routes/blog/[slug]/+page.server.ts with load function that fetches post by slug and adjacent posts, throws 404 for missing posts",
+      "acceptanceCriteria": [
+        "TDD: Write test for load function returning post, previous, and next",
+        "TDD: Test fails with 404 error when slug doesn't exist",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-3"
+    },
+    {
+      "id": "core-007",
+      "phase": "Core Functionality",
+      "title": "Implement individual post page component",
+      "description": "FR-3: Create src/routes/blog/[slug]/+page.svelte with article header, cover image, rendered markdown content, and previous/next navigation",
+      "acceptanceCriteria": [
+        "TDD: Write test for post page rendering with post data",
+        "TDD: Test fails when markdown content is not rendered to HTML",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-3"
+    },
+    {
+      "id": "core-008",
+      "phase": "Core Functionality",
+      "title": "Implement reading time calculation",
+      "description": "FR-6: Ensure reading time is calculated based on word count (200 words/minute) and displayed in short and long formats",
+      "acceptanceCriteria": [
+        "TDD: Write test for reading time calculation with various word counts",
+        "TDD: Test fails when reading time doesn't round up correctly",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-6"
+    },
+    {
+      "id": "testing-001",
+      "phase": "Testing",
+      "title": "Test empty blog state",
+      "description": "EC-1: Test listing page displays empty state message when no posts exist",
+      "acceptanceCriteria": [
+        "TDD: Write test for empty posts array rendering empty state",
+        "TDD: Test fails when empty state message is not displayed",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "EC-1"
+    },
+    {
+      "id": "testing-002",
+      "phase": "Testing",
+      "title": "Test invalid frontmatter handling",
+      "description": "EC-2: Test that posts with missing or malformed frontmatter use default values and don't crash",
+      "acceptanceCriteria": [
+        "TDD: Write test for post with missing required frontmatter fields",
+        "TDD: Test fails when invalid frontmatter causes crash instead of defaults",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "EC-2"
+    },
+    {
+      "id": "testing-003",
+      "phase": "Testing",
+      "title": "Test missing cover image fallback",
+      "description": "EC-3: Test that posts without cover images display gradient background cards",
+      "acceptanceCriteria": [
+        "TDD: Write test for post card rendering without cover image",
+        "TDD: Test fails when missing image causes broken image icon",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "EC-3"
+    },
+    {
+      "id": "testing-004",
+      "phase": "Testing",
+      "title": "Test 404 for invalid slug",
+      "description": "EC-4: Test that navigating to non-existent post slug returns 404 error page",
+      "acceptanceCriteria": [
+        "TDD: Write test for load function throwing 404 error on invalid slug",
+        "TDD: Test fails when invalid slug doesn't throw error",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "EC-4"
+    },
+    {
+      "id": "testing-005",
+      "phase": "Testing",
+      "title": "Test draft post exclusion",
+      "description": "EC-5: Test that posts with draft: true are excluded from production listing",
+      "acceptanceCriteria": [
+        "TDD: Write test for draft posts being filtered out",
+        "TDD: Test fails when draft posts appear in published listing",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 2,
+      "status": "pending",
+      "mapsTo": "EC-5"
+    },
+    {
+      "id": "styling-001",
+      "phase": "Styling",
+      "title": "Apply consistent dark theme styling",
+      "description": "Ensure blog pages use the existing te9 website dark theme with zinc colors, proper contrast, and consistent spacing",
+      "acceptanceCriteria": [
+        "TDD: Write test verifying Tailwind classes match design system",
+        "TDD: Test fails when colors don't match dark theme palette",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Success Criteria 7"
+    },
+    {
+      "id": "styling-002",
+      "phase": "Styling",
+      "title": "Implement responsive bento grid",
+      "description": "Ensure bento grid layout is responsive with proper breakpoints for mobile, tablet, and desktop",
+      "acceptanceCriteria": [
+        "TDD: Write test for grid layout at different viewport sizes",
+        "TDD: Test fails when cards don't stack properly on mobile",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Success Criteria 6"
+    },
+    {
+      "id": "styling-003",
+      "phase": "Styling",
+      "title": "Add typography plugin for prose",
+      "description": "Install and configure @tailwindcss/typography plugin for styled markdown content rendering",
+      "acceptanceCriteria": [
+        "TDD: Write test for prose classes rendering markdown with proper typography",
+        "TDD: Test fails when markdown content lacks proper styling",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "FR-7"
+    },
+    {
+      "id": "integration-001",
+      "phase": "Integration",
+      "title": "Add blog navigation link to main layout",
+      "description": "Add Journal/Blog link to the main site navigation in src/routes/+layout.svelte",
+      "acceptanceCriteria": [
+        "TDD: Write test for blog link presence in navigation",
+        "TDD: Test fails when blog link is missing or incorrect href",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "User Experience"
+    },
+    {
+      "id": "integration-002",
+      "phase": "Integration",
+      "title": "Verify existing routes unaffected",
+      "description": "Test that existing routes (/, /garden) continue to function correctly after blog integration",
+      "acceptanceCriteria": [
+        "TDD: Write test for home page loading correctly",
+        "TDD: Test fails when existing routes break after blog integration",
+        "TDD: Refactor after test passes"
+      ],
+      "priority": 1,
+      "status": "pending",
+      "mapsTo": "Success Criteria 8"
+    }
+  ],
+  "tddWorkflow": {
+    "enforced": true,
+    "cycle": "RED-GREEN-REFACTOR",
+    "rules": [
+      "Write test first (RED) - test must fail",
+      "Write minimal code to pass (GREEN) - no optimization",
+      "Refactor after test passes (REFACTOR) - maintain quality",
+      "All tasks must follow TDD cycle as acceptance criteria"
+    ]
+  }
+}

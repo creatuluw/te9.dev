@@ -5,16 +5,20 @@
 
 /**
  * GardenCard - Represents a card in the garden section
- * @property icon - Lucide icon component
+ * @property icon - Lucide icon name (e.g. "code", "package", "heart")
  * @property title - Card title
  * @property desc - Card description
  * @property tag - Category tag for the card
+ * @property slug - URL-friendly identifier
+ * @property href - Optional link destination
  */
 export interface GardenCard {
-  icon: any;
+  icon: string;
   title: string;
   desc: string;
   tag: string;
+  slug?: string;
+  href?: string | null;
 }
 
 /**
