@@ -1,0 +1,569 @@
+[
+  {
+    "id": "title",
+    "type": "title",
+    "route": "/",
+    "title": "kees.pippeloi.nl",
+    "icon": "Home"
+  },
+  {
+    "id": "app-flow",
+    "type": "app-flow",
+    "route": "/walkthru",
+    "title": "De BPM Stroom",
+    "subtitle": "Hoe alles met elkaar verbonden is",
+    "content": "Van het definiëren van processen tot het analyseren van resultaten - de complete workflow",
+    "icon": "Workflow"
+  },
+  {
+    "id": "dashboard",
+    "type": "route",
+    "route": "/",
+    "title": "Home",
+    "purpose": "Het Dashboard is het centrale commandocentrum waar gebruikers hun dag beginnen, hun toegewezen werk zien en hun taken beheren via een intuïtief Kanban-bord.",
+    "problemsSolved": [
+      {
+        "before": "Verloren in taken",
+        "after": "Visueel overzicht van al je werk op één plek"
+      },
+      {
+        "before": "Onduidelijke prioriteiten",
+        "after": "Drag & drop om te prioriteren via Kanban"
+      },
+      {
+        "before": "Geen inzicht in werkdruk",
+        "after": "Statistieken tonen taakaantal en uren"
+      },
+      {
+        "before": "Verspreide informatie",
+        "after": "Snelle toegang tot backlog, instellingen en chat"
+      }
+    ],
+    "features": [
+      {
+        "name": "Kanban Bord",
+        "description": "Visueel takenbord met drag & drop",
+        "link": "/",
+        "icon": "CheckSquare"
+      },
+      {
+        "name": "Gebruikerskaart",
+        "description": "Persoonlijke hub met statistieken en acties",
+        "link": "/",
+        "icon": "Users"
+      },
+      {
+        "name": "Backlog Kaart",
+        "description": "Overzicht van werk in wachtrij",
+        "link": "/",
+        "icon": "List"
+      },
+      {
+        "name": "Mijn Backlog Lade",
+        "description": "Persoonlijke backlog met wekelijkse stats",
+        "link": "/",
+        "icon": "List"
+      },
+      {
+        "name": "Chat Assistent",
+        "description": "AI-ondersteuning",
+        "link": "/",
+        "icon": "MessageCircle"
+      }
+    ],
+    "taskAchievements": [
+      "Zie al je toegewezen taken in één oogopslag",
+      "Verplaats taken tussen statussen via drag & drop",
+      "Voeg snel nieuwe werkitems toe",
+      "Toegang tot je persoonlijke backlog",
+      "Configureer je beschikbaarheid",
+      "Krijg AI-assistentie via chat",
+      "Navigeer naar weekplanning"
+    ],
+    "icon": "Home"
+  },
+  {
+    "id": "cases",
+    "type": "route",
+    "route": "/cases",
+    "title": "Cases",
+    "purpose": "Cases zijn actieve instanties van processjablonen. Hier gebeurt het daadwerkelijke werk - het volgen van gedefinieerde processen om bedrijfsworkflows af te ronden.",
+    "problemsSolved": [
+      {
+        "before": "Inconsistente workflows",
+        "after": "Gestandaardiseerde procesuitvoering"
+      },
+      {
+        "before": "Gemiste stappen",
+        "after": "Alle taken automatisch gegenereerd uit sjablonen"
+      },
+      {
+        "before": "Geen voortgangsregistratie",
+        "after": "Visuele statusindicatoren per case"
+      },
+      {
+        "before": "Onduidelijk eigenaarschap",
+        "after": "Duidelijke eigenaar-toewijzing per case"
+      }
+    ],
+    "features": [
+      {
+        "name": "Case Grid",
+        "description": "Visueel overzicht van alle cases",
+        "link": "/cases",
+        "icon": "FileText"
+      },
+      {
+        "name": "Zoeken & Filteren",
+        "description": "Geavanceerde filteropties",
+        "link": "/cases",
+        "icon": "Eye"
+      },
+      {
+        "name": "Case Aanmaken",
+        "description": "Maak cases van sjablonen",
+        "link": "/cases/new",
+        "icon": "FileText"
+      },
+      {
+        "name": "Case Detail",
+        "description": "Deep dive in één case",
+        "link": "/cases/[id]",
+        "icon": "FileText"
+      }
+    ],
+    "taskAchievements": [
+      "Maak cases van processjablonen",
+      "Volg case-voortgang over alle stappen",
+      "Wijs eigenaren toe aan cases en taken",
+      "Voltooil individuele taken om de case vooruit te helpen",
+      "Upload relevante bestanden",
+      "Communiceer via berichten-tab",
+      "Deel cases publiek via token-links"
+    ],
+    "icon": "FileText"
+  },
+  {
+    "id": "processes",
+    "type": "route",
+    "route": "/processes",
+    "title": "Processen",
+    "purpose": "Processjablonen zijn de blauwdrukken voor je workflows. Één keer definiëren, oneindig hergebruiken.",
+    "problemsSolved": [
+      {
+        "before": "Het wiel opnieuw uitvinden",
+        "after": "Één keer definiëren, voor altijd hergebruiken"
+      },
+      { "before": "Kennisverlies", "after": "Gedocumenteerde processjablonen" },
+      {
+        "before": "Inconsistente uitvoering",
+        "after": "Gestandaardiseerde takenlijsten"
+      },
+      {
+        "before": "Geen verbetering",
+        "after": "Volg voltooiingstijden, verfijn"
+      }
+    ],
+    "features": [
+      {
+        "name": "Process Grid",
+        "description": "Overzicht van alle sjablonen",
+        "link": "/processes",
+        "icon": "Workflow"
+      },
+      {
+        "name": "Proces Editor",
+        "description": "Bouw stappen en taken",
+        "link": "/processes/[id]/edit",
+        "icon": "Workflow"
+      },
+      {
+        "name": "Archiveren/Herstellen",
+        "description": "Beheer actief vs inactief",
+        "link": "/processes",
+        "icon": "Workflow"
+      },
+      {
+        "name": "Statistieken",
+        "description": "Stappen, taken, uren per proces",
+        "link": "/processes",
+        "icon": "ChartBar"
+      }
+    ],
+    "taskAchievements": [
+      "Maak nieuwe processjablonen",
+      "Definieer multi-stap workflows",
+      "Voeg taken toe aan elke stap",
+      "Stel verwachte voltooiingstijden in",
+      "Archiveer verouderde processen",
+      "Maak cases direct van sjablonen"
+    ],
+    "icon": "Workflow"
+  },
+  {
+    "id": "work-backlog",
+    "type": "route",
+    "route": "/work",
+    "title": "Werk & Backlog",
+    "purpose": "Werkitems zijn zelfstandige taken. De backlog bevat al het ongeplande werk dat wacht om ingepland te worden.",
+    "problemsSolved": [
+      {
+        "before": "Verloren ad-hoc taken",
+        "after": "Leg alles vast in backlog"
+      },
+      {
+        "before": "Geen prioritering",
+        "after": "Sleep items naar planning wanneer klaar"
+      },
+      {
+        "before": "Overweldigd door volume",
+        "after": "Filter en organiseer backlog"
+      },
+      { "before": "Geen capaciteitsinzicht", "after": "Uren tracking per item" }
+    ],
+    "features": [
+      {
+        "name": "Team Kanban",
+        "description": "Zie AL werk, niet alleen het jouwe",
+        "link": "/work",
+        "icon": "CheckSquare"
+      },
+      {
+        "name": "Backlog Grid",
+        "description": "Alle ongeplande items",
+        "link": "/work/backlog",
+        "icon": "List"
+      },
+      {
+        "name": "Naar Planning",
+        "description": "Promoot items naar actief werk",
+        "link": "/work/backlog",
+        "icon": "TrendingUp"
+      },
+      {
+        "name": "Snelle Bewerking",
+        "description": "Bewerk zonder pagina te verlaten",
+        "link": "/work/backlog",
+        "icon": "Wrench"
+      }
+    ],
+    "taskAchievements": [
+      "Maak zelfstandige werkitems",
+      "Onderhoud georganiseerde backlog",
+      "Verplaats items van backlog naar planning",
+      "Volg uren en deadlines",
+      "Wijs werk toe aan teamleden",
+      "Bekijk complete werkgeschiedenis"
+    ],
+    "icon": "CheckSquare"
+  },
+  {
+    "id": "mijn-werk",
+    "type": "route",
+    "route": "/mijn-werk",
+    "title": "Mijn Werk (Planning)",
+    "purpose": "Persoonlijk planning dashboard met heatmap visualisatie die de werklastverdeling toont.",
+    "problemsSolved": [
+      {
+        "before": "Onbekende capaciteit",
+        "after": "Visuele heatmap toont over/under weeks"
+      },
+      {
+        "before": "Gemiste deadlines",
+        "after": "Sleep taken om deadlines in te stellen"
+      },
+      { "before": "Slechte planning", "after": "Verspreid werk over weken" },
+      {
+        "before": "Burnout risico",
+        "after": "Zie rode weken voordat ze gebeuren"
+      }
+    ],
+    "features": [
+      {
+        "name": "Heatmap",
+        "description": "Visuele werklast per week",
+        "link": "/mijn-werk",
+        "icon": "ChartBar"
+      },
+      {
+        "name": "Sleep om te Plannen",
+        "description": "Stel deadlines in door te slepen",
+        "link": "/mijn-werk",
+        "icon": "Calendar"
+      },
+      {
+        "name": "Week Filter",
+        "description": "Klik week om te filteren",
+        "link": "/mijn-werk",
+        "icon": "Calendar"
+      },
+      {
+        "name": "Zonder Datum",
+        "description": "Vind ongeplande items",
+        "link": "/mijn-werk",
+        "icon": "Eye"
+      }
+    ],
+    "taskAchievements": [
+      "Visualiseer werklastverdeling",
+      "Stel deadlines in via drag & drop",
+      "Balanceer werk over weken",
+      "Identificeer capaciteitsproblemen vroeg",
+      "Plan toekomstig werk proactief"
+    ],
+    "icon": "Calendar"
+  },
+  {
+    "id": "projects",
+    "type": "route",
+    "route": "/projects",
+    "title": "Projecten",
+    "purpose": "Projecten zijn containers voor het organiseren van gerelateerde werkitems, cases en teamleden.",
+    "problemsSolved": [
+      { "before": "Verspreid werk", "after": "Groepeer items onder projecten" },
+      {
+        "before": "Onduidelijke betrokkenheid",
+        "after": "Project lidmaatschapsbeheer"
+      },
+      {
+        "before": "Geen context",
+        "after": "Gecentraliseerde bestanden, berichten, notities"
+      }
+    ],
+    "features": [
+      {
+        "name": "Project Grid",
+        "description": "Overzicht van alle projecten",
+        "link": "/projects",
+        "icon": "FolderOpen"
+      },
+      {
+        "name": "Ledenbeheer",
+        "description": "Voeg toe/verwijder leden",
+        "link": "/projects/[id]",
+        "icon": "Users"
+      },
+      {
+        "name": "Archiveren/Herstellen",
+        "description": "Beheer actief vs voltooid",
+        "link": "/projects",
+        "icon": "Folder"
+      },
+      {
+        "name": "Publiek Delen",
+        "description": "Deel projecten extern",
+        "link": "/projects/[id]",
+        "icon": "Eye"
+      }
+    ],
+    "taskAchievements": [
+      "Maak en organiseer projecten",
+      "Voeg teamleden toe aan projecten",
+      "Wijs project-eigendom toe",
+      "Koppel werkitems en cases",
+      "Archiveer voltooide projecten",
+      "Deel projecten publiek"
+    ],
+    "icon": "FolderOpen"
+  },
+  {
+    "id": "messages",
+    "type": "route",
+    "route": "/messages",
+    "title": "Berichten",
+    "purpose": "In-app berichten voor teamcommunicatie met vermeldingen en bestandsbijlagen.",
+    "problemsSolved": [
+      {
+        "before": "Verspreide communicatie",
+        "after": "Gecentraliseerde berichten"
+      },
+      {
+        "before": "Verloren context",
+        "after": "Berichten gekoppeld aan entiteiten"
+      },
+      {
+        "before": "Email overbelasting",
+        "after": "Alleen in-app notificaties"
+      },
+      {
+        "before": "Geen vermeldingen",
+        "after": "Noem gebruikers, projecten, cases"
+      }
+    ],
+    "features": [
+      {
+        "name": "Berichten Tijdlijn",
+        "description": "Chronologische feed",
+        "link": "/messages",
+        "icon": "MessageCircle"
+      },
+      {
+        "name": "@Meldingen",
+        "description": "Tag gebruikers, projecten, cases",
+        "link": "/messages",
+        "icon": "MessageCircle"
+      },
+      {
+        "name": "Bestandsbijlagen",
+        "description": "Voeg bestanden toe aan berichten",
+        "link": "/messages",
+        "icon": "Folder"
+      },
+      {
+        "name": "Email Notificaties",
+        "description": "Configureerbare alerts",
+        "link": "/messages",
+        "icon": "MessageCircle"
+      }
+    ],
+    "taskAchievements": [
+      "Stuur berichten naar team",
+      "@noem specifieke personen of entiteiten",
+      "Voeg relevante bestanden toe",
+      "Volg communicatiegeschiedenis",
+      "Configureer notificatie-voorkeuren"
+    ],
+    "icon": "MessageCircle"
+  },
+  {
+    "id": "reports",
+    "type": "route",
+    "route": "/rapporten",
+    "title": "Rapporten",
+    "purpose": "Rapportage dashboard dat inzicht geeft in teamprestaties, werklast en statistieken.",
+    "problemsSolved": [
+      { "before": "Geen inzichten", "after": "Data-gedreven dashboards" },
+      {
+        "before": "Handmatige rapportage",
+        "after": "Geautomatiseerde analyses"
+      },
+      {
+        "before": "Geen benchmarking",
+        "after": "Vergelijk prestaties over tijd"
+      }
+    ],
+    "features": [
+      {
+        "name": "Medewerker Rapporten",
+        "description": "Werklast per persoon",
+        "link": "/rapporten/medewerkers",
+        "icon": "ChartBar"
+      },
+      {
+        "name": "Operationele Rapporten",
+        "description": "Proces efficiëntie",
+        "link": "/rapporten/operational",
+        "icon": "ChartBar"
+      },
+      {
+        "name": "Activiteit Logs",
+        "description": "Audit trail",
+        "link": "/admin/activity",
+        "icon": "Eye"
+      }
+    ],
+    "taskAchievements": [
+      "Bekijk medewerker werklast statistieken",
+      "Volg taak voltooiingspercentages",
+      "Monitor proces efficiëntie",
+      "Toegang tot audit trails",
+      "Neem data-gedreven beslissingen"
+    ],
+    "icon": "ChartBar"
+  },
+  {
+    "id": "files",
+    "type": "route",
+    "route": "/files",
+    "title": "Bestanden",
+    "purpose": "Gecentraliseerd bestandsbeheer. Upload, organiseer en beheer alle organisatiebestanden.",
+    "features": [
+      {
+        "name": "Bestanden Uploaden",
+        "description": "Upload elk bestandstype",
+        "link": "/files",
+        "icon": "Folder"
+      },
+      {
+        "name": "Map Organisatie",
+        "description": "Creëer mappenstructuur",
+        "link": "/files",
+        "icon": "Folder"
+      },
+      {
+        "name": "Bestanden Browser",
+        "description": "Navigeer en bekijk",
+        "link": "/files",
+        "icon": "Folder"
+      }
+    ],
+    "taskAchievements": [
+      "Upload bestanden van elk type",
+      "Creëer georganiseerde mappenstructuren",
+      "Browse en zoek bestanden",
+      "Verwijder ongewenste bestanden"
+    ],
+    "icon": "Folder"
+  },
+  {
+    "id": "admin",
+    "type": "route",
+    "route": "/admin",
+    "title": "Admin Sectie",
+    "purpose": "Administratieve interface voor systeembeheer, gebruikersadministratie en toegangscontrole.",
+    "problemsSolved": [
+      {
+        "before": "Handmatig gebruikersbeheer",
+        "after": "Gecentraliseerde administratie"
+      },
+      {
+        "before": "Geen toegangscontrole",
+        "after": "Rol-gebaseerde permissies"
+      },
+      { "before": "Geen audit trail", "after": "Complete activiteit logs" }
+    ],
+    "features": [
+      {
+        "name": "Gebruikersbeheer",
+        "description": "Maak, bewerk, verwijder gebruikers",
+        "link": "/admin/gebruikers",
+        "icon": "Users"
+      },
+      {
+        "name": "Rollenbeheer",
+        "description": "Maak rollen, wijs permissies toe",
+        "link": "/admin/rollen",
+        "icon": "Shield"
+      },
+      {
+        "name": "Permissies",
+        "description": "Route-niveau toegangscontrole",
+        "link": "/admin/permissions",
+        "icon": "Shield"
+      },
+      {
+        "name": "Activiteit Logs",
+        "description": "Audit trail",
+        "link": "/admin/activity",
+        "icon": "Eye"
+      }
+    ],
+    "taskAchievements": [
+      "Maak en beheer gebruikersaccounts",
+      "Stuur gebruikersuitnodigingen",
+      "Wijs rollen toe aan gebruikers",
+      "Configureer permissies",
+      "Bekijk activiteit logs voor audit"
+    ],
+    "icon": "Shield"
+  },
+  {
+    "id": "closing",
+    "type": "title",
+    "route": "/walkthru",
+    "title": "Klaar voor Demo",
+    "subtitle": "Je hebt nu alles wat je nodig hebt",
+    "content": "Navigeer met pijltjestoetsen. Gebruik de Nav Companion om te zien waar je bent.",
+    "icon": "Sparkles"
+  }
+]

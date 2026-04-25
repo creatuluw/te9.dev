@@ -1,0 +1,393 @@
+/**
+ * View Transitions CSS
+ * 
+ * Provides CSS animations for various transition types using the View Transitions API.
+ * Animations are controlled via CSS custom properties set by the viewTransitions utility.
+ * 
+ * @see https://developer.chrome.com/docs/web-platform/view-transitions
+ */
+
+@supports (view-transition-name: root) {
+	/**
+	 * Default root transition
+	 * Controls the main page transition animation
+	 */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: var(--view-transition-duration, 300ms);
+		animation-timing-function: var(--view-transition-easing, cubic-bezier(0.4, 0, 0.2, 1));
+	}
+
+	/**
+	 * Fade transition
+	 */
+	[data-transition-type="fade"] ::view-transition-old(root) {
+		animation-name: fade-out;
+	}
+
+	[data-transition-type="fade"] ::view-transition-new(root) {
+		animation-name: fade-in;
+	}
+
+	/**
+	 * Slide left transition
+	 */
+	[data-transition-type="slide-left"] ::view-transition-old(root) {
+		animation-name: slide-out-right;
+	}
+
+	[data-transition-type="slide-left"] ::view-transition-new(root) {
+		animation-name: slide-in-left;
+	}
+
+	/**
+	 * Slide right transition
+	 */
+	[data-transition-type="slide-right"] ::view-transition-old(root) {
+		animation-name: slide-out-left;
+	}
+
+	[data-transition-type="slide-right"] ::view-transition-new(root) {
+		animation-name: slide-in-right;
+	}
+
+	/**
+	 * Slide up transition
+	 */
+	[data-transition-type="slide-up"] ::view-transition-old(root) {
+		animation-name: slide-out-down;
+	}
+
+	[data-transition-type="slide-up"] ::view-transition-new(root) {
+		animation-name: slide-in-up;
+	}
+
+	/**
+	 * Slide down transition
+	 */
+	[data-transition-type="slide-down"] ::view-transition-old(root) {
+		animation-name: slide-out-up;
+	}
+
+	[data-transition-type="slide-down"] ::view-transition-new(root) {
+		animation-name: slide-in-down;
+	}
+
+	/**
+	 * Scale up transition
+	 */
+	[data-transition-type="scale-up"] ::view-transition-old(root) {
+		animation-name: scale-out;
+	}
+
+	[data-transition-type="scale-up"] ::view-transition-new(root) {
+		animation-name: scale-in-up;
+	}
+
+	/**
+	 * Scale down transition
+	 */
+	[data-transition-type="scale-down"] ::view-transition-old(root) {
+		animation-name: scale-out-up;
+	}
+
+	[data-transition-type="scale-down"] ::view-transition-new(root) {
+		animation-name: scale-in;
+	}
+
+	/**
+	 * Blur transition
+	 */
+	[data-transition-type="blur"] ::view-transition-old(root) {
+		animation-name: blur-out, fade-out;
+	}
+
+	[data-transition-type="blur"] ::view-transition-new(root) {
+		animation-name: blur-in, fade-in;
+	}
+
+	/**
+	 * Flip X transition
+	 */
+	[data-transition-type="flip-x"] ::view-transition-old(root) {
+		animation-name: flip-out-x;
+	}
+
+	[data-transition-type="flip-x"] ::view-transition-new(root) {
+		animation-name: flip-in-x;
+	}
+
+	/**
+	 * Flip Y transition
+	 */
+	[data-transition-type="flip-y"] ::view-transition-old(root) {
+		animation-name: flip-out-y;
+	}
+
+	[data-transition-type="flip-y"] ::view-transition-new(root) {
+		animation-name: flip-in-y;
+	}
+
+	/**
+	 * Rotate transition
+	 */
+	[data-transition-type="rotate"] ::view-transition-old(root) {
+		animation-name: rotate-out;
+	}
+
+	[data-transition-type="rotate"] ::view-transition-new(root) {
+		animation-name: rotate-in;
+	}
+
+	/* Animation keyframes */
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-out {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-in-left {
+		from {
+			transform: translateX(-100%);
+			opacity: 0;
+		}
+		to {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-out-right {
+		from {
+			transform: translateX(0);
+			opacity: 1;
+		}
+		to {
+			transform: translateX(100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-in-right {
+		from {
+			transform: translateX(100%);
+			opacity: 0;
+		}
+		to {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-out-left {
+		from {
+			transform: translateX(0);
+			opacity: 1;
+		}
+		to {
+			transform: translateX(-100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-in-up {
+		from {
+			transform: translateY(100%);
+			opacity: 0;
+		}
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-out-down {
+		from {
+			transform: translateY(0);
+			opacity: 1;
+		}
+		to {
+			transform: translateY(100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes slide-in-down {
+		from {
+			transform: translateY(-100%);
+			opacity: 0;
+		}
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes slide-out-up {
+		from {
+			transform: translateY(0);
+			opacity: 1;
+		}
+		to {
+			transform: translateY(-100%);
+			opacity: 0;
+		}
+	}
+
+	@keyframes scale-in-up {
+		from {
+			transform: scale(0.8);
+			opacity: 0;
+		}
+		to {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes scale-out {
+		from {
+			transform: scale(1);
+			opacity: 1;
+		}
+		to {
+			transform: scale(0.8);
+			opacity: 0;
+		}
+	}
+
+	@keyframes scale-in {
+		from {
+			transform: scale(1.2);
+			opacity: 0;
+		}
+		to {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes scale-out-up {
+		from {
+			transform: scale(1);
+			opacity: 1;
+		}
+		to {
+			transform: scale(1.2);
+			opacity: 0;
+		}
+	}
+
+	@keyframes blur-in {
+		from {
+			filter: blur(10px);
+			opacity: 0;
+		}
+		to {
+			filter: blur(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes blur-out {
+		from {
+			filter: blur(0);
+			opacity: 1;
+		}
+		to {
+			filter: blur(10px);
+			opacity: 0;
+		}
+	}
+
+	@keyframes flip-in-x {
+		from {
+			transform: perspective(1000px) rotateX(90deg);
+			opacity: 0;
+		}
+		to {
+			transform: perspective(1000px) rotateX(0deg);
+			opacity: 1;
+		}
+	}
+
+	@keyframes flip-out-x {
+		from {
+			transform: perspective(1000px) rotateX(0deg);
+			opacity: 1;
+		}
+		to {
+			transform: perspective(1000px) rotateX(90deg);
+			opacity: 0;
+		}
+	}
+
+	@keyframes flip-in-y {
+		from {
+			transform: perspective(1000px) rotateY(90deg);
+			opacity: 0;
+		}
+		to {
+			transform: perspective(1000px) rotateY(0deg);
+			opacity: 1;
+		}
+	}
+
+	@keyframes flip-out-y {
+		from {
+			transform: perspective(1000px) rotateY(0deg);
+			opacity: 1;
+		}
+		to {
+			transform: perspective(1000px) rotateY(90deg);
+			opacity: 0;
+		}
+	}
+
+	@keyframes rotate-in {
+		from {
+			transform: rotate(-180deg) scale(0.8);
+			opacity: 0;
+		}
+		to {
+			transform: rotate(0deg) scale(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes rotate-out {
+		from {
+			transform: rotate(0deg) scale(1);
+			opacity: 1;
+		}
+		to {
+			transform: rotate(180deg) scale(0.8);
+			opacity: 0;
+		}
+	}
+}
+
+/**
+ * Reduce motion for users who prefer it
+ */
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 0.01ms !important;
+		animation-timing-function: linear !important;
+	}
+}
+

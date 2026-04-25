@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="nl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cases Overzicht</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <style>
+            :root { --bg: #ffffff; --bg-subtle: #f9fafb; --border: #e5e7eb; --fg: #111827; --muted: #6b7280; --accent: #0f766e; --accent-light: #f0fdfa; }
+            html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+            * { box-sizing: border-box; }
+            body { font-family: "Inter", -apple-system, sans-serif; background: var(--bg); color: var(--fg); line-height: 1.4; }
+            .slide-container { height: 100%; width: 100%; display: flex; flex-direction: column; padding: 24px 32px; background: linear-gradient(to bottom, #ffffff, #f9fafb); }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+            .animate-in { animation: fadeIn 0.4s ease-out forwards; }
+            .delay-1 { animation-delay: 0.05s; opacity: 0; }
+            .delay-2 { animation-delay: 0.1s; opacity: 0; }
+            .delay-3 { animation-delay: 0.15s; opacity: 0; }
+            @media (prefers-reduced-motion: reduce) { .animate-in { animation: none; opacity: 1; } }
+            .section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
+            .main-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; min-height: 0; }
+            .section-container { display: flex; flex-direction: column; min-height: 0; background-color: var(--bg-subtle); border-radius: 12px; padding: 16px; }
+            .content-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; padding-bottom: 4px; }
+            .item-card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; transition: all 0.2s ease; min-height: 90px; display: flex; }
+            .item-card:hover { border-color: rgba(15, 118, 110, 0.3); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); transform: translateY(-1px); }
+            .solutions-list { display: flex; flex-direction: column; gap: 8px; }
+            .solution-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; width: 100%; }
+            .before-text { color: var(--muted); text-decoration: line-through; font-size: 13px; }
+            .after-text { color: var(--fg); font-weight: 500; font-size: 13px; }
+            .arrow-indicator { color: var(--accent); font-size: 14px; opacity: 0.6; transition: opacity 0.2s; }
+            .item-card:hover .arrow-indicator { opacity: 1; }
+            .tasks-grid { display: flex; flex-direction: column; gap: 8px; }
+            .task-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--fg); width: 100%; }
+            .task-check { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s ease; background: white; }
+            .task-item:hover .task-check { border-color: var(--accent); background: white; }
+            .task-item:hover .task-check svg { opacity: 1; }
+            .task-check svg { width: 9px; height: 9px; color: var(--accent); opacity: 0; transition: opacity 0.2s ease; }
+            .features-grid { display: flex; flex-direction: column; gap: 8px; }
+            .feature-item { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+            .feature-icon { width: 28px; height: 28px; border-radius: 5px; background: var(--bg-subtle); display: flex; align-items: center; justify-content: center; color: var(--accent); margin-bottom: 10px; border: 1px solid var(--border); }
+            .feature-name { font-weight: 600; font-size: 13px; color: var(--fg); margin-bottom: 3px; }
+            .feature-desc { font-size: 11px; color: var(--muted); line-height: 1.3; }
+            .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: white; border: 1px solid var(--border); border-radius: 3px; font-size: 11px; font-weight: 500; color: var(--muted); font-family: ui-monospace, monospace; }
+            .content-scroll::-webkit-scrollbar { width: 4px; }
+            .content-scroll::-webkit-scrollbar-track { background: transparent; }
+            .content-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+        </style>
+    </head>
+    <body>
+        <div class="slide-container">
+            <header class="mb-4 animate-in flex items-center justify-between flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-xl font-bold tracking-tight">Cases</h1>
+                    <span class="badge">/cases</span>
+                </div>
+                <p class="text-sm text-[var(--muted)] hidden sm:block">Actieve instanties van processjablonen - hier gebeurt het daadwerkelijke werk</p>
+            </header>
+            <div class="main-grid">
+                <div class="section-container animate-in delay-1">
+                    <h2 class="section-title">Oplossingen</h2>
+                    <div class="content-scroll"><div class="solutions-list" id="solutions-container"></div></div>
+                </div>
+                <div class="section-container animate-in delay-2">
+                    <h2 class="section-title">Taken</h2>
+                    <div class="content-scroll"><div class="tasks-grid" id="tasks-container"></div></div>
+                </div>
+                <div class="section-container animate-in delay-3">
+                    <h2 class="section-title">Features</h2>
+                    <div class="content-scroll"><div class="features-grid" id="features-container"></div></div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const data = {
+                problemsSolved: [
+                    { before: "Inconsistente workflows", after: "Gestandaardiseerde procesuitvoering" },
+                    { before: "Gemiste stappen", after: "Alle taken automatisch gegenereerd uit sjablonen" },
+                    { before: "Geen voortgangsregistratie", after: "Visuele statusindicatoren per case" },
+                    { before: "Onduidelijk eigenaarschap", after: "Duidelijke eigenaar-toewijzing per case" }
+                ],
+                features: [
+                    { name: "Case Grid", description: "Visueel overzicht van alle cases", icon: "FileText" },
+                    { name: "Zoeken & Filteren", description: "Geavanceerde filteropties", icon: "Eye" },
+                    { name: "Case Aanmaken", description: "Maak cases van sjablonen", icon: "FileText" },
+                    { name: "Case Detail", description: "Deep dive in één case", icon: "FileText" }
+                ],
+                taskAchievements: [
+                    "Maak cases van processjablonen",
+                    "Volg case-voortgang over alle stappen",
+                    "Wijs eigenaren toe aan cases en taken",
+                    "Voltooi individuele taken om de case vooruit te helpen",
+                    "Upload relevante bestanden",
+                    "Communiceer via berichten-tab",
+                    "Deel cases publiek via token-links"
+                ]
+            };
+            const icons = {
+                FileText: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`,
+                Eye: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>`,
+                Check: `<svg width="9" height="9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>`,
+                Arrow: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>`
+            };
+            function renderSolutions() {
+                const container = document.getElementById("solutions-container");
+                if (!container) return;
+                container.innerHTML = data.problemsSolved.map(item => `
+                    <div class="item-card solution-row">
+                        <span class="before-text">${item.before}</span>
+                        <span class="arrow-indicator">${icons.Arrow}</span>
+                        <span class="after-text">${item.after}</span>
+                    </div>
+                `).join("");
+            }
+            function renderFeatures() {
+                const container = document.getElementById("features-container");
+                if (!container) return;
+                container.innerHTML = data.features.map(feature => `
+                    <div class="item-card feature-item">
+                        <div class="feature-icon">${icons[feature.icon] || icons.FileText}</div>
+                        <div class="feature-name">${feature.name}</div>
+                        <div class="feature-desc">${feature.description}</div>
+                    </div>
+                `).join("");
+            }
+            function renderTasks() {
+                const container = document.getElementById("tasks-container");
+                if (!container) return;
+                container.innerHTML = data.taskAchievements.map(task => `
+                    <div class="item-card task-item">
+                        <div class="task-check">${icons.Check}</div>
+                        <span>${task}</span>
+                    </div>
+                `).join("");
+            }
+            document.addEventListener("DOMContentLoaded", () => { renderSolutions(); renderFeatures(); renderTasks(); });
+        </script>
+    </body>
+</html>

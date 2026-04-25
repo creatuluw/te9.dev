@@ -71,6 +71,11 @@
                 >garden</a
             >
             <a
+                href="/digest"
+                class="lowercase no-underline transition-colors text-[#888888] hover:text-[#e8e8e8] relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-px after:bg-[#ff9500] after:transition-all after:duration-300 hover:after:w-full"
+                >digest</a
+            >
+            <a
                 href="#links"
                 class="text-[#888888] lowercase no-underline transition-colors hover:text-[#e8e8e8] relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-px after:bg-[#ff9500] after:transition-all after:duration-300 hover:after:w-full"
                 >links</a

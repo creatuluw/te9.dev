@@ -1,0 +1,127 @@
+{
+  "surveys": {
+    "cml4wxxmi0000pc01cixg0311": {
+      "name": "Aanvullende Zorgverzekering",
+      "type": "link",
+      "status": "inProgress",
+      "createdAt": "2026-02-02T08:33:54.810Z",
+      "updatedAt": "2026-02-11T09:14:50.894Z",
+      "emailSubject": "Aanvullende Zorgverzekering",
+      "emailMessage": "Beste collega,\n\nHeb je in dit jaar een aanvullende zorgverzekering? Dan heb je volgens de CAO Kinderopvang recht op een extra bijdrage van €8 per maand.\n\nWat vragen we je te doen?\n\n- Klik op de knop 'Open het formulier' hieronder.\n- Vul het keuzeformulier in.\n- Upload een bewijs van je aanvullende zorgverzekering (bijvoorbeeld een printscreen van je polisblad).\n\nMet deze informatie kunnen we vaststellen of je recht hebt op de extra bijdrage.\n\nDe extra bijdrage wordt via het salaris uitbetaald en met terugwerkende kracht vanaf januari dt jaar.\n\nWe vragen je om het formulier uiterlijk 13 februari volledig in te vullen.\n\nHeb je geen aanvullende zorgverzekering in 2026? Dan hoef je het keuzeformulier niet in te vullen.\n\nAlvast bedankt voor het invullen!\n\nMet vriendelijke groet,\n\nTeam Hoi Pippeloi",
+      "questions": [
+        {
+          "id": "q_a3tyuhr8kzn",
+          "question": "Voornaam",
+          "columnName": "voornaam"
+        },
+        {
+          "id": "q_wrnzo7pkzg",
+          "question": "Achternaam",
+          "columnName": "achternaam"
+        },
+        {
+          "id": "kxbuf7rvi0s3wj5wanucfa",
+          "question": "Wat is de locatie waar je onder contract staat?",
+          "columnName": "locatie"
+        },
+        {
+          "id": "olqnpb5kavjepwmgrzwzr",
+          "question": "Heb je een aanvullende zorgverzekering afgesloten voor 2026?",
+          "columnName": "zv-afgesloten"
+        },
+        {
+          "id": "bo50d7l4oxuojwk9rd2fdm",
+          "question": "Upload bewijs polis 2026",
+          "columnName": "polis-bewijs"
+        }
+      ]
+    },
+    "cmid2kxgz001vn201w5emfmpq": {
+      "name": "Keuzeformulier Verlof en Plusuren",
+      "emailSubject": "Keuzeformulier Verlof en Plusuren",
+      "emailMessage": "Beste collega,\n\nHierbij de link naar het digitaal keuzeformulier voor verlof- en plusuren. Met dit formulier kan je aangeven wat je wilt met de verlof- en plusuren van dit jaar.\n\nGraag het keuzeformulier zo snel mogelijk invullen.\n\nKlik op deze knop \"open het formulier\" om het keuzeformulier te openen.\n\nAlvast bedankt voor het invullen!\n\nMet vriendelijke groet,\n\nTeam Hoi Pippeloi",
+      "questions": [
+        {
+          "id": "q_voornaam",
+          "question": "Voornaam",
+          "columnName": "voornaam"
+        },
+        {
+          "id": "q_achternaam",
+          "question": "Achternaam",
+          "columnName": "achternaam"
+        },
+        {
+          "id": "q_locatie",
+          "question": "Vanuit welke locatie krijg je je salaris betaald?",
+          "columnName": "locatie"
+        },
+        {
+          "id": "q_37q01t2arna",
+          "question": "Wat voor contract heb je?",
+          "columnName": "contractvorm"
+        },
+        {
+          "id": "q_bj5xbbrfzoi",
+          "question": "Wat zijn je vaste uren per week?",
+          "columnName": "vaste-uren-p/wk"
+        },
+        {
+          "id": "q_8dxijty0t6b",
+          "question": "Wat zijn je minimale uren per week?",
+          "columnName": "minimale-uren-p/wk"
+        },
+        {
+          "id": "q_info_verlofsaldo",
+          "question": "Waar vind ik mijn verlof saldo?",
+          "columnName": "info-verlofsaldo"
+        },
+        {
+          "id": "q_5hbloywmpdw",
+          "question": "Heb je een positief verlofsaldo per 31 december?",
+          "columnName": "positief-verlofsaldo-31-december"
+        },
+        {
+          "id": "q_msg_1brglzbr3jh",
+          "question": "Saldo informatie",
+          "columnName": "saldo-informatie"
+        },
+        {
+          "id": "q_zlbgiiv8r2o",
+          "question": "Wil je al je verlof uren uitbetalen in januari?",
+          "columnName": "verlof-uren-uitbetalen-januari"
+        },
+        {
+          "id": "q_5w2ve46q57i",
+          "question": "Hoeveel verlof uren wil je meenemen naar volgend jaar?",
+          "columnName": "verlof-uren-meenemen-volgend-jaar"
+        },
+        {
+          "id": "q_info_plusuren",
+          "question": "Waar vind ik mijn plus-uren saldo?",
+          "columnName": "info-plusuren"
+        },
+        {
+          "id": "q_fifrfhnroks",
+          "question": "Heb je een positief plus-uren saldo op 31 december?",
+          "columnName": "positief-plusuren-saldo-31-december"
+        },
+        {
+          "id": "q_cy6j935zu6v",
+          "question": "Wil je al je plus-uren uitbetalen in januari?",
+          "columnName": "plusuren-uitbetalen-januari"
+        },
+        {
+          "id": "q_0o24t6rfv2ge",
+          "question": "Hoeveel plus-uren wil je meenemen naar volgend jaar?",
+          "columnName": "plusuren-meenemen-volgend-jaar"
+        },
+        {
+          "id": "q_contact_info",
+          "question": "Nog vragen?",
+          "columnName": "contact-info"
+        }
+      ]
+    }
+  }
+}

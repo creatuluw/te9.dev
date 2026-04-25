@@ -49,6 +49,11 @@ export const gardenCards: GardenCard[] = [
 
 export const quickLinks: QuickLink[] = [
   {
+    href: "/digest",
+    name: "Digest",
+    desc: "Analyzed bookmark digests",
+  },
+  {
     href: "https://patrick.te9.nl",
     name: "patrick.te9.nl",
     desc: "Main personal site",

@@ -21,7 +21,12 @@
     "db:studio": "drizzle-kit studio",
     "sync:raindrop": "node scripts/sync-raindrop.js",
     "sync:crawl": "node scripts/crawl-bookmarks.js",
-    "sync:analyze": "node scripts/analyze-bookmarks.js"
+    "sync:analyze": "node scripts/analyze-bookmarks.js",
+    "digest:setup": "node scripts/setup-digests-db.js",
+    "digest:last10": "node scripts/generate-digest.js --type last10",
+    "digest:last10:send": "node scripts/generate-digest.js --type last10 --send",
+    "digest:weekly": "node scripts/generate-digest.js --type weekly",
+    "digest:weekly:send": "node scripts/generate-digest.js --type weekly --send"
   },
   "devDependencies": {
     "@mozilla/readability": "^0.6.0",
@@ -45,6 +50,8 @@
   },
   "dependencies": {
     "@lucide/svelte": "^1.0.1",
-    "@sveltejs/adapter-node": "^5.5.4"
+    "@sveltejs/adapter-node": "^5.5.4",
+    "emailjs": "^5.0.0",
+    "zod": "^4.3.6"
   }
 }

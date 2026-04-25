@@ -1,0 +1,266 @@
+[
+	{
+		"id": "title",
+		"type": "title",
+		"title": "Kees",
+		"subtitle": "https://kees.pippeloi.nl",
+		"content": "Voor teams die zelf hun shit willen regelen",
+		"icon": "Rocket"
+	},
+	{
+		"id": "vision",
+		"type": "content",
+		"title": "Waar doen we dit voor?",
+		"content": "Stel je voor: je team bepaalt zelf hoe ze werken, zonder dat er iemand constant meeloopt. Alles is zichtbaar, iedereen weet wat er speelt, en je kunt gewoon doen wat werkt. Dat is wat we bouwen, een tool die je helpt, niet in de weg zit.",
+		"icon": "Target"
+	},
+	{
+		"id": "goals-title",
+		"type": "title",
+		"title": "Vijf dingen die we belangrijk vinden",
+		"subtitle": "Oftewel: waarom deze tool bestaat",
+		"icon": "Lightbulb"
+	},
+	{
+		"id": "goal-1",
+		"type": "content",
+		"title": "Zelf je ding doen",
+		"content": "Je team weet het beste hoe het werk moet. Dus waarom zou je wachten op anderen die dit kunnen organiseren? Maak je eigen processen, beheer je eigen werk, en neem beslissingen waar het nodig is. Zonder dat er iemand bovenop je zit.",
+		"icon": "Users"
+	},
+	{
+		"id": "goal-1-features",
+		"type": "feature",
+		"title": "Hoe je zelf je ding doet",
+		"icon": "Users",
+		"features": [
+			{
+				"name": "Processen",
+				"description": "Maak sjablonen voor dingen die je vaker doet. Eén keer instellen, altijd gebruiken.",
+				"link": "/processes",
+				"icon": "Workflow"
+			},
+			{
+				"name": "Cases",
+				"description": "Start een case en het systeem maakt automatisch alle taken aan. Handig toch?",
+				"link": "/cases",
+				"icon": "FileText"
+			},
+			{
+				"name": "Werk Items",
+				"description": "Maak taken, gooi ze in je backlog, en houd bij waar je mee bezig bent.",
+				"link": "/work",
+				"icon": "CheckSquare"
+			},
+			{
+				"name": "Dashboard",
+				"description": "Alles op één plek: je Kanban bord, je backlog, en wat je nog moet doen.",
+				"link": "/",
+				"icon": "Home"
+			}
+		]
+	},
+	{
+		"id": "goal-2",
+		"type": "content",
+		"title": "Alles is zichtbaar",
+		"content": "Geen verrassingen, geen \"wie doet wat ook alweer?\". Iedereen ziet wat er gebeurt, wie waar mee bezig is, en wat er nog moet. Zo weet je altijd waar je aan toe bent.",
+		"icon": "Eye"
+	},
+	{
+		"id": "goal-2-features",
+		"type": "feature",
+		"title": "Hoe je alles in de gaten houdt",
+		"icon": "Eye",
+		"features": [
+			{
+				"name": "Mijn Werk",
+				"description": "Zie in één oogopslag of je week vol zit of nog ruimte hebt. Met een handige heatmap.",
+				"link": "/mijn-werk",
+				"icon": "Calendar"
+			},
+			{
+				"name": "Backlog",
+				"description": "Alle taken die nog moeten gebeuren, netjes op een rijtje. Filter en zoek wat je nodig hebt.",
+				"link": "/work/backlog",
+				"icon": "List"
+			},
+			{
+				"name": "Dashboard",
+				"description": "Alles op één plek: je Kanban bord, je backlog, en wat je nog moet doen.",
+				"link": "/kees",
+				"icon": "Home"
+			},
+			{
+				"name": "Alle werkitems",
+				"description": "Bekijk alle werkitems in het systeem. Filter en zoek wat je nodig hebt.",
+				"link": "/work-items",
+				"icon": "CheckSquare"
+			}
+		]
+	},
+	{
+		"id": "goal-3",
+		"type": "content",
+		"title": "Steeds beter worden",
+		"content": "Als je iets goed doet, leg het vast. Als het beter kan, pas het aan. Maak van wat werkt een sjabloon, en verbeter het de volgende keer. Zo wordt alles steeds slimmer.",
+		"icon": "TrendingUp"
+	},
+	{
+		"id": "goal-3-features",
+		"type": "feature",
+		"title": "Hoe je steeds beter wordt",
+		"icon": "TrendingUp",
+		"features": [
+			{
+				"name": "Processen Aanpassen",
+				"description": "Vond je een betere manier? Pas je proces aan. Geen gedoe, gewoon doen.",
+				"link": "/processes",
+				"icon": "Settings"
+			},
+			{
+				"name": "Cases Volgen",
+				"description": "Kijk hoe cases verlopen en zie waar het beter kan. Leren door te doen.",
+				"link": "/cases",
+				"icon": "FileSearch"
+			},
+			{
+				"name": "Operationele Rapporten",
+				"description": "Zie waar het werk blijft hangen en wat goed gaat. Data helpt je beslissen.",
+				"link": "/rapporten/operational",
+				"icon": "ChartBar"
+			},
+			{
+				"name": "Gearchiveerde Taken",
+				"description": "Bekijk wat je eerder deed en leer van patronen. Geschiedenis is nuttig.",
+				"link": "/closed",
+				"icon": "Archive"
+			}
+		]
+	},
+	{
+		"id": "goal-4",
+		"type": "content",
+		"title": "Samen werken, makkelijk",
+		"content": "Praat met elkaar, deel projecten, werk samen aan taken. Alles op één plek, zodat je niet hoeft te zoeken naar informatie. Iedereen blijft op de hoogte, zonder dat je er moeite voor hoeft te doen.",
+		"icon": "MessageSquare"
+	},
+	{
+		"id": "goal-4-features",
+		"type": "feature",
+		"title": "Hoe je samenwerkt",
+		"icon": "MessageSquare",
+		"features": [
+			{
+				"name": "Berichten",
+				"description": "Chat met je team, tag mensen met @, en deel bestanden. Alles in de app.",
+				"link": "/messages",
+				"icon": "MessageCircle"
+			},
+			{
+				"name": "Projecten",
+				"description": "Werk samen aan projecten, deel documenten, en houd alles bij elkaar.",
+				"link": "/projects",
+				"icon": "FolderOpen"
+			},
+			{
+				"name": "Chat Assistant",
+				"description": "Vraag het systeem om hulp. Het weet waar alles zit en helpt je verder.",
+				"link": "/",
+				"icon": "HelpCircle"
+			},
+			{
+				"name": "Publiek Delen",
+				"description": "Deel cases of projecten met mensen buiten het systeem. Handig voor ouders of partners.",
+				"link": "/cases",
+				"icon": "ExternalLink"
+			}
+		]
+	},
+	{
+		"id": "goal-5",
+		"type": "content",
+		"title": "Beslissen op basis van data",
+		"content": "Zie waar het werk blijft hangen, wie te veel op zijn bord heeft, en waar je moet bijsturen. Geen giswerk meer, gewoon kijken wat de cijfers zeggen en daarop beslissen.",
+		"icon": "BarChart3"
+	},
+	{
+		"id": "goal-5-features",
+		"type": "feature",
+		"title": "Hoe je slimme beslissingen neemt",
+		"icon": "BarChart3",
+		"features": [
+			{
+				"name": "Rapporten",
+				"description": "Alles wat je wilt weten over je werk, op één plek. Overzichtelijk en begrijpelijk.",
+				"link": "/rapporten",
+				"icon": "BarChart3"
+			},
+			{
+				"name": "Medewerker Rapporten",
+				"description": "Zie per persoon hoeveel werk ze hebben en hoe het gaat. Handig voor planning.",
+				"link": "/rapporten/medewerkers",
+				"icon": "Users"
+			},
+			{
+				"name": "Operationele Rapporten",
+				"description": "Kijk hoe het werk loopt en waar het vastloopt. Zo zie je wat er moet gebeuren.",
+				"link": "/rapporten/operational",
+				"icon": "ChartBar"
+			},
+			{
+				"name": "Analytics",
+				"description": "Breed overzicht van alles wat er gebeurt. Trends, patronen, en inzichten.",
+				"link": "/admin/dashboard",
+				"icon": "Activity"
+			}
+		]
+	},
+	{
+		"id": "additional-title",
+		"type": "title",
+		"title": "En nog meer handige dingen",
+		"subtitle": "Extra tools die je dag makkelijker maken",
+		"icon": "Sparkles"
+	},
+	{
+		"id": "additional-features",
+		"type": "feature",
+		"title": "Extra handige spullen",
+		"icon": "Wrench",
+		"features": [
+			{
+				"name": "Bestanden",
+				"description": "Upload en beheer al je documenten en foto's. Alles op één plek, makkelijk te vinden.",
+				"link": "/files",
+				"icon": "Folder"
+			},
+			{
+				"name": "Account Instellingen",
+				"description": "Pas je profiel aan en zet je beschikbaarheid. Zo weet het systeem wanneer je werkt.",
+				"link": "/account",
+				"icon": "Settings"
+			},
+			{
+				"name": "Tools & Integraties",
+				"description": "Koppel Formbricks en Typebot voor surveys en chatbots. Alles werkt samen.",
+				"link": "/tools",
+				"icon": "Wrench"
+			},
+			{
+				"name": "Help",
+				"description": "Niet zeker hoe iets werkt? Check de help sectie. Alles staat erin uitgelegd.",
+				"link": "/help",
+				"icon": "HelpCircle"
+			}
+		]
+	},
+	{
+		"id": "closing",
+		"type": "content",
+		"title": "Klaar om te beginnen?",
+		"content": "kees.pippeloi.nl geeft je de structuur die je nodig hebt, zonder dat het in de weg zit. Processen die je helpen, niet beperken. Teams die zelf kunnen werken, zonder dat iemand er bovenop zit. Klinkt goed? Laten we beginnen.",
+		"icon": "Target"
+	}
+]
+

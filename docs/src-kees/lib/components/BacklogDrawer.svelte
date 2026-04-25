@@ -1,0 +1,2678 @@
+<script lang="ts">
+    import { page } from "$app/stores";
+    import { goto, invalidate } from "$app/navigation";
+    import { onMount } from "svelte";
+    import Drawer from "./Drawer.svelte";
+    import Button from "./Button.svelte";
+    import ButtonGroup from "./ButtonGroup.svelte";
+    import Label from "./Label.svelte";
+    import Select, { type SelectOption } from "./Select.svelte";
+    import DatePicker from "./DatePicker.svelte";
+    import * as pocketbaseService from "$lib/services/pocketbaseService";
+    import type { PocketBaseUser } from "$lib/services/pocketbaseService";
+    import TagInput from "./TagInput.svelte";
+    import FileUpload from "./FileUpload.svelte";
+    import Modal from "./Modal.svelte";
+    import Rating from "./Rating.svelte";
+    import IconButton from "./IconButton.svelte";
+    import SearchInput, { type SearchSuggestion } from "./SearchInput.svelte";
+    import KomtVanInput from "./KomtVanInput.svelte";
+    import { Plus, Sparkles, Trash2, Copy, ExternalLink } from "lucide-svelte";
+    import { createLoadingManager } from "$lib/utils/loadingState";
+    import { navigationState } from "$lib/stores/navigationStore.svelte";
+    import * as taskService from "$lib/services/taskService";
+    import { taskStore, deleteWorkItem } from "$lib/stores/taskStore";
+    import { taskState } from "$lib/stores/taskStore.svelte";
+    import * as projectService from "$lib/services/projectService";
+    import * as caseService from "$lib/services/caseService";
+    import * as processService from "$lib/services/processService";
+    import * as minioService from "$lib/services/minioService";
+    import { getCurrentUserId, formatUserName } from "$lib/utils/userUtils";
+    import { toastStore } from "$lib/stores/toastStore";
+    import { getUserMessage, type AppError } from "$lib/types/errors";
+    import { translateStatus } from "$lib/utils/statusTranslations";
+    import TinyTalkChat from "./TinyTalkChat.svelte";
+    import Spinner from "./Spinner.svelte";
+    import type { Task } from "$lib/schemas/task";
+    import type { Project } from "$lib/schemas/project";
+    import type { Case, CaseStep } from "$lib/schemas/case";
+    import type { Process } from "$lib/schemas/process";
+
+    /**
+     * BacklogDrawer component props
+     *
+     * Drawer component for creating/editing work items in the backlog.
+     * Opens when URL param `drawer=workitem` is present.
+     */
+    interface Props {
+        /**
+         * Pre-selected project ID
+         */
+        projectId?: number | null;
+
+        /**
+         * Optional initial case step ID to pre-populate
+         */
+        initialCaseStepId?: number | null;
+
+        /**
+         * Optional initial task ID to pre-populate (requires initialCaseStepId)
+         */
+        initialTaskId?: number | null;
+
+        /**
+         * Control drawer open state externally
+         */
+        isOpen?: boolean;
+
+        /**
+         * Callback when work item is created/updated
+         */
+        onsaved?: (workItem: Task) => void;
+
+        /**
+         * Callback when drawer is closed
+         */
+        onClose?: () => void;
+    }
+
+    let {
+        projectId: initialProjectId = null,
+        initialCaseStepId = null,
+        initialTaskId = null,
+        isOpen: externalIsOpen = false,
+        onsaved,
+        onClose,
+    }: Props = $props();
+
+    // Derive state from URL params - ensure reactivity by accessing $page.url directly
+    const drawerParam = $derived($page.url.searchParams.get("drawer"));
+    const workItemIdParam = $derived($page.url.searchParams.get("workItemId"));
+    const projectIdParam = $derived($page.url.searchParams.get("projectId"));
+    const duplicateParam = $derived($page.url.searchParams.get("duplicate"));
+
+    // Track work item that was deleted to prevent drawer from reopening with it
+    let deletedWorkItemId: number | null = $state(null);
+
+    // Ensure isOpen is reactive to both URL params and external control
+    const isOpen = $derived.by(() => {
+        // Don't reopen drawer for a deleted work item
+        if (deletedWorkItemId !== null && workItemId === deletedWorkItemId) {
+            return false;
+        }
+        const url = $page.url;
+        const param = url.searchParams.get("drawer");
+        return (
+            param === "workitem" || param === "task-drawer" || externalIsOpen
+        );
+    });
+    const workItemId = $derived(
+        // If duplicate=true is set, ignore workItemId - opening as new item
+        duplicateParam === "true"
+            ? null
+            : workItemIdParam
+              ? Number(workItemIdParam)
+              : null,
+    );
+    const urlProjectId = $derived(
+        projectIdParam ? Number(projectIdParam) : null,
+    );
+
+    // Current work item being edited
+    let currentWorkItem = $state<Task | null>(null);
+    let initializedWorkItemId = $state<number | null>(null);
+    let lastLoadedWorkItemId = $state<number | null>(null);
+    let isLoadingWorkItem = $state(false);
+
+    // Form fields
+    let assigneeIds = $state<string[]>([]);
+    let users = $state<PocketBaseUser[]>([]);
+    let selectedProjectId = $state<string | null>(null);
+    let subject = $state("");
+    let voorWie = $state("");
+    let watGaJeDoen = $state("");
+    let waarom = $state("");
+    let dueDate = $state<string | null>(null);
+    let tags = $state<string[]>([]);
+    let komtVan = $state("");
+    let uren = $state<string>("");
+    let relevantie = $state<number | null>(null);
+    let priority: "laag" | "normaal" | "hoog" = $state("normaal");
+    let status: "backlog" | "gepland" | "ad-hoc" = $state("backlog");
+    let kanbanStatus:
+        | "backlog"
+        | "gepland"
+        | "mee_bezig"
+        | "in_review"
+        | "afgerond"
+        | "overdue" = $state("backlog");
+    let newItemFormInitialized = $state(false);
+
+    // Attachment type with metadata
+    type Attachment = {
+        url: string;
+        name: string;
+        size: number | null; // Size in bytes, null for existing attachments
+    };
+
+    let attachments = $state<Attachment[]>([]);
+
+    // Case linking fields
+    let caseSearchQuery = $state("");
+    let selectedCaseId = $state<number | null>(null);
+    let selectedCaseName = $state<string>("");
+    let selectedCaseStepId = $state<number | null>(null);
+    let selectedParentTaskId = $state<number | null>(null);
+    let parentTaskMinDate = $state<string | null>(null); // Parent task's deadline for date validation
+    let cases = $state<Case[]>([]);
+    let allProcesses = $state<Process[]>([]);
+    let caseSteps = $state<CaseStep[]>([]);
+    let stepTasks = $state<any[]>([]);
+
+    // Use centralized loading manager for multiple loading states
+    const loading = createLoadingManager("BacklogDrawer");
+
+    // Check if component is currently loading (any operation)
+    // Only disable inputs during critical operations (saving, loading work item, uploading files)
+    // Don't disable during background loading (cases, steps, tasks, users)
+    const isComponentLoading = $derived.by(() => {
+        return (
+            navigationState.componentLoading["BacklogDrawer:workItem"] ||
+            navigationState.componentLoading["BacklogDrawer:saving"] ||
+            navigationState.componentLoading["BacklogDrawer:files"]
+        );
+    });
+    let fileUploadKey = $state(0); // Key to reset FileUpload component after upload
+
+    // Field-level validation errors
+    let fieldErrors = $state<Record<string, string>>({});
+
+    // Options for selects
+    let projects = $state<Project[]>([]);
+
+    // Add project modal state
+    let addProjectModalOpen = $state(false);
+    let projectName = $state("");
+    let projectDescription = $state("");
+    let creatingProject = $state(false);
+    let projectError = $state<string | null>(null);
+
+    // TinyTalk AI chat state
+    let chatOpen = $state(false);
+
+    // Delete modal state
+    let deleteModalOpen = $state(false);
+    let deleting = $state(false);
+
+    // Track if current work item was just duplicated (for button labels and cancel behavior)
+    let isDuplicatedItem = $state(false);
+
+    // Submit state for immediate spinner feedback
+    let isSubmitting = $state(false);
+    let isSubmittingAndAdding = $state(false);
+
+    const projectOptions = $derived.by(() => {
+        const opts: SelectOption[] = [{ value: "", label: "Geen project" }];
+        for (const project of projects) {
+            opts.push({ value: String(project.id), label: project.name });
+        }
+        return opts;
+    });
+
+    // Derived case suggestions for SearchInput
+    const caseSuggestions = $derived.by((): SearchSuggestion[] => {
+        return cases.map((caseItem) => {
+            const process = allProcesses.find(
+                (p) => p.id === caseItem.process_id,
+            );
+            return {
+                value: caseItem.id.toString(),
+                label: caseItem.name,
+                metadata: `${process?.name || "Onbekend"} · ${translateStatus(caseItem.status)}`,
+            };
+        });
+    });
+
+    // Derived step options
+    const stepOptions = $derived.by((): SelectOption[] => {
+        return caseSteps.map((step) => ({
+            value: step.id.toString(),
+            label: step.name || `Stap ${step.id}`,
+        }));
+    });
+
+    // Derived task options
+    const taskOptions = $derived.by((): SelectOption[] => {
+        return stepTasks.map((task) => ({
+            value: task.id.toString(),
+            label: task.name || `Taak ${task.id}`,
+        }));
+    });
+
+    // Derived user options
+    const userOptions = $derived.by((): SelectOption[] => {
+        return users.map((user) => ({
+            value: user.id,
+            label: user.name || user.username || user.email || "Unknown",
+        }));
+    });
+
+    // Get selected assignee names for display
+    const selectedAssigneeNames = $derived.by(() => {
+        return assigneeIds
+            .map((id) => {
+                const user = users.find((u) => u.id === id);
+                return user ? formatUserName(user) : null;
+            })
+            .filter((name): name is string => name !== null);
+    });
+
+    // Check if case linking is incomplete (case selected but no step)
+    const isCaseLinkingIncomplete = $derived(
+        selectedCaseId !== null && selectedCaseStepId === null,
+    );
+
+    /**
+     * Extract filename from URL, handling query parameters
+     */
+    function extractFilename(url: string): string {
+        try {
+            const urlObj = new URL(url);
+            const pathname = urlObj.pathname;
+            const filename =
+                pathname.split("/").pop() || url.split("/").pop() || "bestand";
+            // Remove query parameters from filename if somehow included
+            return filename.split("?")[0];
+        } catch {
+            // Fallback: extract from path
+            const pathPart = url.split("?")[0]; // Remove query params
+            return pathPart.split("/").pop() || "bestand";
+        }
+    }
+
+    /**
+     * Format file size in bytes to human-readable format
+     */
+    function formatFileSize(bytes: number | null): string {
+        if (bytes === null) return "";
+        if (bytes === 0) return "0 B";
+        const k = 1024;
+        const sizes = ["B", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return `${(bytes / Math.pow(k, i)).toFixed(2)} ${sizes[i]}`;
+    }
+
+    // Debug: Log drawer state changes for troubleshooting
+    $effect(() => {
+        const url = $page.url;
+        const currentDrawerParam = url.searchParams.get("drawer");
+        // Commented out: verbose BacklogDrawer URL change logs
+        // console.log('[BacklogDrawer] URL changed, drawer param:', currentDrawerParam, 'isOpen:', isOpen, 'drawerParam:', drawerParam);
+    });
+
+    // Track if we just updated an item (to prevent unnecessary reload)
+    let justUpdatedWorkItemId: number | null = null;
+    // Track if we just deleted an item (to prevent loading it again)
+    let justDeletedWorkItemId: number | null = null;
+
+    // Load work item when workItemId changes, or initialize form for new item
+    $effect(() => {
+        void (async () => {
+            if (!isOpen) {
+                // Reset tracking when drawer closes - but DON'T clear newItemFormInitialized
+                // This prevents re-initialization when drawer is quickly reopened
+                lastLoadedWorkItemId = null;
+                // Keep newItemFormInitialized intact - don't reset it here
+                // Don't reset justUpdatedWorkItemId here - keep it so we can skip reload if drawer reopens
+                // Also clear justDeletedWorkItemId on close
+                justDeletedWorkItemId = null;
+                // Don't reset deletedWorkItemId here - it should persist until a different work item is loaded
+                return;
+            }
+
+            // Reset form initialization flag when switching to duplicate mode
+            if (duplicateParam === "true") {
+                newItemFormInitialized = false;
+            }
+
+            // Only load if workItemId has changed and we're not already loading
+            // Skip reload if we just updated this item (we already have updated data)
+            // Skip load if we just deleted this item (it no longer exists)
+            if (
+                workItemId &&
+                workItemId !== lastLoadedWorkItemId &&
+                !isLoadingWorkItem
+            ) {
+                // If we just deleted this item, don't try to load it - it's gone
+                if (
+                    justDeletedWorkItemId === workItemId ||
+                    deletedWorkItemId === workItemId
+                ) {
+                    console.log(
+                        "[BacklogDrawer] Skipping load - work item was just deleted:",
+                        workItemId,
+                    );
+                    lastLoadedWorkItemId = workItemId;
+                    justDeletedWorkItemId = null;
+                    return;
+                }
+
+                // If loading a different work item, clear deleted work item tracking
+                if (
+                    deletedWorkItemId !== null &&
+                    workItemId !== deletedWorkItemId
+                ) {
+                    console.log(
+                        "[BacklogDrawer] Loading different work item, clearing deletedWorkItemId:",
+                        deletedWorkItemId,
+                    );
+                    deletedWorkItemId = null;
+                }
+
+                // If we just updated this item, don't reload - use data we already have
+                if (
+                    justUpdatedWorkItemId === workItemId &&
+                    currentWorkItem &&
+                    currentWorkItem.id === workItemId
+                ) {
+                    console.log(
+                        "[BacklogDrawer] Skipping reload - using already updated currentWorkItem for id:",
+                        workItemId,
+                    );
+                    console.log(
+                        "[BacklogDrawer] currentWorkItem.assignee_id:",
+                        $state.snapshot(currentWorkItem.assignee_id),
+                    );
+                    lastLoadedWorkItemId = workItemId;
+                    // Form will re-initialize from currentWorkItem which already has updated data
+                    // Clear the flag after using it
+                    justUpdatedWorkItemId = null;
+                    return;
+                }
+
+                console.log(
+                    "[BacklogDrawer] Drawer opened, workItemId:",
+                    workItemId,
+                );
+                lastLoadedWorkItemId = workItemId;
+                // Clear update flag when loading a different item
+                if (justUpdatedWorkItemId !== workItemId) {
+                    justUpdatedWorkItemId = null;
+                }
+                await loadWorkItem(workItemId);
+            } else if (!workItemId) {
+                // Initialize form for a new item when drawer opens
+                if (!newItemFormInitialized) {
+                    console.log(
+                        "[BacklogDrawer] Form initialization starting...",
+                    );
+                    console.log(
+                        "[BacklogDrawer] duplicateParam:",
+                        $state.snapshot(duplicateParam),
+                    );
+                    console.log(
+                        "[BacklogDrawer] workItemId:",
+                        $state.snapshot(workItemId),
+                    );
+                    console.log(
+                        "[BacklogDrawer] initialCaseStepId:",
+                        $state.snapshot(initialCaseStepId),
+                    );
+                    console.log(
+                        "[BacklogDrawer] initialTaskId:",
+                        $state.snapshot(initialTaskId),
+                    );
+                    console.log(
+                        "[BacklogDrawer] newItemFormInitialized:",
+                        $state.snapshot(newItemFormInitialized),
+                    );
+
+                    lastLoadedWorkItemId = null;
+                    justUpdatedWorkItemId = null;
+
+                    // If initial case step/task IDs are provided, set them directly
+                    if (initialCaseStepId) {
+                        selectedCaseStepId = initialCaseStepId;
+                        // Load case and steps for selected step
+                        await loadCaseForStep(initialCaseStepId);
+                        if (initialTaskId) {
+                            // Call handleTaskSelected to fetch parent task's deadline
+                            await handleTaskSelected(initialTaskId.toString());
+                        }
+                    }
+                    newItemFormInitialized = true;
+                }
+            }
+        })();
+    });
+
+    // Initialize form from loaded work item (only once per work item)
+    $effect(() => {
+        if (
+            currentWorkItem &&
+            isOpen &&
+            currentWorkItem.id !== initializedWorkItemId
+        ) {
+            console.log(
+                "[BacklogDrawer] Initializing form from work item:",
+                currentWorkItem,
+            );
+            console.log(
+                "[BacklogDrawer] currentWorkItem.assignee_id:",
+                currentWorkItem.assignee_id,
+            );
+            console.log(
+                "[BacklogDrawer] currentWorkItem.assignee_id type:",
+                typeof currentWorkItem.assignee_id,
+            );
+            console.log(
+                "[BacklogDrawer] currentWorkItem.assignee_id isArray:",
+                Array.isArray(currentWorkItem.assignee_id),
+            );
+            const newAssigneeIds = Array.isArray(currentWorkItem.assignee_id)
+                ? currentWorkItem.assignee_id
+                : currentWorkItem.assignee_id
+                  ? [currentWorkItem.assignee_id]
+                  : [];
+            console.log(
+                "[BacklogDrawer] Setting assigneeIds to:",
+                newAssigneeIds,
+            );
+            assigneeIds = newAssigneeIds;
+            selectedProjectId = currentWorkItem.project_id
+                ? String(currentWorkItem.project_id)
+                : null;
+            subject = currentWorkItem.subject ?? "";
+            voorWie = currentWorkItem.voor_wie_is_het ?? "";
+            watGaJeDoen = currentWorkItem.wat_ga_je_doen ?? "";
+            waarom = currentWorkItem.waarom_doe_je_het ?? "";
+            dueDate = currentWorkItem.deadline
+                ? new Date(currentWorkItem.deadline).toISOString().split("T")[0]
+                : null;
+            tags = currentWorkItem.tags || [];
+            komtVan = currentWorkItem.komt_van ?? "";
+            uren = currentWorkItem.uren ? String(currentWorkItem.uren) : "";
+            relevantie = currentWorkItem.relevantie || null;
+            priority = (currentWorkItem as any).priority || "normaal";
+            status = currentWorkItem.status as typeof status;
+            kanbanStatus = (currentWorkItem.kanban_status ||
+                "gepland") as typeof kanbanStatus;
+            // Convert URL strings to Attachment objects
+            const bijlagenUrls = currentWorkItem.bijlagen || [];
+            attachments = bijlagenUrls.map((url) => ({
+                url,
+                name: extractFilename(url),
+                size: null, // Size not available for existing attachments
+            }));
+            // Initialize case linking fields
+            selectedCaseStepId = currentWorkItem.case_step_id || null;
+            // If task has a parent task, fetch its deadline for date validation
+            if (currentWorkItem.task_id) {
+                handleTaskSelected(currentWorkItem.task_id.toString());
+                selectedParentTaskId = currentWorkItem.task_id;
+            } else {
+                selectedParentTaskId = null;
+            }
+            // If case_step_id is set, load case and steps
+            if (currentWorkItem.case_step_id) {
+                loadCaseForStep(currentWorkItem.case_step_id);
+            }
+            initializedWorkItemId = currentWorkItem.id;
+            console.log(
+                "[BacklogDrawer] Subject set to:",
+                $state.snapshot(subject),
+            );
+        }
+    });
+
+    async function loadWorkItem(id: number) {
+        if (isLoadingWorkItem) {
+            console.log("[BacklogDrawer] Already loading work item, skipping");
+            return;
+        }
+
+        isLoadingWorkItem = true;
+        loading.start("workItem");
+        currentWorkItem = null;
+        initializedWorkItemId = null; // Reset so form can be initialized for new work item
+        try {
+            const result = await taskService.getWorkItemById(id);
+            if (result.success) {
+                currentWorkItem = result.value;
+            } else {
+                toastStore.add(getUserMessage(result.error), "error");
+            }
+        } finally {
+            loading.stop("workItem");
+            isLoadingWorkItem = false;
+        }
+    }
+
+    function resetForm() {
+        const currentUserId = getCurrentUserId();
+        assigneeIds = currentUserId ? [currentUserId] : [];
+        selectedProjectId =
+            urlProjectId || initialProjectId
+                ? String(urlProjectId || initialProjectId)
+                : null;
+        subject = "";
+        voorWie = "";
+        watGaJeDoen = "";
+        waarom = "";
+        dueDate = null;
+        tags = [];
+        komtVan = "";
+        uren = "";
+        relevantie = null;
+        priority = "normaal";
+        status = "backlog";
+        kanbanStatus = "backlog";
+        attachments = [];
+        currentWorkItem = null;
+        initializedWorkItemId = null;
+        isDuplicatedItem = false; // Reset duplicated flag
+        fieldErrors = {}; // Clear field errors
+        // Reset case linking fields
+        caseSearchQuery = "";
+        selectedCaseId = null;
+        selectedCaseName = "";
+        selectedCaseStepId = null;
+        selectedParentTaskId = null;
+        caseSteps = [];
+        stepTasks = [];
+    }
+
+    onMount(async () => {
+        if (isOpen) {
+            await loadOptions();
+        }
+    });
+
+    // Track if options have been loaded to prevent duplicate calls
+    let optionsLoaded = $state(false);
+
+    $effect(() => {
+        void (async () => {
+            if (isOpen && !optionsLoaded) {
+                await loadOptions();
+                optionsLoaded = true;
+            } else if (!isOpen) {
+                // Reset when drawer closes
+                optionsLoaded = false;
+            }
+        })();
+    });
+
+    async function loadUsers() {
+        loading.start("users");
+        try {
+            const result = await pocketbaseService.getAllUsers();
+            if (result.success) {
+                users = result.value;
+            }
+        } catch (error) {
+            console.error("Error loading users:", error);
+        } finally {
+            loading.stop("users");
+        }
+    }
+
+    async function loadOptions() {
+        const currentUserId = getCurrentUserId()!;
+        const [projectsResult, casesResult, processesResult] =
+            await Promise.all([
+                projectService.getProjectsForUser(currentUserId),
+                caseService.getAllCases(),
+                processService.getAllProcessesIncludingArchived(),
+            ]);
+
+        if (projectsResult.success) {
+            projects = projectsResult.value;
+        }
+
+        if (casesResult.success) {
+            cases = casesResult.value;
+        }
+
+        if (processesResult.success) {
+            allProcesses = processesResult.value;
+        }
+
+        // Load users
+        await loadUsers();
+    }
+
+    // Track the last loaded case step to prevent duplicate API calls
+    let lastLoadedCaseStepId: number | null = null;
+
+    // Load case and steps when a case_step_id is known (for editing)
+    async function loadCaseForStep(caseStepId: number) {
+        // Prevent duplicate calls for the same case step
+        if (lastLoadedCaseStepId === caseStepId) {
+            console.log(
+                "[BacklogDrawer] Case step already loaded, skipping:",
+                caseStepId,
+            );
+            return;
+        }
+
+        loading.start("steps");
+        try {
+            // Get PostgREST URL with fallback
+            const postgrestUrl =
+                import.meta.env.VITE_POSTGREST_URL ||
+                "https://pg-kees.up.railway.app";
+
+            // Fetch step to get case_id
+            const stepResponse = await fetch(
+                `${postgrestUrl}/_bpm_case_steps?id=eq.${caseStepId}`,
+            );
+            if (!stepResponse.ok) {
+                console.error("[BacklogDrawer] Failed to fetch case step");
+                return;
+            }
+
+            const stepData = await stepResponse.json();
+            if (!stepData || stepData.length === 0) {
+                console.error("[BacklogDrawer] Case step not found");
+                return;
+            }
+
+            const step = stepData[0];
+            selectedCaseId = step.case_id;
+
+            // Fetch case to get its name
+            const caseResponse = await fetch(
+                `${postgrestUrl}/_bpm_cases?id=eq.${step.case_id}`,
+            );
+            if (caseResponse.ok) {
+                const caseData = await caseResponse.json();
+                if (caseData && caseData.length > 0) {
+                    selectedCaseName = caseData[0].name;
+                    caseSearchQuery = caseData[0].name;
+                }
+            }
+
+            // Load steps for selected case
+            await handleCaseSelected(step.case_id.toString());
+
+            // Mark as loaded
+            lastLoadedCaseStepId = caseStepId;
+
+            // Note: Don't clear selectedParentTaskId here - it was just set by initialization
+            // The handleStepSelected call would clear it, so we skip it for new items with parent task
+            // Parent task ID should be preserved for form submission
+            console.log(
+                "[BacklogDrawer] Case step loaded, preserving selectedParentTaskId:",
+                selectedParentTaskId,
+            );
+        } catch (error) {
+            console.error(
+                "[BacklogDrawer] Error loading case for step:",
+                error,
+            );
+        } finally {
+            loading.stop("steps");
+        }
+    }
+
+    // Handle case selection from SearchInput
+    async function handleCaseSearch(value: string) {
+        caseSearchQuery = value;
+        // Find case by label (name) or by value (id)
+        const matchingSuggestion = caseSuggestions.find(
+            (s) =>
+                s.label.toLowerCase() === value.toLowerCase() ||
+                s.value === value ||
+                s.label.toLowerCase().includes(value.toLowerCase()),
+        );
+        if (matchingSuggestion) {
+            selectedCaseName = matchingSuggestion.label;
+            // Update the search query to show the full case name
+            caseSearchQuery = matchingSuggestion.label;
+            await handleCaseSelected(matchingSuggestion.value);
+        }
+    }
+
+    // Handle case selection
+    async function handleCaseSelected(caseIdStr: string) {
+        if (!caseIdStr || caseIdStr === "") {
+            selectedCaseId = null;
+            selectedCaseStepId = null;
+            selectedParentTaskId = null;
+            caseSteps = [];
+            stepTasks = [];
+            return;
+        }
+
+        const caseId = parseInt(caseIdStr);
+        if (isNaN(caseId)) return;
+
+        selectedCaseId = caseId;
+        // Don't clear selectedCaseStepId if it's already set (from URL params or initialization)
+        // This preserves the step selection when auto-populating from URL
+        if (!selectedCaseStepId) {
+            selectedCaseStepId = null;
+        }
+        // Don't clear selectedParentTaskId if it's already set (from URL params or initialization)
+        // This preserves the task selection when auto-populating from URL
+        if (!selectedParentTaskId) {
+            selectedParentTaskId = null;
+        }
+        stepTasks = [];
+
+        // Load steps for selected case
+        loading.start("steps");
+        try {
+            const result = await caseService.getCaseStepsByCaseId(caseId);
+            if (result.success) {
+                caseSteps = result.value;
+            } else {
+                toastStore.add(getUserMessage(result.error), "error");
+                caseSteps = [];
+            }
+        } finally {
+            loading.stop("steps");
+        }
+    }
+
+    // Handle step selection
+    async function handleStepSelected(stepIdStr: string | string[] | null) {
+        if (Array.isArray(stepIdStr)) return;
+        if (!stepIdStr || stepIdStr === "") {
+            selectedCaseStepId = null;
+            selectedParentTaskId = null;
+            stepTasks = [];
+            return;
+        }
+
+        const stepId = parseInt(stepIdStr);
+        if (isNaN(stepId)) return;
+
+        selectedCaseStepId = stepId;
+        selectedParentTaskId = null;
+
+        // Find the step_id (process step id) from case step
+        const caseStep = caseSteps.find((s) => s.id === stepId);
+        if (!caseStep || !caseStep.step_id) {
+            stepTasks = [];
+            return;
+        }
+
+        // Load tasks for selected step
+        loading.start("tasks");
+        try {
+            const result = await caseService.getProcessTasksByStepId(
+                caseStep.step_id,
+            );
+            if (result.success) {
+                stepTasks = result.value;
+            } else {
+                toastStore.add(getUserMessage(result.error), "error");
+                stepTasks = [];
+            }
+        } finally {
+            loading.stop("tasks");
+        }
+    }
+
+    // Handle task selection
+    async function handleTaskSelected(taskIdStr: string | string[] | null) {
+        if (Array.isArray(taskIdStr)) return;
+        if (!taskIdStr || taskIdStr === "") {
+            selectedParentTaskId = null;
+            parentTaskMinDate = null;
+            return;
+        }
+
+        const taskId = parseInt(taskIdStr);
+        if (isNaN(taskId)) return;
+        selectedParentTaskId = taskId;
+
+        // Fetch parent task's deadline to set minimum date for child task
+        // First try _bpm_tasks (case tasks), then _bpm_process_tasks (process tasks)
+        try {
+            const postgrestUrl =
+                import.meta.env.VITE_POSTGREST_URL ||
+                "https://pg-kees.up.railway.app";
+            let response = await fetch(
+                `${postgrestUrl}/_bpm_tasks?select=deadline&id=eq.${taskId}`,
+            );
+            let data;
+            let isProcessTask = false;
+
+            if (response.ok) {
+                data = await response.json();
+                if (!data || data.length === 0) {
+                    // Not a case task, try process task
+                    response = await fetch(
+                        `${postgrestUrl}/_bpm_process_tasks?select=id,deadline_days&deadline&id=eq.${taskId}`,
+                    );
+                    if (response.ok) {
+                        data = await response.json();
+                        isProcessTask = true;
+                    }
+                }
+            }
+
+            console.log(
+                "[BacklogDrawer] Parent task data:",
+                data,
+                "isProcessTask:",
+                isProcessTask,
+            );
+
+            if (data && data.length > 0) {
+                if (isProcessTask && data[0].deadline_days) {
+                    // Process task: calculate deadline from case step start date + deadline_days
+                    console.log(
+                        "[BacklogDrawer] Parent is process task with deadline_days:",
+                        data[0].deadline_days,
+                    );
+                    console.log(
+                        "[BacklogDrawer] selectedCaseStepId:",
+                        selectedCaseStepId,
+                    );
+
+                    // Get case step's start_date
+                    const caseStep = caseSteps.find(
+                        (cs) => cs.id === selectedCaseStepId,
+                    );
+                    if (caseStep && caseStep.start_date) {
+                        const stepStartDate = new Date(caseStep.start_date);
+                        const deadlineDays = data[0].deadline_days || 0;
+                        const deadlineDate = new Date(stepStartDate);
+                        deadlineDate.setDate(
+                            deadlineDate.getDate() + deadlineDays,
+                        );
+                        const datePart = deadlineDate
+                            .toISOString()
+                            .split("T")[0];
+                        console.log(
+                            "[BacklogDrawer] Calculated deadline:",
+                            datePart,
+                            "(step start +",
+                            deadlineDays,
+                            "days)",
+                        );
+                        parentTaskMinDate = datePart;
+                    } else {
+                        console.log(
+                            "[BacklogDrawer] Could not find case step start date, clearing parentTaskMinDate",
+                        );
+                        parentTaskMinDate = null;
+                    }
+                } else if (!isProcessTask && data[0].deadline) {
+                    // Case task: use deadline directly
+                    const deadlineStr = data[0].deadline;
+                    console.log(
+                        "[BacklogDrawer] Parent task deadline:",
+                        deadlineStr,
+                    );
+                    const datePart = deadlineStr.includes("T")
+                        ? deadlineStr.split("T")[0]
+                        : deadlineStr;
+                    console.log(
+                        "[BacklogDrawer] Setting parentTaskMinDate to:",
+                        datePart,
+                    );
+                    parentTaskMinDate = datePart;
+                } else {
+                    console.log(
+                        "[BacklogDrawer] No deadline found, clearing parentTaskMinDate",
+                    );
+                    parentTaskMinDate = null;
+                }
+            } else {
+                console.log(
+                    "[BacklogDrawer] No task data found, clearing parentTaskMinDate",
+                );
+                parentTaskMinDate = null;
+            }
+        } catch (error) {
+            console.error(
+                "[BacklogDrawer] Error fetching parent task deadline:",
+                error,
+            );
+            parentTaskMinDate = null;
+        }
+    }
+
+    function handleOpenAddProjectModal() {
+        addProjectModalOpen = true;
+        projectName = "";
+        projectDescription = "";
+        projectError = null;
+    }
+
+    function handleCloseAddProjectModal() {
+        addProjectModalOpen = false;
+        projectName = "";
+        projectDescription = "";
+        projectError = null;
+    }
+
+    async function handleCreateProject() {
+        if (!projectName.trim()) {
+            projectError = "Voer een projectnaam in";
+            return;
+        }
+
+        creatingProject = true;
+        projectError = null;
+
+        const result = await projectService.createProject({
+            name: projectName.trim(),
+            description: projectDescription.trim() || undefined,
+            status: "active",
+            is_private: false,
+        });
+
+        if (result.success) {
+            const newProject = result.value;
+            // Reload projects list
+            await loadOptions();
+            // Select the newly created project
+            selectedProjectId = String(newProject.id);
+            // Close modal
+            handleCloseAddProjectModal();
+            toastStore.add("Project toegevoegd", "success");
+        } else {
+            projectError = getUserMessage(result.error);
+            toastStore.add(getUserMessage(result.error), "error");
+        }
+
+        creatingProject = false;
+    }
+
+    async function handleFileUpload(files: FileList | null) {
+        if (!files || files.length === 0) return;
+
+        loading.start("files");
+        const fileArray = Array.from(files);
+
+        if (import.meta.env.DEV) {
+            console.log(
+                "[BacklogDrawer] Uploading files:",
+                fileArray.map((f) => f.name),
+            );
+        }
+
+        // Use MinIO for file uploads (same as cases)
+        // Upload to tasks folder if we have a work item ID, otherwise upload without folder
+        // Files will be moved to the correct folder when the work item is created
+        const folder = currentWorkItem
+            ? `tasks/${currentWorkItem.id}`
+            : undefined;
+        const entityId = currentWorkItem?.id;
+        const newAttachments: Attachment[] = [];
+
+        try {
+            // Upload each file
+            for (const file of fileArray) {
+                const result = await minioService.uploadFile(
+                    file,
+                    folder,
+                    entityId,
+                );
+                if (result.success && result.value.url) {
+                    newAttachments.push({
+                        url: result.value.url,
+                        name: file.name,
+                        size: file.size,
+                    });
+                } else if (!result.success) {
+                    console.error(
+                        "[BacklogDrawer] Error uploading file:",
+                        result.error,
+                    );
+                    toastStore.add(
+                        `Fout bij uploaden van ${file.name}: ${getUserMessage(result.error)}`,
+                        "error",
+                    );
+                }
+            }
+
+            if (newAttachments.length > 0) {
+                if (import.meta.env.DEV) {
+                    console.log(
+                        "[BacklogDrawer] Upload successful, attachments:",
+                        newAttachments,
+                    );
+                    console.log(
+                        "[BacklogDrawer] Current attachments before:",
+                        $state.snapshot(attachments),
+                    );
+                }
+                attachments = [...attachments, ...newAttachments];
+                if (import.meta.env.DEV) {
+                    console.log(
+                        "[BacklogDrawer] Updated attachments:",
+                        $state.snapshot(attachments),
+                    );
+                }
+                // Reset FileUpload component to clear its internal selected files
+                fileUploadKey += 1;
+                toastStore.add(
+                    `${newAttachments.length} bestand(en) geüpload`,
+                    "success",
+                );
+            }
+        } catch (error) {
+            console.error("[BacklogDrawer] Upload failed:", error);
+            toastStore.add(
+                "Er is een fout opgetreden bij het uploaden",
+                "error",
+            );
+        } finally {
+            loading.stop("files");
+        }
+    }
+
+    function removeAttachment(url: string) {
+        attachments = attachments.filter((a) => a.url !== url);
+    }
+
+    /**
+     * Clear field error when user starts typing
+     */
+    function clearFieldError(fieldName: string) {
+        if (fieldErrors[fieldName]) {
+            fieldErrors = { ...fieldErrors, [fieldName]: "" };
+        }
+    }
+
+    /**
+     * Set field error
+     */
+    function setFieldError(fieldName: string, message: string) {
+        fieldErrors = { ...fieldErrors, [fieldName]: message };
+    }
+
+    /**
+     * Extract field-level errors from ValidationError
+     */
+    function extractFieldErrors(error: AppError): Record<string, string> {
+        const errors: Record<string, string> = {};
+
+        // Check if it's a ValidationError with field info
+        if (error.details?.field) {
+            const field = error.details.field as string;
+            errors[field] = error.message;
+        }
+
+        // Check for Zod validation errors in details
+        if (error.details?.allErrors) {
+            const zodErrors = error.details.allErrors as Array<{
+                path: (string | number)[];
+                message: string;
+            }>;
+            for (const zodError of zodErrors) {
+                const field = zodError.path.join(".");
+                errors[field] = zodError.message;
+            }
+        }
+
+        // If no field-specific errors found, check error message for subject
+        if (
+            Object.keys(errors).length === 0 &&
+            error.message.toLowerCase().includes("subject")
+        ) {
+            errors.subject = error.message;
+        }
+
+        return errors;
+    }
+
+    async function handleSubmit(noRedirect = false) {
+        // Set submitting state immediately for instant UI feedback
+        isSubmitting = true;
+        loading.start("saving");
+        try {
+            // Clear previous errors
+            fieldErrors = {};
+
+            // Helper to convert empty strings to null
+            const emptyToNull = (val: string): string | null =>
+                val.trim() === "" ? null : val.trim();
+            const parseNumber = (
+                val: string | number | null | undefined,
+            ): number | null => {
+                // Handle null/undefined
+                if (val == null) return null;
+                // Handle number type
+                if (typeof val === "number") {
+                    return isNaN(val) || val < 0 ? null : val;
+                }
+                // Handle string type
+                if (typeof val === "string") {
+                    const trimmed = val.trim();
+                    if (trimmed === "") return null;
+                    const parsed = parseFloat(trimmed);
+                    return isNaN(parsed) || parsed < 0 ? null : parsed;
+                }
+                return null;
+            };
+            const parseProjectId = (val: string | null): number | null => {
+                if (!val || val.trim() === "") return null;
+                const parsed = parseInt(val, 10);
+                // Schema requires positive integer, so 0 and negative are invalid
+                return isNaN(parsed) || parsed <= 0 ? null : parsed;
+            };
+
+            // Validate required fields before submission
+            const trimmedSubject = subject.trim();
+            if (!currentWorkItem && !trimmedSubject) {
+                setFieldError(
+                    "subject",
+                    "Onderwerp is verplicht voor nieuwe taken",
+                );
+                isSubmitting = false;
+                loading.stop("saving");
+                return;
+            }
+            // For updates, if subject is provided but empty, reject it (database constraint requires non-null subject)
+            if (currentWorkItem && trimmedSubject === "") {
+                setFieldError("subject", "Onderwerp mag niet leeg zijn");
+                isSubmitting = false;
+                loading.stop("saving");
+                return;
+            }
+
+            // Convert date-only string to ISO datetime if needed
+            const deadlineValue =
+                dueDate && dueDate.trim() !== ""
+                    ? dueDate.includes("T")
+                        ? dueDate
+                        : `${dueDate}T12:00:00Z`
+                    : null;
+
+            const data = {
+                project_id: parseProjectId(selectedProjectId),
+                case_step_id: selectedCaseStepId,
+                task_id: selectedParentTaskId,
+                assignee_id: assigneeIds.length > 0 ? assigneeIds : [],
+                subject: trimmedSubject, // Already validated as non-empty above
+                voor_wie_is_het: emptyToNull(voorWie),
+                wat_ga_je_doen: emptyToNull(watGaJeDoen),
+                waarom_doe_je_het: emptyToNull(waarom),
+                deadline: deadlineValue,
+                tags: (() => {
+                    // Filter out empty tags
+                    let filteredTags = (tags || []).filter(
+                        (tag) => tag && tag.trim() !== "",
+                    );
+                    // Automatically add 'ad-hoc' tag if case-related values are present
+                    if (
+                        selectedCaseStepId &&
+                        !filteredTags.includes("ad-hoc")
+                    ) {
+                        filteredTags = [...filteredTags, "ad-hoc"];
+                    }
+                    return filteredTags;
+                })(),
+                komt_van: emptyToNull(komtVan), // Will be null if empty, which passes email validation
+                uren: parseNumber(uren),
+                bijlagen: (attachments || [])
+                    .map((a) => a.url)
+                    .filter((url) => url && url.trim() !== ""), // Extract URLs from attachment objects
+                relevantie:
+                    relevantie && relevantie >= 1 && relevantie <= 5
+                        ? relevantie
+                        : null,
+                priority: priority,
+                // Use selected status for new tasks (allows creating tasks with 'gepland' status)
+                status: status,
+                kanban_status: kanbanStatus,
+                // Set task_type based on context:
+                // - "help" when on /help route
+                // - "process" when creating a case task (case_step_id is set)
+                // - "manual" for regular work items
+                task_type:
+                    $page.url.pathname === "/help"
+                        ? "help"
+                        : selectedCaseStepId
+                          ? "process"
+                          : "manual",
+                source: currentWorkItem
+                    ? undefined
+                    : typeof window !== "undefined"
+                      ? window.location.href
+                      : null, // Only set source for new work items
+            };
+
+            // Log data being sent in dev mode
+            if (import.meta.env.DEV) {
+                console.log(
+                    "[BacklogDrawer] assigneeIds state before submit:",
+                    $state.snapshot(assigneeIds),
+                );
+                console.log(
+                    "[BacklogDrawer] assigneeIds length:",
+                    assigneeIds.length,
+                );
+                console.log(
+                    "[BacklogDrawer] Submitting data:",
+                    JSON.stringify(data, null, 2),
+                );
+                console.log(
+                    "[BacklogDrawer] Attachments array:",
+                    $state.snapshot(attachments),
+                );
+                console.log(
+                    "[BacklogDrawer] Bijlagen being saved:",
+                    data.bijlagen,
+                );
+            }
+
+            let result;
+            if (currentWorkItem) {
+                // Call service directly to persist to backend
+                // Note: Don't use store.updateWorkItem here as it queues a mutation that also calls the service,
+                // causing duplicate API calls and unique constraint violations for assignees
+                result = await taskService.updateWorkItem(
+                    currentWorkItem.id,
+                    data,
+                );
+
+                // If successful, update the store's local state for immediate UI feedback
+                if (result.success) {
+                    console.log(
+                        "[BacklogDrawer] Update successful, result.value:",
+                        result.value,
+                    );
+                    // Update store state directly without triggering another sync
+                    const updatedItem = result.value[0] || result.value;
+                    console.log(
+                        "[BacklogDrawer] Updated item from API:",
+                        updatedItem,
+                    );
+                    console.log(
+                        "[BacklogDrawer] Updated item assignee_id:",
+                        updatedItem?.assignee_id,
+                    );
+
+                    if (updatedItem) {
+                        // Update currentWorkItem with the returned data so form shows correct values
+                        currentWorkItem = {
+                            ...currentWorkItem,
+                            ...updatedItem,
+                        };
+                        console.log(
+                            "[BacklogDrawer] Updated currentWorkItem.assignee_id:",
+                            currentWorkItem.assignee_id,
+                        );
+
+                        // Update the reactive store state
+                        const planningIdx = taskState.planningItems.findIndex(
+                            (item) => item.id === currentWorkItem!.id,
+                        );
+                        const backlogIdx = taskState.backlogItems.findIndex(
+                            (item) => item.id === currentWorkItem!.id,
+                        );
+
+                        console.log(
+                            "[BacklogDrawer] Found item in store - planningIdx:",
+                            planningIdx,
+                            "backlogIdx:",
+                            backlogIdx,
+                        );
+
+                        if (planningIdx >= 0) {
+                            const oldItem =
+                                taskState.planningItems[planningIdx];
+                            console.log(
+                                "[BacklogDrawer] Old planning item assignee_id:",
+                                oldItem?.assignee_id,
+                            );
+                            // Create new array to ensure reactivity
+                            taskState.planningItems =
+                                taskState.planningItems.map((item, idx) => {
+                                    if (idx === planningIdx) {
+                                        const merged = {
+                                            ...item,
+                                            ...updatedItem,
+                                        } as unknown as typeof item;
+                                        console.log(
+                                            "[BacklogDrawer] Merged planning item assignee_id:",
+                                            merged.assignee_id,
+                                        );
+                                        return merged;
+                                    }
+                                    return item;
+                                });
+                        }
+                        if (backlogIdx >= 0) {
+                            const oldItem = taskState.backlogItems[backlogIdx];
+                            console.log(
+                                "[BacklogDrawer] Old backlog item assignee_id:",
+                                oldItem?.assignee_id,
+                            );
+                            // Create new array to ensure reactivity
+                            taskState.backlogItems = taskState.backlogItems.map(
+                                (item, idx) => {
+                                    if (idx === backlogIdx) {
+                                        const merged = {
+                                            ...item,
+                                            ...updatedItem,
+                                        } as unknown as typeof item;
+                                        console.log(
+                                            "[BacklogDrawer] Merged backlog item assignee_id:",
+                                            merged.assignee_id,
+                                        );
+                                        return merged;
+                                    }
+                                    return item;
+                                },
+                            );
+                        }
+
+                        // Mark that we just updated this item (to prevent unnecessary reload)
+                        justUpdatedWorkItemId = currentWorkItem.id;
+                        console.log(
+                            "[BacklogDrawer] Marked item as just updated:",
+                            justUpdatedWorkItemId,
+                        );
+
+                        // Reset initializedWorkItemId so form re-initializes with updated data
+                        initializedWorkItemId = null;
+                        console.log(
+                            "[BacklogDrawer] Reset initializedWorkItemId to trigger form re-initialization",
+                        );
+
+                        // Refresh the store to ensure work page sees the changes
+                        // Use null to refresh ALL items (work page shows all items, not filtered by assignee)
+                        console.log(
+                            "[BacklogDrawer] Refreshing store with getPlanningItems(null)...",
+                        );
+                        await taskStore.getPlanningItems(null);
+                        console.log(
+                            "[BacklogDrawer] Refreshing store with getBacklogItems(null)...",
+                        );
+                        await taskStore.getBacklogItems(null);
+                    }
+                }
+            } else {
+                // Call service directly to persist to backend
+                result = await taskService.createWorkItem(data);
+
+                // If service call succeeds, refresh store to get real item (replaces optimistic one)
+                if (result.success) {
+                    const workItem = result.value;
+                    // Refresh the appropriate list based on status to get the real item
+                    // assignee_id is an array, get first one or null
+                    const assigneeId =
+                        Array.isArray(data.assignee_id) &&
+                        data.assignee_id.length > 0
+                            ? data.assignee_id[0]
+                            : typeof data.assignee_id === "string"
+                              ? data.assignee_id
+                              : null;
+                    if (data.status === "backlog") {
+                        await taskStore.getBacklogItems(
+                            assigneeId || undefined,
+                            false,
+                        );
+                    } else {
+                        // For 'gepland' or 'ad-hoc', refresh planning items
+                        await taskStore.getPlanningItems(
+                            assigneeId || undefined,
+                            false,
+                        );
+                    }
+                }
+            }
+
+            if (result.success) {
+                // Clear errors on success
+                fieldErrors = {};
+                toastStore.add(
+                    currentWorkItem
+                        ? "Taak bijgewerkt"
+                        : "Taak toegevoegd aan backlog",
+                    "success",
+                );
+
+                // Get the created/updated work item
+                const workItem = Array.isArray(result.value)
+                    ? result.value[0]
+                    : result.value;
+
+                if (onsaved) {
+                    await onsaved(workItem);
+                }
+
+                // If noRedirect is true, just reset the form and keep drawer open
+                if (noRedirect && !currentWorkItem) {
+                    resetForm();
+                    chatOpen = false;
+                    return;
+                }
+
+                // If creating a new task, redirect to task detail page (unless noRedirect is true)
+                if (!currentWorkItem) {
+                    // Reset duplicated flag since user has saved new task
+                    isDuplicatedItem = false;
+                    resetForm();
+                    chatOpen = false;
+
+                    if (workItem?.id) {
+                        // If creating from a case step (initialCaseStepId is set), close drawer instead of redirecting
+                        // This keeps the user on the case page so they can see the new task
+                        if (initialCaseStepId) {
+                            await handleClose();
+                        } else {
+                            // Redirect to task detail page with clean URL (no query params)
+                            // This ensures drawer doesn't stay open on new page
+                            await goto(`/work/${workItem.id}`, {
+                                replaceState: true,
+                            });
+                        }
+                    } else {
+                        // Fallback: close drawer if no work item ID
+                        await handleClose();
+                    }
+                } else if (currentWorkItem) {
+                    // Close drawer after successful update
+                    // Reset duplicated flag since user has saved the task
+                    isDuplicatedItem = false;
+                    await handleClose();
+                } else {
+                    // For new items created elsewhere, close the drawer
+                    await handleClose();
+                }
+            } else {
+                // Log detailed error in dev mode
+                if (import.meta.env.DEV) {
+                    console.error(
+                        "[BacklogDrawer] Error saving work item:",
+                        result.error,
+                    );
+                    if (result.error.details) {
+                        console.error(
+                            "[BacklogDrawer] Error details:",
+                            result.error.details,
+                        );
+                    }
+                }
+
+                // Extract field-level errors
+                const extractedErrors = extractFieldErrors(result.error);
+                if (Object.keys(extractedErrors).length > 0) {
+                    fieldErrors = extractedErrors;
+                } else {
+                    // Show general error in toast if no field-specific errors
+                    toastStore.add(getUserMessage(result.error), "error");
+                }
+            }
+        } finally {
+            loading.stop("saving");
+            isSubmitting = false;
+        }
+    }
+
+    async function handleSubmitAndAddAnother() {
+        isSubmittingAndAdding = true;
+        await handleSubmit(true);
+        isSubmittingAndAdding = false;
+    }
+
+    async function handleDeleteClick() {
+        if (!currentWorkItem) return;
+        deleteModalOpen = true;
+    }
+
+    function handleCancelDelete() {
+        deleteModalOpen = false;
+    }
+
+    async function handleConfirmDelete() {
+        if (!currentWorkItem) return;
+
+        console.log(
+            "[BacklogDrawer] handleConfirmDelete called for work item:",
+            currentWorkItem.id,
+        );
+        deleting = true;
+
+        // Use taskStore.deleteWorkItem() for optimistic delete and proper cache management
+        // This updates the store immediately and prevents infinite loading
+        await deleteWorkItem(currentWorkItem.id);
+
+        toastStore.add("Work item verwijderd", "success");
+        deleteModalOpen = false;
+
+        // Track that we just deleted this item to prevent loading it again
+        justDeletedWorkItemId = currentWorkItem.id;
+
+        console.log(
+            "[BacklogDrawer] Setting deletedWorkItemId to prevent reopening:",
+            currentWorkItem.id,
+        );
+        deletedWorkItemId = currentWorkItem.id;
+
+        // Reset deleting flag immediately to prevent spinner delay
+        deleting = false;
+
+        console.log("[BacklogDrawer] Calling handleClose...");
+        await handleClose();
+        console.log("[BacklogDrawer] handleClose completed");
+
+        // No need to call invalidate() - taskStore.deleteWorkItem() already handles cache updates optimistically
+        // The backlog page will update automatically via reactive subscription to taskStore
+        // The kanban board will refresh automatically via reactive effects
+        // No need to call onsaved as deletion is handled by URL param changes
+    }
+
+    async function handleClose() {
+        console.log(
+            "[BacklogDrawer] handleClose called, drawerParam:",
+            drawerParam,
+        );
+
+        // If this is a duplicated item that hasn't been edited, delete it on cancel
+        if (isDuplicatedItem && currentWorkItem) {
+            console.log(
+                "[BacklogDrawer] Deleting duplicated item on cancel:",
+                currentWorkItem.id,
+            );
+            await deleteWorkItem(currentWorkItem.id);
+            toastStore.add("Gedupliceerde taak verwijderd", "info");
+            isDuplicatedItem = false;
+        }
+
+        resetForm();
+        chatOpen = false;
+
+        // Reset submitting state
+        isSubmitting = false;
+        isSubmittingAndAdding = false;
+
+        // Clear all loading states when closing drawer
+        loading.stop("workItem");
+        loading.stop("cases");
+        loading.stop("steps");
+        loading.stop("tasks");
+        loading.stop("users");
+        loading.stop("saving");
+        loading.stop("files");
+
+        // Reset tracking variables
+        lastLoadedWorkItemId = null;
+        isLoadingWorkItem = false;
+
+        // Remove drawer params from URL if opened via URL
+        // Clear all possible drawer params regardless of which one is currently set
+        const url = new URL($page.url);
+        let urlChanged = false;
+
+        if (url.searchParams.has("drawer")) {
+            url.searchParams.delete("drawer");
+            urlChanged = true;
+        }
+        if (url.searchParams.has("workItemId")) {
+            url.searchParams.delete("workItemId");
+            urlChanged = true;
+        }
+        if (url.searchParams.has("projectId")) {
+            url.searchParams.delete("projectId");
+            urlChanged = true;
+        }
+        if (url.searchParams.has("step_id")) {
+            url.searchParams.delete("step_id");
+            urlChanged = true;
+        }
+        if (url.searchParams.has("task_id")) {
+            url.searchParams.delete("task_id");
+            urlChanged = true;
+        }
+
+        if (urlChanged) {
+            const cleanUrl = url.pathname + url.search;
+            console.log("[BacklogDrawer] Clearing drawer params to:", cleanUrl);
+
+            // Update URL immediately using browser's pushState
+            window.history.pushState({}, "", cleanUrl);
+            console.log("[BacklogDrawer] URL updated via pushState");
+
+            // Also try goto for SvelteKit state management
+            goto(cleanUrl, { noScroll: true, keepFocus: false }).catch(
+                (err) => {
+                    console.log(
+                        "[BacklogDrawer] goto failed (URL already updated):",
+                        err,
+                    );
+                },
+            );
+        } else {
+            console.log("[BacklogDrawer] No drawer params to clear in URL");
+        }
+
+        // Call external close handler if provided
+        if (onClose) {
+            console.log("[BacklogDrawer] Calling external onClose handler");
+            onClose();
+        }
+    }
+
+    /**
+     * Generate next sequence number for subject
+     * - If subject has "(2)" already, return "(3)"
+     * - If subject has "(3)" already, return "(4)"
+     * - Otherwise, return "(2)"
+     */
+    function generateNextSubject(currentSubject: string): string {
+        // Check if there's already a sequence number like (2), (3), etc.
+        const sequenceMatch = currentSubject.match(/\((\d+)\)(?=\s*$)/);
+
+        if (sequenceMatch) {
+            // Has a sequence number, increment it
+            const currentNum = parseInt(sequenceMatch[1], 10);
+            const nextNum = currentNum + 1;
+            // Replace existing sequence with new one
+            return currentSubject.replace(sequenceMatch[0], `(${nextNum})`);
+        } else {
+            // No sequence number yet, add (2)
+            return `${currentSubject} (2)`;
+        }
+    }
+
+    /**
+     * Handle duplicate task click
+     * Creates new record immediately with duplicated data
+     */
+    async function handleDuplicateTask() {
+        if (!currentWorkItem) return;
+
+        const nextSubject = generateNextSubject(currentWorkItem.subject || "");
+
+        // Debug: Log current deadline format
+        console.log(
+            "[BacklogDrawer] Original deadline:",
+            currentWorkItem.deadline,
+        );
+        console.log(
+            "[BacklogDrawer] Deadline type:",
+            typeof currentWorkItem.deadline,
+        );
+
+        // Format deadline properly for ISO datetime (YYYY-MM-DDTHH:mm:ssZ)
+        let formattedDeadline: string | null = null;
+        if (currentWorkItem.deadline) {
+            const deadlineStr = String(currentWorkItem.deadline);
+            if (deadlineStr.includes("T")) {
+                // Already has time component, ensure it has seconds and Z suffix
+                const parts = deadlineStr.split("T");
+                const timePart = parts[1] || "";
+                // Check if time has seconds (HH:mm:ss format has 2 colons)
+                const hasSeconds = timePart.split(":").length >= 3;
+                // Check if ends with Z
+                const hasZ = timePart.endsWith("Z");
+
+                let formattedTime = timePart;
+                if (!hasSeconds) {
+                    // Add seconds if missing (HH:mm -> HH:mm:00)
+                    formattedTime = `${timePart}:00`;
+                }
+                if (!hasZ) {
+                    // Add Z suffix if missing
+                    formattedTime = `${formattedTime}Z`;
+                }
+                formattedDeadline = `${parts[0]}T${formattedTime}`;
+            } else {
+                // Date only, add default time
+                formattedDeadline = `${deadlineStr}T12:00:00Z`;
+            }
+            console.log(
+                "[BacklogDrawer] Formatted deadline:",
+                formattedDeadline,
+            );
+        }
+
+        // Build duplicate data object for API
+        const duplicateData = {
+            subject: nextSubject,
+            voor_wie_is_het: currentWorkItem.voor_wie_is_het || null,
+            wat_ga_je_doen: currentWorkItem.wat_ga_je_doen || null,
+            waarom_doe_je_het: currentWorkItem.waarom_doe_je_het || null,
+            assignee_id: Array.isArray(currentWorkItem.assignee_id)
+                ? currentWorkItem.assignee_id
+                : currentWorkItem.assignee_id
+                  ? [currentWorkItem.assignee_id]
+                  : [],
+            project_id: currentWorkItem.project_id || null,
+            deadline: formattedDeadline,
+            tags: currentWorkItem.tags || [],
+            komt_van: currentWorkItem.komt_van || null,
+            uren: currentWorkItem.uren || null,
+            relevantie: currentWorkItem.relevantie || null,
+            priority: (currentWorkItem as any).priority || "normaal",
+            status: "backlog" as const,
+            kanban_status: "backlog" as const,
+            case_step_id: currentWorkItem.case_step_id || null,
+            task_id: currentWorkItem.task_id || null,
+            bijlagen: currentWorkItem.bijlagen || [],
+        };
+
+        // Create new record immediately via API
+        const result = await taskService.createWorkItem(duplicateData);
+
+        if (result.success) {
+            const newWorkItem = result.value;
+
+            // Show success message
+            toastStore.add("Taak gedupliceerd", "success");
+
+            // Refresh store to include new item
+            const assigneeId =
+                Array.isArray(duplicateData.assignee_id) &&
+                duplicateData.assignee_id.length > 0
+                    ? duplicateData.assignee_id[0]
+                    : null;
+            await taskStore.getBacklogItems(assigneeId || undefined, false);
+
+            // Mark as duplicated item for button labels and cancel behavior
+            isDuplicatedItem = true;
+
+            // Open drawer for newly created item
+            await goto(`/?drawer=workitem&workItemId=${newWorkItem.id}`, {
+                noScroll: true,
+            });
+        } else {
+            // Show error message
+            toastStore.add(
+                `Fout bij dupliceren: ${getUserMessage(result.error)}`,
+                "error",
+            );
+        }
+    }
+
+    /**
+     * Handle form filling from chat conversation
+     */
+    function handleFillForm(fieldData: Record<string, string>) {
+        if (fieldData.subject) {
+            subject = fieldData.subject;
+        }
+        if (fieldData.voorWie) {
+            voorWie = fieldData.voorWie;
+        }
+        if (fieldData.watGaJeDoen) {
+            watGaJeDoen = fieldData.watGaJeDoen;
+        }
+        if (fieldData.waarom) {
+            waarom = fieldData.waarom;
+        }
+
+        // Show feedback that form was filled
+        if (Object.keys(fieldData).length > 0) {
+            toastStore.add(
+                "Formuliervelden ingevuld op basis van het gesprek",
+                "success",
+            );
+        }
+    }
+</script>
+
+<Drawer
+    open={isOpen}
+    position="right"
+    class="w-[95vw] md:w-[66vw]"
+    onclose={handleClose}
+>
+    <div class="flex flex-col h-full">
+        {#if workItemId && !currentWorkItem && isLoadingWorkItem}
+            <div class="flex-1 flex items-center justify-center">
+                <Spinner size="sm" />
+            </div>
+        {:else}
+            <!-- Header -->
+            <div class="mb-6 flex-shrink-0">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-2">
+                        <h2
+                            class="text-2xl font-semibold text-zinc-900 font-aspekta"
+                        >
+                            {currentWorkItem
+                                ? "Taak bewerken"
+                                : "Taak toevoegen"}
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        {#if currentWorkItem}
+                            <IconButton
+                                icon={ExternalLink}
+                                variant="ghost"
+                                size="default"
+                                tooltip="Open volledige pagina"
+                                tooltipPosition="left"
+                                onclick={() => goto(`/work/${workItemId}`)}
+                            />
+                            <IconButton
+                                icon={Copy}
+                                variant="ghost"
+                                size="default"
+                                tooltip="Dupliceren"
+                                tooltipPosition="left"
+                                onclick={handleDuplicateTask}
+                            />
+                        {/if}
+                        <IconButton
+                            icon={Sparkles}
+                            variant="ghost"
+                            size="default"
+                            tooltip="AI Assistent - Klik om te chatten"
+                            tooltipPosition="left"
+                            onclick={() => (chatOpen = !chatOpen)}
+                            class={chatOpen ? "bg-zinc-100" : ""}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content (Scrollable) -->
+            <form
+                id="workitem-form"
+                onsubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                }}
+                class="flex-1 overflow-y-auto space-y-6 pb-6 pointer-events-auto"
+            >
+                <!-- Subject -->
+                <div>
+                    <label
+                        for="subject"
+                        class="block text-sm font-medium text-zinc-900 mb-2"
+                    >
+                        Onderwerp {#if !currentWorkItem}<span
+                                class="text-red-500">*</span
+                            >{/if}
+                    </label>
+                    <div class="relative">
+                        <input
+                            id="subject"
+                            type="text"
+                            bind:value={subject}
+                            oninput={() => clearFieldError("subject")}
+                            disabled={isComponentLoading}
+                            required={!currentWorkItem}
+                            class="w-full px-3 py-2 pr-12 border rounded-sm focus:outline-none focus:ring-2 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm {fieldErrors.subject
+                                ? 'border-red-500 focus:ring-red-500'
+                                : 'border-zinc-300 focus:ring-zinc-500'}"
+                            placeholder="Geef een onderwerp voor deze taak..."
+                            maxlength="255"
+                            aria-invalid={!!fieldErrors.subject}
+                            aria-describedby={fieldErrors.subject
+                                ? "subject-error"
+                                : undefined}
+                        />
+                        <span
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold pointer-events-none {subject.length >
+                            40
+                                ? 'text-red-600'
+                                : 'text-zinc-600'}">{subject.length}/55</span
+                        >
+                    </div>
+                    {#if fieldErrors.subject}
+                        <p
+                            id="subject-error"
+                            class="mt-1 text-sm text-red-600"
+                            role="alert"
+                        >
+                            {fieldErrors.subject}
+                        </p>
+                    {/if}
+                </div>
+
+                <!-- Status and Kanban Status Button Groups in one row -->
+                <div class="grid grid-cols-2 gap-0">
+                    <div>
+                        <div
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Status
+                        </div>
+                        <ButtonGroup size="sm">
+                            <Button
+                                type="button"
+                                variant={status === "backlog"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => {
+                                    status = "backlog";
+                                    kanbanStatus = "backlog";
+                                }}
+                            >
+                                Backlog
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={status === "gepland"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => {
+                                    status = "gepland";
+                                    kanbanStatus = "gepland";
+                                }}
+                            >
+                                Gepland
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={status === "ad-hoc"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => {
+                                    status = "ad-hoc";
+                                    kanbanStatus = "gepland";
+                                }}
+                            >
+                                Ad-hoc
+                            </Button>
+                        </ButtonGroup>
+                    </div>
+
+                    <div>
+                        <div
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Kanban status
+                        </div>
+                        <ButtonGroup size="sm" class="w-full">
+                            <Button
+                                type="button"
+                                variant={kanbanStatus === "backlog"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => {
+                                    kanbanStatus = "backlog";
+                                    status = "backlog";
+                                }}
+                            >
+                                Backlog
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={kanbanStatus === "gepland"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => (kanbanStatus = "gepland")}
+                            >
+                                Gepland
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={kanbanStatus === "mee_bezig"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => (kanbanStatus = "mee_bezig")}
+                            >
+                                Mee bezig
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={kanbanStatus === "in_review"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => (kanbanStatus = "in_review")}
+                            >
+                                In review
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={kanbanStatus === "afgerond"
+                                    ? "default"
+                                    : "secondary"}
+                                class="button-group-item"
+                                onclick={() => (kanbanStatus = "afgerond")}
+                            >
+                                Afgerond
+                            </Button>
+                        </ButtonGroup>
+                    </div>
+                </div>
+
+                <!-- Toegewezen aan, Due date, Uren, Priority in one row -->
+                <div class="grid grid-cols-4 gap-4 items-end">
+                    <div role="group" aria-label="Toegewezen aan">
+                        <div
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Toegewezen aan
+                        </div>
+                        <Select
+                            options={userOptions}
+                            selectedValues={assigneeIds}
+                            multiple={true}
+                            searchable={true}
+                            onchange={(values) => {
+                                console.log(
+                                    "[BacklogDrawer] Assignee Select onchange called with values:",
+                                    values,
+                                );
+                                assigneeIds = (values as string[]) || [];
+                                console.log(
+                                    "[BacklogDrawer] assigneeIds updated to:",
+                                    $state.snapshot(assigneeIds),
+                                );
+                            }}
+                            placeholder="Selecteer gebruikers..."
+                            disabled={isComponentLoading}
+                            loading={false}
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="due-date"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Due date
+                        </label>
+                        <DatePicker
+                            id="due-date"
+                            bind:value={dueDate}
+                            min={parentTaskMinDate ?? undefined}
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="uren"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Uren
+                        </label>
+                        <input
+                            id="uren"
+                            type="number"
+                            bind:value={uren}
+                            min="0"
+                            step="0.1"
+                            disabled={isComponentLoading}
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-500 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm"
+                            placeholder="0.0"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            for="priority"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Prioriteit
+                        </label>
+                        <Select
+                            options={[
+                                { value: "laag", label: "Laag" },
+                                { value: "normaal", label: "Normaal" },
+                                { value: "hoog", label: "Hoog" },
+                            ]}
+                            bind:value={priority}
+                            placeholder="Selecteer prioriteit..."
+                        />
+                    </div>
+                </div>
+
+                <!-- Assignee labels (only show when more than 1 assignee) -->
+                {#if selectedAssigneeNames.length > 1}
+                    <div class="w-full flex flex-wrap gap-2 mt-2">
+                        {#each selectedAssigneeNames as name}
+                            <Label>{name}</Label>
+                        {/each}
+                    </div>
+                {/if}
+
+                <!-- Komt van (e-mailadres) and Project in one row -->
+                <div class="grid grid-cols-[1fr_1fr_auto] gap-4 items-end">
+                    <div>
+                        <label
+                            for="komt-van"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Komt van (e-mailadres)
+                        </label>
+                        <KomtVanInput
+                            id="komt-van"
+                            bind:value={komtVan}
+                            disabled={isComponentLoading}
+                            placeholder="email@example.com"
+                            maxSuggestions={10}
+                            onchange={(value) => {
+                                komtVan = value;
+                                clearFieldError("komt_van");
+                            }}
+                        />
+                        {#if fieldErrors.komt_van}
+                            <p
+                                id="komt-van-error"
+                                class="mt-1 text-sm text-red-600"
+                                role="alert"
+                            >
+                                {fieldErrors.komt_van}
+                            </p>
+                        {/if}
+                    </div>
+                    <div>
+                        <label
+                            for="project"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Project
+                        </label>
+                        <Select
+                            options={projectOptions}
+                            bind:value={selectedProjectId}
+                            placeholder="Selecteer project..."
+                        />
+                    </div>
+                    <div>
+                        <IconButton
+                            icon={Plus}
+                            variant="ghost"
+                            size="default"
+                            tooltip="Nieuw project toevoegen"
+                            tooltipPosition="left"
+                            onclick={handleOpenAddProjectModal}
+                        />
+                    </div>
+                </div>
+
+                <!-- Wat ga je doen -->
+                <div>
+                    <label
+                        for="wat-ga-je-doen"
+                        class="block text-sm font-medium text-zinc-900 mb-2"
+                    >
+                        Wat ga je doen
+                    </label>
+                    <textarea
+                        id="wat-ga-je-doen"
+                        bind:value={watGaJeDoen}
+                        rows="3"
+                        disabled={isComponentLoading}
+                        class="w-full px-3 py-2 border border-zinc-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-500 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm"
+                        placeholder="Beschrijf wat je gaat doen..."
+                    ></textarea>
+                </div>
+
+                <!-- Waarom doe je het and Voor wie is het in one row -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label
+                            for="waarom"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Waarom doe je het
+                        </label>
+                        <textarea
+                            id="waarom"
+                            bind:value={waarom}
+                            rows="2"
+                            disabled={isComponentLoading}
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-500 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm"
+                            placeholder="Leg uit waarom deze taak belangrijk is..."
+                        ></textarea>
+                    </div>
+                    <div>
+                        <label
+                            for="voor-wie"
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Voor wie is het
+                        </label>
+                        <textarea
+                            id="voor-wie"
+                            bind:value={voorWie}
+                            rows="2"
+                            disabled={isComponentLoading}
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-500 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm"
+                            placeholder="Voor wie doe je dit?"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div role="group" aria-label="Tags">
+                    <div class="block text-sm font-medium text-zinc-900 mb-2">
+                        Tags
+                    </div>
+                    <TagInput bind:tags />
+                    {#if selectedCaseStepId && !tags.includes("ad-hoc")}
+                        <p class="mt-1 text-xs text-zinc-600">
+                            💡 De tag "ad-hoc" wordt automatisch toegevoegd
+                            omdat deze taak gekoppeld is aan een case.
+                        </p>
+                    {/if}
+                </div>
+
+                <!-- Case Linking (Optional) -->
+                <div class="space-y-4 pt-2 border-t border-zinc-200">
+                    <div role="group" aria-label="Case Koppeling">
+                        <div
+                            class="block text-sm font-medium text-zinc-900 mb-2"
+                        >
+                            Case Koppeling <span class="text-xs text-zinc-500"
+                                >(Optioneel)</span
+                            >
+                        </div>
+                        <p class="text-xs text-zinc-600 mb-2">
+                            Om een taak aan een case te koppelen, selecteer
+                            eerst een case en vervolgens een stap binnen die
+                            case.
+                        </p>
+                        <div class="flex gap-2">
+                            <div class="flex-1">
+                                <SearchInput
+                                    bind:value={caseSearchQuery}
+                                    suggestions={caseSuggestions}
+                                    placeholder="Zoek een case..."
+                                    showSuggestions={true}
+                                    showSearchScope={false}
+                                    maxSuggestions={10}
+                                    onchange={handleCaseSearch}
+                                    disabled={isComponentLoading}
+                                    class="w-full"
+                                />
+                            </div>
+                            {#if selectedCaseId}
+                                <button
+                                    type="button"
+                                    onclick={() => {
+                                        selectedCaseId = null;
+                                        selectedCaseName = "";
+                                        selectedCaseStepId = null;
+                                        selectedParentTaskId = null;
+                                        caseSearchQuery = "";
+                                        caseSteps = [];
+                                        stepTasks = [];
+                                    }}
+                                    class="px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 border border-zinc-300 rounded-sm hover:bg-zinc-50 transition-colors"
+                                    title="Koppeling verwijderen"
+                                >
+                                    ✕
+                                </button>
+                            {/if}
+                        </div>
+                    </div>
+
+                    {#if selectedCaseId}
+                        <div>
+                            <label
+                                for="case-step"
+                                class="block text-sm font-medium text-zinc-900 mb-2"
+                            >
+                                Stap <span
+                                    class="text-xs text-orange-600 font-semibold"
+                                    >(Verplicht om te koppelen)</span
+                                >
+                            </label>
+                            {#if caseSteps.length > 0}
+                                <Select
+                                    options={[
+                                        {
+                                            value: "",
+                                            label: "Selecteer een stap...",
+                                        },
+                                        ...stepOptions,
+                                    ]}
+                                    value={selectedCaseStepId
+                                        ? String(selectedCaseStepId)
+                                        : ""}
+                                    onchange={handleStepSelected}
+                                    placeholder="Selecteer stap..."
+                                    loading={false}
+                                    disabled={isComponentLoading}
+                                />
+                                {#if selectedCaseId && !selectedCaseStepId}
+                                    <p class="mt-1 text-xs text-orange-600">
+                                        ⚠️ Selecteer een stap om de case
+                                        koppeling op te slaan
+                                    </p>
+                                {/if}
+                            {:else}
+                                <p class="text-sm text-zinc-500 italic">
+                                    Deze case heeft nog geen stappen.
+                                </p>
+                            {/if}
+                        </div>
+                    {/if}
+
+                    {#if selectedCaseStepId && stepTasks.length > 0}
+                        <div>
+                            <label
+                                for="parent-task"
+                                class="block text-sm font-medium text-zinc-900 mb-2"
+                            >
+                                Gerelateerde Taak <span
+                                    class="text-xs text-zinc-500"
+                                    >(Optioneel)</span
+                                >
+                            </label>
+                            <Select
+                                options={[
+                                    {
+                                        value: "",
+                                        label: "Geen taak geselecteerd",
+                                    },
+                                    ...taskOptions,
+                                ]}
+                                value={selectedParentTaskId
+                                    ? String(selectedParentTaskId)
+                                    : ""}
+                                onchange={handleTaskSelected}
+                                placeholder="Selecteer taak..."
+                                loading={false}
+                                disabled={isComponentLoading}
+                            />
+                        </div>
+                    {/if}
+                </div>
+
+                <!-- Attachments -->
+                <div role="group" aria-label="Bijlagen">
+                    <div class="block text-sm font-medium text-zinc-900 mb-2">
+                        Bijlagen
+                    </div>
+                    {#key fileUploadKey}
+                        <FileUpload
+                            variant="drag-drop"
+                            multiple
+                            onchange={handleFileUpload}
+                            disabled={isComponentLoading}
+                        />
+                    {/key}
+
+                    {#if attachments.length > 0}
+                        <div class="mt-4 space-y-2">
+                            {#each attachments as attachment}
+                                <div
+                                    class="flex items-center justify-between rounded-md border border-zinc-200 bg-white px-3 py-2"
+                                >
+                                    <a
+                                        href={attachment.url}
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="flex items-center gap-2 flex-1 min-w-0"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                            class="size-5 text-zinc-400 shrink-0"
+                                        >
+                                            <path
+                                                d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625Z"
+                                            />
+                                        </svg>
+                                        <div class="flex-1 min-w-0">
+                                            <p
+                                                class="text-sm font-medium text-zinc-900 truncate font-aspekta"
+                                            >
+                                                {attachment.name}
+                                            </p>
+                                            {#if attachment.size !== null}
+                                                <p
+                                                    class="text-xs text-zinc-500 font-inter"
+                                                >
+                                                    {formatFileSize(
+                                                        attachment.size,
+                                                    )}
+                                                </p>
+                                            {/if}
+                                        </div>
+                                    </a>
+                                    <button
+                                        type="button"
+                                        onclick={() =>
+                                            removeAttachment(attachment.url)}
+                                        class="ml-2 rounded-md p-1 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100"
+                                        aria-label="Verwijder bestand"
+                                    >
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            class="size-4"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            {/each}
+                        </div>
+                    {/if}
+                </div>
+
+                <!-- Bijdrage aan resultaten (1-5 sterren) -->
+                <div>
+                    <label
+                        for="relevantie"
+                        class="block text-sm font-medium text-zinc-900 mb-2"
+                    >
+                        Bijdrage aan resultaten
+                    </label>
+                    <Rating
+                        rating={relevantie || 0}
+                        max={5}
+                        onchange={(r) => (relevantie = r)}
+                        size="default"
+                    />
+                </div>
+            </form>
+
+            <!-- Footer with Submit Buttons (Fixed) -->
+            <div class="flex-shrink-0 pt-4 border-t border-zinc-200 bg-white">
+                <div class="flex justify-between items-center">
+                    <!-- Action buttons -->
+                    <div class="flex gap-3">
+                        <Button
+                            type="submit"
+                            form="workitem-form"
+                            disabled={isComponentLoading ||
+                                deleting ||
+                                isCaseLinkingIncomplete ||
+                                isSubmitting}
+                        >
+                            {#if isSubmitting && !isSubmittingAndAdding}
+                                <div class="flex items-center gap-2">
+                                    <Spinner size="sm" />
+                                    <span
+                                        >{currentWorkItem && !isDuplicatedItem
+                                            ? "Bijwerken..."
+                                            : "Sla op..."}</span
+                                    >
+                                </div>
+                            {:else}
+                                {currentWorkItem && !isDuplicatedItem
+                                    ? "Bijwerken"
+                                    : "Sla op"}
+                            {/if}
+                        </Button>
+                        {#if !currentWorkItem}
+                            <button
+                                type="button"
+                                onclick={handleSubmitAndAddAnother}
+                                disabled={isComponentLoading ||
+                                    deleting ||
+                                    isCaseLinkingIncomplete ||
+                                    isSubmitting ||
+                                    isSubmittingAndAdding}
+                                class="px-3 py-2 bg-zinc-100 text-zinc-900 rounded-sm shadow-xs hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                                aria-label="Aanmaken en nog een toevoegen"
+                                title="Aanmaken en nog een toevoegen"
+                            >
+                                {#if isSubmittingAndAdding}
+                                    <Spinner size="sm" />
+                                {:else}
+                                    <Plus size={16} />
+                                {/if}
+                            </button>
+                        {/if}
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            onclick={handleClose}
+                            disabled={isComponentLoading || deleting}
+                        >
+                            Annuleren
+                        </Button>
+                    </div>
+                    <!-- Delete button (only show when editing existing work item, aligned right, icon only) -->
+                    <div>
+                        {#if currentWorkItem}
+                            <button
+                                type="button"
+                                onclick={handleDeleteClick}
+                                disabled={isComponentLoading || deleting}
+                                class="px-3 py-2 bg-red-600 text-white rounded-sm shadow-xs hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                                aria-label="Verwijderen"
+                            >
+                                <Trash2 size={16} />
+                            </button>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        {/if}
+    </div>
+</Drawer>
+
+<!-- TinyTalk Chat Drawer (left side) -->
+<Drawer
+    open={chatOpen}
+    position="left"
+    class="w-[40%]"
+    showBackdrop={false}
+    onclose={() => (chatOpen = false)}
+>
+    <TinyTalkChat
+        open={chatOpen}
+        formSelector="#workitem-form"
+        onFillForm={handleFillForm}
+        onclose={() => (chatOpen = false)}
+        class="h-full"
+    />
+</Drawer>
+
+<!-- Add Project Modal -->
+<Modal
+    bind:open={addProjectModalOpen}
+    title="Nieuw Project Aanmaken"
+    size="md"
+    onclose={handleCloseAddProjectModal}
+>
+    <form
+        onsubmit={(e) => {
+            e.preventDefault();
+            handleCreateProject();
+        }}
+        class="space-y-4"
+    >
+        {#if projectError}
+            <div
+                class="p-3 bg-red-50 border border-red-200 rounded-sm text-red-700 text-sm"
+            >
+                {projectError}
+            </div>
+        {/if}
+
+        <div>
+            <label
+                for="project-name"
+                class="block text-sm font-medium text-zinc-900 mb-2"
+            >
+                Projectnaam <span class="text-red-500">*</span>
+            </label>
+            <input
+                id="project-name"
+                type="text"
+                bind:value={projectName}
+                required
+                disabled={creatingProject}
+                class="w-full px-3 py-2 border border-zinc-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-500 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm"
+                placeholder="bijv. Website Redesign"
+            />
+        </div>
+
+        <div>
+            <label
+                for="project-description"
+                class="block text-sm font-medium text-zinc-900 mb-2"
+            >
+                Beschrijving
+            </label>
+            <textarea
+                id="project-description"
+                bind:value={projectDescription}
+                rows="4"
+                disabled={creatingProject}
+                class="w-full px-3 py-2 border border-zinc-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-zinc-500 disabled:bg-zinc-100 disabled:cursor-not-allowed text-sm"
+                placeholder="Beschrijf het doel en de scope van dit project..."
+            ></textarea>
+        </div>
+
+        <div class="pt-4 border-t border-zinc-200 flex gap-3 justify-end">
+            <Button
+                type="button"
+                variant="secondary"
+                onclick={handleCloseAddProjectModal}
+                disabled={creatingProject}
+            >
+                Annuleren
+            </Button>
+            <Button type="submit" disabled={creatingProject}>
+                {#if creatingProject}
+                    <div class="flex items-center gap-2">
+                        <span>Bezig...</span>
+                    </div>
+                {:else}
+                    Project Aanmaken
+                {/if}
+            </Button>
+        </div>
+    </form>
+</Modal>
+
+<!-- Delete Confirmation Modal -->
+<Modal
+    bind:open={deleteModalOpen}
+    title="Work item verwijderen"
+    size="md"
+    closeOnBackdropClick={false}
+    loading={deleting}
+>
+    <div class="space-y-4">
+        <p class="text-zinc-600">
+            Weet u zeker dat u dit work item wilt verwijderen?
+        </p>
+        <p class="text-sm text-zinc-500">
+            Deze actie kan niet ongedaan worden gemaakt.
+        </p>
+        <div class="pt-4 border-t border-zinc-200 flex gap-3 justify-end">
+            <Button
+                variant="secondary"
+                onclick={handleCancelDelete}
+                disabled={deleting}
+            >
+                Annuleren
+            </Button>
+            <button
+                onclick={handleConfirmDelete}
+                disabled={deleting}
+                class="px-4 py-2 bg-red-600 text-white rounded-sm shadow-xs hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                {deleting ? "Verwijderen..." : "Verwijderen"}
+            </button>
+        </div>
+    </div>
+</Modal>

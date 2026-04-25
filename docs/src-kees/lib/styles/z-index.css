@@ -1,0 +1,62 @@
+/**
+ * Z-Index Scale
+ * 
+ * Defines a consistent z-index scale for the application.
+ * Use these custom properties or Tailwind classes to maintain proper layering.
+ * 
+ * Scale:
+ * - z-0 (0): Default/base layer
+ * - z-10 (10): Small UI elements (badges, focus states, close buttons)
+ * - z-20 (20): Floating action buttons, page-specific overlays
+ * - z-30 (30): Sticky header/navigation
+ * - z-40 (40): Dropdowns, popovers, date pickers, select menus
+ * - z-50 (50): Toasts, notifications (legacy, use z-toast instead)
+ * - z-drawer (100): Drawer backdrops and content (base overlay)
+ * - z-toast (105): Toasts, notifications (above drawers)
+ * - z-modal (110): Modal backdrops and content (higher than drawer so modals can appear on top of drawers)
+ * - z-tooltip (120): Tooltips (highest - always visible)
+ */
+
+:root {
+	/* Base layers */
+	--z-base: 0;
+	--z-10: 10;
+	--z-20: 20;
+	--z-30: 30;
+	--z-40: 40;
+	--z-50: 50;
+	
+	/* Overlay layers */
+	--z-drawer: 100;
+	--z-drawer-backdrop: 99;
+	--z-toast: 105;
+	--z-modal: 110;
+	--z-modal-backdrop: 109;
+	--z-tooltip: 120;
+}
+
+/* Utility classes for custom z-index values */
+.z-modal {
+	z-index: var(--z-modal);
+}
+
+.z-modal-backdrop {
+	z-index: var(--z-modal-backdrop);
+}
+
+.z-drawer {
+	z-index: var(--z-drawer);
+}
+
+.z-drawer-backdrop {
+	z-index: var(--z-drawer-backdrop);
+}
+
+.z-toast {
+	z-index: var(--z-toast);
+}
+
+.z-tooltip {
+	z-index: var(--z-tooltip);
+}
+

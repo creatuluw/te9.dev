@@ -1,0 +1,790 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=PT+Mono&display=fallback")
+layer(base);
+@import url("https://fonts.googleapis.com/css2?family=Bokor&family=Doto:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap")
+layer(base);
+
+@layer base {
+    @font-face {
+        font-family: "Aspekta";
+        font-weight: 500;
+        font-style: normal;
+        font-display: fallback;
+        src: url("/fonts/Aspekta-500.woff2") format("woff2");
+    }
+    @font-face {
+        font-family: "Aspekta";
+        font-weight: 650;
+        font-style: normal;
+        font-display: fallback;
+        src: url("/fonts/Aspekta-650.woff2") format("woff2");
+    }
+}
+
+@import "tailwindcss";
+@import "./lib/styles/z-index.css";
+@import "./lib/styles/view-transitions.css";
+
+@plugin "@tailwindcss/forms" {
+    strategy: base;
+}
+
+/* Custom variant for tablet screens (768px - 1399px, ≤13 inch portrait + landscape) */
+@custom-variant tablet (@media (width >= 768px) and (width < 1400px));
+
+/* Custom variant for landscape tablets only (1024px - 1399px) */
+@custom-variant tablet-landscape (@media (width >= 1024px) and (width < 1400px));
+
+/* Theme CSS Variables - Set by applyTheme() function */
+:root {
+    /* Default theme values (fallback) */
+    --theme-primary: #3b82f6;
+    --theme-secondary: #6366f1;
+    --theme-background: #ffffff;
+    --theme-surface: #fafafa;
+    --theme-text-primary: #18181b;
+    --theme-text-secondary: #52525b;
+    --theme-text-muted: #a1a1aa;
+    --theme-border: #e4e4e7;
+    --theme-focus: #fe773c;
+    --theme-error: #ef4444;
+    --theme-success: #10b981;
+    --theme-warning: #f59e0b;
+    --theme-font-heading: Aspekta, sans-serif;
+    --theme-font-body: Inter, sans-serif;
+    --theme-font-mono: PT Mono, monospace;
+    --theme-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --theme-shadow-sm:
+        0 1px 2px 0 rgb(0 0 0 / 0.05), 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+@theme {
+    --font-inter: Inter, sans-serif;
+    --font-aspekta: Aspekta, sans-serif;
+    --font-pt-mono: PT Mono, monospace;
+
+    /* Theme-aware color variables - use theme variables with fallbacks */
+    --color-primary: var(--theme-primary, #3b82f6);
+    --color-background: var(--theme-background, #ffffff);
+    --color-surface: var(--theme-surface, #fafafa);
+    --color-text-primary: var(--theme-text-primary, #18181b);
+    --color-text-secondary: var(--theme-text-secondary, #52525b);
+    --color-text-muted: var(--theme-text-muted, #a1a1aa);
+    --color-border: var(--theme-border, #e4e4e7);
+    --color-focus: var(--theme-focus, #fe773c);
+
+    --spacing: 0.25rem;
+
+    /* Custom text sizes with line-height and letter-spacing */
+    --text-xs: 0.75rem;
+    --text-xs--line-height: 1.5;
+    --text-sm: 0.875rem;
+    --text-sm--line-height: 1.5715;
+    --text-base: 1rem;
+    --text-base--line-height: 1.5;
+    --text-base--letter-spacing: -0.01em;
+    --text-lg: 1.125rem;
+    --text-lg--line-height: 1.5;
+    --text-lg--letter-spacing: -0.01em;
+    --text-xl: 1.25rem;
+    --text-xl--line-height: 1.5;
+    --text-xl--letter-spacing: -0.017em;
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: 1.415;
+    --text-2xl--letter-spacing: -0.017em;
+    --text-3xl: 2rem;
+    --text-3xl--line-height: 1.3125;
+    --text-3xl--letter-spacing: -0.017em;
+    --text-4xl: 2.5rem;
+    --text-4xl--line-height: 1.25;
+    --text-4xl--letter-spacing: -0.017em;
+    --text-5xl: 3.25rem;
+    --text-5xl--line-height: 1.2;
+    --text-5xl--letter-spacing: -0.017em;
+    --text-6xl: 3.75rem;
+    --text-6xl--line-height: 1.1666;
+    --text-6xl--letter-spacing: -0.017em;
+}
+
+/*
+  Border color compatibility with Tailwind v3
+  The default border color changed to `currentColor` in Tailwind CSS v4,
+  so we maintain v3 compatibility here.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--theme-border, var(--color-gray-200, currentColor));
+    }
+
+    /* Apply theme fonts */
+    body {
+        font-family: var(--theme-font-body, Inter, sans-serif);
+        background-color: var(--theme-background);
+        color: var(--theme-text-primary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--theme-font-heading, Aspekta, sans-serif);
+        color: var(--theme-text-primary);
+    }
+
+    code,
+    pre {
+        font-family: var(--theme-font-mono, PT Mono, monospace);
+    }
+
+    /* Make sure theme variables propagate */
+    * {
+        border-color: var(--theme-border);
+    }
+
+    /* Override common hardcoded colors with theme variables */
+    /* This helps components that use bg-white, text-zinc-900, etc. */
+    /* Note: Using attribute selectors to match Tailwind classes */
+    [class*="bg-white"] {
+        background-color: var(--theme-background) !important;
+    }
+
+    [class*="bg-zinc-50"] {
+        background-color: var(--theme-surface) !important;
+    }
+
+    [class*="text-zinc-900"] {
+        color: var(--theme-text-primary) !important;
+    }
+
+    [class*="text-zinc-600"],
+    [class*="text-zinc-700"] {
+        color: var(--theme-text-secondary) !important;
+    }
+
+    [class*="text-zinc-500"],
+    [class*="text-zinc-400"] {
+        color: var(--theme-text-muted) !important;
+    }
+
+    [class*="border-zinc-200"],
+    [class*="border-zinc-300"] {
+        border-color: var(--theme-border) !important;
+    }
+
+    /* Catalyst theme specific styles - Neo-brutalist design */
+    /* Thick black borders for all bordered elements */
+    [data-theme="catalyst"] [class*="border"] {
+        border-width: 4px !important;
+        border-color: #000000 !important;
+    }
+
+    /* Thick borders and offset shadows for cards and containers */
+    [data-theme="catalyst"] [class*="rounded-lg"],
+    [data-theme="catalyst"] [class*="bg-white"] {
+        border: 4px solid #000000 !important;
+        box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1) !important;
+    }
+
+    /* Make headings ultra-bold and uppercase */
+    [data-theme="catalyst"] h1,
+    [data-theme="catalyst"] h2,
+    [data-theme="catalyst"] h3,
+    [data-theme="catalyst"] h4 {
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: -0.02em !important;
+        color: #000000 !important;
+    }
+
+    /* Bold text for important content (not all divs/span) */
+    [data-theme="catalyst"] [class*="font-semibold"],
+    [data-theme="catalyst"] [class*="font-bold"],
+    [data-theme="catalyst"] [class*="font-medium"] {
+        font-weight: 900 !important;
+        color: #000000 !important;
+    }
+
+    /* Buttons with thick borders and offset shadows */
+    [data-theme="catalyst"]
+        button:not([class*="border-0"]):not([class*="border-transparent"]),
+    [data-theme="catalyst"] [role="button"]:not([class*="border-0"]) {
+        border: 4px solid #000000 !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1) !important;
+    }
+
+    /* Remove subtle shadows, use offset shadows */
+    [data-theme="catalyst"] [class*="shadow-xs"],
+    [data-theme="catalyst"] [class*="shadow-sm"] {
+        box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1) !important;
+    }
+
+    /* Make body text bolder but not everything */
+    [data-theme="catalyst"] body {
+        font-weight: 700 !important;
+    }
+
+    /* PGlite theme specific styles - Dark mode with yellow accents */
+    /* Ensure proper contrast for dark backgrounds */
+    [data-theme="pglite"] [class*="bg-white"] {
+        background-color: var(--theme-surface) !important;
+    }
+
+    [data-theme="pglite"] [class*="bg-zinc-50"] {
+        background-color: var(--theme-surface) !important;
+    }
+
+    [data-theme="pglite"] [class*="bg-zinc-100"] {
+        background-color: var(--theme-surface) !important;
+    }
+
+    /* Yellow accents for buttons and links */
+    [data-theme="pglite"] [class*="bg-blue-500"],
+    [data-theme="pglite"] [class*="bg-blue-600"],
+    [data-theme="pglite"] [class*="bg-primary"] {
+        background-color: var(--theme-primary) !important;
+        color: #000000 !important;
+    }
+
+    [data-theme="pglite"] [class*="text-blue-500"],
+    [data-theme="pglite"] [class*="text-blue-600"] {
+        color: var(--theme-primary) !important;
+    }
+
+    /* Focus states use yellow */
+    [data-theme="pglite"] *:focus-visible {
+        outline-color: var(--theme-primary) !important;
+        outline-offset: 2px;
+    }
+
+    /* Subtle borders for dark theme */
+    [data-theme="pglite"] [class*="border-zinc-200"],
+    [data-theme="pglite"] [class*="border-zinc-300"] {
+        border-color: var(--theme-border) !important;
+    }
+
+    /* Cards and surfaces should have subtle dark background */
+    [data-theme="pglite"] [class*="rounded-lg"],
+    [data-theme="pglite"] [class*="rounded-md"] {
+        background-color: var(--theme-surface) !important;
+        border-color: var(--theme-border) !important;
+    }
+
+    /* Shadows should be darker/more visible on dark background */
+    [data-theme="pglite"] [class*="shadow-xs"],
+    [data-theme="pglite"] [class*="shadow-sm"] {
+        box-shadow:
+            0 1px 3px 0 rgb(0 0 0 / 0.5),
+            0 1px 2px 0 rgb(0 0 0 / 0.3) !important;
+    }
+
+    /* Planet theme specific styles - ASCII-like, text-based design inspired by planetscale.com/blog */
+    /* Remove all rounded corners - ASCII-like feel */
+    [data-theme="planet"] [class*="rounded"],
+    [data-theme="planet"] [class*="rounded-lg"],
+    [data-theme="planet"] [class*="rounded-md"],
+    [data-theme="planet"] [class*="rounded-sm"],
+    [data-theme="planet"] [class*="rounded-full"],
+    [data-theme="planet"] [class*="rounded-xl"],
+    [data-theme="planet"] button:not([class*="rounded-0"]),
+    [data-theme="planet"] [role="button"]:not([class*="rounded-0"]),
+    [data-theme="planet"] input:not([class*="rounded-0"]),
+    [data-theme="planet"] textarea:not([class*="rounded-0"]),
+    [data-theme="planet"] select:not([class*="rounded-0"]) {
+        border-radius: 0 !important;
+    }
+
+    /* Remove all shadows - simple styling */
+    [data-theme="planet"] [class*="shadow"],
+    [data-theme="planet"] [class*="shadow-xs"],
+    [data-theme="planet"] [class*="shadow-sm"],
+    [data-theme="planet"] [class*="shadow-md"],
+    [data-theme="planet"] [class*="shadow-lg"] {
+        box-shadow: none !important;
+    }
+
+    /* Ensure clean white backgrounds */
+    [data-theme="planet"] [class*="bg-white"] {
+        background-color: var(--theme-background) !important;
+    }
+
+    [data-theme="planet"] [class*="bg-zinc-50"] {
+        background-color: var(--theme-surface) !important;
+    }
+
+    /* Monospace fonts for ASCII-like feel - applied via theme variables */
+    [data-theme="planet"] body {
+        font-family: var(--theme-font-body) !important;
+        letter-spacing: 0 !important;
+    }
+
+    [data-theme="planet"] h1,
+    [data-theme="planet"] h2,
+    [data-theme="planet"] h3,
+    [data-theme="planet"] h4,
+    [data-theme="planet"] h5,
+    [data-theme="planet"] h6 {
+        font-family: var(--theme-font-heading) !important;
+    }
+
+    /* Links should use orange on hover (matching PlanetScale design) */
+    [data-theme="planet"] a:hover {
+        color: var(--theme-secondary) !important;
+    }
+
+    [data-theme="planet"] [class*="hover:text-orange"] {
+        color: var(--theme-secondary) !important;
+    }
+
+    /* Code blocks and pre tags should have dark background with light text (like ASCII art) */
+    [data-theme="planet"] pre,
+    [data-theme="planet"] code {
+        background-color: #111111 !important;
+        color: #ffffff !important;
+        border-radius: 0 !important;
+    }
+
+    [data-theme="planet"] pre[class*="bg-primary"] {
+        background-color: #111111 !important;
+        color: #ffffff !important;
+    }
+
+    /* Focus states use orange */
+    [data-theme="planet"] *:focus-visible {
+        outline-color: var(--theme-focus) !important;
+        outline-offset: 2px;
+        outline-style: solid !important;
+        outline-width: 2px !important;
+    }
+
+    /* Simple borders - no rounded corners */
+    [data-theme="planet"] [class*="border-zinc-200"],
+    [data-theme="planet"] [class*="border-zinc-300"],
+    [data-theme="planet"] [class*="border"] {
+        border-color: var(--theme-border) !important;
+        border-radius: 0 !important;
+    }
+
+    /* Buttons and interactive elements - no rounded corners, simple borders */
+    [data-theme="planet"] button,
+    [data-theme="planet"] [role="button"],
+    [data-theme="planet"] .btn,
+    [data-theme="planet"] .btn-sm,
+    [data-theme="planet"] [class*="bg-primary"]:not(pre):not(code) {
+        background-color: var(--theme-primary) !important;
+        color: #ffffff !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Invert text on dark backgrounds - ensure white text on dark backgrounds */
+    [data-theme="planet"]
+        [class*="bg-primary"]:not(pre):not(code):not(button):not(
+            [role="button"]
+        ):not(.btn),
+    [data-theme="planet"] [class*="bg-zinc-900"],
+    [data-theme="planet"] [class*="bg-zinc-800"],
+    [data-theme="planet"] [class*="bg-gray-900"],
+    [data-theme="planet"] [class*="bg-gray-800"],
+    [data-theme="planet"] [class*="bg-black"] {
+        color: #ffffff !important;
+    }
+
+    /* Invert ALL text elements on dark backgrounds - comprehensive rule */
+    [data-theme="planet"] [class*="bg-primary"]:not(pre):not(code) *,
+    [data-theme="planet"] [class*="bg-zinc-900"] *,
+    [data-theme="planet"] [class*="bg-zinc-800"] *,
+    [data-theme="planet"] [class*="bg-gray-900"] *,
+    [data-theme="planet"] [class*="bg-gray-800"] *,
+    [data-theme="planet"] [class*="bg-black"] * {
+        color: #ffffff !important;
+    }
+
+    /* Override specific text color classes on dark backgrounds */
+    [data-theme="planet"]
+        [class*="bg-primary"]:not(pre):not(code)
+        [class*="text-zinc"],
+    [data-theme="planet"]
+        [class*="bg-primary"]:not(pre):not(code)
+        [class*="text-gray"],
+    [data-theme="planet"] [class*="bg-zinc-900"] [class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-zinc-900"] [class*="text-gray"],
+    [data-theme="planet"] [class*="bg-zinc-800"] [class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-zinc-800"] [class*="text-gray"],
+    [data-theme="planet"] [class*="bg-gray-900"] [class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-gray-900"] [class*="text-gray"],
+    [data-theme="planet"] [class*="bg-gray-800"] [class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-gray-800"] [class*="text-gray"],
+    [data-theme="planet"] [class*="bg-black"] [class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-black"] [class*="text-gray"] {
+        color: #ffffff !important;
+    }
+
+    /* Buttons with secondary variant on dark backgrounds need white text */
+    [data-theme="planet"]
+        [class*="bg-primary"]:not(pre):not(code)
+        button[class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-zinc-900"] button[class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-zinc-800"] button[class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-gray-900"] button[class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-gray-800"] button[class*="text-zinc"],
+    [data-theme="planet"] [class*="bg-black"] button[class*="text-zinc"] {
+        color: #ffffff !important;
+    }
+
+    /* Theme selector button on dark backgrounds */
+    [data-theme="planet"] [class*="bg-primary"] .theme-selector-dropdown button,
+    [data-theme="planet"]
+        [class*="bg-zinc-900"]
+        .theme-selector-dropdown
+        button,
+    [data-theme="planet"]
+        [class*="bg-zinc-800"]
+        .theme-selector-dropdown
+        button,
+    [data-theme="planet"]
+        [class*="bg-gray-900"]
+        .theme-selector-dropdown
+        button,
+    [data-theme="planet"]
+        [class*="bg-gray-800"]
+        .theme-selector-dropdown
+        button,
+    [data-theme="planet"] [class*="bg-black"] .theme-selector-dropdown button {
+        color: #ffffff !important;
+    }
+
+    /* Links on dark backgrounds should be white with orange hover */
+    [data-theme="planet"] [class*="bg-primary"]:not(pre):not(code) a,
+    [data-theme="planet"] [class*="bg-zinc-900"] a,
+    [data-theme="planet"] [class*="bg-zinc-800"] a,
+    [data-theme="planet"] [class*="bg-gray-900"] a,
+    [data-theme="planet"] [class*="bg-gray-800"] a,
+    [data-theme="planet"] [class*="bg-black"] a {
+        color: #ffffff !important;
+    }
+
+    [data-theme="planet"] [class*="bg-primary"]:not(pre):not(code) a:hover,
+    [data-theme="planet"] [class*="bg-zinc-900"] a:hover,
+    [data-theme="planet"] [class*="bg-zinc-800"] a:hover,
+    [data-theme="planet"] [class*="bg-gray-900"] a:hover,
+    [data-theme="planet"] [class*="bg-gray-800"] a:hover,
+    [data-theme="planet"] [class*="bg-black"] a:hover {
+        color: var(--theme-secondary) !important;
+    }
+
+    /* Exclude form inputs and select elements from text inversion */
+    [data-theme="planet"]
+        [class*="bg-primary"]:not(pre):not(code)
+        input:not([type="checkbox"]):not([type="radio"]),
+    [data-theme="planet"] [class*="bg-primary"]:not(pre):not(code) textarea,
+    [data-theme="planet"] [class*="bg-primary"]:not(pre):not(code) select,
+    [data-theme="planet"]
+        [class*="bg-zinc-900"]
+        input:not([type="checkbox"]):not([type="radio"]),
+    [data-theme="planet"] [class*="bg-zinc-900"] textarea,
+    [data-theme="planet"] [class*="bg-zinc-900"] select {
+        color: var(--theme-text-primary) !important;
+        background-color: var(--theme-background) !important;
+    }
+
+    /* Form inputs - no rounded corners */
+    [data-theme="planet"] input,
+    [data-theme="planet"] textarea,
+    [data-theme="planet"] select {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    /* Cards and containers - no rounded corners, simple borders, ensure light backgrounds */
+    [data-theme="planet"] [class*="card"],
+    [data-theme="planet"] [class*="Card"],
+    [data-theme="planet"] [role="article"],
+    [data-theme="planet"] [class*="panel"],
+    [data-theme="planet"] [class*="Panel"] {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background-color: var(--theme-background) !important;
+    }
+
+    /* Override any dark backgrounds that might be applied to cards */
+    [data-theme="planet"] [class*="card"][class*="bg-primary"],
+    [data-theme="planet"] [class*="Card"][class*="bg-primary"],
+    [data-theme="planet"] [class*="card"][class*="bg-zinc-900"],
+    [data-theme="planet"] [class*="Card"][class*="bg-zinc-900"],
+    [data-theme="planet"] [class*="card"][class*="bg-gray-900"],
+    [data-theme="planet"] [class*="Card"][class*="bg-gray-900"] {
+        background-color: var(--theme-background) !important;
+        color: var(--theme-text-primary) !important;
+    }
+
+    /* Trevor theme specific styles - Clean SaaS with bright yellow accents */
+    /* Ensure clean white backgrounds */
+    [data-theme="trevor"] [class*="bg-white"] {
+        background-color: var(--theme-background) !important;
+    }
+
+    [data-theme="trevor"] [class*="bg-zinc-50"] {
+        background-color: var(--theme-surface) !important;
+    }
+
+    /* Primary buttons should use bright yellow */
+    [data-theme="trevor"] [class*="bg-blue-500"],
+    [data-theme="trevor"] [class*="bg-blue-600"],
+    [data-theme="trevor"] [class*="bg-primary"]:not(pre):not(code) {
+        background-color: var(--theme-primary) !important;
+        color: var(--theme-text-primary) !important;
+        border-radius: 8px !important;
+    }
+
+    /* Text should use dark blue-grey */
+    [data-theme="trevor"] [class*="text-zinc-900"],
+    [data-theme="trevor"] [class*="text-zinc-800"] {
+        color: var(--theme-text-primary) !important;
+    }
+
+    [data-theme="trevor"] [class*="text-zinc-600"],
+    [data-theme="trevor"] [class*="text-zinc-700"] {
+        color: var(--theme-text-secondary) !important;
+    }
+
+    /* Focus states use yellow */
+    [data-theme="trevor"] *:focus-visible {
+        outline-color: var(--theme-focus) !important;
+        outline-offset: 2px;
+    }
+
+    /* Clean, subtle borders */
+    [data-theme="trevor"] [class*="border-zinc-200"],
+    [data-theme="trevor"] [class*="border-zinc-300"] {
+        border-color: var(--theme-border) !important;
+    }
+
+    /* Buttons should have rounded corners and yellow background */
+    [data-theme="trevor"] button[class*="bg-primary"]:not([class*="border-0"]),
+    [data-theme="trevor"] [role="button"][class*="bg-primary"] {
+        border-radius: 8px !important;
+        background-color: var(--theme-primary) !important;
+        color: var(--theme-text-primary) !important;
+        font-weight: 500 !important;
+    }
+
+    /* Clean shadows for minimal design */
+    [data-theme="trevor"] [class*="shadow-xs"],
+    [data-theme="trevor"] [class*="shadow-sm"] {
+        box-shadow:
+            0 1px 2px 0 rgb(0 0 0 / 0.05),
+            0 1px 3px 0 rgb(0 0 0 / 0.1) !important;
+    }
+}
+
+/* Alpine.js cloak support */
+[x-cloak=""] {
+    display: none;
+}
+
+/* Animations */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Component Styles */
+@layer components {
+    /* Animations */
+    .animate-fade-in-up {
+        animation: fade-in-up 500ms ease-out both;
+    }
+
+    /* Typography */
+    .h1 {
+        @apply text-5xl font-bold;
+    }
+
+    .h2 {
+        @apply text-4xl font-bold;
+    }
+
+    .h3 {
+        @apply text-3xl font-bold;
+    }
+
+    .h4 {
+        @apply text-2xl font-bold;
+    }
+
+    @media (width >= theme(--breakpoint-md)) {
+        .h1 {
+            @apply text-6xl;
+        }
+
+        .h2 {
+            @apply text-5xl;
+        }
+
+        .h3 {
+            @apply text-4xl;
+        }
+    }
+
+    /* Buttons */
+    .btn,
+    .btn-sm {
+        @apply text-sm font-medium inline-flex items-center justify-center border border-transparent rounded-md tracking-normal transition;
+    }
+
+    .btn {
+        @apply px-4 py-2;
+    }
+
+    .btn-sm {
+        @apply px-2 py-1;
+    }
+
+    /* Forms */
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+        -webkit-appearance: none;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-multiselect,
+    .form-select,
+    .form-checkbox,
+    .form-radio {
+        @apply border border-zinc-200 shadow-sm shadow-black/5 focus:ring-0 focus:ring-offset-0;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-multiselect,
+    .form-select,
+    .form-checkbox {
+        @apply rounded-sm;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-multiselect,
+    .form-select {
+        @apply bg-white text-zinc-600 text-sm px-4 py-2 focus:border-zinc-400;
+    }
+
+    .form-input,
+    .form-textarea {
+        @apply placeholder-zinc-400;
+    }
+
+    .form-select {
+        @apply pr-10;
+    }
+
+    .form-checkbox,
+    .form-radio {
+        @apply bg-white checked:bg-zinc-800 checked:border-transparent text-zinc-800 focus-visible:not-checked:border-zinc-400;
+    }
+
+    .form-checkbox {
+        @apply rounded-xs;
+    }
+
+    /* Utilities */
+    .shadow-xs {
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    }
+
+    .grab {
+        cursor: -webkit-grab !important;
+        cursor: grab !important;
+    }
+
+    .grab * {
+        cursor: -webkit-grab !important;
+        cursor: grab !important;
+    }
+
+    .grab button,
+    .grab button * {
+        cursor: pointer !important;
+    }
+
+    .grabbing {
+        cursor: -webkit-grabbing !important;
+        cursor: grabbing !important;
+    }
+
+    .grabbing * {
+        cursor: -webkit-grabbing !important;
+        cursor: grabbing !important;
+    }
+
+    .grabbing button,
+    .grabbing button * {
+        cursor: pointer !important;
+    }
+
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    /* Tablet optimizations (≤13 inch, 768px - 1399px)
+     * Covers both portrait (768-1023px) and landscape (1024-1399px)
+     * Targets: iPad 10.2", iPad Air, iPad Pro 11", iPad Pro 12.9", Xiaomi Pad 7
+     */
+    @media (min-width: 768px) and (max-width: 1399px) {
+        /* Drawers expand to 90vw on tablet */
+        [data-drawer] {
+            width: 90vw !important;
+            max-width: 90vw !important;
+        }
+
+        /* Main content containers expand to 98vw on tablet */
+        .container {
+            max-width: 98vw !important;
+        }
+
+        /* Card grids: cap at max 4 columns on tablet */
+        [class*="grid-cols-5"],
+        [class*="grid-cols-6"] {
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        }
+
+        /* Utility: show element only on landscape tablets (1024-1399px) */
+        .tablet-landscape-show {
+            display: flex !important;
+        }
+    }
+
+    /* Safe area padding for iPads/tablets (notch, status bar) */
+    header {
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
+    }
+
+    /* Safe area bottom padding for tablets with home indicator */
+    main {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+}

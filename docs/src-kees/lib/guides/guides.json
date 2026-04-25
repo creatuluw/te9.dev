@@ -1,0 +1,291 @@
+{
+  "/": {
+    "title": "Homepage - Handleiding",
+    "sections": [
+      {
+        "heading": "Overzicht",
+        "content": "De homepage is je centrale dashboard waar je een overzicht hebt van al je werk en snel toegang hebt tot belangrijke functies. Hier vind je navigatiekaarten, een Kanban-bord voor je planning, en verschillende drawers voor het beheren van je taken en instellingen."
+      },
+      {
+        "heading": "Navigatiekaarten",
+        "content": "Bovenaan de pagina staan drie navigatiekaarten die je snel toegang geven tot belangrijke functies:",
+        "items": [
+          "**Je gebruikersnaam**: Toegang tot je persoonlijke functies zoals Mijn backlog, Weekplanning, Mijn voorkeuren, Chat Assistant en Snelkoppelingen",
+          "**Backlog**: Overzicht van alle openstaande taken met het totaal aantal items en uren. Je kunt de backlog bekijken of nieuwe work items toevoegen",
+          "**Projecten**: Navigeer naar de projectenpagina om al je projecten te beheren"
+        ]
+      },
+      {
+        "heading": "Kanban-bord",
+        "content": "Het Kanban-bord toont al je werk items georganiseerd in kolommen op basis van status. Je kunt items verslepen tussen kolommen om de status te wijzigen. Bovenaan het bord kun je schakelen tussen 'Alleen mijn werk' en 'Alle werk' om te filteren welke items je ziet."
+      },
+      {
+        "heading": "Mijn Backlog",
+        "content": "Via de navigatiekaart met je gebruikersnaam kun je 'Mijn backlog' openen. Dit opent een drawer aan de rechterkant met al je toegewezen taken, gesorteerd op deadline. Je kunt weken selecteren in de wekelijkse statistieken om taken te filteren. Gebruik paginering om door grote aantallen taken te navigeren."
+      },
+      {
+        "heading": "Backlog Functionaliteiten",
+        "items": [
+          "**Weekselectie**: Klik op weken in de wekelijkse statistieken om taken te filteren op die specifieke weken",
+          "**Paginering**: Navigeer door pagina's met 15 taken per pagina",
+          "**Status wijzigen**: Gebruik de statusknoppen op taken om ze direct naar 'Gepland' of 'Ad-hoc' te verplaatsen",
+          "**Bewerken**: Klik op een taakkaart om deze te bewerken of op het bewerkingsicoon voor snelle aanpassingen",
+          "**Weekplanning**: Klik op de 'Weekplanning' knop om naar de weekplanning pagina te gaan"
+        ]
+      },
+      {
+        "heading": "Mijn Voorkeuren",
+        "content": "Open 'Mijn voorkeuren' via je gebruikerskaart om je beschikbaarheid per week in te stellen. Dit helpt je om je werklast beter te plannen en te zien wanneer je overbelast bent."
+      },
+      {
+        "heading": "Snelkoppelingen",
+        "content": "De snelkoppelingen drawer geeft je toegang tot je persoonlijke snelkoppelingen. Je kunt snelkoppelingen verwijderen door op het prullenbak icoon te klikken (verwijdering vereist bevestiging). Klik op een snelkoppeling om ernaar toe te navigeren, of gebruik het externe link icoon om deze in een nieuw tabblad te openen."
+      },
+      {
+        "heading": "Chat Assistant",
+        "content": "Open de Chat Assistant via je gebruikerskaart om hulp te krijgen bij vragen of om informatie op te zoeken in de applicatie. De chat assistent kan je helpen met het navigeren door de applicatie en het vinden van specifieke functies."
+      },
+      {
+        "heading": "Work Items Toevoegen",
+        "content": "Via de Backlog navigatiekaart kun je nieuwe work items toevoegen. Klik op 'Work item toevoegen' om een drawer te openen waar je alle details kunt invullen. Na het aanmaken wordt het item automatisch toegevoegd aan je backlog en planning."
+      },
+      {
+        "heading": "Automatische Updates",
+        "content": "De homepage wordt automatisch ververst elke 30 seconden wanneer de pagina actief en zichtbaar is. Wanneer je naar een ander tabblad wisselt, wordt het verversen gepauzeerd. Bij terugkeer wordt de data automatisch ververst zodat je altijd de nieuwste informatie ziet."
+      },
+      {
+        "heading": "Tips",
+        "items": [
+          "Gebruik 'Alleen mijn werk' in het Kanban-bord om gefocust te blijven op je eigen taken",
+          "Filter je backlog op specifieke weken om te zien wat er in een bepaalde periode moet gebeuren",
+          "Stel je beschikbaarheid in via Mijn voorkeuren om realistische planning te kunnen maken",
+          "Versleep taken in het Kanban-bord om snel de status te wijzigen",
+          "Gebruik snelkoppelingen voor pagina's die je vaak bezoekt",
+          "Houd je backlog up-to-date door regelmatig statusen te wijzigen"
+        ]
+      }
+    ]
+  },
+  "/mijn-werk": {
+    "title": "Mijn Werk - Handleiding",
+    "sections": [
+      {
+        "heading": "Overzicht",
+        "content": "De Mijn Werk pagina geeft je een visueel overzicht van je geplande uren versus je beschikbare uren per week. Met de heatmap en backlog kun je eenvoudig je werklast beheren en taken plannen."
+      },
+      {
+        "heading": "Heatmap",
+        "content": "De heatmap toont het percentage van geplande uren ten opzichte van je beschikbare uren per week. Elke cel vertegenwoordigt een week, georganiseerd per maand. Donker oranje betekent dat je week bijna vol gepland is (dicht bij 100%), terwijl licht grijs-wit aangeeft dat je nog veel ruimte hebt."
+      },
+      {
+        "heading": "Functionaliteiten",
+        "items": [
+          "**Klik op een week**: Filter je backlog taken om alleen taken in die specifieke week te zien",
+          "**Sleep taken naar de heatmap**: Versleep een taak van de backlog naar een week om de deadline aan te passen",
+          "**Hover over taken**: Beweeg je muis over een taak om de bijbehorende week in de heatmap te highlighten",
+          "**Backlog weergave**: Klik op de 'Mijn backlog taken' knop (📋) om je backlog te openen naast de heatmap"
+        ]
+      },
+      {
+        "heading": "Backlog Taken",
+        "content": "De backlog toont al je openstaande werk items en case taken. Gebruik de toggle 'Zonder datum' om te schakelen tussen taken zonder deadline en taken met deadline. Wanneer je een week selecteert, zie je alleen de taken die in die week gepland zijn, samen met het totaal aantal uren."
+      },
+      {
+        "heading": "Tips",
+        "items": [
+          "Houd je beschikbare uren per week bij via je gebruikersprofiel",
+          "Gebruik drag & drop om snel deadlines aan te passen",
+          "Let op de kleur van de heatmap cellen om overbelasting te voorkomen",
+          "Klik op een taak om deze te bewerken of meer details te zien"
+        ]
+      }
+    ]
+  },
+  "/processes": {
+    "title": "Processen - Handleiding",
+    "sections": [
+      {
+        "heading": "Overzicht",
+        "content": "De Processen pagina is het centrale punt voor het beheren van je bedrijfsprocessen. Hier kun je processjablonen aanmaken, bewerken en archiveren. Elk proces definieert een reeks stappen en taken die later als case worden uitgevoerd."
+      },
+      {
+        "heading": "Wat is een Proces?",
+        "content": "Een proces is een sjabloon dat de workflow definieert voor een specifiek type werk. Het bevat stappen (fasen) met bijbehorende taken. Wanneer je een case aanmaakt op basis van een proces, worden alle stappen en taken automatisch aangemaakt volgens dit sjabloon."
+      },
+      {
+        "heading": "Proceskaarten",
+        "content": "Elk proces wordt weergegeven als een kaart met belangrijke informatie: de procesnaam, beschrijving, voltooiingstijd in dagen, aantal stappen en aantal taken. Klik op een proceskaart om naar de detail/bewerken pagina te gaan waar je stappen en taken kunt configureren."
+      },
+      {
+        "heading": "Acties per Proces",
+        "items": [
+          "**Case Aanmaken** (📄+): Maak direct een nieuwe case aan op basis van dit proces",
+          "**Bewerken** (✏️): Open het proces in de bewerkingsmodus om naam, beschrijving of voltooiingstijd aan te passen",
+          "**Archiveren** (📦): Verberg het proces uit de lijst. Gearchiveerde processen blijven beschikbaar voor bestaande cases maar kunnen niet meer voor nieuwe cases gebruikt worden"
+        ]
+      },
+      {
+        "heading": "Nieuw Proces Maken",
+        "content": "Klik op 'Nieuw proces maken' rechtsboven om een nieuw proces aan te maken. Vul de procesnaam, beschrijving en verwachte voltooiingstijd in dagen in. Na het aanmaken kun je stappen en taken toevoegen via de detail pagina."
+      },
+      {
+        "heading": "Stappen en Taken Configureren",
+        "content": "Navigeer naar de detail pagina van een proces (klik op de proceskaart) om stappen en taken te beheren. Elke stap kan meerdere taken bevatten. Taken worden automatisch aangemaakt wanneer een case wordt gestart."
+      },
+      {
+        "heading": "Automatische Updates",
+        "content": "De processen lijst wordt automatisch ververst elke 30 seconden wanneer de pagina zichtbaar is. Wanneer je naar een ander tabblad wisselt, wordt het verversen gepauzeerd om resources te besparen."
+      },
+      {
+        "heading": "Tips",
+        "items": [
+          "Gebruik duidelijke procesnamen die het type werk beschrijven",
+          "Geef een realistische voltooiingstijd op om verwachtingen te sturen",
+          "Archiveer verouderde processen in plaats van ze te verwijderen",
+          "Test je proces door een test-case aan te maken voordat je het in productie gebruikt",
+          "Houd het aantal stappen overzichtelijk (meestal 3-7 stappen)",
+          "Groepeer gerelateerde taken in dezelfde stap"
+        ]
+      }
+    ]
+  },
+  "/cases": {
+    "title": "Cases - Handleiding",
+    "sections": [
+      {
+        "heading": "Overzicht",
+        "content": "De Cases pagina toont alle lopende en afgeronde proces-instanties in je organisatie. Een case is een specifieke uitvoering van een processjabloon met eigen tijdlijn, taken en eigenaar. Gebruik filters en zoekfuncties om snel de juiste cases te vinden."
+      },
+      {
+        "heading": "Wat is een Case?",
+        "content": "Een case is een actieve uitvoering van een processjabloon. Wanneer je een case aanmaakt, worden automatisch alle stappen en taken uit het proces gegenereerd met berekende deadlines. Elke case heeft een eigenaar, start- en einddatum, en een status die de voortgang weergeeft."
+      },
+      {
+        "heading": "Case Statussen",
+        "items": [
+          "**Gepland** (⏱️): Case is aangemaakt maar nog niet gestart",
+          "**Mee bezig** (📋): Case is actief en taken worden uitgevoerd",
+          "**Afgerond** (✅): Case is succesvol voltooid",
+          "**Te laat** (⚠️): Case heeft de deadline overschreden"
+        ]
+      },
+      {
+        "heading": "Case Kaarten",
+        "content": "Elke case wordt weergegeven als een kaart met kleurgecodeerde rand en icoon op basis van status. De kaart toont de case naam, het proces waar deze op gebaseerd is, start- en einddatum, eigenaar, en huidige status. Klik op een kaart om de volledige case details te bekijken."
+      },
+      {
+        "heading": "Nieuwe Case Maken",
+        "content": "Klik op 'Nieuwe case maken' rechtsboven. Selecteer een proces, geef de case een naam, kies een startdatum en wijs eventueel een eigenaar toe. Je kunt ook bestanden uploaden die aan de case worden gekoppeld. Na aanmaken worden automatisch alle stappen en taken gegenereerd."
+      },
+      {
+        "heading": "Zoeken en Filteren",
+        "content": "Klik op het zoek/filter icoon linksboven om het filter paneel te openen. Je kunt zoeken in case namen, processen, eigenaren en statussen. Gebruik de zoek scope dropdown om te bepalen waar gezocht wordt: alles, alleen cases, processen, personen, projecten, of taken."
+      },
+      {
+        "heading": "Filters Gebruiken",
+        "items": [
+          "**Proces filter**: Selecteer een of meerdere processen om alleen cases van die processen te zien",
+          "**Status filter**: Filter op één of meerdere statussen (gepland, mee bezig, afgerond, te laat)",
+          "**Eigenaar filter**: Toon alleen cases van specifieke eigenaren",
+          "**Meerdere selecties**: Alle filters ondersteunen meerdere waarden. Het aantal geselecteerde items wordt getoond"
+        ]
+      },
+      {
+        "heading": "URL Filters",
+        "content": "Filters worden opgeslagen in de URL, zodat je filtered weergaven kunt bookmarken en delen. De URL wordt automatisch bijgewerkt wanneer je filters wijzigt. Dit betekent dat de browser back/forward knoppen ook je filter geschiedenis respecteren."
+      },
+      {
+        "heading": "Taken Weergave",
+        "content": "Schakel tussen cases en taken weergave om alle case-gerelateerde taken te zien. In de taken weergave kun je filteren op 'Alleen mijn taken' om alleen aan jou toegewezen taken te tonen. Klik op een taak om naar de bijbehorende case te navigeren."
+      },
+      {
+        "heading": "Case Details",
+        "content": "Klik op een case kaart om naar de detail pagina te gaan. Daar zie je alle stappen, taken, tijdlijn, bijlagen en voortgang. Je kunt taken updaten, bestanden toevoegen, en de case status wijzigen. De detail pagina toont ook welk proces als basis is gebruikt."
+      },
+      {
+        "heading": "Gearchiveerde Processen",
+        "content": "Cases gebaseerd op gearchiveerde processen blijven zichtbaar en werkbaar. Een 'Gearchiveerd' label wordt getoond bij het proces. Je kunt geen nieuwe cases meer aanmaken van gearchiveerde processen, maar bestaande cases blijven volledig functioneel."
+      },
+      {
+        "heading": "Automatische Updates",
+        "content": "De cases lijst wordt automatisch ververst elke 30 seconden wanneer de pagina actief is. Bij het wisselen naar een ander tabblad wordt het verversen gepauzeerd. Wanneer je terugkeert wordt de data automatisch ververst."
+      },
+      {
+        "heading": "Tips",
+        "items": [
+          "Gebruik duidelijke case namen die het specifieke project of klant beschrijven",
+          "Wijs altijd een eigenaar toe voor duidelijke verantwoordelijkheid",
+          "Filter op status 'Te laat' om cases die aandacht nodig hebben snel te vinden",
+          "Gebruik de zoekfunctie om snel specifieke cases te vinden",
+          "Bookmark filtered weergaven die je vaak nodig hebt",
+          "Check regelmatig je toegewezen taken via de taken weergave",
+          "Upload relevante bestanden bij case creatie voor centrale documentatie"
+        ]
+      }
+    ]
+  },
+  "/work/[id]?tab=notities": {
+    "title": "Notities - Handleiding",
+    "sections": [
+      {
+        "heading": "Overzicht",
+        "content": "In het notities tab kun je notities toevoegen, bekijken en beheren voor dit work item. Notities helpen om context, afspraken en belangrijke details vast te leggen."
+      },
+      {
+        "heading": "Notities Toevoegen",
+        "content": "Klik op het veld 'Nieuwe notitie' en typ je bericht. Gebruik de opmaakopties om tekst vet, cursief of met opsomming te maken. Elke notitie krijgt automatisch een tijdstempel."
+      },
+      {
+        "heading": "Notities Beheren",
+        "items": [
+          "**Bekijken**: Alle notities worden chronologisch weergegeven met auteur en tijdstempel",
+          "**Bewerken**: Klik op een bestaande notitie om de tekst aan te passen",
+          "**Verwijderen**: Klik op het prullenbak-icoon om een notitie te verwijderen (na bevestiging)"
+        ]
+      },
+      {
+        "heading": "Checklists",
+        "content": "Je kunt ook checklists maken om taken en controlepunten bij te houden. Checklists helpen om gestructureerd te werken en zorgen dat niets vergeten wordt.",
+        "items": [
+          "**Items toevoegen**: Voeg items toe aan je checklist met korte, duidelijke beschrijvingen",
+          "**Afvegen**: Vink items af als ze voltooid zijn om je voortgang bij te houden",
+          "**Verwijderen**: Verwijder items of hele checklists die niet meer nodig zijn"
+        ]
+      },
+      {
+        "heading": "Tips",
+        "items": [
+          "Gebruik notities voor afspraken, beslissingen en belangrijke details",
+          "Wees specifiek en concreet voor betere zoekbaarheid achteraf",
+          "Voeg notities toe direct na telefoongesprekken of vergaderingen",
+          "Controleer regelmatig je notities om actueel te blijven",
+          "Deel relevante bestanden of links in je notities voor complete documentatie"
+        ]
+      }
+    ]
+  },
+  "/work/[id]": {
+    "title": "Work Detail - Handleiding",
+    "sections": [
+      {
+        "heading": "Overzicht",
+        "content": "De Work Detail pagina toont alle details van een specifiek work item. Bovenaan zie je titel, status, prioriteit, deadline en toegewezen personen. De pagina heeft drie tabs met specifieke functionaliteiten."
+      },
+      {
+        "heading": "Tabs",
+        "items": [
+          "**Huidig**: Status, voortgang en recente activiteiten",
+          "**Checks**: Checklist met controlepunten om af te vinken",
+          "**Notities**: Documentatie en opmerkingen over het work item"
+        ]
+      },
+      {
+        "heading": "Tips",
+        "items": [
+          "Selecteer een tab om specifieke functionaliteiten te bekijken",
+          "Elke tab heeft zijn eigen handleiding voor gedetailleerde uitleg"
+        ]
+      }
+    ]
+  }
+}

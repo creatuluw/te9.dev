@@ -78,3 +78,20 @@ export const bookmarkAnalysis = te9Dev.table("bookmark_analysis", {
 }, (table) => [
   uniqueIndex("bookmark_analysis_bookmark_id_unique").on(table.bookmarkId),
 ]);
+
+export const digests = te9Dev.table("digests", {
+  id: serial("id").primaryKey(),
+  type: text("type").notNull(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  html: text("html").notNull(),
+  entryCount: integer("entry_count").notNull().default(0),
+  lastBookmarkId: integer("last_bookmark_id"),
+  dateRangeStart: timestamp("date_range_start", { withTimezone: true }),
+  dateRangeEnd: timestamp("date_range_end", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  emailSent: boolean("email_sent").notNull().default(false),
+  emailSentAt: timestamp("email_sent_at", { withTimezone: true }),
+});

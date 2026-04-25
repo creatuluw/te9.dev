@@ -1,6 +1,6 @@
 import { db } from "$lib/server/db";
-import { gardenEntrance } from "$lib/server/db/schema";
-import { eq, asc } from "drizzle-orm";
+import { gardenEntrance, digests } from "$lib/server/db/schema";
+import { eq, asc, desc } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
@@ -19,5 +19,18 @@ export const load: PageServerLoad = async () => {
     .where(eq(gardenEntrance.isActive, true))
     .orderBy(asc(gardenEntrance.sortOrder));
 
-  return { entrances };
+  const latestDigests = await db
+    .select({
+      id: digests.id,
+      type: digests.type,
+      title: digests.title,
+      slug: digests.slug,
+      entryCount: digests.entryCount,
+      createdAt: digests.createdAt,
+    })
+    .from(digests)
+    .orderBy(desc(digests.createdAt))
+    .limit(3);
+
+  return { entrances, latestDigests };
 };

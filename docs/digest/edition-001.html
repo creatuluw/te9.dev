@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>te9.dev Digest &mdash; Edition #001</title>
+<meta name="description" content="A curated digest of developer tools and resources. Edition #001 &mdash; April 24, 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&family=Lekton:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --font-heading: 'Bricolage Grotesque', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Lekton', monospace;
+  --color-bg: #F8F8F6;
+  --color-bg-secondary: #EFEFEA;
+  --color-dark: #1A1A1A;
+  --color-accent: #E88500;
+  --color-accent-light: #FFF4E6;
+  --color-accent-dark: #C47000;
+  --color-muted: #6B6B6B;
+  --color-light: #9A9A9A;
+  --color-green: #00A855;
+  --color-green-dark: #008F47;
+  --color-white: #FFFFFF;
+  --border-subtle: #E0DDD8;
+  --border-hover: #CCCCC4;
+  --border-secondary: #E8E8E0;
+  --container-max: 1200px;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-dark);
+  background: var(--color-bg);
+  position: relative;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  margin-bottom: 1rem;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  background: rgba(248, 248, 246, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+  border-bottom-color: var(--border-subtle);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+}
+
+.navbar-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.navbar-logo .cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--color-accent);
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.navbar-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  padding: 4px 10px;
+  border: 1px solid rgba(232, 133, 0, 0.2);
+  letter-spacing: 0.03em;
+}
+
+.navbar-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: var(--color-dark);
+}
+
+/* HERO */
+.hero {
+  min-height: calc(100vh - 60px);
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1px solid rgba(232, 133, 0, 0.15);
+  margin-bottom: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.hero h1 {
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-edition {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.hero-subtitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.hero-description {
+  color: var(--color-muted);
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 133, 0, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-dark);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.hero-meta {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-green);
+  position: relative;
+}
+
+.pulse-dot::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-green);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.hero-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  pointer-events: none;
+}
+
+.hero-ring-1 {
+  width: 400px; height: 400px;
+  top: 10%; left: -8%;
+  animation: ring-pulse 6s ease-in-out infinite;
+}
+
+.hero-ring-2 {
+  width: 300px; height: 300px;
+  bottom: 5%; right: -5%;
+  animation: ring-pulse 8s ease-in-out infinite 2s;
+}
+
+.hero-ring-3 {
+  width: 200px; height: 200px;
+  top: 30%; right: 10%;
+  animation: ring-pulse 5s ease-in-out infinite 1s;
+}
+
+@keyframes ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.05); opacity: 0.6; }
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--color-white);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 2rem 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  padding: 0.5rem;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-dark);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* SECTIONS */
+.section {
+  padding: 5rem 0;
+}
+
+.section-alt {
+  background: var(--color-bg-secondary);
+}
+
+/* EDITORIAL */
+.editorial-body p {
+  max-width: 720px;
+  margin-bottom: 1.5rem;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.editorial-body strong {
+  color: var(--color-dark);
+  font-weight: 700;
+}
+
+.editorial-signature {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-light);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  max-width: 720px;
+}
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.card-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.garden-card {
+  background: var(--color-white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  border-top: 3px solid var(--color-green);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.garden-card:hover {
+  border-top-color: var(--color-accent);
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+
+.garden-card::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -1px;
+  right: -1px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-green), var(--color-accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.garden-card:hover::before {
+  opacity: 1;
+}
+
+.card-category {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  padding: 3px 8px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--color-dark);
+}
+
+.card-domain {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-light);
+  margin-bottom: 1rem;
+}
+
+.card-body {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.card-body strong {
+  color: var(--color-dark);
+  font-weight: 700;
+}
+
+.card-callout {
+  background: var(--color-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.card-callout-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-green-dark);
+  margin-bottom: 0.4rem;
+}
+
+.card-callout-text {
+  color: var(--color-dark);
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.tag-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  background: var(--color-bg);
+  border: 1px solid var(--border-secondary);
+  padding: 3px 8px;
+  letter-spacing: 0.02em;
+}
+
+.card-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  transition: gap 0.2s ease;
+}
+
+.card-source:hover {
+  gap: 10px;
+}
+
+.card-source-arrow {
+  font-size: 0.85rem;
+}
+
+code.inline {
+  font-family: var(--font-mono);
+  background: var(--color-bg-secondary);
+  padding: 2px 6px;
+  font-size: 0.85em;
+  border-radius: 2px;
+  border: 1px solid var(--border-secondary);
+}
+
+/* FEATURED CARD */
+.featured-card {
+  background: var(--color-white);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  border-top: 4px solid var(--color-accent);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  transition: all 0.3s ease;
+}
+
+.featured-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+
+.featured-visual {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 1.5rem;
+  background: var(--color-bg);
+  border: 1px solid var(--border-subtle);
+}
+
+.featured-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+  background: var(--color-white);
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.featured-cell.active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+.featured-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--color-light);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* QUICK REFERENCE */
+.quick-ref-list {
+  list-style: none;
+}
+
+.quick-ref-item {
+  display: grid;
+  grid-template-columns: 40px 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.2s ease;
+}
+
+.quick-ref-item:last-child {
+  border-bottom: none;
+}
+
+.quick-ref-item:hover {
+  background: rgba(232, 133, 0, 0.03);
+}
+
+.quick-ref-number {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-align: right;
+}
+
+.quick-ref-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.quick-ref-category {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-muted);
+  background: var(--color-bg);
+  padding: 3px 8px;
+  border: 1px solid var(--border-secondary);
+}
+
+.quick-ref-link {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+}
+
+.quick-ref-link:hover {
+  gap: 8px;
+}
+
+.theme-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.theme-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  background: var(--color-white);
+  border: 1px solid var(--border-subtle);
+  padding: 5px 12px;
+  letter-spacing: 0.02em;
+}
+
+/* CLOSING */
+.closing {
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.closing h2 {
+  margin-bottom: 1rem;
+}
+
+.closing p {
+  color: var(--color-muted);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--color-dark);
+  color: rgba(255,255,255,0.6);
+  padding: 3rem 0 2rem;
+  font-size: 0.85rem;
+}
+
+.footer-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+}
+
+.footer-logo {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+  color: rgba(255,255,255,0.9);
+}
+
+.footer-status {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-status .pulse-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.footer-copyright {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+/* SCROLL REVEAL */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.section-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .card-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stat-item:nth-child(2) {
+    border-right: none;
+  }
+  .featured-card {
+    grid-template-columns: 1fr;
+  }
+  .hero-meta {
+    gap: 1rem;
+  }
+  .quick-ref-item {
+    grid-template-columns: 30px 1fr;
+    gap: 0.5rem;
+  }
+  .quick-ref-category,
+  .quick-ref-link {
+    display: none;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+  .footer-copyright {
+    align-items: flex-start;
+  }
+  .navbar-badge {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-item {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .stat-item:last-child {
+    border-bottom: none;
+  }
+  .hero-ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="https://te9.dev" class="navbar-logo">&rsaquo; te9.dev<span class="cursor"></span></a>
+    <span class="navbar-badge">// digest #001</span>
+    <a href="https://te9.dev" class="navbar-link">te9.dev &rarr;</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ring hero-ring-1"></div>
+  <div class="hero-ring hero-ring-2"></div>
+  <div class="hero-ring hero-ring-3"></div>
+  <div class="hero-content">
+    <span class="hero-label">[ curated-digest ]</span>
+    <h1>the digest.</h1>
+    <p class="hero-edition">// edition #001 &mdash; april 24, 2026</p>
+    <p class="hero-subtitle">For developers, tech enthusiasts, and open-source trend watchers.</p>
+    <p class="hero-description">Every edition is analyzed by an AI pipeline that scans the developer ecosystem for emerging tools, patterns, and shifts. We curate the signal from the noise.</p>
+    <div class="hero-ctas">
+      <a href="#editorial" class="btn btn-primary">Explore Edition #001 &rsaquo;</a>
+      <a href="#quick-ref" class="btn btn-secondary">Quick Reference</a>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="pulse-dot"></span> 10 resources analyzed</div>
+      <div class="hero-meta-item"><span class="pulse-dot"></span> 7 categories</div>
+      <div class="hero-meta-item"><span class="pulse-dot"></span> powered by GLM-5</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-bar section-reveal">
+  <div class="stats-grid">
+    <div class="stat-item"><span class="stat-number">3</span> ai agent tools</div>
+    <div class="stat-item"><span class="stat-number">2</span> browser infra</div>
+    <div class="stat-item"><span class="stat-number">1</span> edge ai</div>
+    <div class="stat-item"><span class="stat-number">4</span> dev frameworks</div>
+  </div>
+</section>
+
+<!-- EDITORIAL INTRO -->
+<section class="section" id="editorial">
+  <div class="container section-reveal">
+    <div class="section-label">// editorial</div>
+    <h2 class="section-title">what caught our eye</h2>
+    <div class="editorial-body">
+      <p>This inaugural edition lands at a fascinating inflection point in developer tooling. <strong>AI agents are no longer a novelty &mdash; they are becoming infrastructure.</strong> The tools in this digest reveal a clear trend: the ecosystem is shifting from AI that helps you code to AI that acts autonomously on your behalf, and the supporting infrastructure is racing to catch up.</p>
+      <p>We are seeing the emergence of <strong>browser automation as a first-class AI primitive</strong> (Steel Browser, Browser Harness), <strong>sandboxing as a necessity</strong> (Agent Safehouse), and <strong>memory systems that rethink RAG</strong> (Memvid). At the other end of the spectrum, PicoLM reminds us that the edge is still wide open &mdash; running a billion-parameter model on a <code class="inline">$10</code> board is the kind of punk-rock engineering that keeps this field exciting.</p>
+      <p>Meanwhile, the developer experience continues to refine: classless CSS frameworks like <strong>dev.css strip decisions down to semantic HTML</strong>, Bonnard gives AI agents governed data access, and DeepTutor shows what a full-stack AI-native application looks like in production. <strong>Together, these 10 resources paint a picture of a developer ecosystem that is simultaneously reaching for the cloud and the edge, building higher-level abstractions while rediscovering the value of simplicity.</strong></p>
+    </div>
+    <div class="editorial-signature">&mdash; te9.dev editorial, analyzed by GLM-5 via z.ai</div>
+  </div>
+</section>
+
+<!-- AI AGENT INFRASTRUCTURE -->
+<section class="section section-alt" id="ai-agents">
+  <div class="container">
+    <div class="section-reveal">
+      <div class="section-label">// ai agent infrastructure</div>
+      <h2 class="section-title">The Agent Stack is Maturing</h2>
+    </div>
+
+    <!-- Featured Card: Agent Safehouse -->
+    <div class="featured-card section-reveal" style="margin-bottom: 1.5rem;">
+      <div>
+        <span class="card-category">security tool</span>
+        <h3 class="card-title">Agent Safehouse &mdash; Sandbox Your AI Agents</h3>
+        <div class="card-domain">agent-safehouse.dev</div>
+        <p class="card-body"><strong>Agent Safehouse brings macOS-level sandboxing to AI coding agents</strong> at a time when autonomous agents are routinely given filesystem and network access with minimal guardrails. It intercepts agent actions through OS-level entitlements, creating a containment boundary that doesn&rsquo;t rely on cooperative behavior from the agent itself. This is the kind of defensive infrastructure that becomes non-negotiable once AI agents move from demo to production. If you&rsquo;re running <code class="inline">claude</code>, <code class="inline">aider</code>, or <code class="inline">cursor</code> against real codebases, you should be thinking about this.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">USE IT WHEN</div>
+          <div class="card-callout-text">You need to run AI coding agents on production-adjacent systems without risking uncontrolled file modifications, network calls, or privilege escalation.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">sandboxing</span>
+          <span class="tag-pill">macOS</span>
+          <span class="tag-pill">AI safety</span>
+          <span class="tag-pill">entitlements</span>
+          <span class="tag-pill">agent containment</span>
+        </div>
+        <a href="https://agent-safehouse.dev/" target="_blank" rel="noopener" class="card-source">View Project <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+      <div>
+        <div class="featured-visual">
+          <div class="featured-cell">&#x1F512;</div>
+          <div class="featured-cell active">&#x1F6E1;</div>
+          <div class="featured-cell">&#x1F504;</div>
+          <div class="featured-cell active">&#x26A0;</div>
+          <div class="featured-cell">&#x1F4BE;</div>
+          <div class="featured-cell active">&#x1F310;</div>
+          <div class="featured-cell">&#x1F4CB;</div>
+          <div class="featured-cell active">&#x1F510;</div>
+          <div class="featured-cell">&#x2705;</div>
+        </div>
+        <div class="featured-label">security perimeter &mdash; active guardrails highlighted</div>
+      </div>
+    </div>
+
+    <!-- 2-Column Grid -->
+    <div class="card-grid card-grid-2">
+      <!-- Memvid -->
+      <div class="garden-card section-reveal">
+        <span class="card-category">ai/ml library</span>
+        <h3 class="card-title">Memvid &mdash; Single-File Memory for AI Agents</h3>
+        <div class="card-domain">github.com/memvid/memvid</div>
+        <p class="card-body">Memvid rethinks how AI agents store and retrieve knowledge by <strong>encoding embeddings into MP4 video files</strong> that can be searched in milliseconds. It&rsquo;s a RAG alternative that eliminates the need for vector databases &mdash; <strong>a single file replaces an entire infrastructure stack</strong>. The approach is surprisingly effective for offline and serverless environments where running Pinecone or Weaviate isn&rsquo;t practical.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">BEST FOR</div>
+          <div class="card-callout-text">Offline-first AI applications, serverless deployments, and agents that need portable, self-contained memory without external dependencies.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">ai memory</span>
+          <span class="tag-pill">rag alternative</span>
+          <span class="tag-pill">serverless</span>
+          <span class="tag-pill">offline-first</span>
+          <span class="tag-pill">embeddings</span>
+        </div>
+        <a href="https://github.com/memvid/memvid" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+
+      <!-- Steel Browser -->
+      <div class="garden-card section-reveal">
+        <span class="card-category">browser automation infrastructure</span>
+        <h3 class="card-title">Steel Browser &mdash; Managed Browser API</h3>
+        <div class="card-domain">github.com/steel-dev/steel-browser</div>
+        <p class="card-body"><strong>Steel Browser provides a managed, production-ready browser API</strong> built on CDP that handles the messy realities of browser automation: fingerprinting, proxy rotation, CAPTCHAs, and session management. For AI agent builders, this is the difference between spending weeks on Chrome Devtools Protocol edge cases and shipping features. <strong>It&rsquo;s browser automation as infrastructure, not as a scripting problem.</strong></p>
+        <div class="card-callout">
+          <div class="card-callout-label">WHY IT MATTERS</div>
+          <div class="card-callout-text">The gap between &ldquo;Puppeteer works on my machine&rdquo; and &ldquo;Puppeteer works reliably in production&rdquo; is enormous. Steel closes that gap with anti-detection, session persistence, and Docker-first deployment.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">browser automation</span>
+          <span class="tag-pill">headless chrome</span>
+          <span class="tag-pill">puppeteer</span>
+          <span class="tag-pill">anti-detection</span>
+          <span class="tag-pill">docker</span>
+        </div>
+        <a href="https://github.com/steel-dev/steel-browser" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BROWSER AUTOMATION -->
+<section class="section" id="browser">
+  <div class="container">
+    <div class="section-reveal">
+      <div class="section-label">// browser automation</div>
+      <h2 class="section-title">Self-Healing Browser Control</h2>
+    </div>
+    <div class="card-grid card-grid-1">
+      <div class="garden-card section-reveal">
+        <span class="card-category">browser automation tool</span>
+        <h3 class="card-title">Browser Harness &mdash; Resilient CDP Control</h3>
+        <div class="card-domain">github.com/browser-use/browser-harness</div>
+        <p class="card-body">At just <code class="inline">592 lines</code> of Python, Browser Harness achieves something remarkable: <strong>self-healing browser automation via the Chrome DevTools Protocol</strong>. When selectors break (and they always do), the harness recovers by re-evaluating the DOM context rather than failing outright. <strong>This is the kind of reliability layer that AI agents need</strong> to operate browsers autonomously without human intervention on every minor page change.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">USE IT WHEN</div>
+          <div class="card-callout-text">You need browser automation that survives real-world page mutations, dynamic class names, and SPA re-renders without constant selector maintenance.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">browser automation</span>
+          <span class="tag-pill">chrome devtools protocol</span>
+          <span class="tag-pill">self-healing</span>
+          <span class="tag-pill">python</span>
+          <span class="tag-pill">AI agent</span>
+        </div>
+        <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDGE AI -->
+<section class="section section-alt" id="edge-ai">
+  <div class="container">
+    <div class="section-reveal">
+      <div class="section-label">// edge ai</div>
+      <h2 class="section-title">The Edge is Wide Open</h2>
+    </div>
+    <div class="card-grid card-grid-1">
+      <div class="garden-card section-reveal">
+        <span class="card-category">ai/ml library</span>
+        <h3 class="card-title">PicoLM &mdash; 1B Parameters on &#x24;10 Hardware</h3>
+        <div class="card-domain">github.com/RightNow-AI/picolm</div>
+        <p class="card-body">PicoLM proves that <strong>running a billion-parameter LLM on commodity hardware isn&rsquo;t science fiction &mdash; it&rsquo;s a <code class="inline">C11</code> library</strong> that runs on boards costing less than a coffee subscription. With a memory footprint of <code class="inline">256MB</code> and no GPU requirement, <strong>this is edge AI stripped to its essentials</strong>: quantized inference on devices that cost pocket change. It&rsquo;s built on TinyLlama and brings LLM capabilities to Raspberry Pi, ESP32, and any embedded target with a C compiler.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">BEST FOR</div>
+          <div class="card-callout-text">IoT deployments, privacy-first on-device inference, embedded systems, and anyone who believes AI shouldn&rsquo;t require a data center.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">LLM</span>
+          <span class="tag-pill">edge computing</span>
+          <span class="tag-pill">offline AI</span>
+          <span class="tag-pill">C11</span>
+          <span class="tag-pill">raspberry pi</span>
+          <span class="tag-pill">IoT</span>
+          <span class="tag-pill">privacy</span>
+          <span class="tag-pill">TinyLlama</span>
+        </div>
+        <a href="https://github.com/RightNow-AI/picolm" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORKS & TOOLS -->
+<section class="section" id="frameworks">
+  <div class="container">
+    <div class="section-reveal">
+      <div class="section-label">// frameworks &amp; tools</div>
+      <h2 class="section-title">Refining the Developer Experience</h2>
+    </div>
+    <div class="card-grid card-grid-2">
+      <!-- dev.css -->
+      <div class="garden-card section-reveal">
+        <span class="card-category">css framework</span>
+        <h3 class="card-title">dev.css &mdash; Classless CSS for Semantic HTML</h3>
+        <div class="card-domain">tangled.org/devins.page/dev.css</div>
+        <p class="card-body"><strong>dev.css takes the &ldquo;just write HTML&rdquo; philosophy to its logical conclusion.</strong> No classes, no build step, no configuration &mdash; write semantic HTML and get a polished, responsive result. <strong>In an era of CSS-in-JS fatigue and utility-class overload, this is a breath of fresh air</strong> for documentation sites, internal tools, blog posts, and any project where the content matters more than the framework choice.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">BEST FOR</div>
+          <div class="card-callout-text">Documentation pages, markdown-rendered content, internal dashboards, and developers who want beautiful defaults without decision fatigue.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">css</span>
+          <span class="tag-pill">classless</span>
+          <span class="tag-pill">lightweight</span>
+          <span class="tag-pill">responsive</span>
+          <span class="tag-pill">semantic HTML</span>
+        </div>
+        <a href="https://tangled.org/devins.page/dev.css?ref=dailydev" target="_blank" rel="noopener" class="card-source">View Project <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+
+      <!-- Bonnard -->
+      <div class="garden-card section-reveal">
+        <span class="card-category">data infrastructure</span>
+        <h3 class="card-title">Bonnard &mdash; Semantic Layer for AI Agents</h3>
+        <div class="card-domain">github.com/bonnard-data/bonnard</div>
+        <p class="card-body"><strong>Bonnard gives AI agents governed access to your data warehouse through a semantic layer</strong> built on the Model Context Protocol (MCP). Instead of letting agents write raw SQL against your production database, <strong>Bonnard provides a controlled, typed interface</strong> that defines what data agents can access and how. The TypeScript SDK makes integration straightforward for modern stacks, and it&rsquo;s fully self-hosted.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">WHY IT MATTERS</div>
+          <div class="card-callout-text">As AI agents become data consumers, raw database access is a liability. Bonnard introduces the concept of data governance at the agent layer &mdash; a pattern that will become standard practice.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">semantic layer</span>
+          <span class="tag-pill">MCP</span>
+          <span class="tag-pill">data warehouse</span>
+          <span class="tag-pill">typescript SDK</span>
+          <span class="tag-pill">self-hosted</span>
+        </div>
+        <a href="https://github.com/bonnard-data/bonnard" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI APPLICATIONS -->
+<section class="section section-alt" id="ai-apps">
+  <div class="container">
+    <div class="section-reveal">
+      <div class="section-label">// ai applications</div>
+      <h2 class="section-title">AI-Native in Production</h2>
+    </div>
+    <div class="card-grid card-grid-2">
+      <!-- DeepTutor -->
+      <div class="garden-card section-reveal">
+        <span class="card-category">open source AI application</span>
+        <h3 class="card-title">DeepTutor &mdash; Agent-Native Learning Assistant</h3>
+        <div class="card-domain">github.com/HKUDS/DeepTutor</div>
+        <p class="card-body">DeepTutor is what happens when you build an EdTech application <strong>with AI as the architecture, not as a feature bolted on afterward.</strong> Built on Next.js and React with a multi-agent RAG pipeline, it demonstrates the full-stack patterns needed for production AI applications. <strong>For developers building AI-native products, this is a reference architecture worth studying</strong> &mdash; from the agent orchestration to the frontend interaction model.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">BEST FOR</div>
+          <div class="card-callout-text">Developers building AI-native applications who want a production-ready reference for multi-agent RAG, and EdTech teams looking for a starting point that goes beyond simple chat interfaces.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">AI</span>
+          <span class="tag-pill">RAG</span>
+          <span class="tag-pill">Next.js</span>
+          <span class="tag-pill">React</span>
+          <span class="tag-pill">EdTech</span>
+          <span class="tag-pill">multi-agent</span>
+        </div>
+        <a href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+
+      <!-- Claude Code + Seedance 2.0 -->
+      <div class="garden-card section-reveal">
+        <span class="card-category">ai development workflow</span>
+        <h3 class="card-title">Claude Code + Seedance 2.0 &mdash; 10-Minute Site Stack</h3>
+        <div class="card-domain">LinkedIn</div>
+        <p class="card-body">This workflow demonstration shows <strong>Claude Code generating a complete landing page, deploying to Vercel, and producing an AI-generated video</strong> via Seedance 2.0 &mdash; all in under ten minutes. <strong>It&rsquo;s a compelling glimpse of the &ldquo;vibe coding&rdquo; pipeline</strong> where LLMs handle scaffolding, deployment, and even promotional content generation in a single session. Whether you see this as empowering or alarming, the velocity is real.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">WHY IT MATTERS</div>
+          <div class="card-callout-text">The convergence of code generation, instant deployment, and AI video creation signals a new baseline for prototyping speed. What took a weekend now takes a coffee break.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">Claude Code</span>
+          <span class="tag-pill">rapid prototyping</span>
+          <span class="tag-pill">Vercel</span>
+          <span class="tag-pill">AI video</span>
+          <span class="tag-pill">landing page</span>
+        </div>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" class="card-source">View on LinkedIn <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN SOURCE SPOTLIGHT -->
+<section class="section" id="oss">
+  <div class="container">
+    <div class="section-reveal">
+      <div class="section-label">// open source spotlight</div>
+      <h2 class="section-title">Community Highlights</h2>
+    </div>
+    <div class="card-grid card-grid-1">
+      <div class="garden-card section-reveal">
+        <span class="card-category">self-hosted application</span>
+        <h3 class="card-title">TRIP &mdash; Self-Hosted Trip Planner</h3>
+        <div class="card-domain">github.com/itskovacs/trip</div>
+        <p class="card-body"><strong>TRIP is a privacy-first, self-hosted trip planner with integrated maps</strong> that puts your travel data under your control. In a landscape dominated by ad-supported travel platforms that monetize your itinerary data, <strong>this is open-source pragmatism at its best</strong> &mdash; Docker-deployable, feature-complete, and unopinionated about where you go. It&rsquo;s the kind of project that reminds you not everything needs a business model.</p>
+        <div class="card-callout">
+          <div class="card-callout-label">BEST FOR</div>
+          <div class="card-callout-text">Privacy-conscious travelers, self-hosting enthusiasts, and anyone who wants full control over their travel planning data without vendor lock-in.</div>
+        </div>
+        <div class="card-tags">
+          <span class="tag-pill">self-hosted</span>
+          <span class="tag-pill">trip planner</span>
+          <span class="tag-pill">maps</span>
+          <span class="tag-pill">docker</span>
+          <span class="tag-pill">open source</span>
+          <span class="tag-pill">privacy</span>
+        </div>
+        <a href="https://github.com/itskovacs/trip" target="_blank" rel="noopener" class="card-source">View on GitHub <span class="card-source-arrow">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK REFERENCE INDEX -->
+<section class="section section-alt" id="quick-ref">
+  <div class="container section-reveal">
+    <div class="section-label">// quick reference</div>
+    <h2 class="section-title">Edition #001 Index</h2>
+    <ul class="quick-ref-list">
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">01</span>
+        <span class="quick-ref-title">Agent Safehouse</span>
+        <span class="quick-ref-category">security tool</span>
+        <a href="https://agent-safehouse.dev/" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">02</span>
+        <span class="quick-ref-title">Memvid</span>
+        <span class="quick-ref-category">ai/ml library</span>
+        <a href="https://github.com/memvid/memvid" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">03</span>
+        <span class="quick-ref-title">Steel Browser</span>
+        <span class="quick-ref-category">browser automation</span>
+        <a href="https://github.com/steel-dev/steel-browser" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">04</span>
+        <span class="quick-ref-title">Browser Harness</span>
+        <span class="quick-ref-category">browser automation</span>
+        <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">05</span>
+        <span class="quick-ref-title">PicoLM</span>
+        <span class="quick-ref-category">ai/ml library</span>
+        <a href="https://github.com/RightNow-AI/picolm" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">06</span>
+        <span class="quick-ref-title">dev.css</span>
+        <span class="quick-ref-category">css framework</span>
+        <a href="https://tangled.org/devins.page/dev.css?ref=dailydev" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">07</span>
+        <span class="quick-ref-title">Bonnard</span>
+        <span class="quick-ref-category">data infrastructure</span>
+        <a href="https://github.com/bonnard-data/bonnard" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">08</span>
+        <span class="quick-ref-title">DeepTutor</span>
+        <span class="quick-ref-category">open source AI app</span>
+        <a href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">09</span>
+        <span class="quick-ref-title">Claude Code + Seedance 2.0</span>
+        <span class="quick-ref-category">ai workflow</span>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+      <li class="quick-ref-item">
+        <span class="quick-ref-number">10</span>
+        <span class="quick-ref-title">TRIP</span>
+        <span class="quick-ref-category">self-hosted app</span>
+        <a href="https://github.com/itskovacs/trip" target="_blank" rel="noopener" class="quick-ref-link">source &rsaquo;</a>
+      </li>
+    </ul>
+    <div class="theme-badges">
+      <span class="theme-badge">AI Agents</span>
+      <span class="theme-badge">Browser Automation</span>
+      <span class="theme-badge">Edge Computing</span>
+      <span class="theme-badge">Developer Experience</span>
+      <span class="theme-badge">Self-Hosted</span>
+      <span class="theme-badge">Open Source</span>
+      <span class="theme-badge">Privacy</span>
+      <span class="theme-badge">RAG Alternatives</span>
+      <span class="theme-badge">AI Safety</span>
+      <span class="theme-badge">Rapid Prototyping</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="container section-reveal">
+    <div class="section-label">// until next time</div>
+    <h2>See You in Edition #002</h2>
+    <p>The developer ecosystem never sleeps. We&rsquo;ll be back with another curated selection of the tools, libraries, and patterns shaping how we build.</p>
+    <a href="https://te9.dev" class="btn btn-primary">Back to te9.dev &rsaquo;</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">&rsaquo; te9.dev_</div>
+      <p class="footer-tagline">Curated developer intelligence. The signal from the noise, analyzed and delivered.</p>
+      <nav class="footer-nav">
+        <a href="https://te9.dev">Home</a>
+        <a href="https://te9.dev">Projects</a>
+        <a href="https://te9.dev">About</a>
+        <a href="https://te9.dev">Contact</a>
+      </nav>
+      <div class="footer-status">
+        <span class="pulse-dot"></span>
+        analyzed by GLM-5 via z.ai
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <span>&copy; 2026 te9.dev</span>
+      <span>Digest Edition #001</span>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+// Navbar scroll behavior
+(function() {
+  var navbar = document.getElementById('navbar');
+  var scrolled = false;
+
+  function onScroll() {
+    var shouldBeScrolled = window.scrollY > 100;
+    if (shouldBeScrolled !== scrolled) {
+      scrolled = shouldBeScrolled;
+      if (scrolled) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+// Scroll reveal with IntersectionObserver
+(function() {
+  var reveals = document.querySelectorAll('.section-reveal');
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    reveals.forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    reveals.forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

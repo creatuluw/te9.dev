@@ -1,0 +1,72 @@
+/* Custom placeholder styles */
+input::placeholder,
+textarea::placeholder,
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #888;
+  font-size: 0.8125rem; /* 13px - smaller than the default text-sm (14px) */
+}
+
+/* Input text color */
+input,
+textarea,
+.form-input,
+.form-textarea {
+  color: #111;
+  font-weight: 100;
+}
+
+/* Form label color */
+label {
+  color: #555;
+  font-weight: 500;
+  font-size: 0.8125rem;
+}
+
+/* Active/focused form field border */
+input:focus,
+textarea:focus,
+.form-input:focus,
+.form-textarea:focus {
+  border: 1px solid #ccc !important;
+  outline: none !important;
+  box-shadow: none !important;
+  ring: 0 !important;
+}
+
+.svelte-tags-input-field:focus {
+  border: none !important;
+}
+
+/* Pointer cursor for all interactive elements */
+a,
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"],
+input[type="image"],
+select,
+label[for],
+[role="button"],
+[role="link"],
+[onclick],
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Prevent page jump when modals/overlays are open */
+/* This compensates for the scrollbar width when overflow is hidden */
+body.modal-open,
+body.drawer-open {
+  overflow: hidden !important;
+  padding-right: var(--scrollbar-width, 0px) !important;
+}
+
+/* Smooth transition when opening/closing modals */
+html {
+  scroll-behavior: smooth;
+}
+

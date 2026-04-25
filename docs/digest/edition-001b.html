@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>te9.dev Digest — Edition #001</title>
+  <meta name="description" content="A curated, AI-analyzed digest of hand-picked tools and resources for developers, tech enthusiasts, and open-source trend watchers.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Lekton:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    img { display: block; max-width: 100%; }
+
+    :root {
+      --color-brand-bg: #F8F8F6;
+      --color-brand-bg-secondary: #EFEFEA;
+      --color-brand-dark: #1A1A1A;
+      --color-accent: #E88500;
+      --color-accent-light: #FFF4E6;
+      --color-accent-dark: #C47000;
+      --color-accent-gradient-start: #E88500;
+      --color-accent-gradient-end: #D07000;
+      --color-accent-hover-start: #F09500;
+      --color-accent-hover-end: #E08000;
+      --color-brand-muted: #6B6B6B;
+      --color-brand-light: #9A9A9A;
+      --color-garden-green: #00A855;
+      --color-garden-green-light: #E6F9EF;
+      --color-garden-green-dark: #008F47;
+      --color-emerald: #059669;
+      --color-emerald-light: #ECFDF5;
+      --color-success-50: #F0FDF4;
+      --color-success-500: #22C55E;
+      --color-success-700: #15803D;
+      --color-warning-50: #FFFBEB;
+      --color-warning-500: #F59E0B;
+      --color-warning-700: #B45309;
+      --color-error-50: #FEF2F2;
+      --color-error-500: #EF4444;
+      --color-error-700: #B91C1C;
+      --color-info-50: #EFF6FF;
+      --color-info-500: #3B82F6;
+      --color-info-700: #1D4ED8;
+      --color-neutral-50: #FAFAF8;
+      --color-neutral-100: #F5F5F0;
+      --color-neutral-500: #6B7280;
+      --color-neutral-700: #374151;
+      --color-white: #FFFFFF;
+      --color-navbar-bg: rgba(248, 248, 246, 0.9);
+      --color-border-subtle: #E0DDD8;
+      --color-border-hover: #CCCCC4;
+      --color-border-secondary: #E8E8E0;
+      --color-border-tertiary: #D4D4CC;
+      --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Lekton', monospace;
+      --duration-instant: 100ms;
+      --duration-fast: 200ms;
+      --duration-normal: 300ms;
+      --duration-moderate: 500ms;
+      --duration-slow: 550ms;
+      --duration-slower: 800ms;
+      --duration-pulse: 2000ms;
+      --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+      --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+      --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --radius-none: 0;
+      --radius-xs: 0.125rem;
+      --radius-sm: 0.25rem;
+      --radius-md: 0.375rem;
+      --radius-lg: 0.5rem;
+      --radius-xl: 0.75rem;
+      --radius-2xl: 1rem;
+      --radius-3xl: 1.5rem;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 24px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 40px rgba(0,0,0,0.12);
+      --shadow-2xl: 0 25px 50px rgba(0,0,0,0.16);
+      --shadow-accent: 0 8px 25px rgba(232, 133, 0, 0.25);
+      --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.06);
+      --max-width: 1200px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--color-brand-bg);
+      color: var(--color-brand-dark);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.7;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      background: #FFFFFF;
+      padding: 0.5rem 1rem;
+      z-index: 10000;
+      font-size: 0.875rem;
+      border: 2px solid #E88500;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+
+    :focus-visible { outline: 2px solid #E88500; outline-offset: 2px; }
+
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 60px;
+      background: var(--color-navbar-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border-subtle);
+      transition: all var(--duration-normal) var(--ease-standard);
+    }
+    .site-nav.scrolled {
+      background: rgba(248, 248, 246, 0.97);
+      box-shadow: var(--shadow-md);
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-brand-dark);
+    }
+    .nav-logo .prompt { color: var(--color-accent); }
+    .nav-logo .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--color-accent);
+      margin-left: 1px;
+      vertical-align: text-bottom;
+      animation: blink 500ms step-end infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .nav-edition {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--color-accent-dark);
+      background: var(--color-accent-light);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-xs);
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero {
+      padding: 10rem 2rem 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow .bracket { color: var(--color-accent); }
+    .hero-eyebrow .label { color: var(--color-brand-muted); }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-brand-dark);
+      margin-bottom: 1.25rem;
+    }
+    .hero-title .dot { color: var(--color-accent); }
+    .hero-date {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-brand-muted);
+      margin-bottom: 2rem;
+      letter-spacing: 0.05em;
+    }
+    .hero-lead {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--color-brand-muted);
+      line-height: 1.8;
+      max-width: 640px;
+      margin: 0 auto 2rem;
+    }
+    .hero-lead strong { color: var(--color-brand-dark); font-weight: 700; }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-brand-light);
+      letter-spacing: 0.05em;
+    }
+    .hero-stat .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-garden-green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+    .hero-deco {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .deco-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .deco-ring:nth-child(1) { width: 200px; height: 200px; animation: ringPulse1 11s infinite ease-in-out; }
+    .deco-ring:nth-child(2) { width: 420px; height: 420px; animation: ringPulse2 11s infinite ease-in-out 0.4s; }
+    .deco-ring:nth-child(3) { width: 600px; height: 600px; border-width: 2px; animation: ringPulse3 11s infinite ease-in-out 0.8s; }
+    @keyframes ringPulse1 { 0%, 100% { opacity: 0.06; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.14; transform: translate(-50%, -50%) scale(1.04); } }
+    @keyframes ringPulse2 { 0%, 100% { opacity: 0.04; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.10; transform: translate(-50%, -50%) scale(1.03); } }
+    @keyframes ringPulse3 { 0%, 100% { opacity: 0.03; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.07; transform: translate(-50%, -50%) scale(1.02); } }
+
+    .divider {
+      border: none;
+      height: 1px;
+      background: var(--color-border-subtle);
+      margin: 0;
+    }
+
+    .section {
+      padding: 6rem 0;
+    }
+    .section-alt { background: var(--color-brand-bg-secondary); }
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--color-accent);
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--color-brand-dark);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .section-desc {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-brand-muted);
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    .brief-block {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 0;
+    }
+    .brief-text {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--color-brand-muted);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+    .brief-text strong { color: var(--color-brand-dark); font-weight: 700; }
+    .brief-sig {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-brand-light);
+      letter-spacing: 0.05em;
+    }
+    .brief-sig .accent { color: var(--color-accent); }
+
+    .card-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .item-card {
+      position: relative;
+      background: linear-gradient(135deg, #FFFFFF 0%, var(--color-neutral-50) 100%);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-none);
+      padding: 2rem;
+      transition: all var(--duration-normal) var(--ease-standard);
+    }
+    .item-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-garden-green), var(--color-accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--duration-normal) var(--ease-standard);
+    }
+    .item-card:hover {
+      border-color: var(--color-border-hover);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .item-card:hover::after { transform: scaleX(1); }
+    .item-card-glow {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(232, 133, 0, 0.035) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease-standard);
+      pointer-events: none;
+    }
+    .item-card:hover .item-card-glow { opacity: 1; }
+
+    .item-category {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      color: var(--color-garden-green-dark);
+      background: rgba(0, 168, 85, 0.08);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-xs);
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      margin-bottom: 1rem;
+    }
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .item-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-brand-dark);
+      line-height: 1.4;
+    }
+    .item-domain {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--color-brand-light);
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+      margin-top: 0.25rem;
+    }
+    .item-body {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-brand-muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .item-body strong { color: var(--color-brand-dark); font-weight: 700; }
+    .item-callout {
+      background: var(--color-neutral-50);
+      border-left: 2px solid var(--color-accent);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+    .item-callout-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--color-accent-dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .item-callout-text {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: var(--color-neutral-700);
+      line-height: 1.6;
+    }
+    .item-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      margin-bottom: 1rem;
+    }
+    .item-tag {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      color: var(--color-neutral-500);
+      background: var(--color-neutral-100);
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--radius-xs);
+      letter-spacing: 0.02em;
+    }
+    .item-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-accent);
+      transition: all var(--duration-normal) var(--ease-standard);
+    }
+    .item-link:hover { color: var(--color-accent-dark); }
+    .item-link .arrow {
+      transition: transform var(--duration-normal) var(--ease-standard);
+      display: inline-block;
+    }
+    .item-link:hover .arrow { transform: translate(2px, -2px); }
+
+    .full-card {
+      position: relative;
+      background: linear-gradient(135deg, #FFFFFF 0%, var(--color-neutral-50) 100%);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-none);
+      transition: all var(--duration-normal) var(--ease-standard);
+      overflow: hidden;
+    }
+    .full-card:hover {
+      border-color: var(--color-border-hover);
+      box-shadow: var(--shadow-xl);
+    }
+    .full-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-garden-green), var(--color-accent), var(--color-garden-green));
+      background-size: 200% 100%;
+      animation: gradientSlide 4s ease infinite;
+    }
+    @keyframes gradientSlide {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 100% 0%; }
+    }
+    .full-card-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+      .full-card-inner { grid-template-columns: 1fr 320px; }
+    }
+    .full-card-content { padding: 2.5rem; }
+    .full-card-aside {
+      background: linear-gradient(135deg, var(--color-brand-bg-secondary) 0%, var(--color-brand-bg) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .full-card-aside::before {
+      content: '';
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(232, 133, 0, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .aside-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .aside-cell {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      color: var(--color-brand-light);
+      background: rgba(255,255,255,0.5);
+    }
+    .aside-cell.active {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+
+    .index-section { padding: 5rem 0; }
+    .index-list {
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-none);
+      overflow: hidden;
+    }
+    .index-row {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--color-border-secondary);
+      transition: all var(--duration-normal) var(--ease-standard);
+      gap: 1rem;
+    }
+    .index-row:last-child { border-bottom: none; }
+    .index-row:hover {
+      background: var(--color-neutral-50);
+      transform: translateX(2px);
+    }
+    .index-num {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--color-brand-light);
+      width: 1.75rem;
+      flex-shrink: 0;
+    }
+    .index-title {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-brand-dark);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .index-cat {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      color: var(--color-brand-light);
+      flex-shrink: 0;
+      display: none;
+    }
+    @media (min-width: 768px) { .index-cat { display: block; } }
+    .index-arrow {
+      color: var(--color-accent);
+      flex-shrink: 0;
+      transition: transform var(--duration-normal) var(--ease-standard);
+    }
+    .index-row:hover .index-arrow { transform: translate(2px, -2px); }
+
+    .site-footer {
+      background: linear-gradient(to bottom, var(--color-brand-bg-secondary), var(--color-brand-bg));
+      border-top: 1px solid var(--color-border-subtle);
+      padding: 3rem 2rem 2rem;
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .footer-main {
+      display: flex;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .footer-brand { max-width: 320px; }
+    .footer-logo {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+    .footer-tagline {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--color-brand-muted);
+      line-height: 1.6;
+    }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border-subtle);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--color-brand-light);
+    }
+    .footer-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--color-brand-light);
+    }
+    .footer-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-success-500);
+      animation: pulse 2s infinite;
+    }
+
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all var(--duration-slower) var(--ease-spring);
+    }
+    .section-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding: 7rem 1rem 4rem; }
+      .item-card { padding: 1.5rem; }
+      .full-card-content { padding: 1.5rem; }
+      .full-card-aside { display: none; }
+      .section { padding: 4rem 0; }
+      .container { padding: 0 1rem; }
+      .footer-main { flex-direction: column; gap: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .section-reveal { opacity: 1; transform: none; transition: none; }
+      .deco-ring { animation: none; opacity: 0.08; }
+      .nav-logo .cursor { animation: none; opacity: 1; }
+      .footer-status-dot { animation: none; }
+      .hero-stat .pulse-dot { animation: none; }
+      * { transition-duration: 0ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <nav id="navbar" class="site-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="https://te9.dev" class="nav-logo">
+        <span class="prompt">&rsaquo;</span> te9.dev<span class="cursor"></span>
+      </a>
+      <span class="nav-edition">// edition 001</span>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="bracket">[</span>
+          <span class="label">curated-digest</span>
+          <span class="bracket">]</span>
+        </div>
+        <h1 class="hero-title">the digest<span class="dot">.</span></h1>
+        <div class="hero-date">// edition #001 &mdash; april 25, 2026</div>
+        <p class="hero-lead">
+          Ten hand-picked resources, each crawled and analyzed by our AI pipeline.
+          Written for <strong>developers</strong> who ship, <strong>tech enthusiasts</strong> who track what's next,
+          and <strong>open-source watchers</strong> who see the patterns before they hit mainstream.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="pulse-dot"></span> 10 resources</div>
+          <div class="hero-stat"><span class="pulse-dot"></span> 8 categories</div>
+          <div class="hero-stat"><span class="pulse-dot"></span> analyzed by GLM-5</div>
+        </div>
+      </div>
+      <div class="hero-deco" aria-hidden="true">
+        <div class="deco-ring"></div>
+        <div class="deco-ring"></div>
+        <div class="deco-ring"></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="container">
+      <div class="brief-block section-reveal">
+        <span class="section-label">// the brief</span>
+        <h2 class="section-title" style="margin-bottom: 1.5rem;">What's happening this cycle</h2>
+        <p class="brief-text">
+          Three currents run through this batch. First, <strong>AI agents are acquiring hands</strong>: Browser Harness gives LLMs direct control of a live browser via Chrome DevTools Protocol, while WriteHERE decomposes writing tasks into recursive sub-plans that adapt on the fly. The agent wave isn't coming &mdash; it's lapping at the shore.
+        </p>
+        <p class="brief-text">
+          Second, <strong>the edge is real</strong>. PicoLM runs a billion-parameter model on a $10 board with 256&thinsp;MB RAM. That's not a toy &mdash; it's a signal that offline-first, privacy-preserving AI is becoming a practical deployment target, not just a research curiosity.
+        </p>
+        <p class="brief-text">
+          Third, <strong>developer infrastructure keeps maturing</strong>. useSend gives you a self-hosted alternative to Resend and SendGrid. agx wraps analytics into a Tauri+SvelteKit desktop app. Forg turns git commits into social posts. And TRIP proves you can self-host your own trip planner without surrendering data to a SaaS. The common thread: builders taking back control of their toolchain.
+        </p>
+        <div class="brief-sig">
+          <span class="accent">&mdash;</span> analyzed and written by <span class="accent">GLM-5</span>, curated by te9.dev
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header section-reveal">
+          <span class="section-label">// ai agents</span>
+          <h2 class="section-title">Agents That Reach Into the World</h2>
+          <p class="section-desc">
+            The latest agent tooling isn't about writing code faster &mdash; it's about letting AI perceive and act on the real web, compose long-form content, and run on hardware you'd find in a junk drawer.
+          </p>
+        </div>
+
+        <div class="full-card section-reveal" style="margin-bottom: 2rem;">
+          <div class="full-card-inner">
+            <div class="full-card-content">
+              <span class="item-category">browser automation tool</span>
+              <div class="item-head">
+                <h3 class="item-title">Browser Harness &mdash; LLMs Get a Live Browser</h3>
+              </div>
+              <div class="item-body">
+                At roughly 592 lines of Python, <strong>Browser Harness</strong> connects an AI coding assistant (Claude Code, Codex) directly to Chrome via the DevTools Protocol. The twist: the agent writes and edits its own <code style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--color-neutral-100); padding: 0.125rem 0.375rem; border-radius: 2px;">helpers.py</code> mid-task, creating a self-healing automation loop that adapts when selectors break or UIs change. No brittle scripts. No replay maintenance.
+              </div>
+              <div class="item-callout">
+                <div class="item-callout-label">When to use it</div>
+                <div class="item-callout-text">
+                  Complex form submissions, multi-step browser testing, scraping dynamic sites &mdash; anywhere traditional Playwright or Selenium scripts would rot within weeks.
+                </div>
+              </div>
+              <div class="item-tags">
+                <span class="item-tag">browser automation</span>
+                <span class="item-tag">CDP</span>
+                <span class="item-tag">self-healing</span>
+                <span class="item-tag">AI agent</span>
+                <span class="item-tag">python</span>
+              </div>
+              <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener noreferrer" class="item-link">
+                github.com/browser-use/browser-harness <span class="arrow">&rsaquo;</span>
+              </a>
+            </div>
+            <div class="full-card-aside" aria-hidden="true">
+              <div class="aside-grid">
+                <div class="aside-cell active">CDP</div>
+                <div class="aside-cell">DOM</div>
+                <div class="aside-cell active">WS</div>
+                <div class="aside-cell">CSS</div>
+                <div class="aside-cell active">AI</div>
+                <div class="aside-cell">XHR</div>
+                <div class="aside-cell">JS</div>
+                <div class="aside-cell">URL</div>
+                <div class="aside-cell active">&check;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-grid card-grid-2">
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">ai framework</div>
+            <div class="item-head">
+              <h3 class="item-title">WriteHERE &mdash; Recursive Planning for Long-Form Writing</h3>
+              <span class="item-domain">github.com</span>
+            </div>
+            <div class="item-body">
+              Most LLM writing tools follow a rigid prompt&ndash;generate pipeline. <strong>WriteHERE</strong> takes a different approach: it recursively decomposes a writing task into sub-tasks, plans each one, and integrates retrieval, reasoning, and composition at every level. The result is adaptive long-form output &mdash; technical reports, creative fiction &mdash; that isn't shackled to a fixed template.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                When you need multi-page technical docs, grant proposals, or any writing task where rigid outlines fail and the AI needs to re-plan as it goes.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">LLM integration</span>
+              <span class="item-tag">recursive planning</span>
+              <span class="item-tag">long-form writing</span>
+              <span class="item-tag">research</span>
+            </div>
+            <a href="https://github.com/principia-ai/WriteHERE" target="_blank" rel="noopener noreferrer" class="item-link">
+              github.com/principia-ai/writehere <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">ai/ml library</div>
+            <div class="item-head">
+              <h3 class="item-title">PicoLM &mdash; 1B Parameters, $10 Hardware</h3>
+              <span class="item-domain">github.com</span>
+            </div>
+            <div class="item-body">
+              A from-scratch C11 inference engine that runs a billion-parameter model on hardware with as little as 256&thinsp;MB RAM. By memory-mapping model files, PicoLM keeps runtime memory around 45&thinsp;MB. Pair it with <strong>PicoClaw</strong> for fully offline AI agents on Telegram, Discord, or CLI.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">Why it matters</div>
+              <div class="item-callout-text">
+                This is edge AI's proof point. When a Raspberry Pi runs a billion-parameter model, the economics of privacy-first and offline-first apps change completely.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">LLM</span>
+              <span class="item-tag">edge computing</span>
+              <span class="item-tag">C11</span>
+              <span class="item-tag">raspberry pi</span>
+              <span class="item-tag">offline AI</span>
+              <span class="item-tag">TinyLlama</span>
+            </div>
+            <a href="https://github.com/RightNow-AI/picolm" target="_blank" rel="noopener noreferrer" class="item-link">
+              github.com/rightnow-ai/picolm <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header section-reveal">
+          <span class="section-label">// dev infrastructure</span>
+          <h2 class="section-title">Own Your Toolchain</h2>
+          <p class="section-desc">
+            Self-hosted email, desktop analytics, and a platform that turns commits into credibility. The through-line: taking back control of the infrastructure you depend on.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid-2">
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">email infrastructure</div>
+            <div class="item-head">
+              <h3 class="item-title">useSend &mdash; Self-Hosted Transactional Email</h3>
+              <span class="item-domain">github.com</span>
+            </div>
+            <div class="item-body">
+              An open-source alternative to Resend, SendGrid, and Postmark. <strong>useSend</strong> gives you a REST API for transactional and marketing emails, domain management, webhook integration, scheduled sends, and a deliverability dashboard &mdash; all self-hostable. No vendor lock-in, no per-email pricing surprises.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                When your team needs full control over email delivery, custom analytics, or integration with internal systems that SaaS providers can't reach.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">email</span>
+              <span class="item-tag">open source</span>
+              <span class="item-tag">self-hosted</span>
+              <span class="item-tag">SMTP</span>
+              <span class="item-tag">API</span>
+            </div>
+            <a href="https://github.com/usesend/useSend" target="_blank" rel="noopener noreferrer" class="item-link">
+              github.com/usesend/usesend <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">desktop application framework</div>
+            <div class="item-head">
+              <h3 class="item-title">agx &mdash; AI-Powered Analytics Desktop App</h3>
+              <span class="item-domain">github.com</span>
+            </div>
+            <div class="item-body">
+              Built with <strong>Tauri + SvelteKit + Plot</strong>, agx is a cross-platform analytics tool with an interactive SQL editor, schema browser, and LLM integration via Ollama. Run it native or web-based via Docker Compose. It targets data teams who want a local-first analytics interface with AI assistance baked in.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                When you need a custom analytics dashboard with ClickHouse UDFs, local LLM query assistance, or a desktop-first experience that doesn't require a cloud deployment.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">Rust</span>
+              <span class="item-tag">SvelteKit</span>
+              <span class="item-tag">Tauri</span>
+              <span class="item-tag">analytics</span>
+              <span class="item-tag">SQL editor</span>
+            </div>
+            <a href="https://github.com/agnosticeng/agx" target="_blank" rel="noopener noreferrer" class="item-link">
+              github.com/agnosticeng/agx <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">developer tool / saas</div>
+            <div class="item-head">
+              <h3 class="item-title">Forg &mdash; Ship, Share, Sell</h3>
+              <span class="item-domain">forg.to</span>
+            </div>
+            <div class="item-body">
+              <strong>Forg</strong> aggregates your tech stack, GitHub activity, and commit history into a verified builder profile. Its Creator Studio then generates social posts from raw code commits and schedules them to X, LinkedIn, and Bluesky. It's a marketing engine for developers who'd rather write code than craft tweets.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                When you need to build professional credibility, automate dev-content distribution, or aggregate your open-source identity into a single verifiable profile.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">developer identity</span>
+              <span class="item-tag">content automation</span>
+              <span class="item-tag">social proof</span>
+              <span class="item-tag">GitHub</span>
+            </div>
+            <a href="https://forg.to/" target="_blank" rel="noopener noreferrer" class="item-link">
+              forg.to <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">productivity tool</div>
+            <div class="item-head">
+              <h3 class="item-title">Atomic &mdash; Connected Knowledge Base</h3>
+              <span class="item-domain">atomicapp.ai</span>
+            </div>
+            <div class="item-body">
+              <strong>Atomic</strong> converts unstructured notes into a semantic knowledge graph with vector-embedding search. It integrates with MCP clients like Cursor, so you can query your entire note library semantically while coding. Features include agentic chat, wiki synthesis from raw atoms, and force-directed graph visualization.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                During research and documentation phases, when you need to surface related concepts across hundreds of notes or synthesize complex topics into structured wikis.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">knowledge management</span>
+              <span class="item-tag">semantic search</span>
+              <span class="item-tag">MCP</span>
+              <span class="item-tag">vector database</span>
+            </div>
+            <a href="https://atomicapp.ai/" target="_blank" rel="noopener noreferrer" class="item-link">
+              atomicapp.ai <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header section-reveal">
+          <span class="section-label">// creative & spatial</span>
+          <h2 class="section-title">New Tools for New Mediums</h2>
+          <p class="section-desc">
+            Gaussian splat editing in the browser, AI video generation with lip-sync, and a self-hosted trip planner that keeps your travel data off third-party servers.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid-2">
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">development tool</div>
+            <div class="item-head">
+              <h3 class="item-title">SuperSplat &mdash; Browser-Based 3D Gaussian Splat Editor</h3>
+              <span class="item-domain">github.com</span>
+            </div>
+            <div class="item-body">
+              Built on <strong>PlayCanvas</strong>, SuperSplat is a free, open-source tool that lets you inspect, edit, optimize, and publish 3D Gaussian splats entirely in the browser. No local install, no heavy software stack. Load your splats, clean them up, and export &mdash; all through a web interface running at <code style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--color-neutral-100); padding: 0.125rem 0.375rem; border-radius: 2px;">localhost:3000</code> after a quick <code style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--color-neutral-100); padding: 0.125rem 0.375rem; border-radius: 2px;">npm run develop</code>.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                When you need immediate, lightweight editing of complex 3D spatial data without installing desktop software &mdash; prototyping, web-based AR/VR, or spatial visualization workflows.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">3D graphics</span>
+              <span class="item-tag">Gaussian splatting</span>
+              <span class="item-tag">PlayCanvas</span>
+              <span class="item-tag">web editor</span>
+            </div>
+            <a href="https://github.com/playcanvas/supersplat" target="_blank" rel="noopener noreferrer" class="item-link">
+              github.com/playcanvas/supersplat <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">generative ai tool</div>
+            <div class="item-head">
+              <h3 class="item-title">HappyHorse &mdash; AI Video with Native Lip-Sync</h3>
+              <span class="item-domain">happyhorse.mov</span>
+            </div>
+            <div class="item-body">
+              <strong>HappyHorse</strong> generates character-driven short films with multi-shot consistency, 1080p output, and native lip-sync across multiple languages. The four-step workflow (script &rarr; render &rarr; refine &rarr; export) makes it viable for commercial campaigns, motion graphics, and rapid video prototyping without a production crew.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                Rapid prototyping of character-driven content, localized ad campaigns with lip-sync, or any situation where traditional video production is too slow or expensive.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">AI video</span>
+              <span class="item-tag">text-to-video</span>
+              <span class="item-tag">lip-sync</span>
+              <span class="item-tag">character consistency</span>
+            </div>
+            <a href="https://happyhorse.mov/" target="_blank" rel="noopener noreferrer" class="item-link">
+              happyhorse.mov <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+        </div>
+
+        <div class="card-grid" style="max-width: 800px; margin: 2rem auto 0;">
+          <article class="item-card section-reveal">
+            <div class="item-card-glow"></div>
+            <div class="item-category">self-hosted application</div>
+            <div class="item-head">
+              <h3 class="item-title">TRIP &mdash; Self-Hosted Trip Planner with POI Maps</h3>
+              <span class="item-domain">github.com</span>
+            </div>
+            <div class="item-body">
+              A minimalist, Docker-deployable web app for tracking points of interest on interactive maps and planning multi-day itineraries. <strong>TRIP</strong> supports OIDC authentication and keeps all your travel data on your own server. It's also a solid reference project for anyone building mapping applications with collaborative features.
+            </div>
+            <div class="item-callout">
+              <div class="item-callout-label">When to use it</div>
+              <div class="item-callout-text">
+                When you want a privacy-focused trip planner without third-party services, or as a learning project for full-stack mapping apps with Docker deployment.
+              </div>
+            </div>
+            <div class="item-tags">
+              <span class="item-tag">self-hosted</span>
+              <span class="item-tag">trip planner</span>
+              <span class="item-tag">POI</span>
+              <span class="item-tag">Docker</span>
+              <span class="item-tag">maps</span>
+            </div>
+            <a href="https://github.com/itskovacs/trip" target="_blank" rel="noopener noreferrer" class="item-link">
+              github.com/itskovacs/trip <span class="arrow">&rsaquo;</span>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="index-section">
+      <div class="container">
+        <div class="section-header section-reveal">
+          <span class="section-label">// index</span>
+          <h2 class="section-title">Quick Reference</h2>
+        </div>
+        <div class="index-list section-reveal">
+          <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">01</span>
+            <span class="index-title">browser harness</span>
+            <span class="index-cat">browser automation</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://github.com/principia-ai/WriteHERE" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">02</span>
+            <span class="index-title">writehere</span>
+            <span class="index-cat">ai framework</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://github.com/RightNow-AI/picolm" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">03</span>
+            <span class="index-title">picolm</span>
+            <span class="index-cat">ai/ml library</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://github.com/usesend/useSend" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">04</span>
+            <span class="index-title">usesend</span>
+            <span class="index-cat">email infrastructure</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://github.com/agnosticeng/agx" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">05</span>
+            <span class="index-title">agx</span>
+            <span class="index-cat">desktop app framework</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://forg.to/" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">06</span>
+            <span class="index-title">forg</span>
+            <span class="index-cat">developer tool / saas</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://atomicapp.ai/" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">07</span>
+            <span class="index-title">atomic</span>
+            <span class="index-cat">productivity tool</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://github.com/playcanvas/supersplat" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">08</span>
+            <span class="index-title">supersplat</span>
+            <span class="index-cat">development tool</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://happyhorse.mov/" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">09</span>
+            <span class="index-title">happyhorse</span>
+            <span class="index-cat">generative ai</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+          <a href="https://github.com/itskovacs/trip" target="_blank" rel="noopener noreferrer" class="index-row">
+            <span class="index-num">10</span>
+            <span class="index-title">trip</span>
+            <span class="index-cat">self-hosted app</span>
+            <span class="index-arrow">&rsaquo;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <div class="footer-logo">&rsaquo; te9.dev_</div>
+          <p class="footer-tagline">A digital garden growing tools, analysis, and curated signal for the modern developer ecosystem.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 te9.dev &mdash; curated with AI analysis</span>
+        <span class="footer-status">
+          <span class="footer-status-dot"></span>
+          pipeline active
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+      navbar.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.section-reveal').forEach(function (el) { revealObserver.observe(el); });
+  </script>
+
+</body>
+</html>
