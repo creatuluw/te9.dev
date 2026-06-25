@@ -1,0 +1,3953 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LRS — Design System + Components</title>
+    <meta name="seed" content="DS2-GLACIER-7742" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,200..900&family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─────────────────────────────────────────────
+       GLACIER DESIGN SYSTEM — Token Definitions
+       Industrial specification aesthetic, OKLCH color space
+       Seed: DS2-GLACIER-7742
+    ───────────────────────────────────────────── */
+
+      :root {
+        /* ── Color Tokens (OKLCH) ── */
+        --color-accent: oklch(0.69 0.16 41);
+        --color-accent-light: oklch(0.78 0.09 41);
+        --color-accent-dark: oklch(0.44 0.14 41);
+        --color-accent-muted: oklch(0.93 0.03 41);
+
+        --color-surface: oklch(0.98 0.003 250);
+        --color-surface-raised: oklch(0.96 0.005 250);
+        --color-surface-sunken: oklch(0.935 0.006 250);
+
+        --color-text: oklch(0.14 0.01 250);
+        --color-text-secondary: oklch(0.4 0.012 250);
+        --color-text-tertiary: oklch(0.58 0.01 250);
+        --color-text-on-accent: oklch(0.97 0.005 250);
+
+        --color-border: oklch(0.86 0.006 250);
+        --color-border-strong: oklch(0.72 0.012 250);
+        --color-grid: oklch(0.9 0.004 250);
+
+        --color-success: oklch(0.68 0.14 160);
+        --color-warning: oklch(0.76 0.13 80);
+        --color-danger: oklch(0.58 0.17 22);
+
+        /* ── Typography Tokens ── */
+        --font-display: "Source Serif 4", serif;
+        --font-body: "Manrope", sans-serif;
+        --font-mono: "Courier New", Courier, monospace;
+
+        --text-xs: 0.6875rem;
+        --text-sm: 0.8125rem;
+        --text-base: 1rem;
+        --text-md: 1.25rem;
+        --text-lg: 1.563rem;
+        --text-xl: 1.953rem;
+        --text-2xl: 2.441rem;
+        --text-3xl: clamp(2.8rem, 5.5vw, 3.815rem);
+        --text-4xl: clamp(3.2rem, 7vw, 5.06rem);
+
+        --leading-tight: 1.08;
+        --leading-snug: 1.25;
+        --leading-normal: 1.6;
+        --leading-relaxed: 1.8;
+
+        /* ── Spacing Tokens (4pt scale) ── */
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-24: 6rem;
+
+        /* ── Radius Tokens ── */
+        --radius-xs: 2px;
+        --radius-sm: 3px;
+        --radius-md: 4px;
+        --radius-lg: 6px;
+        --radius-xl: 10px;
+        --radius-full: 9999px;
+
+        /* ── Shadow Tokens ── */
+        --shadow-sm: 0 1px 2px oklch(0.22 0.005 250 / 0.07);
+        --shadow-md: 0 2px 8px oklch(0.22 0.005 250 / 0.09);
+        --shadow-lg: 0 6px 24px oklch(0.22 0.005 250 / 0.12);
+
+        /* ── Motion Tokens ── */
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        --ease-industrial: cubic-bezier(0.22, 0.61, 0.36, 1);
+        --duration-fast: 120ms;
+        --duration-base: 250ms;
+        --duration-slow: 450ms;
+        --duration-enter: 600ms;
+
+        /* ── Layout ── */
+        --max-width: 72rem;
+        --gutter: clamp(1rem, 3vw, 2rem);
+
+        /* ── Grid Overlay ── */
+        --grid-color: oklch(0.9 0.004 250 / 0.35);
+        --grid-spacing: 24px;
+      }
+
+      /* ─────────────────────────────────────────────
+       Reset & Base
+    ───────────────────────────────────────────── */
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: var(--font-body);
+        font-size: var(--text-base);
+        line-height: var(--leading-normal);
+        color: var(--color-text);
+        background: var(--color-surface);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* ─────────────────────────────────────────────
+       Grid Overlay Effect (decorative, technical)
+    ───────────────────────────────────────────── */
+
+      .grid-bg {
+        position: relative;
+      }
+
+      .grid-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            90deg,
+            var(--grid-color) 0 1px,
+            transparent 1px var(--grid-spacing)
+          ),
+          repeating-linear-gradient(
+            0deg,
+            var(--grid-color) 0 1px,
+            transparent 1px var(--grid-spacing)
+          );
+        background-size: var(--grid-spacing) var(--grid-spacing);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        transition: opacity var(--duration-slow) ease;
+      }
+
+      .grid-bg:hover::before {
+        opacity: 1;
+      }
+
+      /* ─────────────────────────────────────────────
+       Measurement Annotation
+    ───────────────────────────────────────────── */
+
+      .annotation {
+        position: relative;
+      }
+
+      .annotation::after {
+        content: attr(data-measure);
+        position: absolute;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1;
+        color: var(--color-accent-light);
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+
+      .annotation-right::after {
+        right: 0;
+        top: 50%;
+        transform: translateX(calc(100% + 6px)) translateY(-50%);
+      }
+
+      .annotation-bottom::after {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(calc(100% + 4px));
+      }
+
+      /* ─────────────────────────────────────────────
+       Page Entrance Animation
+    ───────────────────────────────────────────── */
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes typeIn {
+        from {
+          opacity: 0;
+          letter-spacing: 0.12em;
+        }
+        to {
+          opacity: 1;
+          letter-spacing: inherit;
+        }
+      }
+
+      .entrance {
+        animation: slideUp var(--duration-enter) var(--ease-out-expo) both;
+      }
+
+      .entrance-d1 {
+        animation-delay: 60ms;
+      }
+      .entrance-d2 {
+        animation-delay: 120ms;
+      }
+      .entrance-d3 {
+        animation-delay: 180ms;
+      }
+      .entrance-d4 {
+        animation-delay: 240ms;
+      }
+      .entrance-d5 {
+        animation-delay: 300ms;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .entrance,
+        .entrance-d1,
+        .entrance-d2,
+        .entrance-d3,
+        .entrance-d4,
+        .entrance-d5 {
+          animation: none;
+          opacity: 1;
+        }
+      }
+
+      /* ─────────────────────────────────────────────
+       Navigation
+    ───────────────────────────────────────────── */
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: oklch(0.98 0.003 250 / 0.92);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .nav-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-3) var(--gutter);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav-brand {
+        font-family: var(--font-display);
+        font-size: var(--text-md);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .nav-brand .brand-mark {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--color-accent);
+        border-radius: var(--radius-xs);
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-brand .brand-mark::after {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--color-accent);
+        border-radius: 1px;
+      }
+
+      .nav-seed {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        color: var(--color-text-tertiary);
+        padding: 2px 6px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xs);
+        margin-left: var(--space-3);
+        vertical-align: middle;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: var(--space-1);
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-xs);
+        transition:
+          color var(--duration-fast) ease,
+          background var(--duration-fast) ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--color-accent);
+        background: var(--color-accent-muted);
+      }
+
+      .nav-links a:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+
+      /* ─────────────────────────────────────────────
+       Hero Section
+    ───────────────────────────────────────────── */
+
+      .hero {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-24) var(--gutter) var(--space-16);
+        position: relative;
+      }
+
+      .hero-classification {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-6);
+      }
+
+      .hero-classification .class-line {
+        width: 32px;
+        height: 1px;
+        background: var(--color-border-strong);
+      }
+
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: 700;
+        line-height: var(--leading-tight);
+        letter-spacing: -0.03em;
+        color: var(--color-text);
+        max-width: 16ch;
+      }
+
+      .hero-title .accent-word {
+        color: var(--color-accent);
+      }
+
+      .hero-desc {
+        margin-top: var(--space-8);
+        font-size: var(--text-md);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-secondary);
+        max-width: 52ch;
+      }
+
+      .hero-specs {
+        margin-top: var(--space-12);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+        max-width: 600px;
+      }
+
+      .hero-spec {
+        background: var(--color-surface);
+        padding: var(--space-4) var(--space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+      }
+
+      .hero-spec-label {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        color: var(--color-text-tertiary);
+      }
+
+      .hero-spec-value {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+      }
+
+      /* ─────────────────────────────────────────────
+       Section Container
+    ───────────────────────────────────────────── */
+
+      .section {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-16) var(--gutter);
+        position: relative;
+      }
+
+      .section + .section {
+        padding-top: 0;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-4);
+        margin-bottom: var(--space-12);
+      }
+
+      .section-number {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--color-accent-muted);
+        border-radius: var(--radius-xs);
+        background: var(--color-accent-muted);
+        white-space: nowrap;
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: var(--leading-snug);
+        color: var(--color-text);
+      }
+
+      .divider {
+        border: none;
+        height: 1px;
+        background: var(--color-border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .divider-dashed {
+        border: none;
+        height: 0;
+        border-top: 1px dashed var(--color-border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      /* ─────────────────────────────────────────────
+       Color Palette Section
+    ───────────────────────────────────────────── */
+
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .color-swatch {
+        background: var(--color-surface);
+        overflow: hidden;
+        cursor: pointer;
+        transition: background var(--duration-fast) ease;
+        position: relative;
+      }
+
+      .color-swatch:hover {
+        background: var(--color-surface-raised);
+      }
+
+      .color-swatch:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+        z-index: 1;
+      }
+
+      .color-swatch-fill {
+        height: 80px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .color-swatch-info {
+        cursor: pointer;
+      }
+
+      .color-swatch-fill::after {
+        content: attr(data-token);
+        position: absolute;
+        bottom: 6px;
+        right: 8px;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.06em;
+        color: oklch(1 0 0 / 0.6);
+        mix-blend-mode: difference;
+      }
+
+      .color-swatch-info {
+        padding: var(--space-3) var(--space-4);
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .color-swatch-name {
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .color-swatch-value {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .color-swatch .copy-confirm {
+        position: absolute;
+        inset: 0;
+        background: oklch(0.69 0.16 41 / 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text-on-accent);
+        opacity: 0;
+        transition: opacity var(--duration-fast) ease;
+        pointer-events: none;
+      }
+
+      .color-swatch.copied .copy-confirm {
+        opacity: 1;
+      }
+
+      /* Accent swatches */
+      .swatch-accent {
+        background: var(--color-accent);
+      }
+      .swatch-accent-light {
+        background: var(--color-accent-light);
+      }
+      .swatch-accent-dark {
+        background: var(--color-accent-dark);
+      }
+      .swatch-accent-muted {
+        background: var(--color-accent-muted);
+      }
+
+      /* Surface swatches */
+      .swatch-surface {
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .swatch-surface-raised {
+        background: var(--color-surface-raised);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .swatch-surface-sunken {
+        background: var(--color-surface-sunken);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      /* Text swatches */
+      .swatch-text {
+        background: var(--color-text);
+      }
+      .swatch-text-secondary {
+        background: var(--color-text-secondary);
+      }
+      .swatch-text-tertiary {
+        background: var(--color-text-tertiary);
+      }
+
+      /* Semantic swatches */
+      .swatch-success {
+        background: var(--color-success);
+      }
+      .swatch-warning {
+        background: var(--color-warning);
+      }
+      .swatch-danger {
+        background: var(--color-danger);
+      }
+
+      /* ─────────────────────────────────────────────
+       Typography Section
+    ───────────────────────────────────────────── */
+
+      .type-specimen {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .type-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: var(--space-6);
+        align-items: baseline;
+        padding: var(--space-6) 0;
+        border-bottom: 1px dashed var(--color-border);
+      }
+
+      .type-row:last-child {
+        border-bottom: none;
+      }
+
+      .type-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        position: relative;
+      }
+
+      .type-token-name {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+      }
+
+      .type-token-value {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .type-sample-display {
+        font-family: var(--font-display);
+        line-height: var(--leading-tight);
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+      }
+
+      .type-sample-body {
+        font-family: var(--font-body);
+        line-height: var(--leading-normal);
+        color: var(--color-text);
+        max-width: 62ch;
+      }
+
+      .specimen-4xl {
+        font-size: var(--text-4xl);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+      }
+      .specimen-3xl {
+        font-size: var(--text-3xl);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      .specimen-2xl {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+      }
+      .specimen-xl {
+        font-size: var(--text-xl);
+        font-weight: 600;
+      }
+      .specimen-lg {
+        font-size: var(--text-lg);
+        font-weight: 600;
+      }
+      .specimen-md {
+        font-size: var(--text-md);
+        font-weight: 500;
+      }
+      .specimen-base {
+        font-size: var(--text-base);
+        font-weight: 400;
+      }
+      .specimen-sm {
+        font-size: var(--text-sm);
+        font-weight: 400;
+      }
+      .specimen-xs {
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+
+      /* Font pair display */
+      .font-pair-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--color-border);
+        margin-top: var(--space-12);
+      }
+
+      .font-pair-card {
+        background: var(--color-surface);
+        padding: var(--space-8);
+      }
+
+      .font-pair-label {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-4);
+      }
+
+      .font-pair-name {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+      }
+
+      .font-pair-classification {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-6);
+      }
+
+      .font-pair-sample {
+        font-size: var(--text-md);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-secondary);
+        max-width: 38ch;
+      }
+
+      .font-pair-sample.display-sample {
+        font-family: var(--font-display);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .font-pair-sample.body-sample {
+        font-family: var(--font-body);
+        font-weight: 400;
+      }
+
+      /* ─────────────────────────────────────────────
+       Spacing Section
+    ───────────────────────────────────────────── */
+
+      .spacing-specimen {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .spacing-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-2) 0;
+        border-bottom: 1px dashed var(--color-border);
+      }
+
+      .spacing-row:last-child {
+        border-bottom: none;
+      }
+
+      .spacing-label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--color-text-secondary);
+        min-width: 72px;
+        text-align: right;
+      }
+
+      .spacing-bar-track {
+        flex: 1;
+        height: 16px;
+        background: var(--color-surface-sunken);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .spacing-bar-fill {
+        height: 100%;
+        background: var(--color-accent);
+        opacity: 0.55;
+        transition: width var(--duration-slow) var(--ease-out-expo);
+        position: relative;
+      }
+
+      .spacing-bar-fill::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--color-accent);
+        opacity: 1;
+      }
+
+      .spacing-px {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+        min-width: 32px;
+      }
+
+      .spacing-rem {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-accent-light);
+        letter-spacing: 0.02em;
+        min-width: 48px;
+      }
+
+      /* ─────────────────────────────────────────────
+       Component Samples Section
+    ───────────────────────────────────────────── */
+
+      .component-area {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-16);
+      }
+
+      .component-group {
+        position: relative;
+      }
+
+      .component-group-label {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-6);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .component-group-label::before {
+        content: "■";
+        color: var(--color-accent);
+        font-size: 7px;
+      }
+
+      .component-group-title {
+        font-family: var(--font-display);
+        font-size: var(--text-md);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--space-6);
+      }
+
+      /* Buttons */
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        line-height: 1.4;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: var(--radius-xs);
+        transition:
+          transform var(--duration-fast) var(--ease-out-expo),
+          background var(--duration-fast) ease,
+          color var(--duration-fast) ease,
+          border-color var(--duration-fast) ease;
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      .btn:active {
+        transform: scale(0.97);
+      }
+
+      .btn-primary {
+        background: var(--color-accent);
+        color: var(--color-text-on-accent);
+        border-color: var(--color-accent);
+      }
+
+      .btn-primary:hover {
+        background: var(--color-accent-dark);
+        border-color: var(--color-accent-dark);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--color-text);
+        border-color: var(--color-border-strong);
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--color-text-secondary);
+        border-color: transparent;
+      }
+
+      .btn-ghost:hover {
+        background: var(--color-surface-sunken);
+        color: var(--color-text);
+      }
+
+      .btn-danger {
+        background: var(--color-danger);
+        color: oklch(0.97 0.005 22);
+        border-color: var(--color-danger);
+      }
+
+      .btn-danger:hover {
+        background: oklch(0.48 0.15 22);
+        border-color: oklch(0.48 0.15 22);
+      }
+
+      .btn-sm {
+        padding: var(--space-1) var(--space-3);
+        font-size: 9px;
+      }
+
+      .btn-lg {
+        padding: var(--space-3) var(--space-8);
+        font-size: var(--text-sm);
+      }
+
+      /* Tags / Status indicators */
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: 2px var(--space-2);
+        border: 1px solid;
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 600;
+        line-height: 1.5;
+        border-radius: var(--radius-xs);
+      }
+
+      .tag-default {
+        background: var(--color-surface-sunken);
+        color: var(--color-text-secondary);
+        border-color: var(--color-border);
+      }
+
+      .tag-accent {
+        background: var(--color-accent-muted);
+        color: var(--color-accent-dark);
+        border-color: oklch(0.82 0.03 41);
+      }
+
+      .tag-success {
+        background: oklch(0.95 0.03 160);
+        color: oklch(0.4 0.1 160);
+        border-color: oklch(0.88 0.04 160);
+      }
+
+      .tag-warning {
+        background: oklch(0.96 0.03 80);
+        color: oklch(0.42 0.1 80);
+        border-color: oklch(0.9 0.03 80);
+      }
+
+      .tag-danger {
+        background: oklch(0.95 0.03 22);
+        color: oklch(0.38 0.12 22);
+        border-color: oklch(0.9 0.04 22);
+      }
+
+      /* Labels / Colored badges */
+      .label-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .label {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: 2px var(--space-3);
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 600;
+        line-height: 1.5;
+        border-radius: var(--radius-xs);
+        border: 1px solid;
+        letter-spacing: 0.02em;
+      }
+
+      .label-default {
+        background: var(--color-surface-sunken);
+        color: var(--color-text-secondary);
+        border-color: var(--color-border);
+      }
+
+      .label-accent {
+        background: var(--color-accent);
+        color: var(--color-text-on-accent);
+        border-color: var(--color-accent);
+      }
+
+      .label-success {
+        background: oklch(0.95 0.03 160);
+        color: oklch(0.4 0.1 160);
+        border-color: oklch(0.88 0.04 160);
+      }
+
+      .label-warning {
+        background: oklch(0.96 0.03 80);
+        color: oklch(0.42 0.1 80);
+        border-color: oklch(0.9 0.03 80);
+      }
+
+      .label-danger {
+        background: oklch(0.95 0.03 22);
+        color: oklch(0.38 0.12 22);
+        border-color: oklch(0.9 0.04 22);
+      }
+
+      .label-custom {
+        background: #6366f1;
+        color: white;
+        border-color: transparent;
+      }
+
+      /* Input Fields */
+      .input-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: var(--space-6);
+        align-items: flex-start;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .field-label {
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .field-hint {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .input {
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--color-border-strong);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        background: var(--color-surface);
+        border-radius: var(--radius-xs);
+        transition:
+          border-color var(--duration-fast) ease,
+          box-shadow var(--duration-fast) ease;
+      }
+
+      .input::placeholder {
+        color: var(--color-text-tertiary);
+        font-family: var(--font-mono);
+      }
+
+      .input:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-muted);
+      }
+
+      .input:invalid:not(:placeholder-shown) {
+        border-color: var(--color-danger);
+        box-shadow: 0 0 0 2px oklch(0.95 0.03 22);
+      }
+
+      /* Toggle Switch */
+      .toggle-row {
+        display: flex;
+        gap: var(--space-8);
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .toggle-group {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .toggle-label {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        cursor: pointer;
+      }
+
+      .toggle {
+        position: relative;
+        width: 40px;
+        height: 20px;
+        appearance: none;
+        -webkit-appearance: none;
+        background: var(--color-border-strong);
+        border-radius: var(--radius-xs);
+        border: 1px solid var(--color-border);
+        cursor: pointer;
+        transition:
+          background var(--duration-fast) ease,
+          border-color var(--duration-fast) ease;
+      }
+
+      .toggle::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 14px;
+        height: 14px;
+        background: var(--color-surface);
+        border-radius: 1px;
+        transition: transform var(--duration-base) var(--ease-out-expo);
+        box-shadow: 0 1px 2px oklch(0.22 0.005 250 / 0.2);
+      }
+
+      .toggle:checked {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+      }
+
+      .toggle:checked::after {
+        transform: translateX(20px);
+      }
+
+      .toggle:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      /* Card Component */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .card {
+        background: var(--color-surface);
+        padding: var(--space-8);
+        position: relative;
+        transition: background var(--duration-fast) ease;
+      }
+
+      .card:hover {
+        background: var(--color-surface-raised);
+      }
+
+      .card-id {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .card-id::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        background: var(--color-accent);
+      }
+
+      .card-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+      }
+
+      .card-body {
+        font-size: var(--text-sm);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-secondary);
+        max-width: 45ch;
+      }
+
+      .card-footer {
+        margin-top: var(--space-6);
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding-top: var(--space-4);
+        border-top: 1px dashed var(--color-border);
+      }
+
+      /* ─────────────────────────────────────────────
+       ACCORDION Component
+    ───────────────────────────────────────────── */
+
+      .accordion {
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+      }
+
+      .accordion + .accordion {
+        border-top: none;
+      }
+
+      .accordion-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-surface);
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+        text-align: left;
+        transition:
+          background var(--duration-fast) ease,
+          color var(--duration-fast) ease;
+      }
+
+      .accordion-trigger:hover {
+        background: var(--color-surface-raised);
+      }
+
+      .accordion-trigger:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+        z-index: 1;
+      }
+
+      .accordion-trigger-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .accordion-ref {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+        min-width: 48px;
+      }
+
+      .accordion-icon {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform var(--duration-base) var(--ease-out-expo);
+        color: var(--color-text-tertiary);
+        flex-shrink: 0;
+      }
+
+      .accordion-trigger[aria-expanded="true"] .accordion-icon {
+        transform: rotate(180deg);
+      }
+
+      .accordion-trigger[aria-expanded="true"] {
+        background: var(--color-surface-raised);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .accordion-panel {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height var(--duration-slow) var(--ease-out-expo);
+      }
+
+      .accordion-panel[aria-hidden="false"] {
+        max-height: 500px;
+      }
+
+      .accordion-content {
+        padding: var(--space-6);
+        font-size: var(--text-sm);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-secondary);
+        max-width: 60ch;
+      }
+
+      .accordion-content ul {
+        margin-top: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .accordion-content li {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+      }
+
+      .accordion-content li::before {
+        content: "—";
+        color: var(--color-border-strong);
+        flex-shrink: 0;
+      }
+
+      /* ─────────────────────────────────────────────
+       MODAL Component
+    ───────────────────────────────────────────── */
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: oklch(0.14 0.01 250 / 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity var(--duration-slow) var(--ease-out-expo),
+          visibility var(--duration-slow);
+      }
+
+      .modal-backdrop.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-lg);
+        width: 90%;
+        max-width: 520px;
+        transform: translateY(12px) scale(0.98);
+        transition: transform var(--duration-slow) var(--ease-out-expo);
+      }
+
+      .modal-backdrop.is-open .modal {
+        transform: translateY(0) scale(1);
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-6);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .modal-header-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .modal-header-ref {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+      }
+
+      .modal-title {
+        font-family: var(--font-display);
+        font-size: var(--text-md);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+      }
+
+      .modal-close {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xs);
+        cursor: pointer;
+        color: var(--color-text-tertiary);
+        font-size: 14px;
+        line-height: 1;
+        transition:
+          color var(--duration-fast) ease,
+          border-color var(--duration-fast) ease,
+          background var(--duration-fast) ease;
+      }
+
+      .modal-close:hover {
+        color: var(--color-text);
+        border-color: var(--color-border-strong);
+        background: var(--color-surface-sunken);
+      }
+
+      .modal-close:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+
+      .modal-body {
+        padding: var(--space-6);
+      }
+
+      .modal-body p {
+        font-size: var(--text-sm);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+      }
+
+      .modal-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--space-3);
+        padding: var(--space-4) var(--space-6);
+        border-top: 1px dashed var(--color-border);
+      }
+
+      /* ─────────────────────────────────────────────
+       SEARCH-AHEAD SELECT Component
+    ───────────────────────────────────────────── */
+
+      .searchahead {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .searchahead-input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .searchahead-input-wrap::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        border-bottom: 1px solid var(--color-border);
+        opacity: 0;
+        transition: opacity var(--duration-fast) ease;
+      }
+
+      .searchahead-input-wrap.has-dropdown::after {
+        opacity: 1;
+      }
+
+      .searchahead-input-wrap::before {
+        content: "⌕";
+        position: absolute;
+        left: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--color-text-tertiary);
+        pointer-events: none;
+      }
+
+      .searchahead-input {
+        width: 100%;
+        padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
+        border: 1px solid var(--color-border-strong);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        background: var(--color-surface);
+        border-radius: var(--radius-xs);
+        transition:
+          border-color var(--duration-fast) ease,
+          box-shadow var(--duration-fast) ease;
+      }
+
+      .searchahead-input::placeholder {
+        color: var(--color-text-tertiary);
+      }
+
+      .searchahead-input:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-muted);
+      }
+
+      .searchahead-clear {
+        position: absolute;
+        right: var(--space-2);
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-surface-sunken);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xs);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        line-height: 1;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity var(--duration-fast) ease,
+          color var(--duration-fast) ease;
+      }
+
+      .searchahead-clear.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .searchahead-clear:hover {
+        color: var(--color-text);
+      }
+
+      .searchahead-dropdown {
+        position: absolute;
+        top: calc(100% + 2px);
+        left: 0;
+        right: 0;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-md);
+        max-height: 240px;
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition:
+          opacity var(--duration-fast) ease,
+          visibility var(--duration-fast),
+          transform var(--duration-fast) var(--ease-out-expo);
+        z-index: 50;
+      }
+
+      .searchahead-dropdown.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .searchahead-dropdown-header {
+        position: sticky;
+        top: 0;
+        background: var(--color-surface-raised);
+        padding: var(--space-2) var(--space-3);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .searchahead-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-2) var(--space-3);
+        cursor: pointer;
+        transition: background var(--duration-fast) ease;
+      }
+
+      .searchahead-option:hover,
+      .searchahead-option.is-highlighted {
+        background: var(--color-accent-muted);
+      }
+
+      .searchahead-option-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .searchahead-option-icon {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        color: var(--color-accent);
+        width: 16px;
+        text-align: center;
+      }
+
+      .searchahead-option-text {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+      }
+
+      .searchahead-option-text mark {
+        background: none;
+        color: var(--color-accent);
+        font-weight: 700;
+      }
+
+      .searchahead-option-meta {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .searchahead-empty {
+        padding: var(--space-6) var(--space-3);
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.04em;
+      }
+
+      .searchahead-empty::before {
+        content: "// ";
+        color: var(--color-border-strong);
+      }
+
+      .searchahead-selection {
+        margin-top: var(--space-4);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        min-height: 24px;
+      }
+
+      .searchahead-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: 2px var(--space-2);
+        background: var(--color-accent-muted);
+        border: 1px solid oklch(0.82 0.03 41);
+        border-radius: var(--radius-xs);
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-accent-dark);
+        cursor: pointer;
+        transition: background var(--duration-fast) ease;
+      }
+
+      .searchahead-chip:hover {
+        background: oklch(0.88 0.03 41);
+      }
+
+      .searchahead-chip::after {
+        content: "×";
+        font-size: 11px;
+        margin-left: var(--space-1);
+        color: var(--color-accent-light);
+      }
+
+      /* ─────────────────────────────────────────────
+       TOAST Component
+    ───────────────────────────────────────────── */
+
+      .toast-container {
+        position: fixed;
+        bottom: var(--space-6);
+        right: var(--space-6);
+        display: flex;
+        flex-direction: column-reverse;
+        gap: var(--space-2);
+        z-index: 1100;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-md);
+        min-width: 300px;
+        max-width: 420px;
+        pointer-events: auto;
+        transform: translateX(110%);
+        opacity: 0;
+        transition:
+          transform var(--duration-slow) var(--ease-out-expo),
+          opacity var(--duration-slow) var(--ease-out-expo);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .toast.is-visible {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .toast.is-dismissing {
+        transform: translateX(110%);
+        opacity: 0;
+      }
+
+      .toast-indicator {
+        width: 3px;
+        align-self: stretch;
+        flex-shrink: 0;
+      }
+
+      .toast-default .toast-indicator {
+        background: var(--color-accent);
+      }
+      .toast-success .toast-indicator {
+        background: var(--color-success);
+      }
+      .toast-warning .toast-indicator {
+        background: var(--color-warning);
+      }
+      .toast-danger .toast-indicator {
+        background: var(--color-danger);
+      }
+
+      .toast-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .toast-title {
+        font-family: var(--font-body);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .toast-message {
+        font-size: var(--text-sm);
+        line-height: var(--leading-normal);
+        color: var(--color-text-secondary);
+      }
+
+      .toast-close {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--color-text-tertiary);
+        font-size: 12px;
+        line-height: 1;
+        flex-shrink: 0;
+        transition: color var(--duration-fast) ease;
+      }
+
+      .toast-close:hover {
+        color: var(--color-text);
+      }
+
+      .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: var(--color-accent);
+        transform-origin: left;
+        transition: transform linear;
+      }
+
+      .toast-success .toast-progress {
+        background: var(--color-success);
+      }
+      .toast-warning .toast-progress {
+        background: var(--color-warning);
+      }
+      .toast-danger .toast-progress {
+        background: var(--color-danger);
+      }
+
+      .toast-trigger-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+
+      /* ─────────────────────────────────────────────
+       Motion Section
+    ───────────────────────────────────────────── */
+
+      .motion-demos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .motion-demo {
+        background: var(--color-surface);
+        padding: var(--space-8);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .motion-demo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .motion-demo-label {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+      }
+
+      .motion-demo-name {
+        font-family: var(--font-display);
+        font-size: var(--text-md);
+        font-weight: 700;
+        color: var(--color-text);
+      }
+
+      .motion-stage {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        background: var(--color-surface-sunken);
+        cursor: pointer;
+      }
+
+      .motion-block {
+        width: 24px;
+        height: 24px;
+        background: var(--color-accent);
+        position: absolute;
+        left: 8px;
+        transition-property: transform;
+      }
+
+      .motion-stage:hover .motion-block,
+      .motion-stage.active .motion-block {
+        transform: translateX(calc(100% * 5));
+      }
+
+      .ease-expo .motion-block {
+        transition-duration: 700ms;
+        transition-timing-function: var(--ease-out-expo);
+      }
+      .ease-quart .motion-block {
+        transition-duration: 500ms;
+        transition-timing-function: var(--ease-out-quart);
+      }
+      .ease-industrial .motion-block {
+        transition-duration: 600ms;
+        transition-timing-function: var(--ease-industrial);
+      }
+
+      .motion-curve {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      /* Duration reference */
+      .duration-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+        margin-top: var(--space-8);
+      }
+
+      .duration-item {
+        background: var(--color-surface);
+        padding: var(--space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .duration-token {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--color-accent);
+      }
+
+      .duration-value {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+      }
+
+      .duration-usage {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: var(--leading-normal);
+      }
+
+      /* Stagger reveal demo */
+      .stagger-demo {
+        margin-top: var(--space-12);
+      }
+
+      .stagger-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2px;
+        margin-top: var(--space-4);
+      }
+
+      .stagger-cell {
+        aspect-ratio: 2;
+        background: var(--color-surface-sunken);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .stagger-cell::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--color-accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--duration-base) var(--ease-out-expo);
+      }
+
+      .stagger-cell.visible::after {
+        transform: scaleX(1);
+      }
+
+      /* ─────────────────────────────────────────────
+       Principles Section
+    ───────────────────────────────────────────── */
+
+      .principles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .principle {
+        background: var(--color-surface);
+        padding: var(--space-8);
+      }
+
+      .principle-ref {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-4);
+      }
+
+      .principle-title {
+        font-family: var(--font-display);
+        font-size: var(--text-md);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+      }
+
+      .principle-desc {
+        font-size: var(--text-sm);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-secondary);
+        max-width: 38ch;
+      }
+
+      /* ─────────────────────────────────────────────
+       Footer
+    ───────────────────────────────────────────── */
+
+      .footer {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-12) var(--gutter) var(--space-8);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-4);
+        border-top: 1px solid var(--color-border);
+      }
+
+      .footer-brand {
+        font-family: var(--font-display);
+        font-size: var(--text-md);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--color-text-tertiary);
+      }
+
+      .footer-meta {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        color: var(--color-text-tertiary);
+        display: flex;
+        gap: var(--space-6);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: var(--space-4);
+        list-style: none;
+      }
+
+      .footer-links a {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        color: var(--color-text-tertiary);
+        text-decoration: none;
+        transition: color var(--duration-fast) ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--color-accent);
+      }
+
+      /* ─────────────────────────────────────────────
+       Responsive
+    ───────────────────────────────────────────── */
+
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+        .nav-seed {
+          display: none;
+        }
+
+        .hero {
+          padding-top: var(--space-16);
+        }
+        .hero-specs {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .type-row {
+          grid-template-columns: 1fr;
+          gap: var(--space-2);
+        }
+
+        .type-meta {
+          flex-direction: row;
+          gap: var(--space-3);
+        }
+
+        .spacing-label {
+          min-width: 56px;
+          font-size: 9px;
+        }
+        .spacing-rem {
+          display: none;
+        }
+
+        .font-pair-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stagger-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .principles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .footer-meta {
+          flex-direction: column;
+          gap: var(--space-2);
+        }
+
+        .toast-container {
+          left: var(--space-4);
+          right: var(--space-4);
+          bottom: var(--space-4);
+        }
+
+        .toast {
+          min-width: 0;
+          max-width: 100%;
+        }
+
+        .searchahead {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── Navigation ─── -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="#" class="nav-brand">
+          <span class="brand-mark"></span>
+          LRS
+          <span class="nav-seed">DS2-GLACIER-7742</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#colors">Colors</a></li>
+          <li><a href="#type">Type</a></li>
+          <li><a href="#spacing">Spacing</a></li>
+          <li><a href="#components">Components</a></li>
+          <li><a href="#motion">Motion</a></li>
+          <li><a href="#principles">Principles</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ─── Hero ─── -->
+    <header class="hero grid-bg">
+      <div class="hero-classification entrance">
+        <span class="class-line"></span>
+        Design System Specification — v2.0
+      </div>
+      <h1 class="hero-title entrance entrance-d1">
+        Clarity through<br /><span class="accent-word">structure</span>.
+      </h1>
+      <p class="hero-desc entrance entrance-d2">
+        A design system for teaching, learning, and progress tracking — where
+        clarity reduces cognitive load and every element serves the people
+        registering, reviewing, and reporting student growth. No decoration
+        without purpose. No ambiguity without consequence. Built for the
+        teachers who track progress for every student.
+      </p>
+      <div class="hero-specs entrance entrance-d3">
+        <div class="hero-spec">
+          <span class="hero-spec-label">Color Space</span>
+          <span class="hero-spec-value">OKLCH</span>
+        </div>
+        <div class="hero-spec">
+          <span class="hero-spec-label">Type Scale</span>
+          <span class="hero-spec-value">1.25×</span>
+        </div>
+        <div class="hero-spec">
+          <span class="hero-spec-label">Grid Base</span>
+          <span class="hero-spec-value">4 px</span>
+        </div>
+        <div class="hero-spec">
+          <span class="hero-spec-label">Fonts</span>
+          <span class="hero-spec-value">2</span>
+        </div>
+      </div>
+    </header>
+
+    <hr class="divider" />
+
+    <!-- ─── Colors ─── -->
+    <section class="section" id="colors" aria-labelledby="colors-title">
+      <div class="section-header entrance">
+        <span class="section-number">01</span>
+        <h2 class="section-title" id="colors-title">Color Palette</h2>
+      </div>
+
+      <div class="color-grid entrance entrance-d1">
+        <!-- Accent family -->
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy accent color token"
+        >
+          <div
+            class="color-swatch-fill swatch-accent"
+            data-token="--color-accent"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent</span>
+            <span class="color-swatch-value">oklch(0.69 0.16 41)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy accent light color token"
+        >
+          <div
+            class="color-swatch-fill swatch-accent-light"
+            data-token="--color-accent-light"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent Light</span>
+            <span class="color-swatch-value">oklch(0.78 0.09 41)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy accent dark color token"
+        >
+          <div
+            class="color-swatch-fill swatch-accent-dark"
+            data-token="--color-accent-dark"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent Dark</span>
+            <span class="color-swatch-value">oklch(0.44 0.14 41)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy accent muted color token"
+        >
+          <div
+            class="color-swatch-fill swatch-accent-muted"
+            data-token="--color-accent-muted"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent Muted</span>
+            <span class="color-swatch-value">oklch(0.93 0.03 41)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Surface family -->
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy surface color token"
+        >
+          <div
+            class="color-swatch-fill swatch-surface"
+            data-token="--color-surface"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Surface</span>
+            <span class="color-swatch-value">oklch(0.98 0.003 250)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy surface raised color token"
+        >
+          <div
+            class="color-swatch-fill swatch-surface-raised"
+            data-token="--color-surface-raised"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Raised</span>
+            <span class="color-swatch-value">oklch(0.96 0.005 250)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy surface sunken color token"
+        >
+          <div
+            class="color-swatch-fill swatch-surface-sunken"
+            data-token="--color-surface-sunken"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Sunken</span>
+            <span class="color-swatch-value">oklch(0.935 0.006 250)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Text family -->
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy text color token"
+        >
+          <div
+            class="color-swatch-fill swatch-text"
+            data-token="--color-text"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Text Primary</span>
+            <span class="color-swatch-value">oklch(0.14 0.01 250)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy text secondary color token"
+        >
+          <div
+            class="color-swatch-fill swatch-text-secondary"
+            data-token="--color-text-secondary"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Text Secondary</span>
+            <span class="color-swatch-value">oklch(0.40 0.012 250)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Semantic family -->
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy success color token"
+        >
+          <div
+            class="color-swatch-fill swatch-success"
+            data-token="--color-success"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Success</span>
+            <span class="color-swatch-value">oklch(0.68 0.14 160)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy warning color token"
+        >
+          <div
+            class="color-swatch-fill swatch-warning"
+            data-token="--color-warning"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Warning</span>
+            <span class="color-swatch-value">oklch(0.76 0.13 80)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div
+          class="color-swatch"
+          tabindex="0"
+          role="button"
+          aria-label="Copy danger color token"
+        >
+          <div
+            class="color-swatch-fill swatch-danger"
+            data-token="--color-danger"
+          ></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Danger</span>
+            <span class="color-swatch-value">oklch(0.58 0.17 22)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Typography ─── -->
+    <section class="section" id="type" aria-labelledby="type-title">
+      <div class="section-header entrance">
+        <span class="section-number">02</span>
+        <h2 class="section-title" id="type-title">Typography</h2>
+      </div>
+
+      <div class="type-specimen entrance entrance-d1">
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-4xl</span>
+            <span class="type-token-value">clamp(3.2, 7vw, 5.06)</span>
+          </div>
+          <span class="type-sample-display specimen-4xl">Glacier</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-3xl</span>
+            <span class="type-token-value">clamp(2.8, 5.5vw, 3.815)</span>
+          </div>
+          <span class="type-sample-display specimen-3xl">Specification</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-2xl</span>
+            <span class="type-token-value">2.441rem / 700</span>
+          </div>
+          <span class="type-sample-display specimen-2xl">Subsystem Header</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-xl</span>
+            <span class="type-token-value">1.953rem / 600</span>
+          </div>
+          <span class="type-sample-display specimen-xl">Component Title</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-lg</span>
+            <span class="type-token-value">1.563rem / 600</span>
+          </div>
+          <span class="type-sample-display specimen-lg">Section Label</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-md</span>
+            <span class="type-token-value">1.25rem / 500</span>
+          </div>
+          <span class="type-sample-display specimen-md">Subsection</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-base</span>
+            <span class="type-token-value">1rem / 400</span>
+          </div>
+          <p class="type-sample-body specimen-base">
+            Manrope brings geometric clarity with generous spacing and a
+            friendly character. Its clean lines and balanced x-height keep
+            paragraphs comfortable for long sessions, while the slightly
+            informal touch keeps text from feeling clinical or cold.
+          </p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-sm</span>
+            <span class="type-token-value">0.8125rem / 400</span>
+          </div>
+          <p class="type-sample-body specimen-sm">
+            Small body for metadata, timestamps, and secondary readings.
+            Subordinate to the main flow but never disposable.
+          </p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-xs</span>
+            <span class="type-token-value">0.6875rem / 600</span>
+          </div>
+          <span class="type-sample-display specimen-xs"
+            >Classification / Reference</span
+          >
+        </div>
+      </div>
+
+      <!-- Font pair detail -->
+      <div class="font-pair-grid entrance entrance-d2">
+        <div class="font-pair-card">
+          <span class="font-pair-label">Display Font</span>
+          <h3 class="font-pair-name">Source Serif 4</h3>
+          <span class="font-pair-classification"
+            >Variable optical serif / Angle-accent terminals</span
+          >
+          <p class="font-pair-sample display-sample">
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+            abcdefghijklmnopqrstuvwxyz<br />
+            0123456789<br />
+            <em>Precision. Warmth. Memory.</em>
+          </p>
+        </div>
+        <div class="font-pair-card">
+          <span class="font-pair-label">Body Font</span>
+          <h3 class="font-pair-name" style="font-family: var(--font-body)">
+            Manrope
+          </h3>
+          <span class="font-pair-classification"
+            >Variable sans / Geometric / Expanded metrics</span
+          >
+          <p class="font-pair-sample body-sample">
+            abcdefghijklmnopqrstuvwxyz<br />
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+            0123456789<br />
+            Clear. Open. Kind.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Spacing ─── -->
+    <section class="section" id="spacing" aria-labelledby="spacing-title">
+      <div class="section-header entrance">
+        <span class="section-number">03</span>
+        <h2 class="section-title" id="spacing-title">Spacing Scale</h2>
+      </div>
+
+      <div class="spacing-specimen entrance entrance-d1">
+        <div class="spacing-row">
+          <span class="spacing-label">--space-1</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 4.2%"></div>
+          </div>
+          <span class="spacing-px">4px</span>
+          <span class="spacing-rem">0.25r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-2</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 8.3%"></div>
+          </div>
+          <span class="spacing-px">8px</span>
+          <span class="spacing-rem">0.5r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-3</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 12.5%"></div>
+          </div>
+          <span class="spacing-px">12px</span>
+          <span class="spacing-rem">0.75r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-4</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 16.7%"></div>
+          </div>
+          <span class="spacing-px">16px</span>
+          <span class="spacing-rem">1r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-6</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 25%"></div>
+          </div>
+          <span class="spacing-px">24px</span>
+          <span class="spacing-rem">1.5r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-8</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 33.3%"></div>
+          </div>
+          <span class="spacing-px">32px</span>
+          <span class="spacing-rem">2r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-12</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 50%"></div>
+          </div>
+          <span class="spacing-px">48px</span>
+          <span class="spacing-rem">3r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-16</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 66.7%"></div>
+          </div>
+          <span class="spacing-px">64px</span>
+          <span class="spacing-rem">4r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-24</span>
+          <div class="spacing-bar-track">
+            <div class="spacing-bar-fill" style="width: 100%"></div>
+          </div>
+          <span class="spacing-px">96px</span>
+          <span class="spacing-rem">6r</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Components ─── -->
+    <section class="section" id="components" aria-labelledby="components-title">
+      <div class="section-header entrance">
+        <span class="section-number">04</span>
+        <h2 class="section-title" id="components-title">Components</h2>
+      </div>
+
+      <div class="component-area entrance entrance-d1">
+        <!-- Buttons -->
+        <div class="component-group">
+          <span class="component-group-label">Interactive Elements</span>
+          <h3 class="component-group-title">Buttons</h3>
+          <div class="button-row">
+            <button class="btn btn-primary btn-lg">Register</button>
+            <button class="btn btn-primary">Confirm</button>
+            <button class="btn btn-secondary">Edit</button>
+            <button class="btn btn-ghost">Cancel</button>
+            <button class="btn btn-danger btn-sm">Remove</button>
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="component-group">
+          <span class="component-group-label">Status Indicators</span>
+          <h3 class="component-group-title">Tags</h3>
+          <div class="tag-row">
+            <span class="tag tag-default">Draft</span>
+            <span class="tag tag-accent">Active</span>
+            <span class="tag tag-success">On Track</span>
+            <span class="tag tag-warning">At Risk</span>
+            <span class="tag tag-danger">Overdue</span>
+          </div>
+        </div>
+
+        <!-- Labels -->
+        <div class="component-group">
+          <span class="component-group-label">Colored Indicators</span>
+          <h3 class="component-group-title">Labels</h3>
+          <div class="label-row">
+            <span class="label label-default">Concept</span>
+            <span class="label label-accent">Actief</span>
+            <span class="label label-success">Voltooid</span>
+            <span class="label label-warning">Aandacht</span>
+            <span class="label label-danger">Uiterste datum</span>
+            <span class="label label-custom">Label</span>
+          </div>
+        </div>
+
+        <!-- Inputs -->
+        <div class="component-group">
+          <span class="component-group-label">Data Entry</span>
+          <h3 class="component-group-title">Inputs</h3>
+          <div class="input-row">
+            <div class="field">
+              <label class="field-label" for="host-input">Student Name</label>
+              <input
+                class="input"
+                type="text"
+                id="host-input"
+                placeholder="e.g. Jan de Vries"
+              />
+            </div>
+            <div class="field">
+              <label class="field-label" for="port-input">Subject Code</label>
+              <input
+                class="input"
+                type="url"
+                id="port-input"
+                placeholder="e.g. WIS-301"
+                required
+              />
+              <span class="field-hint">Alphanumeric. No spaces.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toggles -->
+        <div class="component-group">
+          <span class="component-group-label">Binary Controls</span>
+          <h3 class="component-group-title">Toggles</h3>
+          <div class="toggle-row">
+            <div class="toggle-group">
+              <input
+                class="toggle"
+                type="checkbox"
+                id="toggle-alerts"
+                checked
+              />
+              <label class="toggle-label" for="toggle-alerts">Notifications</label>
+            </div>
+            <div class="toggle-group">
+              <input class="toggle" type="checkbox" id="toggle-logs" />
+              <label class="toggle-label" for="toggle-logs">Detailed View</label>
+            </div>
+            <div class="toggle-group">
+              <input class="toggle" type="checkbox" id="toggle-auto" checked />
+              <label class="toggle-label" for="toggle-auto">Auto-save</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="component-group">
+          <span class="component-group-label">Information Panels</span>
+          <h3 class="component-group-title">Cards</h3>
+          <div class="card-grid">
+            <article class="card">
+              <span class="card-id">GL-001</span>
+              <h4 class="card-title">Consistent Patterns</h4>
+              <p class="card-body">
+                Every visual value traces to a named token. Teachers and
+                students see the same buttons, colors, and layouts everywhere.
+                Consistency reduces cognitive load and builds trust.
+              </p>
+              <div class="card-footer">
+                <span class="tag tag-accent">Core</span>
+                <button class="btn btn-ghost btn-sm">Details</button>
+              </div>
+            </article>
+            <article class="card">
+              <span class="card-id">GL-002</span>
+              <h4 class="card-title">Measured Motion</h4>
+              <p class="card-body">
+                Movement communicates state change in the interface. When a
+                registration is saved or a report generated, the transition
+                confirms the action. Nothing bounces. Everything arrives.
+              </p>
+              <div class="card-footer">
+                <span class="tag tag-default">Motion</span>
+                <button class="btn btn-ghost btn-sm">Details</button>
+              </div>
+            </article>
+            <article class="card">
+              <span class="card-id">GL-003</span>
+              <h4 class="card-title">Perceptual Accuracy</h4>
+              <p class="card-body">
+                OKLCH ensures colors look equally distinct to all users.
+                Progress indicators and status tags are visually clear. The cold
+                blue undertone gives the interface a calm, focused character.
+              </p>
+              <div class="card-footer">
+                <span class="tag tag-default">Color</span>
+                <button class="btn btn-ghost btn-sm">Details</button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ─── Accordion ─── -->
+        <div class="component-group">
+          <span class="component-group-label">Collapsible Content</span>
+          <h3 class="component-group-title">Accordion</h3>
+
+          <div class="accordion" data-accordion>
+            <button
+              class="accordion-trigger"
+              aria-expanded="false"
+              aria-controls="acc-panel-1"
+              id="acc-trigger-1"
+            >
+              <span class="accordion-trigger-left">
+                <span class="accordion-ref">GL-ACC-01</span>
+                Assessment Criteria
+              </span>
+              <span class="accordion-icon">▾</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="acc-panel-1"
+              role="region"
+              aria-labelledby="acc-trigger-1"
+              aria-hidden="true"
+            >
+              <div class="accordion-content">
+                Standards for evaluating student progress. All assessments must
+                map to curriculum objectives before registration.
+                <ul>
+                  <li>Scale: 1–10 per learning objective</li>
+                  <li>Minimum: 3 assessments per term per subject</li>
+                  <li>Weighting: configurable per step type</li>
+                  <li>Rounding: one decimal place</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion" data-accordion>
+            <button
+              class="accordion-trigger"
+              aria-expanded="false"
+              aria-controls="acc-panel-2"
+              id="acc-trigger-2"
+            >
+              <span class="accordion-trigger-left">
+                <span class="accordion-ref">GL-ACC-02</span>
+                Registration Workflow
+              </span>
+              <span class="accordion-icon">▾</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="acc-panel-2"
+              role="region"
+              aria-labelledby="acc-trigger-2"
+              aria-hidden="true"
+            >
+              <div class="accordion-content">
+                Standard procedure for recording student progress. Start with
+                draft entries, review for accuracy, then finalize.
+                <ul>
+                  <li>Step 1: Select students and subject</li>
+                  <li>Step 2: Enter grades and observations</li>
+                  <li>Step 3: Review for completeness</li>
+                  <li>Step 4: Submit and lock</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion" data-accordion>
+            <button
+              class="accordion-trigger"
+              aria-expanded="false"
+              aria-controls="acc-panel-3"
+              id="acc-trigger-3"
+            >
+              <span class="accordion-trigger-left">
+                <span class="accordion-ref">GL-ACC-03</span>
+                Progress Classification
+              </span>
+              <span class="accordion-icon">▾</span>
+            </button>
+            <div
+              class="accordion-panel"
+              id="acc-panel-3"
+              role="region"
+              aria-labelledby="acc-trigger-3"
+              aria-hidden="true"
+            >
+              <div class="accordion-content">
+                Classification taxonomy for student progress states. Every
+                student maps to exactly one status per step.
+                <ul>
+                  <li>Not Started: No registration yet</li>
+                  <li>In Progress: Partial assessment recorded</li>
+                  <li>Completed: Full assessment submitted</li>
+                  <li>Overdue: Past deadline without submission</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── Modal ─── -->
+        <div class="component-group">
+          <span class="component-group-label">Overlay Dialogs</span>
+          <h3 class="component-group-title">Modal</h3>
+          <p
+            style="
+              font-size: var(--text-sm);
+              color: var(--color-text-secondary);
+              margin-bottom: var(--space-4);
+              max-width: 52ch;
+            "
+          >
+            A focused surface for confirmations, student editing, and detail
+            views. Traps focus. Returns focus on close.
+          </p>
+          <div class="button-row">
+            <button class="btn btn-primary" id="modal-trigger-confirm">
+              Open Confirm
+            </button>
+            <button class="btn btn-secondary" id="modal-trigger-config">
+              Open Edit
+            </button>
+            <button class="btn btn-danger" id="modal-trigger-danger">
+              Open Remove
+            </button>
+          </div>
+        </div>
+
+        <!-- ─── Search-ahead Select ─── -->
+        <div class="component-group">
+          <span class="component-group-label">Filtered Selection</span>
+          <h3 class="component-group-title">Search-ahead Select</h3>
+          <p
+            style="
+              font-size: var(--text-sm);
+              color: var(--color-text-secondary);
+              margin-bottom: var(--space-4);
+              max-width: 52ch;
+            "
+          >
+            Type to filter. Arrow keys to navigate. Enter to select. Backspace
+            on empty input to remove last chip.
+          </p>
+
+          <div class="searchahead" data-searchahead>
+            <div class="searchahead-input-wrap">
+              <input
+                class="searchahead-input"
+                type="text"
+                placeholder="Search students, subjects, groups..."
+                autocomplete="off"
+                aria-label="Search and select items"
+                aria-expanded="false"
+                aria-controls="sa-dropdown"
+                role="combobox"
+              />
+              <button
+                class="searchahead-clear"
+                aria-label="Clear search"
+                type="button"
+              >
+                ×
+              </button>
+              <div class="searchahead-dropdown" id="sa-dropdown" role="listbox">
+                <div class="searchahead-dropdown-header">Results</div>
+              </div>
+            </div>
+            <div
+              class="searchahead-selection"
+              aria-label="Selected items"
+            ></div>
+          </div>
+        </div>
+
+        <!-- ─── Toast ─── -->
+        <div class="component-group">
+          <span class="component-group-label">Notification System</span>
+          <h3 class="component-group-title">Toast</h3>
+          <p
+            style="
+              font-size: var(--text-sm);
+              color: var(--color-text-secondary);
+              margin-bottom: var(--space-4);
+              max-width: 52ch;
+            "
+          >
+            Ephemeral notifications that slide in, persist briefly, then
+            dismiss. Stacks vertically. No interruption to workflow.
+          </p>
+          <div class="toast-trigger-row">
+            <button class="btn btn-primary" data-toast="default">Notify</button>
+            <button
+              class="btn btn-secondary"
+              style="
+                border-color: var(--color-success);
+                color: var(--color-success);
+              "
+              data-toast="success"
+            >
+              Success
+            </button>
+            <button
+              class="btn btn-secondary"
+              style="
+                border-color: var(--color-warning);
+                color: var(--color-warning);
+              "
+              data-toast="warning"
+            >
+              Warning
+            </button>
+            <button
+              class="btn btn-secondary"
+              style="
+                border-color: var(--color-danger);
+                color: var(--color-danger);
+              "
+              data-toast="danger"
+            >
+              Error
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Motion ─── -->
+    <section class="section" id="motion" aria-labelledby="motion-title">
+      <div class="section-header entrance">
+        <span class="section-number">05</span>
+        <h2 class="section-title" id="motion-title">Motion</h2>
+      </div>
+
+      <div class="motion-demos entrance entrance-d1">
+        <div class="motion-demo">
+          <div class="motion-demo-header">
+            <span class="motion-demo-label">Easing</span>
+            <span class="motion-demo-name">Out Expo</span>
+          </div>
+          <div
+            class="motion-stage ease-expo"
+            role="presentation"
+            aria-label="Exponential ease-out demo"
+          >
+            <div class="motion-block"></div>
+          </div>
+          <span class="motion-curve">cubic-bezier(0.16, 1, 0.3, 1)</span>
+        </div>
+        <div class="motion-demo">
+          <div class="motion-demo-header">
+            <span class="motion-demo-label">Easing</span>
+            <span class="motion-demo-name">Out Quart</span>
+          </div>
+          <div
+            class="motion-stage ease-quart"
+            role="presentation"
+            aria-label="Quartic ease-out demo"
+          >
+            <div class="motion-block"></div>
+          </div>
+          <span class="motion-curve">cubic-bezier(0.25, 1, 0.5, 1)</span>
+        </div>
+        <div class="motion-demo">
+          <div class="motion-demo-header">
+            <span class="motion-demo-label">Easing</span>
+            <span class="motion-demo-name">Industrial</span>
+          </div>
+          <div
+            class="motion-stage ease-industrial"
+            role="presentation"
+            aria-label="Industrial easing demo"
+          >
+            <div class="motion-block"></div>
+          </div>
+          <span class="motion-curve">cubic-bezier(0.22, 0.61, 0.36, 1)</span>
+        </div>
+      </div>
+
+      <!-- Duration reference -->
+      <div class="duration-grid entrance entrance-d2">
+        <div class="duration-item">
+          <span class="duration-token">--duration-fast</span>
+          <span class="duration-value">120ms</span>
+          <span class="duration-usage"
+            >Hover feedback, focus rings, micro state</span
+          >
+        </div>
+        <div class="duration-item">
+          <span class="duration-token">--duration-base</span>
+          <span class="duration-value">250ms</span>
+          <span class="duration-usage"
+            >Toggles, inline transitions, panel swaps</span
+          >
+        </div>
+        <div class="duration-item">
+          <span class="duration-token">--duration-slow</span>
+          <span class="duration-value">450ms</span>
+          <span class="duration-usage"
+            >Page regions, expand/collapse, modals</span
+          >
+        </div>
+        <div class="duration-item">
+          <span class="duration-token">--duration-enter</span>
+          <span class="duration-value">600ms</span>
+          <span class="duration-usage"
+            >Page loads, stagger reveals, hero entrance</span
+          >
+        </div>
+      </div>
+
+      <!-- Stagger reveal demo -->
+      <div class="stagger-demo entrance entrance-d3">
+        <span class="component-group-label">Interaction Demo</span>
+        <h3 class="component-group-title">Stagger Reveal</h3>
+        <p
+          style="
+            font-size: var(--text-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+            max-width: 48ch;
+          "
+        >
+          Click the grid to trigger a staggered fill. Elements fill
+          sequentially, creating rhythm without chaos — like indicators lighting
+          up on a control panel.
+        </p>
+        <div
+          class="stagger-grid"
+          id="staggerGrid"
+          role="button"
+          tabindex="0"
+          aria-label="Click to trigger stagger animation"
+        >
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Principles ─── -->
+    <section class="section" id="principles" aria-labelledby="principles-title">
+      <div class="section-header entrance">
+        <span class="section-number">06</span>
+        <h2 class="section-title" id="principles-title">Design Principles</h2>
+      </div>
+
+      <div class="principles-grid entrance entrance-d1">
+        <div class="principle">
+          <span class="principle-ref">GL-P01</span>
+          <h3 class="principle-title">Structure enables focus</h3>
+          <p class="principle-desc">
+            A consistent interface lets teachers focus on teaching and students
+            on learning. When every pattern is predictable — buttons, colors,
+            layouts — cognitive load drops and attention stays on what matters:
+            student progress.
+          </p>
+        </div>
+        <div class="principle">
+          <span class="principle-ref">GL-P02</span>
+          <h3 class="principle-title">Clarity is care</h3>
+          <p class="principle-desc">
+            Teachers work under time pressure with many students. Ambiguous
+            labels, unclear states, and visual noise aren't minor flaws — they
+            steal time from the people who need it most. Precision in the
+            interface is respect for the educator.
+          </p>
+        </div>
+        <div class="principle">
+          <span class="principle-ref">GL-P03</span>
+          <h3 class="principle-title">Motion conveys progress</h3>
+          <p class="principle-desc">
+            Every transition answers a question: what just changed? When a
+            registration is saved or a report generated, the motion confirms
+            the action. Industrial easing. No bounce. No decoration. Progress
+            feels deliberate.
+          </p>
+        </div>
+        <div class="principle">
+          <span class="principle-ref">GL-P04</span>
+          <h3 class="principle-title">Tinted neutrality</h3>
+          <p class="principle-desc">
+            Pure gray is a missed opportunity. Neutrals tinted toward the
+            system's hue create cohesion below conscious perception. The cold
+            blue undertone gives the interface a calm, focused character suited
+            for long sessions of data entry and review.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" style="margin-top: var(--space-16)" />
+
+    <!-- ─── Footer ─── -->
+    <footer class="footer">
+      <span class="footer-brand">LRS Design System</span>
+      <div class="footer-meta">
+        <span>SEED: DS2-GLACIER-7742</span>
+        <span>v2.0</span>
+        <span>OKLCH</span>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#colors">Colors</a></li>
+        <li><a href="#type">Type</a></li>
+        <li><a href="#components">Components</a></li>
+      </ul>
+    </footer>
+
+    <!-- ─── Modal Instances ─── -->
+    <div
+      class="modal-backdrop"
+      id="modal-confirm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-confirm-title"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-header-left">
+            <span class="modal-header-ref">GL-MOD-01</span>
+            <h2 class="modal-title" id="modal-confirm-title">
+              Confirm Registration
+            </h2>
+          </div>
+          <button class="modal-close" aria-label="Close modal" data-modal-close>
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            You are about to submit assessments for
+            <strong>Group 7B</strong>
+            in <strong>Mathematics</strong>. This will register grades for 24
+            students and update their progress records.
+          </p>
+          <p>
+            Estimated processing:
+            <span
+              style="font-family: var(--font-mono); font-size: var(--text-xs)"
+              >~2 sec</span
+            >. Edit window:
+            <span
+              style="font-family: var(--font-mono); font-size: var(--text-xs)"
+              >24 hours</span
+            >.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" data-modal-close>Cancel</button>
+          <button class="btn btn-primary" data-modal-close>Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal-backdrop"
+      id="modal-config"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-config-title"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-header-left">
+            <span class="modal-header-ref">GL-MOD-02</span>
+            <h2 class="modal-title" id="modal-config-title">
+              Edit Student
+            </h2>
+          </div>
+          <button class="modal-close" aria-label="Close modal" data-modal-close>
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="field" style="margin-bottom: var(--space-4)">
+            <label class="field-label" for="modal-node-name">Student Name</label>
+            <input
+              class="input"
+              type="text"
+              id="modal-node-name"
+              placeholder="Jan de Vries"
+              style="width: 100%"
+            />
+          </div>
+          <div class="field" style="margin-bottom: var(--space-4)">
+            <label class="field-label" for="modal-zone">Class</label>
+            <input
+              class="input"
+              type="text"
+              id="modal-zone"
+              placeholder="7B"
+              style="width: 100%"
+            />
+          </div>
+          <div class="field">
+            <label class="field-label" for="modal-weight">Student Number</label>
+            <input
+              class="input"
+              type="number"
+              id="modal-weight"
+              placeholder="2024001"
+              style="width: 100%"
+            />
+            <span class="field-hint">6-digit ID. Unique per student.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" data-modal-close>Discard</button>
+          <button class="btn btn-primary" data-modal-close>Save Config</button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal-backdrop"
+      id="modal-danger"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-danger-title"
+    >
+      <div class="modal">
+        <div
+          class="modal-header"
+          style="border-bottom-color: oklch(0.9 0.04 22)"
+        >
+          <div class="modal-header-left">
+            <span class="modal-header-ref" style="color: var(--color-danger)"
+              >GL-MOD-03</span
+            >
+            <h2
+              class="modal-title"
+              id="modal-danger-title"
+              style="color: var(--color-danger)"
+            >
+              Remove Student
+            </h2>
+          </div>
+          <button class="modal-close" aria-label="Close modal" data-modal-close>
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            This will remove <strong>Jan de Vries</strong> from
+            <strong>Group 7B</strong>. All in-progress registrations will be
+            saved as draft. Submitted grades will not be affected.
+          </p>
+          <p
+            style="
+              font-family: var(--font-mono);
+              font-size: var(--text-xs);
+              color: var(--color-danger);
+              letter-spacing: 0.04em;
+            "
+          >
+            ▸ THIS ACTION CANNOT BE UNDONE
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" data-modal-close>Cancel</button>
+          <button class="btn btn-danger" data-modal-close>Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Toast Container ─── -->
+    <div
+      class="toast-container"
+      id="toastContainer"
+      aria-live="polite"
+      aria-atomic="false"
+    ></div>
+
+    <script>
+      /* ─────────────────────────────────────────────
+       Interaction Logic
+    ───────────────────────────────────────────── */
+
+      // Stagger grid animation
+      const staggerGrid = document.getElementById("staggerGrid");
+      const staggerCells = staggerGrid.querySelectorAll(".stagger-cell");
+
+      function triggerStagger() {
+        staggerCells.forEach((cell) => cell.classList.remove("visible"));
+        requestAnimationFrame(() => {
+          staggerCells.forEach((cell, i) => {
+            setTimeout(() => {
+              cell.classList.add("visible");
+            }, i * 50);
+          });
+        });
+      }
+
+      setTimeout(triggerStagger, 800);
+
+      staggerGrid.addEventListener("click", () => {
+        staggerCells.forEach((c) => c.classList.remove("visible"));
+        setTimeout(triggerStagger, 80);
+      });
+
+      staggerGrid.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          staggerCells.forEach((c) => c.classList.remove("visible"));
+          setTimeout(triggerStagger, 80);
+        }
+      });
+
+      // Motion stage toggle on click
+      document.querySelectorAll(".motion-stage").forEach((stage) => {
+        stage.addEventListener("click", () => {
+          stage.classList.toggle("active");
+        });
+      });
+
+      // Intersection Observer for scroll-triggered entrances
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationPlayState = "running";
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document.querySelectorAll(".entrance").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Color swatch click to copy token or oklch value
+      document.querySelectorAll(".color-swatch").forEach((swatch) => {
+        const fill = swatch.querySelector(".color-swatch-fill");
+        const info = swatch.querySelector(".color-swatch-info");
+        const token = fill?.getAttribute("data-token");
+        const value = swatch.querySelector(".color-swatch-value")?.textContent;
+
+        function handleCopy(e) {
+          const clickedFill = fill?.contains(e.target) || e.target === fill;
+          const clickedInfo = info?.contains(e.target) || e.target === info;
+
+          let textToCopy = "";
+          if (clickedFill && token) {
+            textToCopy = token;
+          } else if (clickedInfo && value) {
+            textToCopy = value;
+          } else if (value) {
+            // Fallback: if neither specifically clicked, copy oklch
+            textToCopy = value;
+          }
+
+          if (!textToCopy) return;
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+              swatch.classList.add("copied");
+              setTimeout(() => {
+                swatch.classList.remove("copied");
+              }, 1200);
+              showCopyToast(textToCopy);
+            })
+            .catch(() => {});
+        }
+
+        swatch.addEventListener("click", handleCopy);
+        swatch.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            // On keyboard, copy the oklch value as default
+            if (!value) return;
+            navigator.clipboard
+              .writeText(value)
+              .then(() => {
+                swatch.classList.add("copied");
+                setTimeout(() => {
+                  swatch.classList.remove("copied");
+                }, 1200);
+                showCopyToast(value);
+              })
+              .catch(() => {});
+          }
+        });
+      });
+
+      // Copy toast helper — minimal toast showing the copied value
+      let copyToastTimer = null;
+      function showCopyToast(copiedValue) {
+        const id = `toast-copy-${++toastCounter}`;
+        const el = document.createElement("div");
+        el.className = "toast toast-default";
+        el.id = id;
+        el.setAttribute("role", "status");
+        el.innerHTML = `
+        <div class="toast-indicator"></div>
+        <div class="toast-body">
+          <span class="toast-title">Copied to clipboard</span>
+          <span class="toast-message" style="font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em;">${copiedValue}</span>
+        </div>
+        <button class="toast-close" aria-label="Dismiss notification">×</button>
+        <div class="toast-progress" style="width: 100%; transition-duration: 2000ms;"></div>
+      `;
+
+        toastContainer.appendChild(el);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.add("is-visible");
+            const progress = el.querySelector(".toast-progress");
+            progress.style.transform = "scaleX(0)";
+          });
+        });
+
+        const dismiss = () => {
+          el.classList.remove("is-visible");
+          el.classList.add("is-dismissing");
+          setTimeout(() => el.remove(), 500);
+        };
+
+        el.querySelector(".toast-close").addEventListener("click", dismiss);
+        setTimeout(dismiss, 2000);
+      }
+
+      /* ─────────────────────────────────────────────
+       ACCORDION Logic
+    ───────────────────────────────────────────── */
+
+      document.querySelectorAll("[data-accordion]").forEach((acc) => {
+        const trigger = acc.querySelector(".accordion-trigger");
+        const panel = acc.querySelector(".accordion-panel");
+
+        trigger.addEventListener("click", () => {
+          const isOpen = trigger.getAttribute("aria-expanded") === "true";
+
+          if (isOpen) {
+            trigger.setAttribute("aria-expanded", "false");
+            panel.setAttribute("aria-hidden", "true");
+          } else {
+            trigger.setAttribute("aria-expanded", "true");
+            panel.setAttribute("aria-hidden", "false");
+          }
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+       MODAL Logic
+    ───────────────────────────────────────────── */
+
+      let previousFocus = null;
+
+      function openModal(id) {
+        const backdrop = document.getElementById(id);
+        if (!backdrop) return;
+        previousFocus = document.activeElement;
+        backdrop.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+
+        const firstFocusable = backdrop.querySelector(
+          ".modal-close, .btn, input, [tabindex]",
+        );
+        if (firstFocusable) firstFocusable.focus();
+
+        backdrop.addEventListener("keydown", trapFocus);
+        backdrop.addEventListener("click", (e) => {
+          if (e.target === backdrop) closeModal(id);
+        });
+      }
+
+      function closeModal(id) {
+        const backdrop = document.getElementById(id);
+        if (!backdrop) return;
+        backdrop.classList.remove("is-open");
+        document.body.style.overflow = "";
+        backdrop.removeEventListener("keydown", trapFocus);
+        if (previousFocus) previousFocus.focus();
+      }
+
+      function trapFocus(e) {
+        if (e.key === "Escape") {
+          const backdrop = e.currentTarget;
+          closeModal(backdrop.id);
+          return;
+        }
+        if (e.key !== "Tab") return;
+
+        const backdrop = e.currentTarget;
+        const focusable = backdrop.querySelectorAll(
+          'button, input, [tabindex]:not([tabindex="-1"])',
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+
+      document
+        .getElementById("modal-trigger-confirm")
+        .addEventListener("click", () => openModal("modal-confirm"));
+      document
+        .getElementById("modal-trigger-config")
+        .addEventListener("click", () => openModal("modal-config"));
+      document
+        .getElementById("modal-trigger-danger")
+        .addEventListener("click", () => openModal("modal-danger"));
+
+      document.querySelectorAll("[data-modal-close]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const backdrop = btn.closest(".modal-backdrop");
+          if (backdrop) closeModal(backdrop.id);
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+       SEARCH-AHEAD SELECT Logic
+    ───────────────────────────────────────────── */
+
+      const saData = [
+        { id: "stu-01", label: "Emma Bakker", meta: "Group 7B", icon: "◉" },
+        { id: "stu-02", label: "Jan de Vries", meta: "Group 7B", icon: "◉" },
+        { id: "stu-03", label: "Sophie Jansen", meta: "Group 7A", icon: "◉" },
+        { id: "stu-04", label: "Lucas Visser", meta: "Group 8A", icon: "◉" },
+        { id: "sub-wis", label: "Wiskunde", meta: "WIS-301", icon: "◆" },
+        { id: "sub-tal", label: "Taal", meta: "TAL-201", icon: "◆" },
+        { id: "sub-lez", label: "Lezen", meta: "LEZ-102", icon: "◆" },
+        { id: "sub-snk", label: "Snappet", meta: "SNK-401", icon: "◆" },
+        { id: "grp-7a", label: "Group 7A", meta: "28 students", icon: "▨" },
+        { id: "grp-7b", label: "Group 7B", meta: "24 students", icon: "▨" },
+        { id: "grp-8a", label: "Group 8A", meta: "26 students", icon: "▨" },
+        { id: "grp-8b", label: "Group 8B", meta: "22 students", icon: "▨" },
+        { id: "tea-01", label: "Marie Kosters", meta: "Teacher", icon: "◈" },
+        { id: "tea-02", label: "Peter Hendriks", meta: "Teacher", icon: "◈" },
+      ];
+
+      const saContainer = document.querySelector("[data-searchahead]");
+      const saInput = saContainer.querySelector(".searchahead-input");
+      const saDropdown = saContainer.querySelector(".searchahead-dropdown");
+      const saClear = saContainer.querySelector(".searchahead-clear");
+      const saSelection = saContainer.querySelector(".searchahead-selection");
+      let saSelected = [];
+      let saHighlighted = -1;
+      let saFiltered = [];
+
+      function saHighlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(
+          `(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi",
+        );
+        return text.replace(regex, "<mark>$1</mark>");
+      }
+
+      function saRenderOptions(query) {
+        const q = query.toLowerCase().trim();
+        saFiltered = saData.filter((item) => !saSelected.includes(item.id));
+
+        if (q) {
+          saFiltered = saFiltered.filter(
+            (item) =>
+              item.label.toLowerCase().includes(q) ||
+              item.meta.toLowerCase().includes(q),
+          );
+        }
+
+        saHighlighted = -1;
+
+        if (saFiltered.length === 0) {
+          saDropdown.innerHTML = `
+          <div class="searchahead-dropdown-header">Results</div>
+          <div class="searchahead-empty">No matching results</div>
+        `;
+        } else {
+          saDropdown.innerHTML = `
+          <div class="searchahead-dropdown-header">Results (${saFiltered.length})</div>
+          ${saFiltered
+            .map(
+              (item, i) => `
+            <div class="searchahead-option" role="option" data-index="${i}" data-id="${item.id}">
+              <span class="searchahead-option-left">
+                <span class="searchahead-option-icon">${item.icon}</span>
+                <span class="searchahead-option-text">${saHighlightText(item.label, q)}</span>
+              </span>
+              <span class="searchahead-option-meta">${item.meta}</span>
+            </div>
+          `,
+            )
+            .join("")}
+        `;
+        }
+
+        saDropdown.classList.add("is-open");
+        saInput.setAttribute("aria-expanded", "true");
+        saInput
+          .closest(".searchahead-input-wrap")
+          .classList.add("has-dropdown");
+      }
+
+      function saCloseDropdown() {
+        saDropdown.classList.remove("is-open");
+        saInput.setAttribute("aria-expanded", "false");
+        saInput
+          .closest(".searchahead-input-wrap")
+          .classList.remove("has-dropdown");
+      }
+
+      function saUpdateHighlight() {
+        saDropdown.querySelectorAll(".searchahead-option").forEach((opt, i) => {
+          opt.classList.toggle("is-highlighted", i === saHighlighted);
+        });
+      }
+
+      function saSelect(id) {
+        const item = saData.find((d) => d.id === id);
+        if (!item || saSelected.includes(id)) return;
+        saSelected.push(id);
+        saRenderChips();
+        saInput.value = "";
+        saClear.classList.remove("visible");
+        saRenderOptions("");
+        saInput.focus();
+      }
+
+      function saDeselect(id) {
+        saSelected = saSelected.filter((s) => s !== id);
+        saRenderChips();
+      }
+
+      function saRenderChips() {
+        saSelection.innerHTML = saSelected
+          .map((id) => {
+            const item = saData.find((d) => d.id === id);
+            return `<span class="searchahead-chip" data-id="${id}">${item.label}</span>`;
+          })
+          .join("");
+      }
+
+      saInput.addEventListener("focus", () => {
+        saRenderOptions(saInput.value);
+      });
+
+      saInput.addEventListener("input", () => {
+        const q = saInput.value;
+        saClear.classList.toggle("visible", q.length > 0);
+        saRenderOptions(q);
+      });
+
+      saInput.addEventListener("keydown", (e) => {
+        const options = saDropdown.querySelectorAll(".searchahead-option");
+
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (options.length) {
+            saHighlighted = Math.min(saHighlighted + 1, options.length - 1);
+            saUpdateHighlight();
+          }
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (options.length) {
+            saHighlighted = Math.max(saHighlighted - 1, 0);
+            saUpdateHighlight();
+          }
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          if (saHighlighted >= 0 && saFiltered[saHighlighted]) {
+            saSelect(saFiltered[saHighlighted].id);
+          }
+        } else if (e.key === "Escape") {
+          saCloseDropdown();
+        } else if (
+          e.key === "Backspace" &&
+          saInput.value === "" &&
+          saSelected.length
+        ) {
+          saDeselect(saSelected[saSelected.length - 1]);
+        }
+      });
+
+      saDropdown.addEventListener("click", (e) => {
+        const option = e.target.closest(".searchahead-option");
+        if (option) saSelect(option.dataset.id);
+      });
+
+      saDropdown.addEventListener("mouseover", (e) => {
+        const option = e.target.closest(".searchahead-option");
+        if (option) {
+          const options = [
+            ...saDropdown.querySelectorAll(".searchahead-option"),
+          ];
+          saHighlighted = options.indexOf(option);
+          saUpdateHighlight();
+        }
+      });
+
+      saClear.addEventListener("click", () => {
+        saInput.value = "";
+        saClear.classList.remove("visible");
+        saRenderOptions("");
+        saInput.focus();
+      });
+
+      saSelection.addEventListener("click", (e) => {
+        const chip = e.target.closest(".searchahead-chip");
+        if (chip) saDeselect(chip.dataset.id);
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!saContainer.contains(e.target)) {
+          saCloseDropdown();
+        }
+      });
+
+      /* ─────────────────────────────────────────────
+       TOAST Logic
+    ───────────────────────────────────────────── */
+
+      const toastContainer = document.getElementById("toastContainer");
+      let toastCounter = 0;
+
+      const toastPresets = {
+        default: {
+          title: "Notification",
+          message: "Progress update saved successfully.",
+          duration: 4500,
+        },
+        success: {
+          title: "Registration Complete",
+          message:
+            "Assessments for Group 7B in Mathematics registered for 24 students.",
+          duration: 4500,
+        },
+        warning: {
+          title: "Incomplete Data",
+          message:
+            "3 students in Group 7A are missing assessments for Wiskunde this term.",
+          duration: 5500,
+        },
+        danger: {
+          title: "Deadline Approaching",
+          message:
+            "Report deadline is tomorrow. 12 students still have pending registrations.",
+          duration: 6000,
+        },
+      };
+
+      function showToast(variant) {
+        const preset = toastPresets[variant] || toastPresets.default;
+        const id = `toast-${++toastCounter}`;
+
+        const el = document.createElement("div");
+        el.className = `toast toast-${variant}`;
+        el.id = id;
+        el.setAttribute("role", "status");
+        el.innerHTML = `
+        <div class="toast-indicator"></div>
+        <div class="toast-body">
+          <span class="toast-title">${preset.title}</span>
+          <span class="toast-message">${preset.message}</span>
+        </div>
+        <button class="toast-close" aria-label="Dismiss notification">×</button>
+        <div class="toast-progress" style="width: 100%; transition-duration: ${preset.duration}ms;"></div>
+      `;
+
+        toastContainer.appendChild(el);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.add("is-visible");
+            const progress = el.querySelector(".toast-progress");
+            progress.style.transform = "scaleX(0)";
+          });
+        });
+
+        const dismiss = () => {
+          el.classList.remove("is-visible");
+          el.classList.add("is-dismissing");
+          setTimeout(() => el.remove(), 500);
+        };
+
+        el.querySelector(".toast-close").addEventListener("click", dismiss);
+
+        setTimeout(dismiss, preset.duration);
+      }
+
+      document.querySelectorAll("[data-toast]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          showToast(btn.dataset.toast);
+        });
+      });
+    </script>
+  </body>
+</html>

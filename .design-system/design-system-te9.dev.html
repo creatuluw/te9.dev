@@ -1,0 +1,4245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>te9.dev — Design System + Components</title>
+    <meta name="seed" content="TE9-TERMINAL-7742" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Lekton:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─────────────────────────────────────────────
+       TE9.DEV DESIGN SYSTEM — Token Definitions
+       Terminal / Developer Garden aesthetic
+       Dark-first, monospace accents, amber + emerald
+       Seed: TE9-TERMINAL-7742
+    ───────────────────────────────────────────── */
+
+      :root {
+        /* ── Color Tokens ── */
+
+        /* Accent — Amber/Orange */
+        --color-accent: #ff9500;
+        --color-accent-light: #ffaa00;
+        --color-accent-dark: #ff6b00;
+        --color-accent-muted: rgba(255, 149, 0, 0.1);
+        --color-accent-glow: rgba(255, 149, 0, 0.5);
+
+        /* Emerald / Green */
+        --color-emerald: #00ff88;
+        --color-emerald-muted: rgba(0, 255, 136, 0.1);
+        --color-emerald-dark: #00cc6a;
+        --color-emerald-status: #4ade80;
+
+        /* Surfaces — Dark */
+        --color-surface: #0a0a0a;
+        --color-surface-raised: #0f0f0f;
+        --color-surface-elevated: #111111;
+        --color-surface-card: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+        --color-surface-hover: #141414;
+        --color-surface-sunken: #1a1a1a;
+
+        /* Text */
+        --color-text: #e8e8e8;
+        --color-text-secondary: #888888;
+        --color-text-tertiary: #666666;
+        --color-text-on-accent: #0a0a0a;
+
+        /* Borders */
+        --color-border: #2a2a2a;
+        --color-border-strong: #333333;
+
+        /* Semantic */
+        --color-success: #4ade80;
+        --color-warning: #ff9500;
+        --color-danger: #ff4444;
+
+        /* Backgrounds */
+        --bg-selection: #10b981;
+        --bg-scrollbar-track: #0a0a0a;
+        --bg-scrollbar-thumb: #333333;
+
+        /* ── Typography Tokens ── */
+        --font-display: "Bricolage Grotesque", sans-serif;
+        --font-body: "Bricolage Grotesque", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --font-label: "Lekton", monospace;
+        --font-ui: "Space Grotesk", sans-serif;
+
+        --text-9xs: 9px;
+        --text-8xs: 10px;
+        --text-xs: 0.6875rem;
+        --text-sm: 0.8125rem;
+        --text-base: 0.875rem;
+        --text-md: 1rem;
+        --text-lg: 1.25rem;
+        --text-xl: 1.5rem;
+        --text-2xl: 2rem;
+        --text-3xl: 2.5rem;
+        --text-4xl: clamp(3rem, 8vw, 6rem);
+
+        --leading-tight: 1.05;
+        --leading-snug: 1.2;
+        --leading-normal: 1.5;
+        --leading-relaxed: 1.6;
+        --leading-loose: 1.7;
+
+        /* ── Spacing Tokens ── */
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-24: 6rem;
+
+        /* ── Radius Tokens ── */
+        --radius-none: 0;
+        --radius-xs: 2px;
+        --radius-sm: 3px;
+        --radius-md: 4px;
+        --radius-lg: 6px;
+        --radius-xl: 8px;
+        --radius-full: 9999px;
+
+        /* ── Shadow Tokens ── */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+        --shadow-accent: 0 8px 25px rgba(255, 149, 0, 0.3);
+
+        /* ── Motion Tokens ── */
+        --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+        --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+        --duration-fast: 100ms;
+        --duration-base: 300ms;
+        --duration-slow: 450ms;
+        --duration-enter: 500ms;
+        --duration-pulse: 2s;
+
+        /* ── Layout ── */
+        --max-width: 1200px;
+        --gutter: clamp(1rem, 3vw, 2rem);
+        --nav-height: 60px;
+
+        /* ── Grid Overlay ── */
+        --grid-color: rgba(42, 42, 42, 0.35);
+        --grid-spacing: 24px;
+
+        /* ── Noise / Scanlines ── */
+        --noise-opacity: 0.03;
+        --scanline-opacity: 0.1;
+      }
+
+      /* ─────────────────────────────────────────────
+       Reset & Base
+    ───────────────────────────────────────────── */
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+      }
+
+      body {
+        font-family: var(--font-body);
+        font-size: var(--text-md);
+        line-height: var(--leading-normal);
+        color: var(--color-text);
+        background: var(--color-surface);
+        overflow-x: hidden;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      ::selection {
+        background-color: var(--bg-selection);
+        color: var(--color-surface);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--bg-selection);
+        outline-offset: 2px;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-scrollbar-track);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--bg-scrollbar-thumb);
+        border-radius: var(--radius-md);
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-accent);
+      }
+
+      /* ─────────────────────────────────────────────
+       Background Effects (Noise + Scanlines)
+    ───────────────────────────────────────────── */
+
+      .noise-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: var(--noise-opacity);
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+      }
+
+      .scanlines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0) 50%,
+          rgba(0, 0, 0, 0.1) 50%,
+          rgba(0, 0, 0, 0.1)
+        );
+        background-size: 100% 4px;
+        opacity: var(--scanline-opacity);
+      }
+
+      /* ─────────────────────────────────────────────
+       Page Entrance Animation
+    ───────────────────────────────────────────── */
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes flyIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .entrance {
+        animation: slideUp var(--duration-enter) var(--ease-default) both;
+      }
+
+      .entrance-d1 { animation-delay: 100ms; }
+      .entrance-d2 { animation-delay: 200ms; }
+      .entrance-d3 { animation-delay: 300ms; }
+      .entrance-d4 { animation-delay: 400ms; }
+      .entrance-d5 { animation-delay: 500ms; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .entrance,
+        .entrance-d1,
+        .entrance-d2,
+        .entrance-d3,
+        .entrance-d4,
+        .entrance-d5 {
+          animation: none;
+          opacity: 1;
+        }
+      }
+
+      /* ─────────────────────────────────────────────
+       Grid Overlay Effect (decorative, technical)
+    ───────────────────────────────────────────── */
+
+      .grid-bg {
+        position: relative;
+      }
+
+      .grid-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            90deg,
+            var(--grid-color) 0 1px,
+            transparent 1px var(--grid-spacing)
+          ),
+          repeating-linear-gradient(
+            0deg,
+            var(--grid-color) 0 1px,
+            transparent 1px var(--grid-spacing)
+          );
+        background-size: var(--grid-spacing) var(--grid-spacing);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        transition: opacity var(--duration-slow) ease;
+      }
+
+      .grid-bg:hover::before {
+        opacity: 1;
+      }
+
+      /* ─────────────────────────────────────────────
+       Navigation (Header)
+    ───────────────────────────────────────────── */
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        transition: all var(--duration-base) ease;
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-surface);
+      }
+
+      .nav.scrolled {
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .nav-inner {
+        width: 100%;
+        padding: 0 var(--space-8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: var(--nav-height);
+      }
+
+      .nav-brand {
+        font-family: var(--font-mono);
+        font-size: var(--text-md);
+        font-weight: 500;
+        color: var(--color-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+        transition: color var(--duration-base) ease;
+      }
+
+      .nav-brand:hover {
+        color: var(--color-accent);
+      }
+
+      .nav-brand .prompt {
+        color: var(--color-accent);
+        font-weight: 700;
+      }
+
+      .nav-brand .cursor {
+        color: var(--color-accent);
+        animation: blink 1s step-end infinite;
+      }
+
+      @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+      }
+
+      .nav-seed {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.08em;
+        color: var(--color-text-tertiary);
+        padding: 2px 6px;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xs);
+        margin-left: var(--space-3);
+        vertical-align: middle;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+        list-style: none;
+        font-family: var(--font-label);
+        font-size: var(--text-base);
+      }
+
+      .nav-links a {
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        text-transform: lowercase;
+        position: relative;
+        transition: color var(--duration-base) ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--color-text);
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--color-accent);
+        transition: all var(--duration-base) ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-links a.active {
+        color: var(--color-text);
+      }
+
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      /* ─────────────────────────────────────────────
+       Hero Section
+    ───────────────────────────────────────────── */
+
+      .hero {
+        min-height: calc(100vh - var(--nav-height));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: var(--space-16) var(--space-8);
+        overflow: hidden;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        text-align: center;
+        z-index: 1;
+        position: relative;
+      }
+
+      .hero-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        margin-bottom: var(--space-6);
+        font-size: var(--text-base);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-family: var(--font-label);
+      }
+
+      .hero-label .bracket {
+        color: var(--color-accent);
+        font-weight: 600;
+      }
+
+      .hero-label .label-text {
+        color: var(--color-text-secondary);
+      }
+
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: var(--space-6);
+        color: var(--color-text);
+      }
+
+      .hero-title .dot {
+        color: var(--color-accent);
+      }
+
+      .hero-subtitle {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+        line-height: var(--leading-relaxed);
+        font-family: var(--font-label);
+      }
+
+      .hero-subtitle .accent-text {
+        color: var(--color-accent);
+        font-weight: 500;
+      }
+
+      .hero-desc {
+        font-size: var(--text-md);
+        color: var(--color-text-tertiary);
+        max-width: 600px;
+        margin: 0 auto var(--space-8);
+        line-height: var(--leading-loose);
+        font-family: var(--font-label);
+      }
+
+      .hero-cta {
+        display: flex;
+        gap: var(--space-4);
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* Decorative rings */
+      .hero-decoration {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 600px;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .deco-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 1px solid var(--color-border);
+        opacity: 0.3;
+      }
+
+      .deco-ring-1 {
+        width: 200px;
+        height: 200px;
+        animation: pulse-ring-1 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      .deco-ring-2 {
+        width: 450px;
+        height: 450px;
+        animation: pulse-ring-2 11s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.4s;
+      }
+
+      .deco-ring-3 {
+        width: 600px;
+        height: 600px;
+        animation: pulse-ring-3 11s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.8s;
+        border-width: 2px;
+      }
+
+      @keyframes pulse-ring-1 {
+        0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); border-color: var(--color-border); }
+        27% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.03); border-color: var(--color-accent); }
+        38% { opacity: 0; transform: translate(-50%, -50%) scale(1); border-color: var(--color-border); }
+      }
+
+      @keyframes pulse-ring-2 {
+        0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); border-color: var(--color-border); }
+        27% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.44); border-color: var(--color-accent); }
+        38% { opacity: 0; transform: translate(-50%, -50%) scale(1); border-color: var(--color-border); }
+      }
+
+      @keyframes pulse-ring-3 {
+        0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); border-color: var(--color-border); }
+        27% { opacity: 0.12; transform: translate(-50%, -50%) scale(2.22); border-color: var(--color-accent); }
+        38% { opacity: 0; transform: translate(-50%, -50%) scale(1); border-color: var(--color-border); }
+      }
+
+      /* ─────────────────────────────────────────────
+       Section Container
+    ───────────────────────────────────────────── */
+
+      .section {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-24) var(--gutter);
+        position: relative;
+      }
+
+      .section + .section {
+        padding-top: 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: var(--space-12);
+      }
+
+      .section-label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-base);
+        color: var(--color-accent);
+        margin-bottom: var(--space-4);
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: var(--text-3xl);
+        font-weight: 700;
+        color: var(--color-text);
+        line-height: var(--leading-snug);
+        margin: 0;
+      }
+
+      .section-number {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--color-accent-muted);
+        border-radius: var(--radius-xs);
+        background: var(--color-accent-muted);
+        white-space: nowrap;
+        margin-right: var(--space-4);
+      }
+
+      .divider {
+        border: none;
+        height: 1px;
+        background: var(--color-border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .divider-dashed {
+        border: none;
+        height: 0;
+        border-top: 1px dashed var(--color-border);
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      /* ─────────────────────────────────────────────
+       Color Palette Section
+    ───────────────────────────────────────────── */
+
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .color-swatch {
+        background: var(--color-surface);
+        overflow: hidden;
+        cursor: pointer;
+        transition: background var(--duration-fast) ease;
+        position: relative;
+      }
+
+      .color-swatch:hover {
+        background: var(--color-surface-elevated);
+      }
+
+      .color-swatch:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+        z-index: 1;
+      }
+
+      .color-swatch-fill {
+        height: 80px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .color-swatch-fill::after {
+        content: attr(data-token);
+        position: absolute;
+        bottom: 6px;
+        right: 8px;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        letter-spacing: 0.06em;
+        color: rgba(255, 255, 255, 0.6);
+        mix-blend-mode: difference;
+      }
+
+      .color-swatch-info {
+        padding: var(--space-3) var(--space-4);
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        cursor: pointer;
+      }
+
+      .color-swatch-name {
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .color-swatch-value {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .color-swatch .copy-confirm {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 149, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text-on-accent);
+        opacity: 0;
+        transition: opacity var(--duration-fast) ease;
+        pointer-events: none;
+      }
+
+      .color-swatch.copied .copy-confirm {
+        opacity: 1;
+      }
+
+      /* Accent swatches */
+      .swatch-accent { background: var(--color-accent); }
+      .swatch-accent-light { background: var(--color-accent-light); }
+      .swatch-accent-dark { background: var(--color-accent-dark); }
+      .swatch-accent-muted { background: var(--color-accent-muted); border-bottom: 1px solid var(--color-border); }
+
+      /* Emerald swatches */
+      .swatch-emerald { background: var(--color-emerald); }
+      .swatch-emerald-muted { background: var(--color-emerald-muted); border-bottom: 1px solid var(--color-border); }
+      .swatch-emerald-dark { background: var(--color-emerald-dark); }
+      .swatch-emerald-status { background: var(--color-emerald-status); }
+
+      /* Surface swatches */
+      .swatch-surface { background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+      .swatch-surface-raised { background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border); }
+      .swatch-surface-elevated { background: var(--color-surface-elevated); border-bottom: 1px solid var(--color-border); }
+
+      /* Text swatches */
+      .swatch-text { background: var(--color-text); }
+      .swatch-text-secondary { background: var(--color-text-secondary); }
+      .swatch-text-tertiary { background: var(--color-text-tertiary); }
+
+      /* Semantic swatches */
+      .swatch-success { background: var(--color-success); }
+      .swatch-warning { background: var(--color-warning); }
+      .swatch-danger { background: var(--color-danger); }
+
+      /* ─────────────────────────────────────────────
+       Typography Section
+    ───────────────────────────────────────────── */
+
+      .type-specimen {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .type-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: var(--space-6);
+        align-items: baseline;
+        padding: var(--space-6) 0;
+        border-bottom: 1px dashed var(--color-border);
+      }
+
+      .type-row:last-child {
+        border-bottom: none;
+      }
+
+      .type-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        position: relative;
+      }
+
+      .type-token-name {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+      }
+
+      .type-token-value {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .type-sample-display {
+        font-family: var(--font-display);
+        line-height: var(--leading-tight);
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+      }
+
+      .type-sample-body {
+        font-family: var(--font-body);
+        line-height: var(--leading-normal);
+        color: var(--color-text);
+        max-width: 62ch;
+      }
+
+      .type-sample-label {
+        font-family: var(--font-label);
+        color: var(--color-text);
+      }
+
+      .type-sample-mono {
+        font-family: var(--font-mono);
+        color: var(--color-text);
+      }
+
+      .specimen-4xl { font-size: var(--text-4xl); font-weight: 700; letter-spacing: -0.03em; }
+      .specimen-3xl { font-size: var(--text-3xl); font-weight: 700; }
+      .specimen-2xl { font-size: var(--text-2xl); font-weight: 700; }
+      .specimen-xl { font-size: var(--text-xl); font-weight: 600; }
+      .specimen-lg { font-size: var(--text-lg); font-weight: 600; }
+      .specimen-md { font-size: var(--text-md); font-weight: 500; }
+      .specimen-base { font-size: var(--text-base); font-weight: 400; }
+      .specimen-sm { font-size: var(--text-sm); font-weight: 400; }
+      .specimen-xs { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.05em; }
+
+      /* Font pair display */
+      .font-pair-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+        margin-top: var(--space-12);
+      }
+
+      .font-pair-card {
+        background: var(--color-surface);
+        padding: var(--space-8);
+      }
+
+      .font-pair-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-4);
+      }
+
+      .font-pair-name {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+      }
+
+      .font-pair-classification {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-6);
+      }
+
+      .font-pair-sample {
+        font-size: var(--text-md);
+        line-height: var(--leading-loose);
+        color: var(--color-text-secondary);
+        max-width: 38ch;
+      }
+
+      /* ─────────────────────────────────────────────
+       Spacing Section
+    ───────────────────────────────────────────── */
+
+      .spacing-specimen {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .spacing-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-2) 0;
+        border-bottom: 1px dashed var(--color-border);
+      }
+
+      .spacing-row:last-child {
+        border-bottom: none;
+      }
+
+      .spacing-label {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--color-text-secondary);
+        min-width: 72px;
+        text-align: right;
+      }
+
+      .spacing-bar-track {
+        flex: 1;
+        height: 16px;
+        background: var(--color-surface-sunken);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .spacing-bar-fill {
+        height: 100%;
+        background: var(--color-accent);
+        opacity: 0.55;
+        transition: width var(--duration-slow) var(--ease-default);
+        position: relative;
+      }
+
+      .spacing-bar-fill::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--color-accent);
+        opacity: 1;
+      }
+
+      .spacing-px {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+        min-width: 32px;
+      }
+
+      .spacing-rem {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-accent);
+        letter-spacing: 0.02em;
+        min-width: 48px;
+      }
+
+      /* ─────────────────────────────────────────────
+       Component Samples Section
+    ───────────────────────────────────────────── */
+
+      .component-area {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-16);
+      }
+
+      .component-group {
+        position: relative;
+      }
+
+      .component-group-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-6);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .component-group-label::before {
+        content: "//";
+        color: var(--color-accent);
+      }
+
+      .component-group-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--space-6);
+      }
+
+      /* ── Buttons ── */
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-8);
+        font-size: var(--text-base);
+        font-weight: 500;
+        line-height: 1.4;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: var(--radius-lg);
+        transition:
+          transform var(--duration-base) var(--ease-default),
+          background var(--duration-base) ease,
+          color var(--duration-base) ease,
+          border-color var(--duration-base) ease,
+          box-shadow var(--duration-base) ease;
+        font-family: var(--font-label);
+        text-transform: lowercase;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      .btn:active {
+        transform: translateY(0) scale(0.97);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+        color: var(--color-text-on-accent);
+        border-color: var(--color-accent);
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-accent) 100%);
+        transition: left var(--duration-base) ease;
+      }
+
+      .btn-primary:hover::before {
+        left: 0;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-accent);
+      }
+
+      .btn-text {
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-icon {
+        position: relative;
+        z-index: 1;
+        transition: transform var(--duration-base) ease;
+      }
+
+      .btn-primary:hover .btn-icon {
+        transform: translateX(4px);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--color-text);
+        border-color: var(--color-border);
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--color-accent);
+        background: var(--color-accent-muted);
+        transform: translateY(-2px);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--color-text-secondary);
+        border-color: transparent;
+      }
+
+      .btn-ghost:hover {
+        background: var(--color-surface-sunken);
+        color: var(--color-text);
+      }
+
+      .btn-danger {
+        background: var(--color-danger);
+        color: white;
+        border-color: var(--color-danger);
+      }
+
+      .btn-danger:hover {
+        background: #cc3333;
+        border-color: #cc3333;
+      }
+
+      .btn-sm {
+        padding: var(--space-1) var(--space-3);
+        font-size: var(--text-xs);
+      }
+
+      .btn-lg {
+        padding: var(--space-3) var(--space-8);
+        font-size: var(--text-base);
+      }
+
+      /* ── Tags / Status indicators ── */
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-1) var(--space-3);
+        font-family: var(--font-label);
+        font-size: var(--text-xs);
+        font-weight: 400;
+        line-height: 1.5;
+        border-radius: var(--radius-xs);
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+      }
+
+      .tag-default {
+        color: var(--color-emerald-dark);
+        background: var(--color-emerald-muted);
+      }
+
+      .tag-accent {
+        color: var(--color-accent);
+        background: var(--color-accent-muted);
+      }
+
+      .tag-success {
+        color: var(--color-success);
+        background: rgba(74, 222, 128, 0.1);
+      }
+
+      .tag-warning {
+        color: var(--color-warning);
+        background: var(--color-accent-muted);
+      }
+
+      .tag-danger {
+        color: var(--color-danger);
+        background: rgba(255, 68, 68, 0.1);
+      }
+
+      /* ── Labels ── */
+      .label-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .label {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: 2px var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        font-weight: 600;
+        line-height: 1.5;
+        border-radius: var(--radius-xs);
+        letter-spacing: 0.08em;
+        text-transform: lowercase;
+      }
+
+      .label-default {
+        color: var(--color-text-secondary);
+      }
+
+      .label-accent {
+        color: var(--color-accent);
+      }
+
+      .label-sent {
+        color: var(--color-text-tertiary);
+      }
+
+      /* ── Input Fields ── */
+      .input-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: var(--space-6);
+        align-items: flex-start;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .field-label {
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .field-hint {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .input {
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--color-border);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        background: var(--color-surface-raised);
+        border-radius: var(--radius-md);
+        transition:
+          border-color var(--duration-base) ease,
+          box-shadow var(--duration-base) ease;
+      }
+
+      .input::placeholder {
+        color: var(--color-text-tertiary);
+        font-family: var(--font-mono);
+      }
+
+      .input:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-muted);
+      }
+
+      .input:invalid:not(:placeholder-shown) {
+        border-color: var(--color-danger);
+        box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.1);
+      }
+
+      /* ── Toggle Switch ── */
+      .toggle-row {
+        display: flex;
+        gap: var(--space-8);
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .toggle-group {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .toggle-label {
+        font-family: var(--font-label);
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        cursor: pointer;
+      }
+
+      .toggle {
+        position: relative;
+        width: 40px;
+        height: 20px;
+        appearance: none;
+        -webkit-appearance: none;
+        background: var(--color-border);
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        cursor: pointer;
+        transition:
+          background var(--duration-base) ease,
+          border-color var(--duration-base) ease;
+      }
+
+      .toggle::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 14px;
+        height: 14px;
+        background: var(--color-text-tertiary);
+        border-radius: 50%;
+        transition: transform var(--duration-base) var(--ease-default);
+      }
+
+      .toggle:checked {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+      }
+
+      .toggle:checked::after {
+        transform: translateX(20px);
+        background: var(--color-text-on-accent);
+      }
+
+      .toggle:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+      }
+
+      /* ── Garden Card Component ── */
+      .garden-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-8);
+      }
+
+      .garden-card {
+        position: relative;
+        background: linear-gradient(135deg, #1a1a1a 0%, var(--color-surface-raised) 100%);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-none);
+        padding: var(--space-8);
+        transition: all var(--duration-base) ease;
+        overflow: hidden;
+      }
+
+      .garden-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-emerald), var(--color-accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--duration-base) ease;
+      }
+
+      .garden-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .garden-card:hover {
+        border-color: var(--color-border-strong);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .garden-card-accent {
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 149, 0, 0.03) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity var(--duration-base) ease;
+        pointer-events: none;
+      }
+
+      .garden-card:hover .garden-card-accent {
+        opacity: 1;
+      }
+
+      .garden-card-content {
+        position: relative;
+        z-index: 10;
+      }
+
+      .garden-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-3);
+      }
+
+      .garden-card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-emerald);
+        flex-shrink: 0;
+      }
+
+      .garden-card-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+      }
+
+      .garden-card-desc {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        line-height: var(--leading-relaxed);
+        margin: 0 0 var(--space-4) 0;
+        font-family: var(--font-label);
+      }
+
+      .garden-card-tag {
+        display: inline-block;
+        padding: var(--space-1) var(--space-3);
+        font-size: var(--text-xs);
+        color: var(--color-emerald-dark);
+        background: var(--color-emerald-muted);
+        border-radius: var(--radius-xs);
+        font-family: var(--font-label);
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* ── Quick Link Component ── */
+      .links-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .link-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-6);
+        background: var(--color-surface-raised);
+        border: 1px solid var(--color-surface-sunken);
+        border-radius: var(--radius-xl);
+        text-decoration: none;
+        transition: all var(--duration-base) ease;
+        cursor: pointer;
+        color: inherit;
+      }
+
+      .link-item:hover {
+        background: var(--color-surface-hover);
+        border-color: var(--color-border);
+        transform: translateY(-2px);
+      }
+
+      .link-name {
+        font-family: var(--font-mono);
+        font-size: var(--text-md);
+        font-weight: 500;
+        color: var(--color-text);
+        flex: 1;
+      }
+
+      .link-desc {
+        font-size: var(--text-base);
+        color: var(--color-text-tertiary);
+        margin: 0 var(--space-4);
+      }
+
+      .link-arrow {
+        color: var(--color-accent);
+        transition: transform var(--duration-base) ease;
+      }
+
+      .link-item:hover .link-arrow {
+        transform: translate(2px, -2px);
+      }
+
+      /* ── Digest Card Component ── */
+      .digest-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-8);
+      }
+
+      .digest-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        padding: var(--space-6);
+        background: linear-gradient(135deg, var(--color-surface-sunken), var(--color-surface-raised));
+        border: 1px solid var(--color-border);
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        overflow: hidden;
+        transition: all var(--duration-base) ease;
+      }
+
+      .digest-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--color-emerald), var(--color-accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--duration-base) ease;
+      }
+
+      .digest-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .digest-card:hover {
+        border-color: var(--color-border-strong);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .digest-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .digest-card-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--color-text);
+        line-height: var(--leading-snug);
+        transition: color var(--duration-base) ease;
+      }
+
+      .digest-card:hover .digest-card-title {
+        color: var(--color-accent);
+      }
+
+      .digest-card-date {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.04em;
+      }
+
+      .digest-card-count {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.06em;
+      }
+
+      /* ── Digest List (archive) ── */
+      .digest-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .digest-item {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        padding: var(--space-6) 0;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        transition: all var(--duration-base) ease;
+      }
+
+      .digest-item-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .digest-item-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--color-text);
+        line-height: var(--leading-snug);
+        transition: color var(--duration-base) ease;
+      }
+
+      .digest-item:hover .digest-item-title {
+        color: var(--color-accent);
+      }
+
+      .digest-item-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.04em;
+      }
+
+      .digest-item-sep {
+        color: var(--color-border);
+      }
+
+      .digest-item-arrow {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-accent);
+        opacity: 0;
+        transition: all var(--duration-base) ease;
+      }
+
+      .digest-item:hover .digest-item-arrow {
+        opacity: 1;
+        transform: translateY(-50%) translateX(4px);
+      }
+
+      /* ── Card Component (general) ── */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .card {
+        background: var(--color-surface);
+        padding: var(--space-8);
+        position: relative;
+        transition: background var(--duration-base) ease;
+      }
+
+      .card:hover {
+        background: var(--color-surface-raised);
+      }
+
+      .card-id {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.1em;
+        color: var(--color-text-tertiary);
+        margin-bottom: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .card-id::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        background: var(--color-accent);
+      }
+
+      .card-title {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+      }
+
+      .card-body {
+        font-size: var(--text-base);
+        line-height: var(--leading-loose);
+        color: var(--color-text-secondary);
+        max-width: 45ch;
+        font-family: var(--font-label);
+      }
+
+      .card-footer {
+        margin-top: var(--space-6);
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding-top: var(--space-4);
+        border-top: 1px dashed var(--color-border);
+      }
+
+      /* ─────────────────────────────────────────────
+       ACCORDION Component
+    ───────────────────────────────────────────── */
+
+      .accordion {
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+      }
+
+      .accordion + .accordion {
+        border-top: none;
+      }
+
+      .accordion-trigger {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-4) var(--space-6);
+        background: var(--color-surface);
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+        text-align: left;
+        transition:
+          background var(--duration-base) ease,
+          color var(--duration-base) ease;
+      }
+
+      .accordion-trigger:hover {
+        background: var(--color-surface-raised);
+      }
+
+      .accordion-trigger:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+        z-index: 1;
+      }
+
+      .accordion-trigger-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .accordion-ref {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.08em;
+        color: var(--color-accent);
+        min-width: 48px;
+      }
+
+      .accordion-icon {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform var(--duration-base) var(--ease-default);
+        color: var(--color-text-tertiary);
+        flex-shrink: 0;
+      }
+
+      .accordion-trigger[aria-expanded="true"] .accordion-icon {
+        transform: rotate(180deg);
+      }
+
+      .accordion-trigger[aria-expanded="true"] {
+        background: var(--color-surface-raised);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .accordion-panel {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height var(--duration-slow) var(--ease-default);
+      }
+
+      .accordion-panel[aria-hidden="false"] {
+        max-height: 500px;
+      }
+
+      .accordion-content {
+        padding: var(--space-6);
+        font-size: var(--text-base);
+        line-height: var(--leading-loose);
+        color: var(--color-text-secondary);
+        max-width: 60ch;
+        font-family: var(--font-label);
+      }
+
+      .accordion-content ul {
+        margin-top: var(--space-3);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .accordion-content li {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+      }
+
+      .accordion-content li::before {
+        content: "—";
+        color: var(--color-border-strong);
+        flex-shrink: 0;
+      }
+
+      /* ─────────────────────────────────────────────
+       MODAL Component
+    ───────────────────────────────────────────── */
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 10, 10, 0.8);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity var(--duration-slow) var(--ease-default),
+          visibility var(--duration-slow);
+      }
+
+      .modal-backdrop.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-lg);
+        width: 90%;
+        max-width: 520px;
+        transform: translateY(12px) scale(0.98);
+        transition: transform var(--duration-slow) var(--ease-default);
+      }
+
+      .modal-backdrop.is-open .modal {
+        transform: translateY(0) scale(1);
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-6);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .modal-header-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .modal-header-ref {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+      }
+
+      .modal-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+      }
+
+      .modal-close {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        color: var(--color-text-tertiary);
+        font-size: 14px;
+        line-height: 1;
+        transition:
+          color var(--duration-base) ease,
+          border-color var(--duration-base) ease,
+          background var(--duration-base) ease;
+      }
+
+      .modal-close:hover {
+        color: var(--color-text);
+        border-color: var(--color-border-strong);
+        background: var(--color-surface-sunken);
+      }
+
+      .modal-close:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+
+      .modal-body {
+        padding: var(--space-6);
+      }
+
+      .modal-body p {
+        font-size: var(--text-base);
+        line-height: var(--leading-loose);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+        font-family: var(--font-label);
+      }
+
+      .modal-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--space-3);
+        padding: var(--space-4) var(--space-6);
+        border-top: 1px dashed var(--color-border);
+      }
+
+      /* ─────────────────────────────────────────────
+       SEARCH-AHEAD SELECT Component
+    ───────────────────────────────────────────── */
+
+      .searchahead {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .searchahead-input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .searchahead-input-wrap::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        border-bottom: 1px solid var(--color-border);
+        opacity: 0;
+        transition: opacity var(--duration-base) ease;
+      }
+
+      .searchahead-input-wrap.has-dropdown::after {
+        opacity: 1;
+      }
+
+      .searchahead-input-wrap::before {
+        content: "⌕";
+        position: absolute;
+        left: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--color-text-tertiary);
+        pointer-events: none;
+      }
+
+      .searchahead-input {
+        width: 100%;
+        padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
+        border: 1px solid var(--color-border);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+        background: var(--color-surface-raised);
+        border-radius: var(--radius-md);
+        transition:
+          border-color var(--duration-base) ease,
+          box-shadow var(--duration-base) ease;
+      }
+
+      .searchahead-input::placeholder {
+        color: var(--color-text-tertiary);
+      }
+
+      .searchahead-input:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px var(--color-accent-muted);
+      }
+
+      .searchahead-clear {
+        position: absolute;
+        right: var(--space-2);
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-surface-sunken);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xs);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        line-height: 1;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity var(--duration-base) ease,
+          color var(--duration-base) ease;
+      }
+
+      .searchahead-clear.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .searchahead-clear:hover {
+        color: var(--color-text);
+      }
+
+      .searchahead-dropdown {
+        position: absolute;
+        top: calc(100% + 2px);
+        left: 0;
+        right: 0;
+        background: var(--color-surface-raised);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-lg);
+        max-height: 240px;
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition:
+          opacity var(--duration-base) ease,
+          visibility var(--duration-base),
+          transform var(--duration-base) var(--ease-default);
+        z-index: 50;
+      }
+
+      .searchahead-dropdown.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .searchahead-dropdown-header {
+        position: sticky;
+        top: 0;
+        background: var(--color-surface-sunken);
+        padding: var(--space-2) var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .searchahead-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-2) var(--space-3);
+        cursor: pointer;
+        transition: background var(--duration-base) ease;
+      }
+
+      .searchahead-option:hover,
+      .searchahead-option.is-highlighted {
+        background: var(--color-accent-muted);
+      }
+
+      .searchahead-option-left {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .searchahead-option-icon {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        color: var(--color-accent);
+        width: 16px;
+        text-align: center;
+      }
+
+      .searchahead-option-text {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+      }
+
+      .searchahead-option-text mark {
+        background: none;
+        color: var(--color-accent);
+        font-weight: 700;
+      }
+
+      .searchahead-option-meta {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      .searchahead-empty {
+        padding: var(--space-6) var(--space-3);
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.04em;
+      }
+
+      .searchahead-empty::before {
+        content: "// ";
+        color: var(--color-border-strong);
+      }
+
+      .searchahead-selection {
+        margin-top: var(--space-4);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        min-height: 24px;
+      }
+
+      .searchahead-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: 2px var(--space-2);
+        background: var(--color-accent-muted);
+        border: 1px solid rgba(255, 149, 0, 0.3);
+        border-radius: var(--radius-xs);
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        cursor: pointer;
+        transition: background var(--duration-base) ease;
+      }
+
+      .searchahead-chip:hover {
+        background: rgba(255, 149, 0, 0.2);
+      }
+
+      .searchahead-chip::after {
+        content: "×";
+        font-size: 11px;
+        margin-left: var(--space-1);
+        color: var(--color-accent);
+      }
+
+      /* ─────────────────────────────────────────────
+       TOAST Component
+    ───────────────────────────────────────────── */
+
+      .toast-container {
+        position: fixed;
+        bottom: var(--space-6);
+        right: var(--space-6);
+        display: flex;
+        flex-direction: column-reverse;
+        gap: var(--space-2);
+        z-index: 1100;
+        pointer-events: none;
+      }
+
+      .toast {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-lg);
+        min-width: 300px;
+        max-width: 420px;
+        pointer-events: auto;
+        transform: translateX(110%);
+        opacity: 0;
+        transition:
+          transform var(--duration-slow) var(--ease-default),
+          opacity var(--duration-slow) var(--ease-default);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .toast.is-visible {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .toast.is-dismissing {
+        transform: translateX(110%);
+        opacity: 0;
+      }
+
+      .toast-indicator {
+        width: 3px;
+        align-self: stretch;
+        flex-shrink: 0;
+      }
+
+      .toast-default .toast-indicator { background: var(--color-accent); }
+      .toast-success .toast-indicator { background: var(--color-success); }
+      .toast-warning .toast-indicator { background: var(--color-warning); }
+      .toast-danger .toast-indicator { background: var(--color-danger); }
+
+      .toast-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .toast-title {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        color: var(--color-text);
+      }
+
+      .toast-message {
+        font-size: var(--text-base);
+        line-height: var(--leading-normal);
+        color: var(--color-text-secondary);
+        font-family: var(--font-label);
+      }
+
+      .toast-close {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--color-text-tertiary);
+        font-size: 12px;
+        line-height: 1;
+        flex-shrink: 0;
+        transition: color var(--duration-base) ease;
+      }
+
+      .toast-close:hover {
+        color: var(--color-text);
+      }
+
+      .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: var(--color-accent);
+        transform-origin: left;
+        transition: transform linear;
+      }
+
+      .toast-success .toast-progress { background: var(--color-success); }
+      .toast-warning .toast-progress { background: var(--color-warning); }
+      .toast-danger .toast-progress { background: var(--color-danger); }
+
+      .toast-trigger-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+
+      /* ─────────────────────────────────────────────
+       Motion Section
+    ───────────────────────────────────────────── */
+
+      .motion-demos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .motion-demo {
+        background: var(--color-surface);
+        padding: var(--space-8);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .motion-demo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .motion-demo-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-text-tertiary);
+      }
+
+      .motion-demo-name {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--color-text);
+      }
+
+      .motion-stage {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        background: var(--color-surface-raised);
+        cursor: pointer;
+      }
+
+      .motion-block {
+        width: 24px;
+        height: 24px;
+        background: var(--color-accent);
+        position: absolute;
+        left: 8px;
+        transition-property: transform;
+      }
+
+      .motion-stage:hover .motion-block,
+      .motion-stage.active .motion-block {
+        transform: translateX(calc(100% * 5));
+      }
+
+      .ease-default .motion-block {
+        transition-duration: 500ms;
+        transition-timing-function: var(--ease-default);
+      }
+      .ease-out .motion-block {
+        transition-duration: 400ms;
+        transition-timing-function: var(--ease-out);
+      }
+      .ease-in .motion-block {
+        transition-duration: 600ms;
+        transition-timing-function: var(--ease-in);
+      }
+
+      .motion-curve {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+        letter-spacing: 0.02em;
+      }
+
+      /* Duration reference */
+      .duration-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+        margin-top: var(--space-8);
+      }
+
+      .duration-item {
+        background: var(--color-surface);
+        padding: var(--space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+
+      .duration-token {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--color-accent);
+      }
+
+      .duration-value {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-text-tertiary);
+      }
+
+      .duration-usage {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        line-height: var(--leading-normal);
+        font-family: var(--font-label);
+      }
+
+      /* Stagger reveal demo */
+      .stagger-demo {
+        margin-top: var(--space-12);
+      }
+
+      .stagger-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2px;
+        margin-top: var(--space-4);
+      }
+
+      .stagger-cell {
+        aspect-ratio: 2;
+        background: var(--color-surface-raised);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .stagger-cell::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, var(--color-emerald), var(--color-accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--duration-base) var(--ease-default);
+      }
+
+      .stagger-cell.visible::after {
+        transform: scaleX(1);
+      }
+
+      /* ─────────────────────────────────────────────
+       Principles Section
+    ───────────────────────────────────────────── */
+
+      .principles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .principle {
+        background: var(--color-surface);
+        padding: var(--space-8);
+      }
+
+      .principle-ref {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        color: var(--color-accent);
+        margin-bottom: var(--space-4);
+      }
+
+      .principle-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+      }
+
+      .principle-desc {
+        font-size: var(--text-base);
+        line-height: var(--leading-loose);
+        color: var(--color-text-secondary);
+        max-width: 38ch;
+        font-family: var(--font-label);
+      }
+
+      /* ─────────────────────────────────────────────
+       Site Footer
+    ───────────────────────────────────────────── */
+
+      .site-footer {
+        background: linear-gradient(to bottom, var(--color-surface-elevated), var(--color-surface));
+        padding: var(--space-12) var(--gutter) var(--space-8);
+        border-top: 1px solid var(--color-border);
+      }
+
+      .footer-content {
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .footer-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--space-8);
+      }
+
+      .footer-brand { flex-shrink: 0; }
+
+      .footer-logo {
+        font-family: var(--font-mono);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        color: var(--color-accent);
+        display: block;
+        margin-bottom: var(--space-2);
+      }
+
+      .footer-tagline {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        margin: 0;
+        font-family: var(--font-label);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 4rem;
+      }
+
+      .footer-col h4 {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--color-text);
+        margin-bottom: var(--space-4);
+        font-family: var(--font-mono);
+      }
+
+      .footer-col a {
+        display: block;
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        margin-bottom: var(--space-2);
+        transition: color var(--duration-base) ease;
+      }
+
+      .footer-col a:hover {
+        color: var(--color-accent);
+      }
+
+      .footer-social {
+        display: flex;
+        gap: var(--space-4);
+        margin-top: var(--space-2);
+      }
+
+      .footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        transition: color var(--duration-base) ease;
+        font-size: var(--text-lg);
+      }
+
+      .footer-social a:hover {
+        color: var(--color-accent);
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: var(--space-8);
+        border-top: 1px solid var(--color-border);
+        font-size: var(--text-base);
+        color: var(--color-text-tertiary);
+        font-family: var(--font-label);
+      }
+
+      .footer-status {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--color-emerald-status);
+        border-radius: 50%;
+        animation: pulse-dot var(--duration-pulse) ease-in-out infinite;
+      }
+
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.95); }
+      }
+
+      /* ─────────────────────────────────────────────
+       Page Transitions Reference
+    ───────────────────────────────────────────── */
+
+      .transitions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1px;
+        background: var(--color-border);
+      }
+
+      .transition-item {
+        background: var(--color-surface);
+        padding: var(--space-4) var(--space-6);
+        text-align: center;
+        cursor: pointer;
+        transition: all var(--duration-base) ease;
+      }
+
+      .transition-item:hover {
+        background: var(--color-surface-raised);
+      }
+
+      .transition-name {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+        margin-bottom: var(--space-1);
+      }
+
+      .transition-type {
+        font-family: var(--font-mono);
+        font-size: var(--text-9xs);
+        color: var(--color-accent);
+        letter-spacing: 0.06em;
+      }
+
+      /* ─────────────────────────────────────────────
+       Responsive
+    ───────────────────────────────────────────── */
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+        .nav-seed {
+          display: none;
+        }
+
+        .hero {
+          padding: var(--space-16) var(--space-4);
+        }
+
+        .hero-cta {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 280px;
+          justify-content: center;
+        }
+
+        .type-row {
+          grid-template-columns: 1fr;
+          gap: var(--space-2);
+        }
+
+        .type-meta {
+          flex-direction: row;
+          gap: var(--space-3);
+        }
+
+        .spacing-label {
+          min-width: 56px;
+          font-size: var(--text-9xs);
+        }
+        .spacing-rem {
+          display: none;
+        }
+
+        .font-pair-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .garden-card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stagger-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .principles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-main {
+          flex-direction: column;
+          gap: var(--space-8);
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          gap: var(--space-4);
+          text-align: center;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: var(--space-8);
+        }
+
+        .toast-container {
+          left: var(--space-4);
+          right: var(--space-4);
+          bottom: var(--space-4);
+        }
+
+        .toast {
+          min-width: 0;
+          max-width: 100%;
+        }
+
+        .searchahead {
+          max-width: 100%;
+        }
+
+        .section-title {
+          font-size: var(--text-2xl);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .section-title {
+          font-size: var(--text-xl);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background Effects -->
+    <div class="noise-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- ─── Navigation ─── -->
+    <nav class="nav" role="navigation" aria-label="Main navigation" id="mainNav">
+      <div class="nav-inner">
+        <a href="#" class="nav-brand">
+          <span class="prompt">›</span>
+          <span class="brand-name" id="navBrandName"></span><span class="cursor" id="navCursor">_</span>
+          <span class="nav-seed">TE9-TERMINAL-7742</span>
+        </a>
+        <div class="nav-links">
+          <a href="#colors">colors</a>
+          <a href="#type">type</a>
+          <a href="#spacing">spacing</a>
+          <a href="#components">components</a>
+          <a href="#motion">motion</a>
+          <a href="#transitions">transitions</a>
+          <a href="#principles">principles</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ─── Hero ─── -->
+    <header class="hero grid-bg" style="padding-top: calc(var(--nav-height) + var(--space-16))">
+      <div class="hero-content">
+        <div class="hero-label entrance">
+          <span class="bracket">[</span>
+          <span class="label-text">digital-garden</span>
+          <span class="bracket">]</span>
+        </div>
+        <h1 class="hero-title entrance entrance-d1">
+          te9<span class="dot">.</span>dev
+        </h1>
+        <p class="hero-subtitle entrance entrance-d2">
+          Playground. Garden. Archive.<br />
+          <span class="accent-text">Everything in one place.</span>
+        </p>
+        <p class="hero-desc entrance entrance-d3">
+          A personal corner of the web for dev experiments, starter kits,
+          notes, tools, and resources. Built to share, designed to grow.
+        </p>
+        <div class="hero-cta entrance entrance-d4">
+          <a href="#garden-cards" class="btn btn-primary">
+            <span class="btn-text">explore</span>
+            <span class="btn-icon">→</span>
+          </a>
+          <a href="#principles" class="btn btn-secondary">
+            <span class="btn-text">about</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-decoration">
+        <div class="deco-ring deco-ring-1"></div>
+        <div class="deco-ring deco-ring-2"></div>
+        <div class="deco-ring deco-ring-3"></div>
+      </div>
+    </header>
+
+    <hr class="divider" />
+
+    <!-- ─── Colors ─── -->
+    <section class="section" id="colors" aria-labelledby="colors-title">
+      <div class="section-header entrance">
+        <span class="section-label">// color palette</span>
+        <h2 class="section-title" id="colors-title">Colors</h2>
+      </div>
+
+      <div class="color-grid entrance entrance-d1">
+        <!-- Accent family -->
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy accent color">
+          <div class="color-swatch-fill swatch-accent" data-token="--color-accent"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent</span>
+            <span class="color-swatch-value">#ff9500</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy accent light color">
+          <div class="color-swatch-fill swatch-accent-light" data-token="--color-accent-light"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent Light</span>
+            <span class="color-swatch-value">#ffaa00</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy accent dark color">
+          <div class="color-swatch-fill swatch-accent-dark" data-token="--color-accent-dark"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent Dark</span>
+            <span class="color-swatch-value">#ff6b00</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy accent muted color">
+          <div class="color-swatch-fill swatch-accent-muted" data-token="--color-accent-muted"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Accent Muted</span>
+            <span class="color-swatch-value">rgba(255,149,0,0.1)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Emerald family -->
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy emerald color">
+          <div class="color-swatch-fill swatch-emerald" data-token="--color-emerald"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Emerald</span>
+            <span class="color-swatch-value">#00ff88</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy emerald muted color">
+          <div class="color-swatch-fill swatch-emerald-muted" data-token="--color-emerald-muted"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Emerald Muted</span>
+            <span class="color-swatch-value">rgba(0,255,136,0.1)</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy emerald dark color">
+          <div class="color-swatch-fill swatch-emerald-dark" data-token="--color-emerald-dark"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Emerald Dark</span>
+            <span class="color-swatch-value">#00cc6a</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy emerald status color">
+          <div class="color-swatch-fill swatch-emerald-status" data-token="--color-emerald-status"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Status Green</span>
+            <span class="color-swatch-value">#4ade80</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Surface family -->
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy surface color">
+          <div class="color-swatch-fill swatch-surface" data-token="--color-surface"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Surface</span>
+            <span class="color-swatch-value">#0a0a0a</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy surface raised color">
+          <div class="color-swatch-fill swatch-surface-raised" data-token="--color-surface-raised"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Raised</span>
+            <span class="color-swatch-value">#0f0f0f</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy surface elevated color">
+          <div class="color-swatch-fill swatch-surface-elevated" data-token="--color-surface-elevated"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Elevated</span>
+            <span class="color-swatch-value">#111111</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Text family -->
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy text color">
+          <div class="color-swatch-fill swatch-text" data-token="--color-text"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Text Primary</span>
+            <span class="color-swatch-value">#e8e8e8</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy text secondary color">
+          <div class="color-swatch-fill swatch-text-secondary" data-token="--color-text-secondary"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Text Secondary</span>
+            <span class="color-swatch-value">#888888</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy text tertiary color">
+          <div class="color-swatch-fill swatch-text-tertiary" data-token="--color-text-tertiary"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Text Tertiary</span>
+            <span class="color-swatch-value">#666666</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+
+        <!-- Semantic family -->
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy success color">
+          <div class="color-swatch-fill swatch-success" data-token="--color-success"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Success</span>
+            <span class="color-swatch-value">#4ade80</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+        <div class="color-swatch" tabindex="0" role="button" aria-label="Copy danger color">
+          <div class="color-swatch-fill swatch-danger" data-token="--color-danger"></div>
+          <div class="color-swatch-info">
+            <span class="color-swatch-name">Danger</span>
+            <span class="color-swatch-value">#ff4444</span>
+          </div>
+          <div class="copy-confirm">Copied</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Typography ─── -->
+    <section class="section" id="type" aria-labelledby="type-title">
+      <div class="section-header entrance">
+        <span class="section-label">// typography</span>
+        <h2 class="section-title" id="type-title">Typography</h2>
+      </div>
+
+      <div class="type-specimen entrance entrance-d1">
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-4xl</span>
+            <span class="type-token-value">clamp(3rem, 8vw, 6rem) / 700</span>
+          </div>
+          <span class="type-sample-display specimen-4xl">te9<span style="color: var(--color-accent)">.</span>dev</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-3xl</span>
+            <span class="type-token-value">2.5rem / 700</span>
+          </div>
+          <span class="type-sample-display specimen-3xl">Digest Archive</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-2xl</span>
+            <span class="type-token-value">2rem / 700</span>
+          </div>
+          <span class="type-sample-display specimen-2xl">Section Header</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-lg</span>
+            <span class="type-token-value">1.25rem / 600</span>
+          </div>
+          <span class="type-sample-display specimen-lg">Card Title</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-md</span>
+            <span class="type-token-value">1rem / 500</span>
+          </div>
+          <span class="type-sample-display specimen-md">Subsection</span>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-base</span>
+            <span class="type-token-value">0.875rem / 400</span>
+          </div>
+          <p class="type-sample-label specimen-base">
+            Navigation links, tag text, and link descriptions. Lekton gives a
+            typewriter feel that fits the terminal aesthetic — clean,
+            readable, and slightly technical.
+          </p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-sm</span>
+            <span class="type-token-value">0.8125rem / 400</span>
+          </div>
+          <p class="type-sample-label specimen-sm">
+            Metadata, timestamps, and secondary readings. Monospace
+            code values and technical references.
+          </p>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <span class="type-token-name">--text-xs</span>
+            <span class="type-token-value">0.6875rem / 600</span>
+          </div>
+          <span class="type-sample-mono specimen-xs">classification / reference</span>
+        </div>
+      </div>
+
+      <!-- Font pair detail -->
+      <div class="font-pair-grid entrance entrance-d2">
+        <div class="font-pair-card">
+          <span class="font-pair-label">Display Font</span>
+          <h3 class="font-pair-name">Bricolage Grotesque</h3>
+          <span class="font-pair-classification">Variable sans / Geometric / Modern</span>
+          <p class="font-pair-sample" style="font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;">
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+            abcdefghijklmnopqrstuvwxyz<br />
+            0123456789<br />
+            <em>Experimental. Personal. Growing.</em>
+          </p>
+        </div>
+        <div class="font-pair-card">
+          <span class="font-pair-label">Label / UI Font</span>
+          <h3 class="font-pair-name" style="font-family: var(--font-label)">Lekton</h3>
+          <span class="font-pair-classification">Monospace / Typewriter aesthetic</span>
+          <p class="font-pair-sample" style="font-family: var(--font-label);">
+            abcdefghijklmnopqrstuvwxyz<br />
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+            0123456789<br />
+            Terminal. Code. Precision.
+          </p>
+        </div>
+        <div class="font-pair-card">
+          <span class="font-pair-label">Mono Font</span>
+          <h3 class="font-pair-name" style="font-family: var(--font-mono)">JetBrains Mono</h3>
+          <span class="font-pair-classification">Developer monospace / Ligatures</span>
+          <p class="font-pair-sample" style="font-family: var(--font-mono);">
+            abcdefghijklmnopqrstuvwxyz<br />
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+            0123456789<br />
+            const x = await fetch('/api');
+          </p>
+        </div>
+        <div class="font-pair-card">
+          <span class="font-pair-label">UI Font (alt)</span>
+          <h3 class="font-pair-name" style="font-family: var(--font-ui)">Space Grotesk</h3>
+          <span class="font-pair-classification">Geometric sans / Technical</span>
+          <p class="font-pair-sample" style="font-family: var(--font-ui);">
+            abcdefghijklmnopqrstuvwxyz<br />
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
+            0123456789<br />
+            Modern. Technical. Clean.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Spacing ─── -->
+    <section class="section" id="spacing" aria-labelledby="spacing-title">
+      <div class="section-header entrance">
+        <span class="section-label">// spacing scale</span>
+        <h2 class="section-title" id="spacing-title">Spacing</h2>
+      </div>
+
+      <div class="spacing-specimen entrance entrance-d1">
+        <div class="spacing-row">
+          <span class="spacing-label">--space-1</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 4.2%"></div></div>
+          <span class="spacing-px">4px</span>
+          <span class="spacing-rem">0.25r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-2</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 8.3%"></div></div>
+          <span class="spacing-px">8px</span>
+          <span class="spacing-rem">0.5r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-3</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 12.5%"></div></div>
+          <span class="spacing-px">12px</span>
+          <span class="spacing-rem">0.75r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-4</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 16.7%"></div></div>
+          <span class="spacing-px">16px</span>
+          <span class="spacing-rem">1r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-6</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 25%"></div></div>
+          <span class="spacing-px">24px</span>
+          <span class="spacing-rem">1.5r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-8</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 33.3%"></div></div>
+          <span class="spacing-px">32px</span>
+          <span class="spacing-rem">2r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-12</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 50%"></div></div>
+          <span class="spacing-px">48px</span>
+          <span class="spacing-rem">3r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-16</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 66.7%"></div></div>
+          <span class="spacing-px">64px</span>
+          <span class="spacing-rem">4r</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-24</span>
+          <div class="spacing-bar-track"><div class="spacing-bar-fill" style="width: 100%"></div></div>
+          <span class="spacing-px">96px</span>
+          <span class="spacing-rem">6r</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Components ─── -->
+    <section class="section" id="components" aria-labelledby="components-title">
+      <div class="section-header entrance">
+        <span class="section-label">// components</span>
+        <h2 class="section-title" id="components-title">Components</h2>
+      </div>
+
+      <div class="component-area entrance entrance-d1">
+
+        <!-- ── Hero CTA Buttons ── -->
+        <div class="component-group">
+          <span class="component-group-label">interactive elements</span>
+          <h3 class="component-group-title">Buttons</h3>
+          <div class="button-row">
+            <button class="btn btn-primary btn-lg">
+              <span class="btn-text">explore</span>
+              <span class="btn-icon">→</span>
+            </button>
+            <button class="btn btn-primary">confirm</button>
+            <button class="btn btn-secondary">edit</button>
+            <button class="btn btn-ghost">cancel</button>
+            <button class="btn btn-danger btn-sm">remove</button>
+          </div>
+        </div>
+
+        <!-- ── Tags ── -->
+        <div class="component-group">
+          <span class="component-group-label">status indicators</span>
+          <h3 class="component-group-title">Tags</h3>
+          <div class="tag-row">
+            <span class="tag tag-default">experiments</span>
+            <span class="tag tag-accent">weekly</span>
+            <span class="tag tag-success">on track</span>
+            <span class="tag tag-warning">at risk</span>
+            <span class="tag tag-danger">overdue</span>
+          </div>
+        </div>
+
+        <!-- ── Labels ── -->
+        <div class="component-group">
+          <span class="component-group-label">classification</span>
+          <h3 class="component-group-title">Labels</h3>
+          <div class="label-row">
+            <span class="label label-default">last 10</span>
+            <span class="label label-accent">sent</span>
+            <span class="label label-sent">9 entries</span>
+          </div>
+        </div>
+
+        <!-- ── Inputs ── -->
+        <div class="component-group">
+          <span class="component-group-label">data entry</span>
+          <h3 class="component-group-title">Inputs</h3>
+          <div class="input-row">
+            <div class="field">
+              <label class="field-label" for="search-input">Search</label>
+              <input class="input" type="text" id="search-input" placeholder="e.g. svelte kit" />
+            </div>
+            <div class="field">
+              <label class="field-label" for="slug-input">Slug</label>
+              <input class="input" type="url" id="slug-input" placeholder="e.g. my-first-post" required />
+              <span class="field-hint">Lowercase. Hyphens only.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Toggles ── -->
+        <div class="component-group">
+          <span class="component-group-label">binary controls</span>
+          <h3 class="component-group-title">Toggles</h3>
+          <div class="toggle-row">
+            <div class="toggle-group">
+              <input class="toggle" type="checkbox" id="toggle-scanlines" checked />
+              <label class="toggle-label" for="toggle-scanlines">Scanlines</label>
+            </div>
+            <div class="toggle-group">
+              <input class="toggle" type="checkbox" id="toggle-noise" checked />
+              <label class="toggle-label" for="toggle-noise">Noise</label>
+            </div>
+            <div class="toggle-group">
+              <input class="toggle" type="checkbox" id="toggle-grid" />
+              <label class="toggle-label" for="toggle-grid">Grid overlay</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Garden Cards ── -->
+        <div class="component-group" id="garden-cards">
+          <span class="component-group-label">information panels</span>
+          <h3 class="component-group-title">Garden Cards</h3>
+          <div class="garden-card-grid">
+            <article class="garden-card">
+              <div class="garden-card-accent"></div>
+              <div class="garden-card-content">
+                <div class="garden-card-header">
+                  <h3 class="garden-card-title">Dev Playground</h3>
+                  <div class="garden-card-icon">⟨/⟩</div>
+                </div>
+                <p class="garden-card-desc">Experiments, prototypes, and side projects. A sandbox for trying new technologies and approaches.</p>
+                <span class="garden-card-tag">experiments</span>
+              </div>
+            </article>
+            <article class="garden-card">
+              <div class="garden-card-accent"></div>
+              <div class="garden-card-content">
+                <div class="garden-card-header">
+                  <h3 class="garden-card-title">Starter Kits</h3>
+                  <div class="garden-card-icon">📦</div>
+                </div>
+                <p class="garden-card-desc">Quick shortcuts to project templates and boilerplate. Jump-start new projects with battle-tested configs.</p>
+                <span class="garden-card-tag">templates</span>
+              </div>
+            </article>
+            <article class="garden-card">
+              <div class="garden-card-accent"></div>
+              <div class="garden-card-content">
+                <div class="garden-card-header">
+                  <h3 class="garden-card-title">Notes & Articles</h3>
+                  <div class="garden-card-icon">📝</div>
+                </div>
+                <p class="garden-card-desc">Personal notes on topics I'm exploring. From technical deep-dives to random interests and learnings.</p>
+                <span class="garden-card-tag">knowledge</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ── Quick Links ── -->
+        <div class="component-group">
+          <span class="component-group-label">shortcuts</span>
+          <h3 class="component-group-title">Quick Links</h3>
+          <div class="links-list">
+            <a href="#" class="link-item">
+              <span class="link-name">Digest</span>
+              <span class="link-desc">Analyzed bookmark digests</span>
+              <span class="link-arrow">↗</span>
+            </a>
+            <a href="#" class="link-item">
+              <span class="link-name">patrick.te9.nl</span>
+              <span class="link-desc">Main personal site</span>
+              <span class="link-arrow">↗</span>
+            </a>
+            <a href="#" class="link-item">
+              <span class="link-name">GitHub</span>
+              <span class="link-desc">@creatuluw</span>
+              <span class="link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Digest Cards ── -->
+        <div class="component-group">
+          <span class="component-group-label">digest archive</span>
+          <h3 class="component-group-title">Digest Cards</h3>
+          <div class="digest-grid">
+            <a href="#" class="digest-card">
+              <div class="digest-card-header">
+                <span class="tag tag-default">last 10</span>
+                <span class="digest-card-count">12 entries</span>
+              </div>
+              <h3 class="digest-card-title">Weekly roundup — May 2025</h3>
+              <span class="digest-card-date">may 15, 2025</span>
+            </a>
+            <a href="#" class="digest-card">
+              <div class="digest-card-header">
+                <span class="tag tag-accent">weekly</span>
+                <span class="digest-card-count">8 entries</span>
+              </div>
+              <h3 class="digest-card-title">Svelte 5 deep dive resources</h3>
+              <span class="digest-card-date">may 8, 2025</span>
+            </a>
+            <a href="#" class="digest-card">
+              <div class="digest-card-header">
+                <span class="tag tag-default">last 10</span>
+                <span class="digest-card-count">10 entries</span>
+              </div>
+              <h3 class="digest-card-title">Design systems & tooling</h3>
+              <span class="digest-card-date">may 1, 2025</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Accordion ── -->
+        <div class="component-group">
+          <span class="component-group-label">collapsible content</span>
+          <h3 class="component-group-title">Accordion</h3>
+
+          <div class="accordion" data-accordion>
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-panel-1" id="acc-trigger-1">
+              <span class="accordion-trigger-left">
+                <span class="accordion-ref">TE9-ACC-01</span>
+                Garden Architecture
+              </span>
+              <span class="accordion-icon">▾</span>
+            </button>
+            <div class="accordion-panel" id="acc-panel-1" role="region" aria-labelledby="acc-trigger-1" aria-hidden="true">
+              <div class="accordion-content">
+                The digital garden uses a card-based layout with auto-fit grids.
+                Each entrance maps to a database entry with title, description,
+                tag, and icon metadata.
+                <ul>
+                  <li>Grid: auto-fit, minmax(300px, 1fr)</li>
+                  <li>Card: gradient background with top-accent border animation</li>
+                  <li>Tags: monospace labels with semantic coloring</li>
+                  <li>Icons: Lucide icon library via @lucide/svelte</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion" data-accordion>
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-panel-2" id="acc-trigger-2">
+              <span class="accordion-trigger-left">
+                <span class="accordion-ref">TE9-ACC-02</span>
+                Digest Pipeline
+              </span>
+              <span class="accordion-icon">▾</span>
+            </button>
+            <div class="accordion-panel" id="acc-panel-2" role="region" aria-labelledby="acc-trigger-2" aria-hidden="true">
+              <div class="accordion-content">
+                Digests are generated via CLI commands, stored in the database,
+                and rendered as a chronological archive with type-based tags.
+                <ul>
+                  <li>Generation: npm run digest:weekly / digest:last10</li>
+                  <li>Storage: SQLite via Drizzle ORM</li>
+                  <li>Rendering: SvelteKit page server with slug routing</li>
+                  <li>Email: Optional notification via configured transport</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion" data-accordion>
+            <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-panel-3" id="acc-trigger-3">
+              <span class="accordion-trigger-left">
+                <span class="accordion-ref">TE9-ACC-03</span>
+                View Transitions
+              </span>
+              <span class="accordion-icon">▾</span>
+            </button>
+            <div class="accordion-panel" id="acc-panel-3" role="region" aria-labelledby="acc-trigger-3" aria-hidden="true">
+              <div class="accordion-content">
+                Every navigation uses a randomly selected view transition.
+                10 variations are available, each with unique entry/exit animations.
+                <ul>
+                  <li>slide — horizontal movement</li>
+                  <li>zoom — scale-based focus</li>
+                  <li>rotate — angular entry</li>
+                  <li>flip — 3D perspective</li>
+                  <li>curtain — vertical reveal</li>
+                  <li>blur — focus transition</li>
+                  <li>spiral — rotation + scale</li>
+                  <li>explode — expansion effect</li>
+                  <li>drop — vertical drop-in</li>
+                  <li>swipe — bottom-to-top</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Modal ── -->
+        <div class="component-group">
+          <span class="component-group-label">overlay dialogs</span>
+          <h3 class="component-group-title">Modal</h3>
+          <p style="font-size: var(--text-base); color: var(--color-text-secondary); margin-bottom: var(--space-4); max-width: 52ch; font-family: var(--font-label);">
+            A focused surface for confirmations, editing, and detail views.
+            Traps focus. Returns focus on close. Dark backdrop with blur.
+          </p>
+          <div class="button-row">
+            <button class="btn btn-primary" id="modal-trigger-confirm">Open Confirm</button>
+            <button class="btn btn-secondary" id="modal-trigger-config">Open Edit</button>
+            <button class="btn btn-danger" id="modal-trigger-danger">Open Remove</button>
+          </div>
+        </div>
+
+        <!-- ── Search-ahead Select ── -->
+        <div class="component-group">
+          <span class="component-group-label">filtered selection</span>
+          <h3 class="component-group-title">Search-ahead Select</h3>
+          <p style="font-size: var(--text-base); color: var(--color-text-secondary); margin-bottom: var(--space-4); max-width: 52ch; font-family: var(--font-label);">
+            Type to filter. Arrow keys to navigate. Enter to select.
+            Backspace on empty input to remove last chip.
+          </p>
+
+          <div class="searchahead" data-searchahead>
+            <div class="searchahead-input-wrap">
+              <input class="searchahead-input" type="text" placeholder="Search components, patterns, tags..." autocomplete="off" aria-label="Search and select items" aria-expanded="false" aria-controls="sa-dropdown" role="combobox" />
+              <button class="searchahead-clear" aria-label="Clear search" type="button">×</button>
+              <div class="searchahead-dropdown" id="sa-dropdown" role="listbox">
+                <div class="searchahead-dropdown-header">Results</div>
+              </div>
+            </div>
+            <div class="searchahead-selection" aria-label="Selected items"></div>
+          </div>
+        </div>
+
+        <!-- ── Toast ── -->
+        <div class="component-group">
+          <span class="component-group-label">notification system</span>
+          <h3 class="component-group-title">Toast</h3>
+          <p style="font-size: var(--text-base); color: var(--color-text-secondary); margin-bottom: var(--space-4); max-width: 52ch; font-family: var(--font-label);">
+            Ephemeral notifications that slide in, persist briefly, then dismiss.
+            Stacks vertically. No interruption to workflow.
+          </p>
+          <div class="toast-trigger-row">
+            <button class="btn btn-primary" data-toast="default">Notify</button>
+            <button class="btn btn-secondary" style="border-color: var(--color-success); color: var(--color-success);" data-toast="success">Success</button>
+            <button class="btn btn-secondary" style="border-color: var(--color-warning); color: var(--color-warning);" data-toast="warning">Warning</button>
+            <button class="btn btn-secondary" style="border-color: var(--color-danger); color: var(--color-danger);" data-toast="danger">Error</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Motion ─── -->
+    <section class="section" id="motion" aria-labelledby="motion-title">
+      <div class="section-header entrance">
+        <span class="section-label">// motion</span>
+        <h2 class="section-title" id="motion-title">Motion</h2>
+      </div>
+
+      <div class="motion-demos entrance entrance-d1">
+        <div class="motion-demo">
+          <div class="motion-demo-header">
+            <span class="motion-demo-label">Easing</span>
+            <span class="motion-demo-name">Default</span>
+          </div>
+          <div class="motion-stage ease-default" role="presentation" aria-label="Default easing demo">
+            <div class="motion-block"></div>
+          </div>
+          <span class="motion-curve">cubic-bezier(0.4, 0, 0.2, 1)</span>
+        </div>
+        <div class="motion-demo">
+          <div class="motion-demo-header">
+            <span class="motion-demo-label">Easing</span>
+            <span class="motion-demo-name">Ease Out</span>
+          </div>
+          <div class="motion-stage ease-out" role="presentation" aria-label="Ease out demo">
+            <div class="motion-block"></div>
+          </div>
+          <span class="motion-curve">cubic-bezier(0, 0, 0.2, 1)</span>
+        </div>
+        <div class="motion-demo">
+          <div class="motion-demo-header">
+            <span class="motion-demo-label">Easing</span>
+            <span class="motion-demo-name">Ease In</span>
+          </div>
+          <div class="motion-stage ease-in" role="presentation" aria-label="Ease in demo">
+            <div class="motion-block"></div>
+          </div>
+          <span class="motion-curve">cubic-bezier(0.4, 0, 1, 1)</span>
+        </div>
+      </div>
+
+      <!-- Duration reference -->
+      <div class="duration-grid entrance entrance-d2">
+        <div class="duration-item">
+          <span class="duration-token">--duration-fast</span>
+          <span class="duration-value">100ms</span>
+          <span class="duration-usage">Micro feedback, focus rings</span>
+        </div>
+        <div class="duration-item">
+          <span class="duration-token">--duration-base</span>
+          <span class="duration-value">300ms</span>
+          <span class="duration-usage">Hover, transitions, card animations</span>
+        </div>
+        <div class="duration-item">
+          <span class="duration-token">--duration-slow</span>
+          <span class="duration-value">450ms</span>
+          <span class="duration-usage">Expand/collapse, modals, panels</span>
+        </div>
+        <div class="duration-item">
+          <span class="duration-token">--duration-enter</span>
+          <span class="duration-value">500ms</span>
+          <span class="duration-usage">Page loads, stagger reveals, hero entrance</span>
+        </div>
+      </div>
+
+      <!-- Stagger reveal demo -->
+      <div class="stagger-demo entrance entrance-d3">
+        <span class="component-group-label">interaction demo</span>
+        <h3 class="component-group-title">Stagger Reveal</h3>
+        <p style="font-size: var(--text-base); color: var(--color-text-secondary); margin-bottom: var(--space-4); max-width: 48ch; font-family: var(--font-label);">
+          Click the grid to trigger a staggered fill. Uses the emerald→accent
+          gradient, matching the card accent borders.
+        </p>
+        <div class="stagger-grid" id="staggerGrid" role="button" tabindex="0" aria-label="Click to trigger stagger animation">
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+          <div class="stagger-cell"></div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Page Transitions ─── -->
+    <section class="section" id="transitions" aria-labelledby="transitions-title">
+      <div class="section-header entrance">
+        <span class="section-label">// view transitions</span>
+        <h2 class="section-title" id="transitions-title">Page Transitions</h2>
+      </div>
+      <p style="font-size: var(--text-base); color: var(--color-text-secondary); margin-bottom: var(--space-8); max-width: 60ch; font-family: var(--font-label);">
+        Every page navigation randomly selects one of 10 transition styles.
+        View Transitions API creates smooth, animated page changes.
+      </p>
+      <div class="transitions-grid entrance entrance-d1">
+        <div class="transition-item"><span class="transition-name">slide</span><span class="transition-type">horizontal</span></div>
+        <div class="transition-item"><span class="transition-name">zoom</span><span class="transition-type">scale</span></div>
+        <div class="transition-item"><span class="transition-name">rotate</span><span class="transition-type">angular</span></div>
+        <div class="transition-item"><span class="transition-name">flip</span><span class="transition-type">3D perspective</span></div>
+        <div class="transition-item"><span class="transition-name">curtain</span><span class="transition-type">vertical clip</span></div>
+        <div class="transition-item"><span class="transition-name">blur</span><span class="transition-type">focus</span></div>
+        <div class="transition-item"><span class="transition-name">spiral</span><span class="transition-type">rotation + scale</span></div>
+        <div class="transition-item"><span class="transition-name">explode</span><span class="transition-type">expansion</span></div>
+        <div class="transition-item"><span class="transition-name">drop</span><span class="transition-type">vertical</span></div>
+        <div class="transition-item"><span class="transition-name">swipe</span><span class="transition-type">bottom-to-top</span></div>
+      </div>
+    </section>
+
+    <hr class="divider-dashed" />
+
+    <!-- ─── Principles ─── -->
+    <section class="section" id="principles" aria-labelledby="principles-title">
+      <div class="section-header entrance">
+        <span class="section-label">// design principles</span>
+        <h2 class="section-title" id="principles-title">Design Principles</h2>
+      </div>
+
+      <div class="principles-grid entrance entrance-d1">
+        <div class="principle">
+          <span class="principle-ref">TE9-P01</span>
+          <h3 class="principle-title">Terminal honesty</h3>
+          <p class="principle-desc">
+            The interface speaks its nature. Monospace labels, terminal prompts,
+            and code-like section markers aren't decoration — they're the language
+            of a developer's garden. Every element is intentional and functional.
+          </p>
+        </div>
+        <div class="principle">
+          <span class="principle-ref">TE9-P02</span>
+          <h3 class="principle-title">Dark-first clarity</h3>
+          <p class="principle-desc">
+            Built for the dark environment developers live in. High contrast text
+            on deep surfaces, amber accents that glow without glare, and emerald
+            greens that indicate growth and status. No pure blacks — layered
+            darkness creates depth.
+          </p>
+        </div>
+        <div class="principle">
+          <span class="principle-ref">TE9-P03</span>
+          <h3 class="principle-title">Organic growth</h3>
+          <p class="principle-desc">
+            A digital garden grows over time. Cards, digests, and links are
+            living content that evolves. The design system supports this with
+            flexible grids, type-based tags, and transitions that feel like
+            turning pages in a notebook.
+          </p>
+        </div>
+        <div class="principle">
+          <span class="principle-ref">TE9-P04</span>
+          <h3 class="principle-title">Gradual reveal</h3>
+          <p class="principle-desc">
+            Information reveals itself through interaction. Hover states expose
+            accent borders, cards glow on attention, and arrows appear when
+            needed. The interface respects attention by not demanding all of it
+            at once.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" style="margin-top: var(--space-16)" />
+
+    <!-- ─── Footer ─── -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <span class="footer-logo">› te9.dev</span>
+            <p class="footer-tagline">Patrick's Digital Garden</p>
+          </div>
+          <div class="footer-links">
+            <div class="footer-col">
+              <h4>Connect</h4>
+              <div class="footer-social">
+                <a href="#" aria-label="Email">✉</a>
+                <a href="#" aria-label="LinkedIn">◉</a>
+                <a href="#" aria-label="Bluesky">◈</a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Code</h4>
+              <div class="footer-social">
+                <a href="#" aria-label="GitHub">◆</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2025 Patrick Tehubijuluw</span>
+          <span class="footer-status">
+            <span class="status-dot"></span>
+            Growing organically
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ─── Modal Instances ─── -->
+    <div class="modal-backdrop" id="modal-confirm" role="dialog" aria-modal="true" aria-labelledby="modal-confirm-title">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-header-left">
+            <span class="modal-header-ref">TE9-MOD-01</span>
+            <h2 class="modal-title" id="modal-confirm-title">Confirm Generation</h2>
+          </div>
+          <button class="modal-close" aria-label="Close modal" data-modal-close>×</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            You are about to generate a digest for <strong>this week's bookmarks</strong>.
+            This will crawl, analyze, and annotate up to 10 resources.
+          </p>
+          <p>
+            Estimated processing:
+            <span style="font-family: var(--font-mono); font-size: var(--text-xs)">~30 sec</span>.
+            Format:
+            <span style="font-family: var(--font-mono); font-size: var(--text-xs)">markdown</span>.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" data-modal-close>Cancel</button>
+          <button class="btn btn-primary" data-modal-close>Generate</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="modal-config" role="dialog" aria-modal="true" aria-labelledby="modal-config-title">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-header-left">
+            <span class="modal-header-ref">TE9-MOD-02</span>
+            <h2 class="modal-title" id="modal-config-title">Edit Entrance</h2>
+          </div>
+          <button class="modal-close" aria-label="Close modal" data-modal-close>×</button>
+        </div>
+        <div class="modal-body">
+          <div class="field" style="margin-bottom: var(--space-4)">
+            <label class="field-label" for="modal-title-input">Title</label>
+            <input class="input" type="text" id="modal-title-input" placeholder="Dev Playground" style="width: 100%" />
+          </div>
+          <div class="field" style="margin-bottom: var(--space-4)">
+            <label class="field-label" for="modal-tag-input">Tag</label>
+            <input class="input" type="text" id="modal-tag-input" placeholder="experiments" style="width: 100%" />
+          </div>
+          <div class="field">
+            <label class="field-label" for="modal-icon-input">Icon</label>
+            <input class="input" type="text" id="modal-icon-input" placeholder="code" style="width: 100%" />
+            <span class="field-hint">Lucide icon name. e.g. code, package, heart</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" data-modal-close>Discard</button>
+          <button class="btn btn-primary" data-modal-close>Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="modal-danger" role="dialog" aria-modal="true" aria-labelledby="modal-danger-title">
+      <div class="modal">
+        <div class="modal-header" style="border-bottom-color: var(--color-danger)">
+          <div class="modal-header-left">
+            <span class="modal-header-ref" style="color: var(--color-danger)">TE9-MOD-03</span>
+            <h2 class="modal-title" id="modal-danger-title" style="color: var(--color-danger)">Remove Digest</h2>
+          </div>
+          <button class="modal-close" aria-label="Close modal" data-modal-close>×</button>
+        </div>
+        <div class="modal-body">
+          <p>
+            This will permanently delete the digest <strong>"Weekly roundup — May 2025"</strong>
+            and all its analyzed entries.
+          </p>
+          <p style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-danger); letter-spacing: 0.04em;">
+            ▸ THIS ACTION CANNOT BE UNDONE
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" data-modal-close>Cancel</button>
+          <button class="btn btn-danger" data-modal-close>Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Toast Container ─── -->
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
+    <script>
+      /* ─────────────────────────────────────────────
+       Navigation — Terminal typing effect
+    ───────────────────────────────────────────── */
+
+      (function() {
+        const brandEl = document.getElementById('navBrandName');
+        const cursorEl = document.getElementById('navCursor');
+        const fullText = 'te9.dev';
+        let i = 0;
+
+        // Typing effect
+        const typeInterval = setInterval(() => {
+          if (i < fullText.length) {
+            brandEl.textContent = fullText.slice(0, i + 1);
+            i++;
+          } else {
+            clearInterval(typeInterval);
+          }
+        }, 100);
+
+        // Cursor blink
+        setInterval(() => {
+          cursorEl.style.opacity = cursorEl.style.opacity === '0' ? '1' : '0';
+        }, 500);
+
+        // Scroll state
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+          nav.classList.toggle('scrolled', window.scrollY > 100);
+        });
+      })();
+
+      /* ─────────────────────────────────────────────
+       Stagger grid animation
+    ───────────────────────────────────────────── */
+
+      const staggerGrid = document.getElementById("staggerGrid");
+      const staggerCells = staggerGrid.querySelectorAll(".stagger-cell");
+
+      function triggerStagger() {
+        staggerCells.forEach((cell) => cell.classList.remove("visible"));
+        requestAnimationFrame(() => {
+          staggerCells.forEach((cell, i) => {
+            setTimeout(() => {
+              cell.classList.add("visible");
+            }, i * 50);
+          });
+        });
+      }
+
+      setTimeout(triggerStagger, 800);
+
+      staggerGrid.addEventListener("click", () => {
+        staggerCells.forEach((c) => c.classList.remove("visible"));
+        setTimeout(triggerStagger, 80);
+      });
+
+      staggerGrid.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          staggerCells.forEach((c) => c.classList.remove("visible"));
+          setTimeout(triggerStagger, 80);
+        }
+      });
+
+      // Motion stage toggle on click
+      document.querySelectorAll(".motion-stage").forEach((stage) => {
+        stage.addEventListener("click", () => {
+          stage.classList.toggle("active");
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+       Intersection Observer for scroll-triggered entrances
+    ───────────────────────────────────────────── */
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationPlayState = "running";
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll(".entrance").forEach((el) => {
+        observer.observe(el);
+      });
+
+      /* ─────────────────────────────────────────────
+       Color swatch click to copy
+    ───────────────────────────────────────────── */
+
+      let toastCounter = 0;
+      const toastContainer = document.getElementById("toastContainer");
+
+      function showCopyToast(copiedValue) {
+        const id = `toast-copy-${++toastCounter}`;
+        const el = document.createElement("div");
+        el.className = "toast toast-default";
+        el.id = id;
+        el.setAttribute("role", "status");
+        el.innerHTML = `
+          <div class="toast-indicator"></div>
+          <div class="toast-body">
+            <span class="toast-title">Copied to clipboard</span>
+            <span class="toast-message" style="font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em;">${copiedValue}</span>
+          </div>
+          <button class="toast-close" aria-label="Dismiss notification">×</button>
+          <div class="toast-progress" style="width: 100%; transition-duration: 2000ms;"></div>
+        `;
+
+        toastContainer.appendChild(el);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.add("is-visible");
+            const progress = el.querySelector(".toast-progress");
+            progress.style.transform = "scaleX(0)";
+          });
+        });
+
+        const dismiss = () => {
+          el.classList.remove("is-visible");
+          el.classList.add("is-dismissing");
+          setTimeout(() => el.remove(), 500);
+        };
+
+        el.querySelector(".toast-close").addEventListener("click", dismiss);
+        setTimeout(dismiss, 2000);
+      }
+
+      document.querySelectorAll(".color-swatch").forEach((swatch) => {
+        const fill = swatch.querySelector(".color-swatch-fill");
+        const info = swatch.querySelector(".color-swatch-info");
+        const token = fill?.getAttribute("data-token");
+        const value = swatch.querySelector(".color-swatch-value")?.textContent;
+
+        function handleCopy(e) {
+          const clickedFill = fill?.contains(e.target) || e.target === fill;
+          const clickedInfo = info?.contains(e.target) || e.target === info;
+          let textToCopy = "";
+
+          if (clickedFill && token) {
+            textToCopy = token;
+          } else if (clickedInfo && value) {
+            textToCopy = value;
+          } else if (value) {
+            textToCopy = value;
+          }
+
+          if (!textToCopy) return;
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+              swatch.classList.add("copied");
+              setTimeout(() => swatch.classList.remove("copied"), 1200);
+              showCopyToast(textToCopy);
+            })
+            .catch(() => {});
+        }
+
+        swatch.addEventListener("click", handleCopy);
+        swatch.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            if (!value) return;
+            navigator.clipboard
+              .writeText(value)
+              .then(() => {
+                swatch.classList.add("copied");
+                setTimeout(() => swatch.classList.remove("copied"), 1200);
+                showCopyToast(value);
+              })
+              .catch(() => {});
+          }
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+       ACCORDION Logic
+    ───────────────────────────────────────────── */
+
+      document.querySelectorAll("[data-accordion]").forEach((acc) => {
+        const trigger = acc.querySelector(".accordion-trigger");
+        const panel = acc.querySelector(".accordion-panel");
+
+        trigger.addEventListener("click", () => {
+          const isOpen = trigger.getAttribute("aria-expanded") === "true";
+          if (isOpen) {
+            trigger.setAttribute("aria-expanded", "false");
+            panel.setAttribute("aria-hidden", "true");
+          } else {
+            trigger.setAttribute("aria-expanded", "true");
+            panel.setAttribute("aria-hidden", "false");
+          }
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+       MODAL Logic
+    ───────────────────────────────────────────── */
+
+      let previousFocus = null;
+
+      function openModal(id) {
+        const backdrop = document.getElementById(id);
+        if (!backdrop) return;
+        previousFocus = document.activeElement;
+        backdrop.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        const firstFocusable = backdrop.querySelector(".modal-close, .btn, input, [tabindex]");
+        if (firstFocusable) firstFocusable.focus();
+        backdrop.addEventListener("keydown", trapFocus);
+        backdrop.addEventListener("click", (e) => {
+          if (e.target === backdrop) closeModal(id);
+        });
+      }
+
+      function closeModal(id) {
+        const backdrop = document.getElementById(id);
+        if (!backdrop) return;
+        backdrop.classList.remove("is-open");
+        document.body.style.overflow = "";
+        backdrop.removeEventListener("keydown", trapFocus);
+        if (previousFocus) previousFocus.focus();
+      }
+
+      function trapFocus(e) {
+        if (e.key === "Escape") {
+          const backdrop = e.currentTarget;
+          closeModal(backdrop.id);
+          return;
+        }
+        if (e.key !== "Tab") return;
+        const backdrop = e.currentTarget;
+        const focusable = backdrop.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+
+      document.getElementById("modal-trigger-confirm").addEventListener("click", () => openModal("modal-confirm"));
+      document.getElementById("modal-trigger-config").addEventListener("click", () => openModal("modal-config"));
+      document.getElementById("modal-trigger-danger").addEventListener("click", () => openModal("modal-danger"));
+
+      document.querySelectorAll("[data-modal-close]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const backdrop = btn.closest(".modal-backdrop");
+          if (backdrop) closeModal(backdrop.id);
+        });
+      });
+
+      /* ─────────────────────────────────────────────
+       SEARCH-AHEAD SELECT Logic
+    ───────────────────────────────────────────── */
+
+      const saData = [
+        { id: "cmp-card", label: "Garden Card", meta: "Component", icon: "◆" },
+        { id: "cmp-link", label: "Quick Link", meta: "Component", icon: "◆" },
+        { id: "cmp-digest", label: "Digest Card", meta: "Component", icon: "◆" },
+        { id: "cmp-toast", label: "Toast", meta: "Component", icon: "◆" },
+        { id: "cmp-modal", label: "Modal", meta: "Component", icon: "◆" },
+        { id: "pat-grid", label: "Auto-fit Grid", meta: "Pattern", icon: "◈" },
+        { id: "pat-stagger", label: "Stagger Reveal", meta: "Pattern", icon: "◈" },
+        { id: "pat-accent", label: "Gradient Border", meta: "Pattern", icon: "◈" },
+        { id: "clr-accent", label: "Amber Accent", meta: "Color", icon: "◉" },
+        { id: "clr-emerald", label: "Emerald Green", meta: "Color", icon: "◉" },
+        { id: "clr-surface", label: "Dark Surface", meta: "Color", icon: "◉" },
+        { id: "fnt-display", label: "Bricolage Grotesque", meta: "Font", icon: "◇" },
+        { id: "fnt-mono", label: "JetBrains Mono", meta: "Font", icon: "◇" },
+        { id: "fnt-label", label: "Lekton", meta: "Font", icon: "◇" },
+      ];
+
+      const saContainer = document.querySelector("[data-searchahead]");
+      const saInput = saContainer.querySelector(".searchahead-input");
+      const saDropdown = saContainer.querySelector(".searchahead-dropdown");
+      const saClear = saContainer.querySelector(".searchahead-clear");
+      const saSelection = saContainer.querySelector(".searchahead-selection");
+      let saSelected = [];
+      let saHighlighted = -1;
+      let saFiltered = [];
+
+      function saHighlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+        return text.replace(regex, "<mark>$1</mark>");
+      }
+
+      function saRenderOptions(query) {
+        const q = query.toLowerCase().trim();
+        saFiltered = saData.filter((item) => !saSelected.includes(item.id));
+        if (q) {
+          saFiltered = saFiltered.filter(
+            (item) => item.label.toLowerCase().includes(q) || item.meta.toLowerCase().includes(q)
+          );
+        }
+        saHighlighted = -1;
+
+        if (saFiltered.length === 0) {
+          saDropdown.innerHTML = `
+            <div class="searchahead-dropdown-header">Results</div>
+            <div class="searchahead-empty">No matching results</div>
+          `;
+        } else {
+          saDropdown.innerHTML = `
+            <div class="searchahead-dropdown-header">Results (${saFiltered.length})</div>
+            ${saFiltered.map((item, i) => `
+              <div class="searchahead-option" role="option" data-index="${i}" data-id="${item.id}">
+                <span class="searchahead-option-left">
+                  <span class="searchahead-option-icon">${item.icon}</span>
+                  <span class="searchahead-option-text">${saHighlightText(item.label, q)}</span>
+                </span>
+                <span class="searchahead-option-meta">${item.meta}</span>
+              </div>
+            `).join("")}
+          `;
+        }
+
+        saDropdown.classList.add("is-open");
+        saInput.setAttribute("aria-expanded", "true");
+        saInput.closest(".searchahead-input-wrap").classList.add("has-dropdown");
+      }
+
+      function saCloseDropdown() {
+        saDropdown.classList.remove("is-open");
+        saInput.setAttribute("aria-expanded", "false");
+        saInput.closest(".searchahead-input-wrap").classList.remove("has-dropdown");
+      }
+
+      function saUpdateHighlight() {
+        saDropdown.querySelectorAll(".searchahead-option").forEach((opt, i) => {
+          opt.classList.toggle("is-highlighted", i === saHighlighted);
+        });
+      }
+
+      function saSelect(id) {
+        const item = saData.find((d) => d.id === id);
+        if (!item || saSelected.includes(id)) return;
+        saSelected.push(id);
+        saRenderChips();
+        saInput.value = "";
+        saClear.classList.remove("visible");
+        saRenderOptions("");
+        saInput.focus();
+      }
+
+      function saDeselect(id) {
+        saSelected = saSelected.filter((s) => s !== id);
+        saRenderChips();
+      }
+
+      function saRenderChips() {
+        saSelection.innerHTML = saSelected.map((id) => {
+          const item = saData.find((d) => d.id === id);
+          return `<span class="searchahead-chip" data-id="${id}">${item.label}</span>`;
+        }).join("");
+      }
+
+      saInput.addEventListener("focus", () => saRenderOptions(saInput.value));
+      saInput.addEventListener("input", () => {
+        saClear.classList.toggle("visible", saInput.value.length > 0);
+        saRenderOptions(saInput.value);
+      });
+      saInput.addEventListener("keydown", (e) => {
+        const options = saDropdown.querySelectorAll(".searchahead-option");
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (options.length) {
+            saHighlighted = Math.min(saHighlighted + 1, options.length - 1);
+            saUpdateHighlight();
+          }
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (options.length) {
+            saHighlighted = Math.max(saHighlighted - 1, 0);
+            saUpdateHighlight();
+          }
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          if (saHighlighted >= 0 && saFiltered[saHighlighted]) saSelect(saFiltered[saHighlighted].id);
+        } else if (e.key === "Escape") {
+          saCloseDropdown();
+        } else if (e.key === "Backspace" && saInput.value === "" && saSelected.length) {
+          saDeselect(saSelected[saSelected.length - 1]);
+        }
+      });
+      saDropdown.addEventListener("click", (e) => {
+        const option = e.target.closest(".searchahead-option");
+        if (option) saSelect(option.dataset.id);
+      });
+      saDropdown.addEventListener("mouseover", (e) => {
+        const option = e.target.closest(".searchahead-option");
+        if (option) {
+          const options = [...saDropdown.querySelectorAll(".searchahead-option")];
+          saHighlighted = options.indexOf(option);
+          saUpdateHighlight();
+        }
+      });
+      saClear.addEventListener("click", () => {
+        saInput.value = "";
+        saClear.classList.remove("visible");
+        saRenderOptions("");
+        saInput.focus();
+      });
+      saSelection.addEventListener("click", (e) => {
+        const chip = e.target.closest(".searchahead-chip");
+        if (chip) saDeselect(chip.dataset.id);
+      });
+      document.addEventListener("click", (e) => {
+        if (!saContainer.contains(e.target)) saCloseDropdown();
+      });
+
+      /* ─────────────────────────────────────────────
+       TOAST Logic
+    ───────────────────────────────────────────── */
+
+      const toastPresets = {
+        default: {
+          title: "Notification",
+          message: "Garden updated successfully.",
+          duration: 4500,
+        },
+        success: {
+          title: "Digest Generated",
+          message: "Weekly roundup digest created with 10 analyzed entries.",
+          duration: 4500,
+        },
+        warning: {
+          title: "Missing Content",
+          message: "3 garden entrances have no description set.",
+          duration: 5500,
+        },
+        danger: {
+          title: "Generation Failed",
+          message: "Could not connect to the analysis service. Check your API key.",
+          duration: 6000,
+        },
+      };
+
+      function showToast(variant) {
+        const preset = toastPresets[variant] || toastPresets.default;
+        const id = `toast-${++toastCounter}`;
+        const el = document.createElement("div");
+        el.className = `toast toast-${variant}`;
+        el.id = id;
+        el.setAttribute("role", "status");
+        el.innerHTML = `
+          <div class="toast-indicator"></div>
+          <div class="toast-body">
+            <span class="toast-title">${preset.title}</span>
+            <span class="toast-message">${preset.message}</span>
+          </div>
+          <button class="toast-close" aria-label="Dismiss notification">×</button>
+          <div class="toast-progress" style="width: 100%; transition-duration: ${preset.duration}ms;"></div>
+        `;
+
+        toastContainer.appendChild(el);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.add("is-visible");
+            const progress = el.querySelector(".toast-progress");
+            progress.style.transform = "scaleX(0)";
+          });
+        });
+
+        const dismiss = () => {
+          el.classList.remove("is-visible");
+          el.classList.add("is-dismissing");
+          setTimeout(() => el.remove(), 500);
+        };
+
+        el.querySelector(".toast-close").addEventListener("click", dismiss);
+        setTimeout(dismiss, preset.duration);
+      }
+
+      document.querySelectorAll("[data-toast]").forEach((btn) => {
+        btn.addEventListener("click", () => showToast(btn.dataset.toast));
+      });
+    </script>
+  </body>
+</html>
