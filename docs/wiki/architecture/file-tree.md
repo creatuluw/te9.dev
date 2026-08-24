@@ -1,5 +1,5 @@
 ---
-type: Reference
+type: Artifact
 title: File Tree
 description: Complete project file listing with descriptions.
 timestamp: "2026-06-25T18:30:00.000Z"
