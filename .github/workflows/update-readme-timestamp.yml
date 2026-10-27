@@ -5,6 +5,9 @@ on:
     - cron: "0 8 * * 1"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -13,7 +16,7 @@ jobs:
 
       - name: Update last updated timestamp
         run: |
-          sed -i '/^<!-- last-updated:/c\<!-- last-updated: $(date -u "+%Y-%m-%d") -->' README.md
+          sed -i "s/^<!-- last-updated:.*-->/<!-- last-updated: $(date -u '+%Y-%m-%d') -->/" README.md
 
       - name: Commit and push
         run: |

@@ -5,9 +5,6 @@ on:
     - cron: "0 */4 * * *"
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -40,7 +37,6 @@ jobs:
           LLM_GATEWAY_URL: ${{ secrets.LLM_GATEWAY_URL }}
         run: node scripts/analyze-bookmarks.js
 
-      # GitHub auto-disables cron workflows after 60 days of repo inactivity.
-      # This makes a dummy commit when the repo approaches that limit (~50 days),
-      # keeping this workflow (and the workflow_run-triggered digest) alive.
-      - uses: gautamkrishnar/keepalive-workflow@v2
+      # Note: repo activity is kept alive by the weekly update-readme-timestamp
+      # workflow's commit, which prevents GitHub's 60-day cron auto-disable.
+      # (gautamkrishnar/keepalive-workflow is ToS-blocked by GitHub — see 8d04ae8.)
