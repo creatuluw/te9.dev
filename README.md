@@ -43,5 +43,5 @@ You can preview the production build with `npm run preview`.
 
 ---
 
-<!-- last-updated: 2026-11-16 -->
+<!-- last-updated: 2026-11-23 -->
 _Last updated weekly._
